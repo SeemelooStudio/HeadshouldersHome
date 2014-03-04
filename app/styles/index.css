@@ -4,3 +4,12 @@
 @import "../../vendor/bower/html5-boilerplate/css/main.css";
 
 /*-- Application stylesheets. -----------------------------------------------*/
+#header {
+    background: #90daf7 url(/app/img/topbg.png) no-repeat center bottom;
+    background-size: 360px 163px;
+    height: 163px;
+    width: 100%;
+}
+body {
+    background: #348314 url(/app/img/grass.png);
+}

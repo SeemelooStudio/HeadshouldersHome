@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
 
   <title>海飞丝 玩游戏去巴西！</title>
-
+  <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
   <!-- Application styles. -->
-  <!-- build:[href] /styles.min.css -->
+  <!-- build:[href] styles.min.css -->
   <link rel="stylesheet" href="/app/styles/index.css">
   <!-- /build -->
 </head>
@@ -16,9 +16,54 @@
 <body>
   <!-- Application container. -->
   <header id="header">
-      
+    <div class="container">
+      <div id="logo"><img src="app/img/logo.png" /></div>
+      <div id="messi"><img src="app/img/messi.png" /></div>
+      <div id="plane"><img src="app/img/plane.png" /></div>
+      <div id="belt"><img src="app/img/belt.png" /></div>
+    </div>
   </header>
-  <main role="main" id="main"></main>
+  <main role="main" id="main">
+    <div class="container">
+        <a class="gameButton" id="gameButton-pass" href="#">
+            <div class="gameButton-innner">
+                <img class="gameButton-img" src="app/img/game1-btn.png" />
+            </div>
+            <div class="gameButton-tag">
+                <div class="gameButton-small">
+                    世界排名
+                </div>
+                <div class="gameButton-large">
+                    999+
+                </div>
+            </div>
+        </a>
+        
+        <a class="gameButton" id="gameButton-dribble" href="#">
+            <div class="gameButton-innner">
+                <img id="gameButton-dribbleLeft" src="app/img/game2-left.png" />
+                <img id="gameButton-dribbleRight" src="app/img/game2-right.png" />
+                <img class="gameButton-img" src="app/img/game2-btn.png" />
+            </div>
+            <div class="gameButton-tag">
+                <div class="gameButton-small">
+                    世界排名
+                </div>
+                <div class="gameButton-large">
+                    99
+                </div>
+            </div>
+        </a>
+        
+        <a class="gameButton disabled" id="gameButton-shoot">
+            <div class="gameButton-innner">
+                <img class="gameButton-img"  src="app/img/game3-btn.png" />
+            </div>
+        </a>
+        
+        <a id="showTops"></a>
+    </div>
+  </main>
   <footer id="footer">
   </footer>
 

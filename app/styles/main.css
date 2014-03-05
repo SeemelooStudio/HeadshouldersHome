@@ -1,0 +1,274 @@
+#header {
+    background: #90daf7 url(../../app/img/topbg.png) no-repeat center bottom;
+    background-size: 100% 100%;
+    height: 140px;
+    width: 100%;
+    text-align: center;
+}
+html {
+    height: 100%;
+}
+body {
+    background: #348314 url(../../app/img/grass.png);
+    min-height: 100%;
+    position: relative;
+}
+img {
+    max-width: 100%;
+}
+.container {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    position: relative;
+}
+#logo {
+    width: 220px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+#messi {
+    width: 65px;
+    position: absolute;
+    left: 5px;
+    top:50px;
+}
+#plane {
+    width: 145px;
+    position: absolute;
+    left: 50%;
+    margin-left: -79px;
+    top:85px;
+}
+#belt {
+    width: 200px;
+    position: absolute;
+    left: 50%;
+    margin-left: -103px;
+    top:125px;
+}
+#main {
+    padding-top: 25px;
+}
+.gameButton {
+    background-color:#3c8ae4;
+    margin: 1em 1em;
+    height: 70px;
+    border-radius: 20px 2px 20px 2px;
+    border:2px solid #000;
+    box-shadow: 2px 4px 0 rgba(0,0,0,0.5);
+    color: #FFF;
+    padding: 2px;
+    position: relative;
+    display: block;
+}
+.gameButton.disabled {
+    background: #d4d4d4;
+}
+.gameButton:active,.gameButton:focus{
+    background-color: #ffd800;
+}
+.gameButton-innner {
+    width: 100%;
+    height: 100%;
+    background: url(../../app/img/btnbg.png) center center;
+    background-size:100% 100%;
+    border-radius: 20px 2px 20px 2px;
+    position: relative;
+}
+.gameButton-tag {
+    position: absolute;
+    left: 5%;
+    top:-5px;
+    border-radius: 0 0 20px 0;
+    height: 40px;
+    background: #34a316;
+    width: 45px;
+    border:2px solid #000;
+    box-shadow: 1px 2px 0 rgba(0,0,0,0.5);
+    padding: 3px 5px 0 0;
+    text-align: center;
+    overflow: hidden;
+}
+.gameButton-small {
+    font-size: 8px;
+    line-height: 12px;
+    height: 12px;
+    overflow: hidden;
+    padding-top: 2px;
+    font-style: italic;
+}
+.gameButton-large {
+    font-family: 'Audiowide', cursive;
+    font-size: 14px;
+    line-height: 20px;
+    font-style: italic;
+    font-weight: normal;
+}
+.gameButton-img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+#gameButton-pass .gameButton-img {
+    width: 180px;
+    margin-left:-73px;
+}
+#gameButton-dribble .gameButton-img {
+    width: 94px;
+    bottom: 13px;
+    margin-left: -45px;
+    
+}
+#gameButton-shoot .gameButton-img {
+    width: 200px;
+    bottom: 15px;
+    margin-left: -100px;
+}
+#gameButton-dribbleLeft,#gameButton-dribbleRight {
+    position: absolute;
+    bottom: 0;
+    width: 75px;
+}
+#gameButton-dribbleLeft {
+    left: 0;
+}
+#gameButton-dribbleRight {
+    right: 0;
+
+}
+#showTops {
+    width: 106px;
+    height: 80px;
+    display: block;
+    background: url(../../app/img/showtops.png) no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+}
+#share {
+    background-color: #ffd800;
+    border-radius: 0 0 20px 0;
+    position: absolute;
+    right: 5%;
+    top:-5px;
+    text-align: center;
+    padding: 8px 12px 4px;
+    border:2px solid #000;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+#share img {
+    width: 22px;
+    margin: 0 auto;
+    position: relative;
+    right: -2px;
+}
+#shareText {
+    font-size: 8px;
+    color: #226a0e;
+    line-height: 14px;
+}
+
+@media only screen and (min-width: 350px) and ( max-width:749px) {
+    /* Style adjustments for viewports that meet the condition */
+    #header {
+        background-size: 100% auto;
+        height: 160px; 
+    }
+}
+@media only screen and (min-width: 750px){
+    /* Style adjustments for viewports that meet the condition */
+    #header {
+        background-size: 100% auto;
+        height: 250px; 
+    }
+    #logo {
+        width: 350px;
+        padding-top: 30px;
+    }
+    #plane {
+        width: 240px;
+        margin-left: -100px;
+        top:165px;
+    }
+    #belt {
+        width: 320px;
+        margin-left: -160px;
+        top:230px;
+    }
+    #messi {
+        width: 130px;
+        left: 10%;
+    }
+    #main {
+        padding-top: 40px;
+    }
+    .gameButton {
+        height: 120px;
+        margin: 1.8em 1em;
+        border-radius: 50px 2px 50px 2px;
+    }
+    .gameButton-innner{
+        border-radius: 50px 2px 50px 2px;
+    }
+    #gameButton-pass .gameButton-img {
+        width: 335px;
+        margin-left: -154px;
+    }
+    #gameButton-dribble .gameButton-img {
+        width: 160px;
+        margin-left: -75px;
+        bottom: 20px;
+    }
+    #gameButton-shoot .gameButton-img {
+        width: 320px;
+        margin-left: -160px;
+        bottom: 20px;
+    }
+    #gameButton-dribbleLeft, #gameButton-dribbleRight {
+        width: 140px;
+    }
+    #share {
+        border-radius: 0 0 30px 2px;
+        padding-bottom: 10px;
+    }
+    #share img {
+        width: 30px;
+        right: -3px;
+    }
+    #shareText {
+        font-size: 12px;
+        line-height: 18px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .gameButton-tag {
+        width: 80px;
+        height: 75px;
+        border-radius: 0 0 40px 2px;
+    }
+    .gameButton-small {
+        font-size: 12px;
+        line-height: 16px;
+        height: 16px;
+        padding-top: 8px;
+    }
+    .gameButton-large {
+        font-size: 26px;
+        line-height: 40px;
+        height: 40px;
+    }
+    #showTops {
+        width: 140px;
+        height: 100px;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        margin-left: -70px;
+    }
+    #main {
+        padding-bottom: 120px;
+    }
+    body {
+        background-size:80px 150px;
+    }
+}

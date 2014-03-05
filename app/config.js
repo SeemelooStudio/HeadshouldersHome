@@ -2,10 +2,10 @@
 // supplementing shared properties.
 require.config({
   paths: {
-    "vendor": "../vendor",
-    "almond": "../vendor/bower/almond/almond",
-    "underscore": "../vendor/bower/lodash/dist/lodash.underscore",
-    "jquery": "../vendor/bower/jquery/dist/jquery",
-    "backbone": "../vendor/bower/backbone/backbone"
+    "vendor": "../../vendor",
+    "almond": "../../vendor/bower/almond/almond",
+    "underscore": "../../vendor/bower/lodash/dist/lodash.underscore",
+    "jquery": "../../vendor/bower/jquery/dist/jquery",
+    "backbone": "../../vendor/bower/backbone/backbone"
   }
 });

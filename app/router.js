@@ -3,14 +3,20 @@ define(function(require, exports, module) {
 
   // External dependencies.
   var Backbone = require("backbone");
-
+  var BackboneTouch = require("backbonetouch");
+  
   // Defining the application router.
   module.exports = Backbone.Router.extend({
     routes: {
-      "": "index"
+      "": "index",
+      "leaderboard":"leaderboard"
     },
 
     index: function() {
+      console.log("Welcome to your / route.");
+    },
+    
+    leaderboard: function() {
       console.log("Welcome to your / route.");
     }
   });

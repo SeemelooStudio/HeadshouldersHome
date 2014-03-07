@@ -2,4 +2,5 @@
 
 @import "../../vendor/bower/html5-boilerplate/css/normalize.css";
 @import "../../vendor/bower/html5-boilerplate/css/main.css";
+@import "animate.css";
 @import "main.css";

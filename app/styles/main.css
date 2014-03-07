@@ -38,16 +38,16 @@ img {
     position: absolute;
     left: 50%;
     margin-left: -60px;
-    top:85px;
+    top:-50px;
 }
 #belt {
     width:160px;
     position: absolute;
     left: 50%;
     margin-left: -80px;
-    top:125px;
+    top:-15px;
 }
-#main {
+#gameNavigation {
     padding-top: 25px;
 }
 .gameButton {
@@ -304,6 +304,13 @@ img {
     background:#0e509c;
     color: #3c8ae4;
 }
+#gameNavigation {
+    height: 300px;
+}
+#leaderboard {
+    height: 80px;
+    overflow: hidden;
+}
 @media only screen and (min-width: 350px) and ( max-width:749px) {
     /* Style adjustments for viewports that meet the condition */
     #header {
@@ -324,18 +331,18 @@ img {
     #plane {
         width: 240px;
         margin-left: -100px;
-        top:165px;
+        top:-105px;
     }
     #belt {
         width: 320px;
         margin-left: -160px;
-        top:230px;
+        top:-40px;
     }
     #messi {
         width: 130px;
         left: 10%;
     }
-    #main {
+    #gameNavigation {
         padding-top: 40px;
     }
     .gameButton {
@@ -426,5 +433,11 @@ img {
     }
     body {
         background-size:80px 150px;
+    }
+    #gameNavigation {
+    height: 500px;
+    }
+    #leaderboard {
+    height: 100px;
     }
 }

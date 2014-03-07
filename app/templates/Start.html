@@ -1,0 +1,80 @@
+<div class="container" id="gameNavigation">
+      <div id="plane" data-entranceAnimation="slideInLeft" ><img src="app/img/plane.png" /></div>
+      <div id="belt" data-entranceAnimation="slideInRight" ><img src="app/img/belt.png" /></div>
+      
+      <a class="gameButton" id="gameButton-pass" href="#" data-entranceAnimation="flipInX" >
+            <div class="gameButton-innner">
+                <img class="gameButton-img" src="app/img/game1-btn.png" />
+            </div>
+            <div class="gameButton-tag">
+                <div class="gameButton-small">
+                    世界排名
+                </div>
+                <div class="gameButton-large">
+                    {{passGameRanking}}
+                </div>
+            </div>
+        </a>
+        
+        <a class="gameButton" id="gameButton-dribble" href="#" data-entranceAnimation="flipInX" >
+            <div class="gameButton-innner">
+                <img id="gameButton-dribbleLeft" src="app/img/game2-left.png" />
+                <img id="gameButton-dribbleRight" src="app/img/game2-right.png" />
+                <img class="gameButton-img" src="app/img/game2-btn.png" />
+            </div>
+            <div class="gameButton-tag">
+                <div class="gameButton-small">
+                    世界排名
+                </div>
+                <div class="gameButton-large">
+                    {{dribbleGameRanking}}
+                </div>
+            </div>
+        </a>
+        
+        <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="flipInX" >
+            <div class="gameButton-innner">
+                <img class="gameButton-img"  src="app/img/game3-btn.png" />
+            </div>
+        </a>
+       
+</div><!--/container-->
+
+<div id="leaderboard">
+    <a id="showTops"></a>
+            <div id="leaderboard-main" >
+                <div class="container">
+
+                    <ul id="leaderboard-buttons" class="clearfix">
+                        <li class="leaderboard-button current" id="leaderboard-buttonScore">
+                            <span class="leaderboard-buttonIcon"></span>
+                            <span class="leaderboard-buttonText">积分榜</span>
+                        </li>
+                        <li class="leaderboard-button" id="leaderboard-buttonPass">
+                            <span class="leaderboard-buttonIcon"></span>
+                            <span class="leaderboard-buttonText">过人榜</span>
+                        </li>
+                        <li class="leaderboard-button" id="leaderboard-buttonDribble">
+                            <span class="leaderboard-buttonIcon"></span>
+                            <span class="leaderboard-buttonText">传球榜</span>
+                        </li>
+                        <li class="leaderboard-button" id="leaderboard-buttonShoot">
+                            <span class="leaderboard-buttonIcon"></span>
+                            <span class="leaderboard-buttonText">射门榜</span>
+                        </li>
+                    </ul>
+                    <div class="leaderboardContainer">
+                        <div class="leaderboard-content" id="leaderboard-Score">
+                            <div class="userpanel">
+                            <h2>{{name}}</h2>
+                            <p>积分 <span class="userpanel-rank">{{accumulatePoints}}</span>，世界排名 <span class="userpanel-score">{{accumulatePointsRanking}}</span></p></div>
+                            <ul class="leaderboard-list">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="leaderboard-footer">
+            </div>
+</div><!--/leaderboard-->

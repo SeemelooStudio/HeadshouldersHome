@@ -1,3 +1,6 @@
+::selection {
+    background: none;
+}
 #header {
     background: #90daf7 url(../../app/img/topbg.png) no-repeat center bottom;
     background-size: 100% 100%;
@@ -34,11 +37,11 @@ img {
     top:50px;
 }
 #plane {
-    width: 120px;
+    width: 130px;
     position: absolute;
-    left: 50%;
-    margin-left: -60px;
-    top:-50px;
+    left: 80%;
+    margin-left: -65px;
+    top:-65px;
 }
 #belt {
     width:160px;
@@ -82,7 +85,7 @@ img {
     top:-5px;
     border-radius: 0 0 20px 0;
     height: 40px;
-    background: #34a316;
+    background: #1a2b4d;
     width: 45px;
     border:1px solid #221714;
     box-shadow: 1px 2px 0 rgba(0,0,0,0.5);
@@ -168,65 +171,55 @@ img {
 }
 
 #leaderboard-main {
-    background-color: #eaeaea;
-    border-top:2px solid #221714;
-    width: 100%;
-    padding: 10px 0;
-    max-width: 760px;
+    background-color: #1a2b4d;
+    border:2px solid #221714;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+    width: 96%;
+    padding: 10px 0 0;
+    max-width: 730px;
     margin: 0 auto;
+    color: #FFF;
 }
-#leaderboard-footer {
-    height: 23px;
-    background: url(../../app/img/topsbottom.png) no-repeat center bottom;
-    width: 100%;
-}
+
 #leaderboard-buttons {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 -1% 0.5em -1%;
+    padding: 5px;
+    background:#3c8ae4;
+    border:2px solid #221714;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
 }
 .leaderboard-button {
     list-style: none;
     margin: 0;
     padding: 0;
     
-    width: 25%;
-    height: 50px;
+    width: 20%;
+    height: 35px;
+    line-height: 35px;
     float: left;
     display: inline-block;
     
     text-align: center;
     
 }
-
-.leaderboard-buttonIcon {
-    width: 95%;
-    height: 50px;
-    border-radius: 20px 2px 0 0;
-    background: #ffd800 url(../../app/img/topsicon.png) center top no-repeat;
-    background-size: 50px auto;
-    display: block;
+#icon-trophy {
+    position: relative;
 }
-.leaderboard-button .leaderboard-buttonText{
-    display: none;
-}
-.leaderboard-button.current .leaderboard-buttonText{
-
-   color: #3c8ae4;
-}
-.leaderboard-button.current .leaderboard-buttonIcon{
-    background-color: #0e509c;
+#icon-trophy img{
+    max-width: 45px;
+    position: absolute;
+    bottom: -15px;
+    left: 0;
 }
 
-#leaderboard-buttonPass .leaderboard-buttonIcon {
-    background-position: center -50px;
+.leaderboard-button.current {
+
+   color: #1a2b4d;
+   font-size: 1.2em;
+   font-weight: bold;
 }
-#leaderboard-buttonDribble .leaderboard-buttonIcon {
-    background-position: center -100px;
-}
-#leaderboard-buttonShoot .leaderboard-buttonIcon {
-    background-position: center -150px;
-}
+
 #leaderboard-main .container {
     width: auto;
     padding: 0 0.5em;
@@ -238,21 +231,72 @@ img {
 }
 .leaderboard-rank {
     display: inline-block;
-    color: #3c8ae4;
-    width: 15%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 50%;
+    color: #1a2b4d;
+    background: #FFF;
     font-family: 'Audiowide', sans-serif;
+    position: absolute;
+    right: 15%;
+    top: 10px;
+    overflow: hidden;
+}
+.leaderboard-col1 {
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+.leaderboard-col2 {
+    width: 45%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+.leaderboard-col3 {
+    width: 35%;
+    height: 100%;
+    display: inline-block;
+    float: left;
 }
 .leaderboard-name {
-    width: 50%;
-    display: inline-block;
+    display: block;
+    line-height: 25px;
+    height: 25px;
+    overflow: hidden;
+    padding-top: 5px;
+    font-size: 16px;
 }
-.leaderboard-score {
+.leaderboard-gamePlayed {
+    display: block;
+    line-height: 15px;
+    font-size: 12px;
     color: #3c8ae4;
-    width: 30%;
-    display: inline-block;
+}
+
+.leaderboard-score {
     font-family: 'Audiowide', sans-serif;
+    font-size: 18px;
+    line-height: 55px;
+    overflow: hidden;
+    background: url(../../app/img/score-icon.png) no-repeat left center;
+    background-size: 18px 18px;
+    padding-left: 22px;
     
 }
+.leaderboard-smallRank .leaderboard-rank {
+    font-size: 10px;
+    color: #FFF;
+    width: auto;
+    background:none;
+    border-radius: 0;
+}
+
 .userpanel-rank,.userpanel-score {
     font-family: 'Audiowide', sans-serif;
     color: #3c8ae4;
@@ -263,12 +307,20 @@ img {
         list-style: none;
 }
 .leaderboard-item {
-    width: 95%;
-    padding-left: 5%;
-    height: 35px;
-    line-height: 35px;
+    height: 55px;
+    line-height: 55px;
     overflow: hidden;
     color: #FFF;
+    border-bottom: 1px solid #3c8ae4; 
+}
+.leaderboard-smallRank {
+    border-bottom: 0;
+}
+.leaderboard-more {
+    font-size: 40px;
+    color: #3c8ae4;
+    text-align: center;
+    line-height: 40px;
 }
 #leaderboard-buttons {
 }
@@ -282,6 +334,7 @@ img {
     margin: 0 0 0.2em;
     padding: 0;
 }
+
 .userpanel {
     margin:0;
     text-align: center;
@@ -291,25 +344,24 @@ img {
     color: #FFF;
     line-height: 25px;
 }
-.leaderboard-item:nth-child(odd)
-{
-    background:#3c8ae4;
-    color: #0e509c;
-}
-.leaderboard-item:nth-child(odd) .leaderboard-rank,.leaderboard-item:nth-child(odd) .leaderboard-score {
-    color: #0e509c;
-}
-.leaderboard-item:nth-child(even)
-{
-    background:#0e509c;
-    color: #3c8ae4;
-}
+
+
 #gameNavigation {
     height: 300px;
 }
 #leaderboard {
     height: 80px;
     overflow: hidden;
+}
+#leaderboard.expand {
+    height: auto;
+    overflow: visible;
+    padding-bottom: 40px;
+}
+#backHome {
+    width: 100px;
+    margin: 0 auto;
+    display: block;
 }
 @media only screen and (min-width: 350px) and ( max-width:749px) {
     /* Style adjustments for viewports that meet the condition */
@@ -404,33 +456,7 @@ img {
         width: 140px;
         height: 100px;
     }
-    #leaderboard-main {
-        border-right:2px solid #221714;
-        border-left:2px solid #221714;
-    }
-    .leaderboard-button {
-        height: 100px;
-    }
-    .leaderboard-buttonIcon {
-        width: 95%;
-        height: 100px;
-        border-radius:40px 2px 0 0;
-        background-size:100px auto;
-    }
-    #leaderboard-buttonPass .leaderboard-buttonIcon {
-        background-position: center -100px;
-    }
-    #leaderboard-buttonDribble .leaderboard-buttonIcon {
-        background-position: center -200px;
-    }
-    #leaderboard-buttonShoot .leaderboard-buttonIcon {
-        background-position: center -300px;
-    }
-    .leaderboard-item {
-        height: 50px;
-        line-height: 50px;
-        font-size: 18px;
-    }
+
     body {
         background-size:80px 150px;
     }

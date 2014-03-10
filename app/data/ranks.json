@@ -1,10 +1,12 @@
 [
-{"rankId":1, "name": "小孩子是第一", "score":1234},
-{"rankId":2, "name": "皮渣渣", "score":1234},
-{"rankId":3, "name": "沐浴露拯救发际线", "score":1234},
-{"rankId":4, "name": "不想洗头", "score":1234},
-{"rankId":5, "name": "小孩子是第一", "score":1234},
-{"rankId":6, "name": "小孩子是第一", "score":1234},
-{"rankId":7, "name": "小孩子是第一", "score":1234},
-{"rankId":8, "name": "小孩子是第一", "score":1234}
+{"rankId":1, "name": "小孩子是第一", "score":4545664,"gamePlayed":84545},
+{"rankId":2, "name": "皮渣渣", "score":466564,"gamePlayed":7545},
+{"rankId":3, "name": "沐浴露拯救发际线", "score":466564,"gamePlayed":6446},
+{"rankId":4, "name": "不想洗头", "score":34555,"gamePlayed":5454},
+{"rankId":5, "name": "每天抖一抖", "score":23542,"gamePlayed":4534},
+{"rankId":6, "name": "活过九十九", "score":12345,"gamePlayed":2135},
+{"rankId":7, "name": "啦啦", "score":6234,"gamePlayed":2100},
+{"rankId":8, "name": "潘婷路过", "score":5466,"gamePlayed":1035},
+{"rankId":9, "name": "飘柔也路过", "score":1354,"gamePlayed":599},
+{"rankId":10, "name": "不想当洗发水的沐浴露不是阿迪达斯", "score":879,"gamePlayed":325}
 ]

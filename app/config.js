@@ -11,7 +11,8 @@ require.config({
     "text": "../../vendor/bower/text/text",
     "backbonetouch":"../vendor/backbone.touch",
     "animationscheduler":"../vendor/animationScheduler",
-    "image": "../vendor/image"
+    "image": "../vendor/image",
+    "scrollto":"../vendor/bower/jquery.scrollTo/jquery.scrollTo.min"
   },
 
   shim: {

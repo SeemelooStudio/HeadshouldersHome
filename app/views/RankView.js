@@ -29,7 +29,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
             },
             
             postRender: function() {
-
+                $.scrollTo("#leaderboard-main",500);
             }
         });
 

@@ -1,6 +1,6 @@
 // StartView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "collections/Ranks"],
+define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "collections/Ranks", "scrollto"],
     function ($, Backbone, Mustache, template, AnimationScheduler, RankView, Ranks) {
         var StartView = Backbone.View.extend({
 
@@ -12,7 +12,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             },
             
             events: {
-                "click #showTops":"onClickLeaderboard"
+                "click #showTops":"onClickLeaderboard",
+                "click #backHome":"onClickBackHome"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -32,23 +33,28 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             ready: function(){
                 this.render();
             },
-            onClickLeaderboard: function(){
+            onClickLeaderboard: function(e){
+                console.log(e);
+                e.preventDefault();
+                e.stopPropagation();
                 var self = this;
                 
-                this.$el.find("#leaderboard").css({
-                  "height":"auto",
-                  "overflow":"visible"
-                });
-                
-                $('body').scrollTop(750);
-                
+                this.$el.find("#leaderboard").addClass("expand");                
                 this.ranks = new Ranks();
                 this.ranks.fetch({
                     success: function(){
                         self.rankView = new RankView({collection:self.ranks});
                     }
                 });
+                return false;
                 
+            },
+            onClickBackHome: function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                this.$el.find("#leaderboard").removeClass("expand");
+                $.scrollTo("#header", 500);
+                return false;
             }
         });
         return StartView;

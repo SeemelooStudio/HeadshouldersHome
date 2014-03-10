@@ -26,9 +26,11 @@ img {
     position: relative;
 }
 #logo {
-    width: 162px;
+    width: 150px;
     margin: 0 auto;
     padding-top: 15px;
+    position: relative;
+    left: -15px;
 }
 #messi {
     width: 65px;
@@ -37,11 +39,10 @@ img {
     top:50px;
 }
 #plane {
-    width: 130px;
+    width: 100px;
     position: absolute;
-    left: 80%;
-    margin-left: -65px;
-    top:-65px;
+    right:1%;
+    top:-45px;
 }
 #belt {
     width:160px;
@@ -374,16 +375,17 @@ img {
     /* Style adjustments for viewports that meet the condition */
     #header {
         background-size: 100% auto;
+        background-position: center center;
         height: 250px; 
     }
     #logo {
-        width: 323px;
+        width: 280px;
         padding-top: 30px;
     }
     #plane {
         width: 240px;
-        margin-left: -100px;
-        top:-105px;
+        right: 0;
+        top:-125px;
     }
     #belt {
         width: 320px;

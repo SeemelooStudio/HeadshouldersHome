@@ -29,7 +29,12 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
             },
             
             postRender: function() {
-                $.scrollTo("#leaderboard-main",500);
+                var top = $("#leaderboard-main").offset().top;
+                $('body').animate({
+                    scrollTop:top
+                },500
+                );
+                //$.scrollTo("#leaderboard-main",500);
             }
         });
 

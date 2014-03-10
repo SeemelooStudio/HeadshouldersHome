@@ -1,6 +1,6 @@
 // StartView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "collections/Ranks", "scrollto"],
+define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "collections/Ranks"],
     function ($, Backbone, Mustache, template, AnimationScheduler, RankView, Ranks) {
         var StartView = Backbone.View.extend({
 
@@ -34,7 +34,6 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.render();
             },
             onClickLeaderboard: function(e){
-                console.log(e);
                 e.preventDefault();
                 e.stopPropagation();
                 var self = this;
@@ -52,8 +51,18 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             onClickBackHome: function(e){
                 e.preventDefault();
                 e.stopPropagation();
-                this.$el.find("#leaderboard").removeClass("expand");
-                $.scrollTo("#header", 500);
+                var self = this;
+                $('body').animate({
+                    scrollTop:0
+                },500,
+                function(){
+                    self.$el.find("#leaderboard").removeClass("expand");
+                }
+                );
+                /*
+                $.scrollTo("#header", 500, function(){
+                    
+                });*/
                 return false;
             }
         });

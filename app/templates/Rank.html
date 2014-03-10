@@ -1,7 +1,13 @@
 {{#ranks}}
 <li class="leaderboard-item">
-<span class="leaderboard-rank">{{rankId}}</span>
-<span class="leaderboard-name">{{name}}</span>
-<span class="leaderboard-score">{{score}}</span>
+<div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span></div>
+<div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
+<div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
 </li>
 {{/ranks}}
+<li class="leaderboard-item leaderboard-more">...</li>
+<li class="leaderboard-item leaderboard-me leaderboard-smallRank">
+    <div class="leaderboard-col1"><span class="leaderboard-rank">5454</span></div>
+    <div class="leaderboard-col2"><span class="leaderboard-name">小海海有实力</span><span class="leaderboard-gamePlayed">挑战次数:8934</span></div>
+    <div class="leaderboard-col3"><div class="leaderboard-score">13</div></div>
+</li>

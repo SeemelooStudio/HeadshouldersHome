@@ -6,10 +6,13 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
 
         var RankView = Backbone.View.extend({
 
-            el: ".leaderboard-list",
+            el: ".leaderboardContainer",
 
-            initialize: function () {
-                this.listenTo(this.collection, "change", this.render);
+            initialize: function (options) {
+
+                this.user = options.user;
+                this.model.set(this.user.toJSON());
+                
                 this.listenTo(this, "render", this.postRender);
                 this.render();
             },
@@ -19,8 +22,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
 
             // Renders the view's template to the UI
             render: function () {
-                this.template = _.template(template, {});
-                this.$el.html(Mustache.render(this.template, { "ranks" : this.collection.toJSON() }));
+                this.template = _.template(template, {});                
+                this.$el.html(Mustache.render(this.template, this.model.toJSON()));
 
                 this.trigger("render");
 
@@ -34,7 +37,30 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
                     scrollTop:top
                 },500
                 );
-                //$.scrollTo("#leaderboard-main",500);
+                //add class to first three lines
+                this.$el.find('.leaderboard-list').each(function(){
+                    $(this).find('.leaderboard-item').first().next().addClass('first').next().addClass('second').next().addClass('third');
+                });
+                
+                if ( this.model.get("accumulateLeader") ) {
+                    this.highLightUser( "#leaderboard-score", this.model.get("accumulatePointsRanking") );
+                }
+                
+                if ( this.model.get("passGameLeader") ) {
+                    this.highLightUser( "#leaderboard-pass", this.model.get("passGameRanking") );
+                }
+                
+                if ( this.model.get("dribbleGameLeader") ) {
+                    this.highLightUser( "#leaderboard-dribble", this.model.get("dribbleGameRanking") );
+                }
+                
+                if ( this.model.get("shootGameLeader") ) {
+                    this.highLightUser( "#leaderboard-shoot", this.model.get("shootGameRanking") );
+                }
+            }, 
+            highLightUser: function(leaderboardId, rank) {
+                console.log(rank);
+                this.$el.find(leaderboardId + " .leaderboard-list").children(".leaderboard-item:eq(" + rank + ")").addClass("leaderboard-me");
             }
         });
 

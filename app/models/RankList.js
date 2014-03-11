@@ -5,9 +5,7 @@ define(["jquery", "backbone"],
     function ($, Backbone) {
 
         var Rank = Backbone.Model.extend({
-
-            idAttribute: "rankId"
-
+            url: "app/data/ranklist.json",
         });
 
         return Rank;

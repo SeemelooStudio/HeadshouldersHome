@@ -242,7 +242,7 @@ img {
     background: #FFF;
     font-family: 'Audiowide', sans-serif;
     position: absolute;
-    right: 15%;
+    right: 8px;
     top: 10px;
     overflow: hidden;
 }
@@ -258,12 +258,14 @@ img {
     height: 100%;
     display: inline-block;
     float: left;
+    overflow: hidden;
 }
 .leaderboard-col3 {
     width: 35%;
     height: 100%;
     display: inline-block;
     float: left;
+    overflow: hidden;
 }
 .leaderboard-name {
     display: block;
@@ -290,9 +292,15 @@ img {
     padding-left: 22px;
     
 }
+.leaderboard-me .leaderboard-rank {
+    background: #f7cf2b;
+}
+.leaderboard-me .leaderboard-gamePlayed {
+    color: #f7cf2b; 
+}
 .leaderboard-smallRank .leaderboard-rank {
     font-size: 10px;
-    color: #FFF;
+    color: #f7cf2b;
     width: auto;
     background:none;
     border-radius: 0;
@@ -301,6 +309,12 @@ img {
 .userpanel-rank,.userpanel-score {
     font-family: 'Audiowide', sans-serif;
     color: #3c8ae4;
+}
+.leaderboard-content {
+    display: none;
+}
+.leaderboard-content.current {
+    display: block;
 }
 .leaderboard-list, .leaderboard-item {
         padding: 0;
@@ -313,6 +327,46 @@ img {
     overflow: hidden;
     color: #FFF;
     border-bottom: 1px solid #3c8ae4; 
+}
+.leaderboard-header {
+    height: 30px;
+    line-height: 30px;
+    font-size: 11px;
+}
+.leaderboard-header .leaderboard-col2,.leaderboard-header .leaderboard-col3 {
+    text-align: center;
+}
+.leaderboard-item.first .icon-crown,.leaderboard-item.second .icon-crown,.leaderboard-item.third .icon-crown {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 12px;
+    top:-2px;
+    background: url(../../app/img/crown.png) no-repeat center top;
+    background-size: 18px auto;
+    display: block;
+}
+.leaderboard-me  {
+    position: relative;
+    color: #f7cf2b;
+}
+.leaderboard-me .icon-me {
+    position: absolute;
+    width: 24px;
+    height: 17px;
+    background: url(../../app/img/pointer.png) no-repeat center center;
+    background-size: 100% 100%;
+    right: -5px;
+    top:20px;
+}
+.leaderboard-item.first .icon-crown {
+    
+}
+.leaderboard-item.second .icon-crown {
+    background-position: center -18px;
+}
+.leaderboard-item.third .icon-crown {
+    background-position: center -36px; 
 }
 .leaderboard-smallRank {
     border-bottom: 0;
@@ -467,5 +521,9 @@ img {
     }
     #leaderboard {
     height: 100px;
+    }
+    .leaderboard-item.first .icon-crown,.leaderboard-item.second .icon-crown,.leaderboard-item.third .icon-crown {
+        right: 15px;
+        top:-2px;
     }
 }

@@ -1,14 +1,19 @@
 {
-
+    "name":"小海海有实力",
+    
     "accumulatePoints":345,
-    "accumulatePointsRanking":45,
+    "accumulatePointsRanking":1,
+    "accumulateGamePlayed":14,
     
     "passGameScore":0,
     "passGameRanking":3394,
+    "passGamePlayed":14,
     
     "dribbleGameScore":10,
     "dribbleGameRanking":23,
+    "dribbleGamePlayed":10,
     
     "shootGameScore":13,
-    "shootGameRanking":245
+    "shootGameRanking":245,
+    "shootGamePlayed":1
 }

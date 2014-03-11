@@ -42,9 +42,37 @@ define(["jquery", "backbone"],
                 this.url = "app/data/user.json" + "?weiboUid=" + uid + "&type=" + type;
                 this.fetch({
                     success: function(){
+                        self.initLeaderSetting();
                         self.trigger("onFetchSuccess");
                     }
                 });                
+            },
+            
+            initLeaderSetting: function() {
+                console.log(this);
+                if ( this.get("accumulatePointsRanking") < 11 ) {
+                    this.set("accumulateLeader",true);
+                } else {
+                    this.set("accumulateLeader",false);
+                }
+                
+                if ( this.get("passGameRanking") < 11 ) {
+                    this.set("passGameLeader",true);
+                } else {
+                    this.set("passGameLeader",false);
+                }
+                
+                if ( this.get("dribbleGameRanking") < 11 ) {
+                    this.set("dribbleGameLeader",true);
+                } else {
+                    this.set("dribbleGameLeader",false);
+                }
+                
+                if ( this.get("shootGameRanking") < 11 ) {
+                    this.set("shootGameLeader",true);
+                }else {
+                    this.set("shootGameLeader",false);
+                }
             }
         });
 

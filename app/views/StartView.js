@@ -1,7 +1,7 @@
 // StartView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "collections/Ranks"],
-    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, Ranks) {
+define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList) {
         var StartView = Backbone.View.extend({
 
             el: "#main",
@@ -13,7 +13,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             
             events: {
                 "click #showTops":"onClickLeaderboard",
-                "click #backHome":"onClickBackHome"
+                "click #backHome":"onClickBackHome",
+                "click .leaderboard-button":"onClickLeaderboardTab"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -39,10 +40,10 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 var self = this;
                 
                 this.$el.find("#leaderboard").addClass("expand");                
-                this.ranks = new Ranks();
-                this.ranks.fetch({
+                this.ranklist = new RankList();
+                this.ranklist.fetch({
                     success: function(){
-                        self.rankView = new RankView({collection:self.ranks});
+                        self.rankView = new RankView({model:self.ranklist, user: self.model});
                     }
                 });
                 return false;
@@ -59,11 +60,19 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     self.$el.find("#leaderboard").removeClass("expand");
                 }
                 );
-                /*
-                $.scrollTo("#header", 500, function(){
-                    
-                });*/
                 return false;
+            },
+            onClickLeaderboardTab: function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var self = this;
+                var tab = $(e.target);
+                var id =tab.attr("data-target");
+                tab.siblings(".current").removeClass("current");
+                tab.addClass("current");
+                
+                $(".leaderboard-content.current").removeClass("current");
+                $(id).addClass("current animated fadeIn");
             }
         });
         return StartView;

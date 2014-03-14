@@ -27,42 +27,13 @@
     </ul>
 </div>
 
-<div class="leaderboard-content" id="leaderboard-pass">
-    <ul class="leaderboard-list">
-    
-        <li class="leaderboard-item leaderboard-header">
-            <div class="leaderboard-col1"></div>
-            <div class="leaderboard-col2">用户</div>
-            <div class="leaderboard-col3">过人数</div>
-        </li>
-        {{#passGameRankList}}
-        <li class="leaderboard-item">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span><span class="icon-crown"></span></div>
-            <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
-            <div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
-            <div class="icon-me"></div>
-        </li>
-        {{/passGameRankList}}
-        {{^passGameLeader}}
-        <li class="leaderboard-item leaderboard-more">...</li>
-        <li class="leaderboard-item leaderboard-me leaderboard-smallRank">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{passGameRanking}}</span></div>
-            <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{passGamePlayed}}</span></div>
-            <div class="leaderboard-col3"><div class="leaderboard-score">{{passGameScore}}</div></div>
-            <div class="icon-me"></div>
-        </li>
-        {{/passGameLeader}}
-    
-    </ul>
-</div>
-
 <div class="leaderboard-content" id="leaderboard-dribble">
     <ul class="leaderboard-list">
     
         <li class="leaderboard-item leaderboard-header">
             <div class="leaderboard-col1"></div>
             <div class="leaderboard-col2">用户</div>
-            <div class="leaderboard-col3">传球数</div>
+            <div class="leaderboard-col3">过人数</div>
         </li>
         {{#dribbleGameRankList}}
         <li class="leaderboard-item">
@@ -81,6 +52,35 @@
             <div class="icon-me"></div>
         </li>
         {{/dribbleGameLeader}}
+    
+    </ul>
+</div>
+
+<div class="leaderboard-content" id="leaderboard-pass">
+    <ul class="leaderboard-list">
+    
+        <li class="leaderboard-item leaderboard-header">
+            <div class="leaderboard-col1"></div>
+            <div class="leaderboard-col2">用户</div>
+            <div class="leaderboard-col3">传球数</div>
+        </li>
+        {{#passGameRankList}}
+        <li class="leaderboard-item">
+            <div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span><span class="icon-crown"></span></div>
+            <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
+            <div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
+            <div class="icon-me"></div>
+        </li>
+        {{/passGameRankList}}
+        {{^passGameLeader}}
+        <li class="leaderboard-item leaderboard-more">...</li>
+        <li class="leaderboard-item leaderboard-me leaderboard-smallRank">
+            <div class="leaderboard-col1"><span class="leaderboard-rank">{{passGameRanking}}</span></div>
+            <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{passGamePlayed}}</span></div>
+            <div class="leaderboard-col3"><div class="leaderboard-score">{{passGameScore}}</div></div>
+            <div class="icon-me"></div>
+        </li>
+        {{/passGameLeader}}
     
     </ul>
 </div>

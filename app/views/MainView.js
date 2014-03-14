@@ -5,13 +5,26 @@ define(["jquery", "backbone","animationscheduler"],
             el: "body",
             // View constructor
             initialize: function (options) {
-                
+                this.headerAnimationScheduler = new AnimationScheduler(this.$el.find("#header"), {
+                    hideAtFirst: false
+                });
             },
             // View Event Handlers
             events: {
                 "click #logo":"onClickLogo"
             },
             onClickLogo: function() {
+
+            },
+            hideHeader: function() {
+                this.headerAnimationScheduler.animateOut();
+            },
+            showHeader: function(callback) {
+                if ($("#header").is(":visible")) {
+                    callback();
+                } else {
+                this.headerAnimationScheduler.animateIn(callback);
+                }
 
             }
         });

@@ -4,7 +4,7 @@
 #header {
     background: #90daf7 url(../../app/img/topbg.png) no-repeat center bottom;
     background-size: 100% 100%;
-    height: 140px;
+    height: 130px;
     width: 100%;
     text-align: center;
 }
@@ -26,9 +26,9 @@ img {
     position: relative;
 }
 #logo {
-    width: 150px;
+    width: 187px;
     margin: 0 auto;
-    padding-top: 15px;
+    padding-top: 20px;
     position: relative;
     left: -15px;
 }
@@ -42,7 +42,7 @@ img {
     width: 100px;
     position: absolute;
     right:1%;
-    top:-45px;
+    top:-70px;
 }
 #belt {
     width:160px;
@@ -113,11 +113,11 @@ img {
     bottom: 0;
     left: 50%;
 }
-#gameButton-pass .gameButton-img {
+#gameButton-dribble .gameButton-img {
     width: 195px;
     margin-left:-80px;
 }
-#gameButton-dribble .gameButton-img {
+#gameButton-pass .gameButton-img {
     width: 94px;
     bottom: 13px;
     margin-left: -45px;
@@ -128,15 +128,15 @@ img {
     bottom: 15px;
     margin-left: -100px;
 }
-#gameButton-dribbleLeft,#gameButton-dribbleRight {
+#gameButton-passLeft,#gameButton-passRight {
     position: absolute;
     bottom: 0;
     width: 75px;
 }
-#gameButton-dribbleLeft {
+#gameButton-passLeft {
     left: 0;
 }
-#gameButton-dribbleRight {
+#gameButton-passRight {
     right: 0;
 
 }
@@ -144,8 +144,6 @@ img {
     width: 106px;
     height: 80px;
     display: block;
-    background: url(../../app/img/showtops.png) no-repeat;
-    background-size: 100% 100%;
     margin: 0 auto;
 }
 #share {
@@ -180,6 +178,7 @@ img {
     max-width: 730px;
     margin: 0 auto;
     color: #FFF;
+    overflow: hidden;
 }
 
 #leaderboard-buttons {
@@ -418,12 +417,303 @@ img {
     margin: 0 auto;
     display: block;
 }
-@media only screen and (min-width: 350px) and ( max-width:749px) {
-    /* Style adjustments for viewports that meet the condition */
-    #header {
-        background-size: 100% auto;
-        height: 160px; 
-    }
+
+#leaderboard-dribble .leaderboard-score{
+    background-image: url(../../app/img/dribble-icon.png);
+}
+#leaderboard-pass .leaderboard-score{
+    background-image: url(../../app/img/shoot-icon.png);
+}
+#leaderboard-shoot .leaderboard-score{
+    background-image: url(../../app/img/shoot-icon.png);
+}
+#lotto {
+    position: absolute;
+    left: 9;
+    top: 0;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+#lottoLogo {
+    width: 120px;
+    margin: 5px auto;
+}
+#lottoActions {
+    padding: 5px 0;
+}
+.btn-blue {
+    background-color: #3c8ae4;
+    padding: 3px;
+    border:2px solid #221714;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.btn-blue:active {
+    background-color: #ffd800;    
+}
+.btn-inline {
+    width: 100px;
+    display: inline-block;
+    margin-right: 10px;
+}
+.btn-inline:last-child {
+    margin-right: 0;
+}
+.btn-inner {
+    background:url(../../app/img/btnbg.png) center center no-repeat;
+    background-size: 100% 100%;
+    color: #FFF;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    position: relative;
+
+}
+.btn-notification {
+    position: absolute;
+    right: -15px;
+    top:-15px;
+    text-shadow: none;
+    color: #221714;
+    font-size: 14px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    line-height: 20px;
+    background: #ffd800;
+    border-radius: 50%;
+    border:1px solid #221714;
+    text-align: center;
+    
+}
+#lottoBackHome {
+    position: fixed;
+    bottom: 5%;
+    left: 0;
+    width: 93px;
+}
+#card {
+    position: absolute;
+    width: 254px;
+    height: 170px;
+    margin-left: -127px;
+    top: 220px;
+    left: 50%;
+}
+#envelope-cover {
+    width: 254px;
+    height: 128px;
+    background: url(../../app/img/envelopeTop.png) center center no-repeat;
+    background-size: 254px 128px;
+}
+#envelope-front {
+    width: 254px;
+    height: 170px;
+    background: url(../../app/img/envelopeFront.png) center center no-repeat;
+    background-size: 254px 170px;
+}
+#envelope-back {
+    width:250px;
+    height: 164px;
+    background: #f3f2ee;
+}
+#envelope-cover,#envelope-front,#envelope-back {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#envelope-back  {
+    left: 2px;
+    top:1px;
+}
+#envelope-sealing {
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+    left: 50%;
+    margin-left: -36px;
+    top:60px;
+    position: absolute;
+    background: #00429a;
+    border-radius: 50%;
+    border:1px solid #221714;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+}
+#envelope-sealing:active {
+    background-color: #ffd800;    
+}
+#lotto-info {
+    padding: 5px 10px;
+    margin: 10px auto;
+    height: 18px;
+    line-height: 18px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.5);
+    color: #FFF;
+    font-size: 12px;
+    text-align: center;
+    width: 224px;
+}
+#envelope-sealingInner {
+    border:2px dotted #FFF;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    color: #FFF;
+
+    text-align: center;
+    overflow: hidden;
+}
+#envelope-title {
+    line-height: 56px;
+    font-size: 16px;
+    font-weight: bold;    
+}
+#envelope-points {
+    line-height: 18px;
+    font-size: 10px;
+    background: url(../../app/img/score-icon.png) 10px center no-repeat;
+    padding-left:30px;
+    text-align: left;
+    background-size: 18px 18px;
+}
+#envelope-arrow {
+
+    background-color: #0b97e4;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 13px;
+    left: 50%;
+    margin-left: -15px;
+
+}
+#envelope-arrowCaret {
+    position: absolute;
+    border-top:20px solid #0b97e4;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    width: 0;
+    overflow: hidden;
+    left: -10px;
+    bottom: -12px;
+
+}
+#envelope-arrowPoints {
+    background: url(../../app/img/score-icon.png) center 3px no-repeat;
+    background-size: 18px 18px;
+    padding-top: 16px;
+    line-height: 16px;
+    height: 16px;
+    font-size: 12px;
+    position: relative;
+    color: #FFF;
+}
+.lotto-pointsCount {
+    background: url(../../app/img/score-icon.png) left center no-repeat;
+    background-size: 18px 18px;
+    padding-left: 18px;
+}
+#lottoAward {
+    margin-top:210px;
+    padding-bottom: 50px;
+}
+#lottoAwardTitle {
+    width: 72px;
+    height: 19px;
+    position: absolute;
+    top:-15px;
+    left: 50%;
+    margin-left: -36px;
+}
+#lottoAward .gameButton {
+    height: auto;
+    margin:0 auto 30px;
+    width: 254px;
+}
+#lottoAward .gameButton:active {
+    background-color: #3c8ae4;
+}
+#lottoAwardList,.lottoAward-item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#lottoAwardList {
+    padding: 15px 0;
+    width: 90%;
+    margin: 0 auto;
+}
+.lottoAward-item {
+    float: left;
+    display: inline-block;
+    width: 50%;
+    font-size: 10px;
+    text-align: center;
+    
+    
+}
+
+.lottoAward-img {
+    border:1px solid #221714;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    border-radius: 5px;
+    width: 75%;
+}
+.lottoAward-name {
+    background-color: #00419c;
+    color: #FFF;
+    border:1px solid #221714;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    position: relative;
+    top: -8px;
+    margin: 0 auto;
+    padding: 3px 0;
+    width: 95%;
+}
+@-webkit-keyframes float {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  50% {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  50% {
+    -webkit-transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    transform: translateY(10px);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(10px);
+    transform: translateY(0);
+  }
+}
+
+.float {
+  -webkit-animation: float 1s infinite; /* Safari 4+ */
+  animation:         float 1s infinite; /* IE 10+ */
+
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
@@ -433,13 +723,13 @@ img {
         height: 250px; 
     }
     #logo {
-        width: 280px;
-        padding-top: 30px;
+        width: 340px;
+        padding-top: 35px;
     }
     #plane {
         width: 240px;
         right: 0;
-        top:-125px;
+        top:-180px;
     }
     #belt {
         width: 320px;
@@ -461,11 +751,11 @@ img {
     .gameButton-innner{
         border-radius: 50px 2px 50px 2px;
     }
-    #gameButton-pass .gameButton-img {
+    #gameButton-dribble .gameButton-img {
         width: 335px;
         margin-left: -154px;
     }
-    #gameButton-dribble .gameButton-img {
+    #gameButton-pass .gameButton-img {
         width: 160px;
         margin-left: -75px;
         bottom: 20px;
@@ -475,7 +765,7 @@ img {
         margin-left: -160px;
         bottom: 20px;
     }
-    #gameButton-dribbleLeft, #gameButton-dribbleRight {
+    #gameButton-passLeft, #gameButton-passRight {
         width: 140px;
     }
     #share {
@@ -526,4 +816,130 @@ img {
         right: 15px;
         top:-2px;
     }
+    #lotto {
+        width: 750px;
+        left: 50%;
+        margin-left:-375px;
+    }
+    #lottoLogo {
+    width: 240px;
+    margin: 0 auto;
+    }
+#lottoActions {
+    padding: 15px 0;
+}
+.btn-blue {
+    padding: 5px;
+}
+.btn-inline {
+    width: 150px;
+    display: inline-block;
+    margin-right: 15px;
+}
+.btn-inline:last-child {
+    margin-right: 0;
+}
+.btn-inner {
+    font-size: 24px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.btn-notification {
+
+    right: -18px;
+    top:-18px;
+ 
+    font-size: 18px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    
+}
+#lottoBackHome {
+    width: 180px;
+}
+#lotto-info {
+    height: 36px;
+    line-height: 36px;
+    width: 340px;
+    font-size: 16px;
+}
+#card {
+    width: 508px;
+    height: 340px;
+    margin-left: -254px;
+    top:380px;
+}
+#envelope-back {
+    width: 500px;
+    height: 328px;
+}
+#envelope-front {
+    width: 508px;
+    height: 340px;
+    background-size: 100% 100%;
+}
+#envelope-cover {
+    width: 508px;
+    height: 256px;
+    background-size: 100% 100%;
+}
+#envelope-sealing {
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+    margin-left: -72px;
+    top:120px;
+    border-width: 2px;
+}
+#envelope-sealingInner {
+    width: 112px;
+    height: 112px;
+    border-width: 4px;
+}
+#envelope-title {
+    line-height: 112px;
+    font-size: 36px;
+}
+#envelope-arrow {
+    width: 60px;
+    height: 60px;
+    top:26px;
+    margin-left: -30px;
+}
+#envelope-arrowCaret {
+    border-top-width: 40px;
+    border-left-width: 50px;
+    border-right-width: 50px;
+    left:-20px;
+    bottom:-24px;
+}
+#envelope-arrowPoints {
+    background-size: 36px 36px;
+    padding-top:32px;
+    line-height: 32px;
+    height: 32px;
+    font-size: 20px;
+}
+#lottoAward {
+    margin-top:410px;
+}
+#lottoAward .gameButton {
+    width: 520px;
+}
+#lottoAwardTitle {
+    width: 144px;
+    height: 38px;
+    margin-left: -72px;
+    top:-30px;
+}
+.lottoAward-item {
+    width: 25%;
+}
+#lottoAwardList {
+    padding: 20px 0 0;
+}
+.lottoAward-name {
+    font-size: 12px;
+}
 }

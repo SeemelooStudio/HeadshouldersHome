@@ -1,7 +1,7 @@
 <div class="container" id="gameNavigation">
       <div id="plane" data-entranceAnimation="slideInLeft" ><img src="app/img/plane.png" /></div>
       
-      <a class="gameButton" id="gameButton-pass" href="#" data-entranceAnimation="flipInX" >
+      <a class="gameButton" id="gameButton-dribble" href="#" data-entranceAnimation="flipInX" >
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game1-btn.png" />
             </div>
@@ -10,15 +10,15 @@
                     世界排名
                 </div>
                 <div class="gameButton-large">
-                    {{passGameRanking}}
+                    {{dribbleGameRanking}}
                 </div>
             </div>
         </a>
         
-        <a class="gameButton" id="gameButton-dribble" href="#" data-entranceAnimation="flipInX" >
+        <a class="gameButton" id="gameButton-pass" href="#" data-entranceAnimation="flipInX" >
             <div class="gameButton-innner">
-                <img id="gameButton-dribbleLeft" src="app/img/game2-left.png" />
-                <img id="gameButton-dribbleRight" src="app/img/game2-right.png" />
+                <img id="gameButton-passLeft" src="app/img/game2-left.png" />
+                <img id="gameButton-passRight" src="app/img/game2-right.png" />
                 <img class="gameButton-img" src="app/img/game2-btn.png" />
             </div>
             <div class="gameButton-tag">
@@ -26,7 +26,7 @@
                     世界排名
                 </div>
                 <div class="gameButton-large">
-                    {{dribbleGameRanking}}
+                    {{passGameRanking}}
                 </div>
             </div>
         </a>
@@ -40,20 +40,20 @@
 </div><!--/container-->
 
 <div id="leaderboard">
-    <div id="showTops" onclick="return false;"></div>
+    <div id="showTops" ><img src="app/img/showtops.png" /></div>
             <div id="leaderboard-main" >
 
                     <ul id="leaderboard-buttons" class="clearfix">
                         <li class="leaderboard-button" id="icon-trophy"><img src="app/img/trophy.png"/></li>
-                        <li class="leaderboard-button current" id="leaderboard-buttonScore" data-target="#leaderboard-score">                总积分
+                        <li class="leaderboard-button current" id="leaderboard-buttonScore" data-type="score">                总积分
                         </li>
-                        <li class="leaderboard-button" id="leaderboard-buttonPass"  data-target="#leaderboard-pass">
+                        <li class="leaderboard-button" id="leaderboard-buttonDribble"  data-type="dribble">
                             过人
                         </li>
-                        <li class="leaderboard-button" id="leaderboard-buttonDribble"  data-target="#leaderboard-dribble">
+                        <li class="leaderboard-button" id="leaderboard-buttonPass"  data-type="pass">
                             传球
                         </li>
-                        <li class="leaderboard-button" id="leaderboard-buttonShoot"  data-target="#leaderboard-shoot">
+                        <li class="leaderboard-button" id="leaderboard-buttonShoot"  data-type="shoot">
                             射门
                         </li>
                     </ul>

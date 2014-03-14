@@ -7,10 +7,12 @@ define(["jquery", "backbone"],
         var User = Backbone.Model.extend({
         
             initialize: function() {
-                //this.login();
-                this.onLoginSuccess("0","本地测试用户名","test");
+                
             },
             login: function(){
+                this.onLoginSuccess("0","本地测试用户名","test"); 
+                return;
+                /*
                 var self = this;
                 
                 //get uid and username from sina weibo
@@ -31,6 +33,7 @@ define(["jquery", "backbone"],
         
                     
                 });
+                */
             },
             onLoginSuccess: function(uid, name, type) {
                 var self = this;
@@ -49,26 +52,26 @@ define(["jquery", "backbone"],
             },
             
             initLeaderSetting: function() {
-                console.log(this);
-                if ( this.get("accumulatePointsRanking") < 11 ) {
+                var leadershipRank = 6;
+                if ( this.get("accumulatePointsRanking") < leadershipRank ) {
                     this.set("accumulateLeader",true);
                 } else {
                     this.set("accumulateLeader",false);
                 }
                 
-                if ( this.get("passGameRanking") < 11 ) {
+                if ( this.get("passGameRanking") < leadershipRank ) {
                     this.set("passGameLeader",true);
                 } else {
                     this.set("passGameLeader",false);
                 }
                 
-                if ( this.get("dribbleGameRanking") < 11 ) {
+                if ( this.get("dribbleGameRanking") < leadershipRank ) {
                     this.set("dribbleGameLeader",true);
                 } else {
                     this.set("dribbleGameLeader",false);
                 }
                 
-                if ( this.get("shootGameRanking") < 11 ) {
+                if ( this.get("shootGameRanking") < leadershipRank ) {
                     this.set("shootGameLeader",true);
                 }else {
                     this.set("shootGameLeader",false);

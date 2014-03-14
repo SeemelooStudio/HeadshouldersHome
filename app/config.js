@@ -10,6 +10,11 @@ require.config({
     "mustache": '../../vendor/bower/mustache/mustache',
     "text": "../../vendor/bower/text/text",
     "backbonetouch":"../vendor/backbone.touch",
+    "hammerjs":"../vendor/bower/hammerjs/hammer",
+    "jqueryhammer":"../vendor/jquery.hammer.min",
+    "fakemultitouch":"../vendor/bower/hammerjs/plugins/hammer.fakemultitouch",
+    "showtouches":"../vendor/bower/hammerjs/plugins/hammer.showtouches",
+    
     "animationscheduler":"../vendor/animationScheduler",
     "image": "../vendor/image"
   },
@@ -22,7 +27,19 @@ require.config({
       deps: ["jquery", "underscore"],
 
       // This maps the global `Backbone` object to `require("backbone")`.
-      exports: "Backbone"
+      exports: "Backbone",
+    },
+    "hammerjs": {
+      exports: 'Hammer'
+    },
+    "jqueryhammer": {
+        deps: ['hammerjs']
+    },
+    "fakemultitouch": {
+        deps: ['jqueryhammer']
+    },
+    "showtouches": {
+        deps: ['jqueryhammer', "fakemultitouch"]
     }
-  }
+    }
 });

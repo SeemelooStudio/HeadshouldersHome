@@ -15,6 +15,6 @@
     "sinon": "~1.8.2",
     "mustache": "~0.8.1",
     "text": "~2.0.10",
-    "flesler/jquery.scrollto": "*"
+    "hammerjs":"*"
   }
 }

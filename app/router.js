@@ -3,13 +3,16 @@ define(function(require, exports, module) {
 
   // External dependencies.
   var Backbone = require("backbone");
-  var BackboneTouch = require("backbonetouch");
-  
+  var Hammer = require("hammerjs");
+  require("fakemultitouch");
+  var JqueryHammer = require("jqueryhammer");
   //views
   var MainView = require("views/MainView");
   var mainView;
   var StartView = require("views/StartView");
   var startView;
+  var LottoView = require("views/LottoView");
+  var lottoView;
   
   //models
   var User = require("models/User");
@@ -20,24 +23,45 @@ define(function(require, exports, module) {
     initialize: function() {
         user = new User();
         mainView = new MainView();
-        startView = new StartView({ model: user });
-        
     },
     routes: {
       "": "index",
-      "leaderboard":"leaderboard"
+      "leaderboard/:type":"leaderboard",
+      "lotto":"lotto"
     },
 
     index: function() {
-      console.log("Welcome to your / route.");
+        mainView.showHeader(function(){
+            if ( startView ) {
+                startView.render();
+            } else {
+                startView = new StartView({ model: user });
+                user.login();
+            }
+            
+        });
+        
     },
     
-    leaderboard: function() {
-
+    leaderboard: function(type) {
+        if ( !startView ) {
+            startView = new StartView({ model: user });
+            user.login();
+        }
+        if ( !startView.isReady ) {
+           startView.once("render", function(){
+               startView.showLeaderboard(type);
+           });
+        } else {
+            startView.showLeaderboard(type);
+        }
     },
-    ready: function(){
-        
-        
+    lotto: function() {
+        mainView.hideHeader();
+        lottoView = new LottoView( { model: user });
+        user.login();
+    },
+    ready: function(){        
         startView.ready();
     }
   });

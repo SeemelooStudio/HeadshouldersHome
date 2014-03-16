@@ -1,10 +1,17 @@
-<div class="container" id="gameNavigation">
+<div class="container">
       <div id="plane" data-entranceAnimation="slideInLeft" ><img src="app/img/plane.png" /></div>
-      
-      <a class="gameButton" id="gameButton-dribble" href="#" data-entranceAnimation="flipInX" >
+    {{#isLogin}}
+      <div id="user">
+        {{name}}，欢迎你！ <a id="logout">退出</a>
+      </div>
+      {{/isLogin}}
+</div><!--/container-->
+      <div  id="gameNavigation">
+      <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="flipInX"  data-target="gameDribble">
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game1-btn.png" />
             </div>
+            {{#isLogin}}
             <div class="gameButton-tag">
                 <div class="gameButton-small">
                     世界排名
@@ -13,14 +20,16 @@
                     {{dribbleGameRanking}}
                 </div>
             </div>
+            {{/isLogin}}
         </a>
         
-        <a class="gameButton" id="gameButton-pass" href="#" data-entranceAnimation="flipInX" >
+        <a class="gameButton" id="gameButton-pass" data-entranceAnimation="flipInX" data-target="gamePass">
             <div class="gameButton-innner">
                 <img id="gameButton-passLeft" src="app/img/game2-left.png" />
                 <img id="gameButton-passRight" src="app/img/game2-right.png" />
                 <img class="gameButton-img" src="app/img/game2-btn.png" />
             </div>
+            {{#isLogin}}
             <div class="gameButton-tag">
                 <div class="gameButton-small">
                     世界排名
@@ -29,15 +38,16 @@
                     {{passGameRanking}}
                 </div>
             </div>
+            {{/isLogin}}
         </a>
         
-        <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="flipInX" >
+        <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="flipInX"  data-target="gameShoot">
             <div class="gameButton-innner">
                 <img class="gameButton-img"  src="app/img/game3-btn.png" />
             </div>
         </a>
-       
-</div><!--/container-->
+      </div><!-- #gameNavigation -->
+
 
 <div id="leaderboard">
     <div id="showTops" ><img src="app/img/showtops.png" /></div>
@@ -53,9 +63,11 @@
                         <li class="leaderboard-button" id="leaderboard-buttonPass"  data-type="pass">
                             传球
                         </li>
+                        <!--
                         <li class="leaderboard-button" id="leaderboard-buttonShoot"  data-type="shoot">
                             射门
                         </li>
+                        -->
                     </ul>
                     <div class="leaderboardContainer">
 

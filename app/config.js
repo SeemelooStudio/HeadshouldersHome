@@ -10,13 +10,12 @@ require.config({
     "mustache": '../../vendor/bower/mustache/mustache',
     "text": "../../vendor/bower/text/text",
     "backbonetouch":"../vendor/backbone.touch",
-    "hammerjs":"../vendor/bower/hammerjs/hammer",
+    "hammerjs":"../vendor/hammer.min",
     "jqueryhammer":"../vendor/jquery.hammer.min",
-    "fakemultitouch":"../vendor/bower/hammerjs/plugins/hammer.fakemultitouch",
-    "showtouches":"../vendor/bower/hammerjs/plugins/hammer.showtouches",
-    
+    "fakemultitouch":"../vendor/hammer.fakemultitouch",
     "animationscheduler":"../vendor/animationScheduler",
-    "image": "../vendor/image"
+    "image": "../vendor/image",
+    "crafty":"../vendor/bower/crafty/dist/crafty-min"
   },
 
   shim: {
@@ -32,14 +31,12 @@ require.config({
     "hammerjs": {
       exports: 'Hammer'
     },
+    "fakemultitouch": {
+        deps: ['hammerjs'],
+        exports:"Hammer.plugins.fakemultitouch"
+    },
     "jqueryhammer": {
         deps: ['hammerjs']
-    },
-    "fakemultitouch": {
-        deps: ['jqueryhammer']
-    },
-    "showtouches": {
-        deps: ['jqueryhammer', "fakemultitouch"]
     }
     }
 });

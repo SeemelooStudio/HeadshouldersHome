@@ -1,8 +1,8 @@
 // RankView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
+define(["jquery", "backbone", "mustache", "text!templates/Rank.html","hammerjs"],
 
-    function ($, Backbone, Mustache, template) {
+    function ($, Backbone, Mustache, template, Hammer) {
 
         var RankView = Backbone.View.extend({
 

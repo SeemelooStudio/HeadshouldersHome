@@ -34,7 +34,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
 
                 
                 
-                this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#belt,#plane"));
+                this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#rule,#plane"));
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true});
                 
                 this.lottoAnimationScheduler.animateIn(function(){
@@ -126,8 +126,6 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopPropagation();
             },
             onClickLotto: function(e) {
-                e.preventDefault();
-                e.stopPropagation();
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();

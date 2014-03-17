@@ -28,9 +28,9 @@ img {
 #logo {
     width: 187px;
     margin: 0 auto;
-    padding-top: 20px;
+    padding-top: 10px;
     position: relative;
-    left: -15px;
+    left: -5px;
 }
 #messi {
     width: 65px;
@@ -41,8 +41,15 @@ img {
 #plane {
     width: 100px;
     position: absolute;
-    right:1%;
+    right:0;
     top:-70px;
+}
+#rule {
+    width: 123px;
+    height: 67px;
+    position: absolute;
+    left: 1%;
+    top:-35px;
 }
 #belt {
     width:160px;
@@ -67,6 +74,7 @@ img {
     padding: 2px;
     position: relative;
     display: block;
+    max-width: 740px;
 }
 .gameButton.disabled {
     background: #d4d4d4;
@@ -517,12 +525,14 @@ img {
     height: 128px;
     background: url(../../app/img/envelopeTop.png) center center no-repeat;
     background-size: 254px 128px;
+    z-index: 1;
 }
 #envelope-front {
     width: 254px;
     height: 170px;
     background: url(../../app/img/envelopeFront.png) center center no-repeat;
     background-size: 254px 170px;
+    z-index: 1;
 }
 #envelope-back {
     width:250px;
@@ -533,10 +543,14 @@ img {
     position: absolute;
     left: 0;
     top: 0;
+    -webkit-transform-origin:left top;
+    -moz-transform-origin: left top;
+    -ms-transform-origin: left top;
+    transform-origin: left top;
 }
 #envelope-back  {
     left: 2px;
-    top:1px;
+    top:0;
 }
 #envelope-sealing {
     width: 60px;
@@ -550,6 +564,7 @@ img {
     border-radius: 50%;
     border:1px solid #221714;
     box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    z-index: 1;
 }
 #envelope-sealing:active {
     background-color: #ffd800;    
@@ -725,6 +740,50 @@ img {
   animation:         float 1s infinite; /* IE 10+ */
 
 }
+@-webkit-keyframes opencard {
+  0% {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotateX(180deg);
+    transform: rotateX(180deg);
+  }
+}
+@keyframes opencard {
+  0% {
+    -webkit-transform: rotateX(0deg);
+    -ms-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg);
+    transform: rotateX(180deg);
+  }
+}
+.opencard {
+  -webkit-animation: opencard 1s ; /* Safari 4+ */
+  animation:opencard 1s ; /* IE 10+ */
+  animation-fill-mode:both;
+  -webkit-animation-fill-mode:both; /* Safari and Chrome */
+  z-index: auto;
+    
+}
+#envelope-content {
+    width: 250px;
+    position: absolute;
+    z-index: 99;
+    border-radius: 10px;
+    background-color: #00419e;
+    background:#00419e url(../../app/img/cardconner.png) left top no-repeat;
+    background-size: 76px 110px;
+    border:2px solid #221417;
+    z-index: 1;
+}
+
 #weiboLogin {
     margin: 1em auto;
     text-align: center;
@@ -743,16 +802,17 @@ img {
     line-height: 48px;
 }
 #user {
-    width: 180px;
-    margin-left:-90px;
+    width: 140px;
+    margin-left:-80px;
     padding: 3px 5px;
     position: absolute;
     left: 50%;
     border-radius: 5px;
-    top:-30px;
+    top:-40px;
     background: rgba(0,0,0,0.3);
     color: #FFF;
     font-size: 12px;
+    text-align: center;
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
@@ -766,9 +826,14 @@ img {
         padding-top: 35px;
     }
     #plane {
-        width: 240px;
+        width: 200px;
         right: 0;
-        top:-180px;
+        top:-160px;
+    }
+    #rule {
+        width: 200px;
+        top:-65px;
+        left: 0;
     }
     #belt {
         width: 320px;
@@ -784,7 +849,7 @@ img {
     }
     .gameButton {
         height: 120px;
-        margin: 1.8em 1em;
+        margin: 1.8em auto;
         border-radius: 50px 2px 50px 2px;
     }
     .gameButton-innner{

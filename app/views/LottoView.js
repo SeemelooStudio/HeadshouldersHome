@@ -1,5 +1,5 @@
-define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animationscheduler","hammerjs"],
-    function ($, Backbone, Mustache, template, AnimationScheduler,Hammer) {
+define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animationscheduler","hammerjs", "views/CardView", "models/Card"],
+    function ($, Backbone, Mustache, template, AnimationScheduler,Hammer, CardView, Card) {
         var LottoView = Backbone.View.extend({
             // The DOM Element associated with this view
             el: "#main",
@@ -7,6 +7,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             initialize: function (options) {
                 this.listenTo(this, "render", this.postRender);
                 this.render();
+                
                 
             },
             // View Event Handlers
@@ -29,13 +30,27 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.miceAnimationScheduler = new AnimationScheduler(this.$el.find("#lottoLogo,#lotto-info,#lottoActions,#lottoAward"), {
                     "hideAtFirst":false
                 });
+
+                this.card = new Card();
+                this.cardView = new CardView({ model: this.card });
             },
             onClickCard: function(e) {
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 this.miceAnimationScheduler.animateOut();
-                $("#envelope-arrow").hide();
+                this.$el.find("#envelope-arrow").hide();
+                
+                var self = this;
+                //todo: get result from server
+                this.card.fetch({
+                    success: function(model, response, options) {
+                        self.openCard();
+                    },
+                    error: function(model, response, options) {
+                    
+                    }
+                });
             },
             onClickBack: function(e) {
                 e.gesture.preventDefault();
@@ -47,6 +62,10 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                     Backbone.history.navigate("", { trigger: true, replace: true });
                 });
                 
+            },
+            openCard: function(e) {
+                this.$el.find("#envelope-sealing").addClass("rollOut animated");
+                this.$el.find("#envelope-cover").addClass("opencard");
             }
         });
         // Returns the View class

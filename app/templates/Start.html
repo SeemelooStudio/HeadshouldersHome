@@ -1,13 +1,14 @@
 <div class="container">
-      <div id="plane" data-entranceAnimation="slideInLeft" ><img src="app/img/plane.png" /></div>
+      <div id="plane" data-entranceAnimation="slideInRight" ><img src="app/img/plane.png" /></div>
+      <div id="rule" data-entranceAnimation="slideInLeft" ><img src="app/img/rule.png" /></div>
     {{#isLogin}}
       <div id="user">
-        {{name}}，欢迎你！ <a id="logout">退出</a>
+        {{name}}，<a id="logout">退出</a>
       </div>
       {{/isLogin}}
 </div><!--/container-->
       <div  id="gameNavigation">
-      <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="flipInX"  data-target="gameDribble">
+      <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble">
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game1-btn.png" />
             </div>
@@ -23,7 +24,7 @@
             {{/isLogin}}
         </a>
         
-        <a class="gameButton" id="gameButton-pass" data-entranceAnimation="flipInX" data-target="gamePass">
+        <a class="gameButton" id="gameButton-pass" data-entranceAnimation="slideInLeft" data-target="gamePass">
             <div class="gameButton-innner">
                 <img id="gameButton-passLeft" src="app/img/game2-left.png" />
                 <img id="gameButton-passRight" src="app/img/game2-right.png" />
@@ -41,7 +42,7 @@
             {{/isLogin}}
         </a>
         
-        <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="flipInX"  data-target="gameShoot">
+        <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="slideInLeft"  data-target="gameShoot">
             <div class="gameButton-innner">
                 <img class="gameButton-img"  src="app/img/game3-btn.png" />
             </div>

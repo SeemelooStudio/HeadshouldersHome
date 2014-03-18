@@ -29,16 +29,19 @@ define(function(require, exports, module) {
   // Defining the application router.
   module.exports = Backbone.Router.extend({
     initialize: function() {
+        
         user = new User();
         game = new Game();
         mainView = new MainView();
         
         startView = new StartView({ model: user });
         loginView = new LoginView({ user : user});
+        
     },
     routes: {
       "": "index",
       "login":"login",
+      "loginSuccess":"loginSuccess",
       "leaderboard/:type":"leaderboard",
       "lotto":"lotto",
       "gameDribble":"gameDribble",
@@ -49,16 +52,19 @@ define(function(require, exports, module) {
     index: function() {
         mainView.showHeader(function(){
             user.checkLogin();
+            startView.render();
         });
         
     },
     login: function() {
+        user.checkLogin();
+        /*
         mainView.showHeader(function(){
             loginView.render();
         });
+        */
     },
     leaderboard: function(type) {
-        user.checkLogin();
         if ( !startView.isReady ) {
            startView.once("render", function(){
                startView.showLeaderboard(type);

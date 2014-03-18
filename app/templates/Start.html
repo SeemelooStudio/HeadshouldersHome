@@ -1,11 +1,14 @@
 <div class="container">
       <div id="plane" data-entranceAnimation="slideInRight" ><img src="app/img/plane.png" /></div>
-      <div id="rule" data-entranceAnimation="slideInLeft" ><img src="app/img/rule.png" /></div>
-    {{#isLogin}}
+      
+      {{#isLogin}}
       <div id="user">
-        {{name}}，<a id="logout">退出</a>
+        <div id="user-avatar">
+        <img src="{{headimgurl}}" />
+        </div>
       </div>
       {{/isLogin}}
+      <div id="rule" data-entranceAnimation="slideInLeft" ><img src="app/img/rule.png" /></div>
 </div><!--/container-->
       <div  id="gameNavigation">
       <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble">

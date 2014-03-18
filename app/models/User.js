@@ -10,18 +10,25 @@ define(["jquery", "backbone"],
             },
         
             initialize: function() {
+
             },
             checkLogin: function(){
                 if ( this.get("isLogin") ) {
                     this.trigger("onFetchSuccess");
-                } else if (  WB2.checkLogin() ) {
+                } else if ( this.isWechat() ) {
+                    var data = this.getParameterByName("userdata",window.location.href);
+                    if ( data ) {
+                        user.parseUserdata(data);
+                    } else {
+                        this.wechatLogin();
+                    }
+                } else {
                     //get weibo info
                     this.weiboLogin();
-                } else {
-                    this.trigger("onFetchSuccess");
                 }
             },
             weiboLogin: function(){
+                /*
                 var self = this;   
                 WB2.login(function(){
                     WB2.anyWhere(function(W){
@@ -29,7 +36,7 @@ define(["jquery", "backbone"],
                                 var uid = sResult.uid;
                                 WB2.anyWhere(function(W){
                                     W.parseCMD("/users/show.json", function(sResult, bStatus){
-                                        self.onLoginSuccess(uid, sResult.name, "weibo");
+                                        self.onLoginSuccess(uid, sResult.name, "weibo", sResult.profile_image_url);
                                         
                                     },{uid:uid},{method:'GET'});
         
@@ -39,19 +46,24 @@ define(["jquery", "backbone"],
                     });
         
                     
-                });
+                });*/
+                this.wechatLogin();
             },
             wechatLogin: function() {
-                this.onLoginSuccess("0","本地测试用户名","test"); 
+                this.onLoginSuccess("0","本地测试用户名","test", "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/64"); 
                 return;
+                /* 
+                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                */
             },
-            onLoginSuccess: function(uid, name, type) {
+            onLoginSuccess: function(uid, name, type, avatar) {
                 var self = this;
                 this.set({
                     "uid":uid,
                     "name":name,
                     "type":type,
-                    "isLogin": true
+                    "isLogin": true,
+                    "headimgurl":avatar
                 });
                 this.url = "app/data/user.json" + "?uid=" + uid + "&type=" + type;
                 this.fetch({
@@ -87,6 +99,33 @@ define(["jquery", "backbone"],
                 }else {
                     this.set("shootGameLeader",false);
                 }
+            },
+            getParameterByName: function( name,href )
+            {
+              name = name.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");
+              var regexS = "[\\?&]"+name+"=([^&#]*)";
+              var regex = new RegExp( regexS );
+              var results = regex.exec( href );
+              if( results === null )
+                return "";
+              else
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            },
+            isWechat: function() {
+                var ua = navigator.userAgent.toLowerCase();
+                if(ua.match(/MicroMessenger/i)=="micromessenger") {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            parseUserdata: function(userdata) {
+                $("#main").html(userdata);
+                alert(userdata);
+                this.set($.parseJSON(userdata));
+                
+                this.initLeaderSetting();
+                this.trigger("onFetchSuccess");
             }
         });
 

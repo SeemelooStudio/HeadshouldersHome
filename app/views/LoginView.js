@@ -10,7 +10,6 @@ define(["jquery", "backbone","mustache", "text!templates/Login.html","hammerjs"]
             },
             // View Event Handlers
             events: {
-                "touch #weiboLogin": "onClickWeibo",
                 "touch #wechatLogin": "onWechat"
             },
             render: function(){

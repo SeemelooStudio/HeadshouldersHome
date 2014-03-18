@@ -1,13 +1,32 @@
+        <div class="clearfix">
+            <div id="award-img">
+                    <img src="app/img/award{{id}}.jpg" />
+            </div>
+            <div id="award-info">
                 <div id="award-title">
-                    恭喜你，中奖了！
+                    恭喜你，中奖啦！
                 </div>
                 <div id="award-name">
-                    海飞洗发水一套
+                    {{name}}<br /><span class="award-small">X</span> {{quantity}}</span>
                 </div>
-                <div id="award-img">
-                    <img src="app/img/award3.jpg" />
-                </div>
+            </div>
+        </div>   
+        <div id="award-address">
                 <p>请填写你的收货地址，否则奖品就寄不到了哦！</p>
-                <p><input class="text" placeholder="姓名" /></p>
-                <p><input class="text" placeholder="联系电话" /></p>
-                <p><textarea  placeholder="邮寄地址"></textarea></p>
+                <p><input class="form-control" type="text" placeholder="姓名" /></p>
+                <p><input class="form-control" type="text"  placeholder="联系电话" /></p>
+                <p><textarea class="form-control" rows="3" placeholder="邮寄地址"></textarea></p>
+        </div>
+        
+        <div id="award-action" class="clearfix">
+            <div id="btnAwardOK" class="btn btn-blue btn-inline">
+                <div class="btn-inner">
+                    确认地址
+                </div>
+            </div>
+            <div id="btnAwardShare" class="btn btn-red  btn-inline">
+                <div class="btn-inner">
+                    确认并分享
+                </div>
+            </div>
+        </div>

@@ -13,7 +13,8 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             // View Event Handlers
             events: {
                 "touch #lottoBackHome":"onClickBack",
-                "touch #envelope-sealing" :"onClickCard"
+                "touch #envelope-sealing" :"onClickCard",
+                "touch #btnAwardOK,#btnAwardShare":"onClickAwardOk"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -24,6 +25,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             postRender: function() {
                 this.$el.hammer();
                 Hammer.plugins.fakeMultitouch();
+                
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#lotto"));
                 this.mainAnimationScheduler.animateIn();
                 
@@ -39,8 +41,8 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 this.miceAnimationScheduler.animateOut();
-                this.$el.find("#envelope-arrow").hide();
-                
+                this.$el.find("#envelope-arrow,#lottoBackHome").hide();
+                $("#share").hide();
                 var self = this;
                 //todo: get result from server
                 this.card.fetch({
@@ -65,7 +67,24 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             },
             openCard: function(e) {
                 this.$el.find("#envelope-sealing").addClass("rollOut animated");
-                this.$el.find("#envelope-cover").addClass("opencard");
+                this.$el.find("#card").addClass("opencard");
+                var self =this;
+                $('#envelope-sealing,#envelope-cover,#envelope-back,#envelope-front').one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
+                    self.$el.find("#envelope-content").css({
+                       "overflow": "visible"
+                    });
+                    $(e.currentTarget).remove();
+                });
+            },
+            onClickAwardOk: function(e) {
+                e.gesture.preventDefault();
+                e.gesture.stopPropagation(); 
+                e.gesture.stopDetect();
+                var self = this;
+                this.mainAnimationScheduler.animateOut(function(){
+                    $("#share").show();
+                    self.initialize();
+                });
             }
         });
         // Returns the View class

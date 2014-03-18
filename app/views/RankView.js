@@ -22,7 +22,12 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html","hammerjs"]
 
             // Renders the view's template to the UI
             render: function () {
-                this.template = _.template(template, {});                
+                this.template = _.template(template, {});
+                
+                var accumulateList = this.model.get("accumulatePointsRankList");
+                var scoreGap =   accumulateList[accumulateList.length - 1].score - this.user.get("accumulatePoints");
+                this.model.set("accumulatePointsGap", scoreGap);
+                            
                 this.$el.html(Mustache.render(this.template, this.model.toJSON()));
 
                 this.trigger("render");

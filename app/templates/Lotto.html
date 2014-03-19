@@ -14,7 +14,9 @@
             <div id="btnLottoHistory" class="btn btn-blue  btn-inline">
                 <div class="btn-inner">
                     中奖记录
-                    <span class="btn-notification">3</span>
+                    {{#winningRecordsCount}}
+                    <span class="btn-notification">{{winningRecordsCount}}</span>
+                    {{/winningRecordsCount}}
                 </div>
             </div>
        </div>

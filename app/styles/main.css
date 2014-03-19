@@ -535,7 +535,7 @@ img {
     text-align: center;
     
 }
-#lottoBackHome {
+#lottoBackHome,#winningBackHome {
     position: fixed;
     bottom: 5%;
     left: 0;
@@ -642,6 +642,7 @@ img {
     top: 13px;
     left: 50%;
     margin-left: -15px;
+    z-index: 2;
 
 }
 #envelope-arrowCaret {
@@ -830,31 +831,40 @@ img {
   0% {
     top:0;
     left: 0;
-    height: 166px;
-  }
-  50% {
-      height: 400px;
   }
   100% {
     top:-200px;
     left: 0;
-    height: 400px;
-
   }
 }
 @keyframes cardslidein {
   0% {
     top:0;
     left: 0;
-    height: 166px;
-  }
-  50% {
-      height: 400px;
   }
   100% {
     top:-200px;
     left: 0;
-    height: 400px;
+  }
+}
+@-webkit-keyframes cardslidein2 {
+  0% {
+    top:0;
+    left: 0;
+  }
+  100% {
+    top:-350px;
+    left: 0;
+  }
+}
+@keyframes cardslidein2 {
+  0% {
+    top:0;
+    left: 0;
+  }
+  100% {
+    top:-350px;
+    left: 0;
   }
 }
 .opencard #envelope-cover{
@@ -884,8 +894,6 @@ img {
 }
 #envelope-content {
     width: 252px;
-    height: 165px;
-    overflow: hidden;
     position: absolute;
     z-index: 99;
     border-radius: 20px 10px 10px 10px;
@@ -898,16 +906,20 @@ img {
     color: #3c8ae4;
     text-align: center;
 }
+#award-top {
+    height: 165px;
+}
 #award-title {
     color: #3c8ae4;
     font-size: 14px;
 }
 #award-name {
-    margin: 2px 0;
+    margin: 5px 0;
     font-size: 20px;
     font-weight: bold;
     color: #FFF;
     line-height: 24px;
+    
 }
 #award-img {
     width: 100px;
@@ -917,8 +929,8 @@ img {
     box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
     overflow: hidden;
     float: left;
-    margin-right: 10px;
-    margin-top:5px;
+    margin-right: 15px;
+    margin-top:25px;
 }
 .award-small {
     font-size: 12px;
@@ -926,12 +938,14 @@ img {
 #award-address {
     border-top:1px dashed #3c8ae4;
     padding: 5px;
-    margin: 10px 0;
+    margin:-10px 0 10px;
+    display: none;
 }
 #award-info {
     float: left;
     width: 120px;
-    margin-top: 10px;
+    margin-top: 25px;
+    text-align: left;
 }
 #weiboLogin {
     margin: 1em auto;
@@ -987,7 +1001,99 @@ textarea.form-control {
     height: auto;
 }
 #award-action {
-    margin-top:-10px;
+    position: relative;
+    top: -10px;
+    display: none;
+}
+.lottoHistory-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    float: left;
+    overflow: hidden;
+    border:2px solid #1a2b4d;
+    margin-right: 10px;
+    margin-left: -10px;
+}
+#lottoHistory {
+    padding: 40px 0 0;
+}
+.lottoHistory-user {
+    width: 90%;
+    height: 46px;
+    border-radius: 20px 20px 0 0;
+    background-color: #1a2b4d;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    position: relative;
+    border-bottom: 1px dashed #3c8ae4;
+    box-shadow: 2px 0 0 rgba(0,0,0,0.5);
+}
+.username {
+    color: #ffd800;
+    font-size: 16px;
+    line-height: 25px;
+    position: relative;
+    top:3px;
+    
+}
+.lottoLogo {
+    position: absolute;
+    right: -10px;
+    bottom: 0px;
+    width: 90px;
+}
+#lotto-records,.lotto-record {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.lotto-record {
+    border-bottom: 1px dashed #3c8ae4;
+    padding: 15px 10px;
+}
+.lotto-warning {
+    line-height: 16px;
+    font-size: 12px;
+    color: #FFF;
+    padding: 15px 10px;
+}
+#lotto-records {
+    background-color: #1a2b4d;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 2px 0 0 rgba(0,0,0,0.5);
+}
+#btnWinningBack {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    font-size: 32px;
+}
+.winning-time {
+    font-size: 10px;
+    color: #3c8ae4;
+}
+.winning-name {
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFF;
+}
+.winning-name small{
+    font-size: 10px;
+}
+.winning-address {
+    font-size: 12px;
+    line-height: 16px;
+    color: #3c8ae4;
+}
+.lotto-warning a,.lotto-warning em{
+    color: #3c8ae4;
+    font-style: normal;
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
@@ -1134,7 +1240,7 @@ textarea.form-control {
     line-height: 30px;
     
 }
-#lottoBackHome {
+#lottoBackHome,#winningBackHome {
     width: 180px;
 }
 #lotto-info {
@@ -1234,54 +1340,58 @@ textarea.form-control {
     width: 504px;
     position: absolute;
     border-radius: 40px 15px 15px 15px;
-    height: 336px;
     font-size: 14px;
 
 }
-@-webkit-keyframes cardslidein {
-  0% {
-    top:0;
-    left: 0;
-    height: 336px;
-  }
-  50% {
-      height: 475px;
-  }
-  100% {
-    top:-200px;
-    left: 0;
-    height: 475px;
 
-  }
-}
-@keyframes cardslidein {
-  0% {
-    top:0;
-    left: 0;
-    height: 336px;
-  }
-  50% {
-      height: 475px;
-  }
-  100% {
-    top:-200px;
-    left: 0;
-    height: 475px;
-  }
-}
 #award-img {
     width: 150px;
     height: 150px;
+    margin-right: 25px;
+}
+#award-top {
+    height: 200px;
 }
 #award-info {
-    width: 340px;
+    width: 300px;
 }
 #award-title {
-    font-size: 16px;
+    font-size: 20px;
 }
 #award-name {
-    font-size: 26px;
-    line-height: 30px;
+    font-size: 32px;
+    line-height: 36px;
     margin: 10px 0;
+}
+.opencard #envelope-content {
+  -webkit-animation: cardslidein2 1s ; /* Safari 4+ */
+  animation:cardslidein2 1s ; /* IE 10+ */
+  animation-fill-mode:both;
+  -webkit-animation-fill-mode:both; /* Safari and Chrome */
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s; 
+}
+#lottoHistory {
+    padding-top: 50px;
+}
+.lottoLogo {
+    width: 140px;
+    right: -30px;
+    bottom: -40px;
+}
+.winning-time {
+    font-size: 14px;
+    line-height: 18px;
+}
+.winning-name {
+    font-size: 18px;
+    line-height: 26px;
+}
+.winning-address {
+    font-size: 14px;
+    line-height: 18px;
+}
+.lotto-record {
+    padding: 20px 15px;
 }
 }

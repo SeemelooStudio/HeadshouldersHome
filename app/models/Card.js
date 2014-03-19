@@ -13,6 +13,9 @@ define(["jquery", "backbone"],
                 if ( this.has("type") && this.get("type") > 1 ) {
                     this.set("isWinner", true);
                 }
+                if ( this.has("type") && this.get("type")==1) {
+                    this.set("isConcrete", true);
+                }
             }
         });
 

@@ -13,8 +13,10 @@ define(function(require, exports, module) {
   var startView;
   var LottoView = require("views/LottoView");
   var lottoView;
-  var LoginView = require("views/LoginView");
-  var loginView;
+  var LottoHistoryView = require("views/LottoHistoryView");
+  var lottoHistoryView;
+  var PrepareView = require("views/PrepareView");
+  var prepareView;
   
   var GameView = require("views/GameView");
   var gameView;
@@ -26,45 +28,43 @@ define(function(require, exports, module) {
   var Game = require("models/Game");
   var game;
   
+  var LottoHistory = require("collections/WinningRecords");
+  var lottoHistory;
+  
+  
   // Defining the application router.
   module.exports = Backbone.Router.extend({
     initialize: function() {
         
         user = new User();
         game = new Game();
-        mainView = new MainView();
+        lottoHistory = new LottoHistory();
         
-        startView = new StartView({ model: user });
-        loginView = new LoginView({ user : user});
+        mainView = new MainView();        
+        prepareView = new PrepareView();
         
     },
     routes: {
       "": "index",
-      "login":"login",
-      "loginSuccess":"loginSuccess",
       "leaderboard/:type":"leaderboard",
-      "lotto":"lotto",
+      "lottery":"lottery",
+      "winningRecords":"winningRecords",
       "gameDribble":"gameDribble",
-      "gamePass":"gamePass",
-      "gameShoot":"gameShoot"
+      "gamePass":"gameDribble",
+      "gameShoot":"gameDribble"
     },
 
     index: function() {
         mainView.showHeader(function(){
-            user.checkLogin();
-            startView.render();
+            prepareView.render();
+            startView = new StartView({ model: user });
         });
         
     },
-    login: function() {
-        user.checkLogin();
-        /*
-        mainView.showHeader(function(){
-            loginView.render();
-        });
-        */
-    },
     leaderboard: function(type) {
+        if ( !startView ) {
+            startView = new StartView({ model: user });
+        }
         if ( !startView.isReady ) {
            startView.once("render", function(){
                startView.showLeaderboard(type);
@@ -73,23 +73,23 @@ define(function(require, exports, module) {
             startView.showLeaderboard(type);
         }
     },
-    lotto: function() {
-        if ( user.get("isLogin") ) {
-            mainView.hideHeader();
+    lottery: function() {
+        prepareView.render();
+        mainView.hideHeader(function(){
             lottoView = new LottoView( { model: user });
-        } else {
-            Backbone.history.navigate("login", { trigger: true, replace: true });
-        }
+        });
         
     },
+    winningRecords: function() {
+        prepareView.render();
+        mainView.hideHeader(function(){
+            lottoHistoryView = new LottoHistoryView( { collection:lottoHistory, user: user });
+
+        });
+    },
     gameDribble: function() {
-        if ( user.get("isLogin") ) {
-            mainView.hideHeader();
-            gameView = new GameView({ model: game, user : user });
-        } else {
-            Backbone.history.navigate("login", { trigger: true, replace: true });
-        }
-        
+        mainView.hideHeader();
+        gameView = new GameView({ model: game, user : user });
     },
     ready: function(){        
         startView.ready();

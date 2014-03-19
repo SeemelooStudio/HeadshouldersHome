@@ -8,8 +8,12 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             
             initialize: function () {
                 this.listenTo(this, "render", this.postRender);
-                this.listenTo(this.model,"onFetchSuccess", this.ready);
                 this.isReady = false;
+                if ( this.model.checkLogin() ) {
+                    this.ready();
+                } else {
+                    this.listenToOnce(this.model,"onFetchSuccess", this.ready);
+                }
             },
             
             events: {
@@ -23,6 +27,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             render: function () {
                 this.template = _.template(template, {});
                 this.$el.html(Mustache.render(this.template, this.model.toJSON()));
+                
                 this.trigger("render");
                 return this;
             },
@@ -103,8 +108,6 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 return false;
             },
             onClickLeaderboardTab: function(e) {
-                e.preventDefault();
-                e.stopPropagation();
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
@@ -129,7 +132,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                Backbone.history.navigate("lotto", { trigger: true, replace: true });
+                Backbone.history.navigate("lottery", { trigger: true, replace: true });
 
             },
             onClickGameButton: function(e) {

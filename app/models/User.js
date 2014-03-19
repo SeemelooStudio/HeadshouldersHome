@@ -10,12 +10,10 @@ define(["jquery", "backbone"],
             },
         
             initialize: function() {
-
+                this.login();
             },
-            checkLogin: function(){
-                if ( this.get("isLogin") ) {
-                    this.trigger("onFetchSuccess");
-                } else if ( this.isWechat() ) {
+            login: function() {
+                if ( this.isWechat() ) {
                     var data = this.getParameterByName("userdata",window.location.href);
                     if ( data ) {
                         user.parseUserdata(data);
@@ -26,6 +24,9 @@ define(["jquery", "backbone"],
                     //get weibo info
                     this.weiboLogin();
                 }
+            },
+            checkLogin: function(){
+                return this.get("isLogin");
             },
             weiboLogin: function(){
                 /*
@@ -62,14 +63,15 @@ define(["jquery", "backbone"],
                     "uid":uid,
                     "name":name,
                     "type":type,
-                    "isLogin": true,
                     "headimgurl":avatar
                 });
                 this.url = "app/data/user.json" + "?uid=" + uid + "&type=" + type;
                 this.fetch({
                     success: function(){
                         self.initLeaderSetting();
+                        self.set("isLogin", true);
                         self.trigger("onFetchSuccess");
+                        
                     }
                 });                
             },
@@ -123,6 +125,7 @@ define(["jquery", "backbone"],
                 $("#main").html(userdata);
                 alert(userdata);
                 this.set($.parseJSON(userdata));
+                this.set("isLogin", true);
                 
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");

@@ -16,8 +16,12 @@ define(["jquery", "backbone","animationscheduler"],
             onClickLogo: function() {
 
             },
-            hideHeader: function() {
-                this.headerAnimationScheduler.animateOut();
+            hideHeader: function(callback) {
+                if ($("#header").is(":hidden")) {
+                    callback();
+                } else {
+                this.headerAnimationScheduler.animateOut(callback);
+                }
             },
             showHeader: function(callback) {
                 if ($("#header").is(":visible")) {

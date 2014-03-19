@@ -1,0 +1,42 @@
+<div class="container" id="lottoHistory" data-entranceAnimation="slideInRight" data-exitAnimation="slideOutRight">
+       
+       <div class="clearfix lottoHistory-user">
+            <div class="lottoHistory-avatar">
+                <img src="{{headimgurl}}" />
+            </div>
+            <div class="lottoHistory-name">
+                <span class="username">{{name}}</span><br />您有{{winningRecordsCount}}条中奖记录
+            </div>
+            <div class="lottoLogo">
+               <img src="app/img/lottologo.png" />
+            </div>
+       </div>
+        
+        <ul id="lotto-records">
+            {{#records}}
+                <li class="lotto-record">
+                    <div class="winning-time">{{time}}</div>
+                    <div class="winning-name">{{name}} <small>x</small> {{quantity}}</div>
+                    {{#address}}<div class="winning-address">{{address}}</div>{{/address}}
+                </li>
+            {{/records}}
+            <li class="lotto-warning">
+                实物奖品会自动发出，如果地址填写有误，务必在中奖后24小时内联系小海修改哦。<br />
+                微信公众号：<em>海飞丝巴西实力挑战赛</em><br />
+                新浪微博：  <a href="http://weibo.com/headandshoulders">@海飞丝实力派</a><br />
+                
+            </li>
+        </ul>
+       <div class="clearfix">
+
+            <div id="btnWinningBack" class="btn btn-blue">
+                <div class="btn-inner">
+                    继续抽奖
+                </div>
+            </div>
+       </div>
+
+</div><!--/container-->
+<div id="winningBackHome">
+    <img src="app/img/lottoback.png" />
+</div>

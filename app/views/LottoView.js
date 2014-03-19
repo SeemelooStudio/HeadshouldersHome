@@ -6,7 +6,12 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             // View constructor
             initialize: function (options) {
                 this.listenTo(this, "render", this.postRender);
-                this.render();
+                this.ready = false;
+                if ( this.model.checkLogin() ) {
+                    this.render();
+                } else {
+                    this.listenToOnce(this.model,"onFetchSuccess", this.render);
+                }
                 
                 
             },
@@ -14,11 +19,13 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             events: {
                 "touch #lottoBackHome":"onClickBack",
                 "touch #envelope-sealing" :"onClickCard",
-                "touch #btnAwardOK,#btnAwardShare":"onClickAwardOk"
+                "touch #btnAwardOK,#btnAwardShare":"onClickAwardOk",
+                "touch #btnLottoHistory" : "onClickLottoHistory"
             },
             render: function(){
                 this.template = _.template(template, {});
                 this.$el.html(Mustache.render(this.template, this.model.toJSON()));
+                this.ready = true;
                 this.trigger("render");
                 return this;                
             },
@@ -66,14 +73,19 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 
             },
             openCard: function(e) {
-                this.$el.find("#envelope-sealing").addClass("rollOut animated");
+                
+                this.$el.find("#envelope-sealing").addClass("hinge animated");
                 this.$el.find("#card").addClass("opencard");
                 var self =this;
-                $('#envelope-sealing,#envelope-cover,#envelope-back,#envelope-front').one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
-                    self.$el.find("#envelope-content").css({
-                       "overflow": "visible"
-                    });
+                $('#envelope-sealing').one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
                     $(e.currentTarget).remove();
+                });
+                $('#envelope-cover,#envelope-back,#envelope-front').one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
+                    $(e.currentTarget).remove();
+                });
+                $("#envelope-content").one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e) {
+                    console.log('here');
+                    $(this).find("#award-address,#award-action").fadeIn();
                 });
             },
             onClickAwardOk: function(e) {
@@ -81,9 +93,20 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 var self = this;
+                
                 this.mainAnimationScheduler.animateOut(function(){
-                    $("#share").show();
-                    self.initialize();
+                    $('body').scrollTop(0);
+                    Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
+                });
+            },
+            onClickLottoHistory: function(e) {
+                e.gesture.preventDefault();
+                e.gesture.stopPropagation(); 
+                e.gesture.stopDetect();
+                $('body').scrollTop(0);
+                this.$el.find("#lottoBackHome").fadeOut();
+                this.mainAnimationScheduler.animateOut(function(){
+                Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
                 });
             }
         });

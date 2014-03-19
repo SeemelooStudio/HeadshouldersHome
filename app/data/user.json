@@ -14,5 +14,7 @@
     
     "shootGameScore":13,
     "shootGameRanking":245,
-    "shootGamePlayed":1
+    "shootGamePlayed":1,
+    
+    "winningRecordsCount":3
 }

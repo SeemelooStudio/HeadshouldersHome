@@ -1,6 +1,7 @@
 {
     "type":1,
-    "id":1,
-    "name":"海飞丝男士洗发水套装",
-    "quantity":1    
+    "cardId":1,
+    "awardId":1,
+    "name":"海飞丝男士洗发套装",
+    "quantity":2    
 }

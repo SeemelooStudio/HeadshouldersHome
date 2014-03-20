@@ -1,4 +1,4 @@
-define(["jquery", "backbone","mustache", "text!templates/Login.html","hammerjs"],
+define(["jquery", "backbone","mustache", "text!templates/Login.html"],
     function ($, Backbone, Mustache, template, Hammer) {
         var LoginView = Backbone.View.extend({
             // The DOM Element associated with this view
@@ -20,7 +20,6 @@ define(["jquery", "backbone","mustache", "text!templates/Login.html","hammerjs"]
             },
             postRender: function() {
                 this.$el.hammer();
-                Hammer.plugins.fakeMultitouch();
             },
             onClickWeibo: function() {
                 this.user.weiboLogin();

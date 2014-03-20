@@ -42,7 +42,7 @@ img {
     width: 100px;
     position: absolute;
     right:0;
-    top:-70px;
+    top:-74px;
 }
 #rule {
     width: 160px;
@@ -62,7 +62,70 @@ img {
     padding-top: 25px;
     padding-bottom: 80px;
 }
+#game-topBar {
+    position: absolute;
+    top: 1em;
+    left: 8%;
+    width: 85%;
+}
+#game-topBar #game-topBar-Logo{
+    width: 70px;
+    position: absolute;
+    left: -16px;
+    top:-2px;
+}
+.bar {
 
+    height: 30px;
+    border-radius:20px 2px 20px 2px;
+    border:1px solid #221714;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    color: #FFF;
+    padding: 3px 3px;
+    
+}
+.bar-inner {
+    border-radius:18px 2px 18px 2px;
+    height: 100%;
+    width: 100%;
+}
+.bar-blue {
+    background-color: #3c8ae4;  
+}
+.bar-blue .bar-inner {
+    background-color: #00429a;  
+}
+#game-topBar-score,#game-topBar-high,#game-topBar-coupon {
+    position: absolute;
+    height: 100%;
+    line-height: 30px;
+    height: 30px;
+    font-style: italic;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    font-weight: bold;
+    font-size: 16px;
+}
+#game-topBar-high {
+    left: 45%;
+    top:4px;
+    padding-left: 21px;
+    background:url(../../app/img/high-icon.png) no-repeat left 4px;
+    background-size: 20px 20px;
+}
+#game-topBar-score {
+    left: 25%;
+    top:4px;
+    padding-left: 21px;
+    background:url(../../app/img/shoot-icon.png) no-repeat left 4px;
+    background-size: 20px 20px;
+}
+#game-topBar-coupon {
+    left: 75%;
+    top:4px;
+    padding-left: 21px;
+    background:url(../../app/img/score-icon.png) no-repeat left 4px;
+    background-size: 20px 20px;
+}
 .gameButton {
     background-color:#3c8ae4;
     margin: 1em 1em;
@@ -134,9 +197,9 @@ img {
     
 }
 #gameButton-shoot .gameButton-img {
-    width: 200px;
+    width: 180px;
     bottom: 15px;
-    margin-left: -100px;
+    margin-left: -90px;
 }
 #gameButton-passLeft,#gameButton-passRight {
     position: absolute;
@@ -296,7 +359,7 @@ img {
     font-size: 18px;
     line-height: 55px;
     overflow: hidden;
-    background: url(../../app/img/score-icon.png) no-repeat left center;
+    background: url(../../app/img/shoot-icon.png) no-repeat left center;
     background-size: 18px 18px;
     padding-left: 22px;
     
@@ -459,15 +522,7 @@ img {
     display: block;
 }
 
-#leaderboard-dribble .leaderboard-score{
-    background-image: url(../../app/img/dribble-icon.png);
-}
-#leaderboard-pass .leaderboard-score{
-    background-image: url(../../app/img/shoot-icon.png);
-}
-#leaderboard-shoot .leaderboard-score{
-    background-image: url(../../app/img/shoot-icon.png);
-}
+
 #lotto {
     position: absolute;
     left: 9;
@@ -482,6 +537,15 @@ img {
 }
 #lottoActions {
     padding: 5px 0;
+}
+.btn-block {
+    width: 80%;
+    margin: 10px auto;
+    display: block;
+}
+.btn-block .btn-inner {
+    height: 35px;
+    line-height: 35px;
 }
 .btn-blue {
     background-color: #3c8ae4;
@@ -535,7 +599,7 @@ img {
     text-align: center;
     
 }
-#lottoBackHome,#winningBackHome {
+.backhome {
     position: fixed;
     bottom: 5%;
     left: 0;
@@ -728,6 +792,7 @@ img {
     padding: 3px 0;
     width: 95%;
 }
+
 @-webkit-keyframes float {
   0% {
     -webkit-transform: translateY(0);
@@ -967,7 +1032,7 @@ img {
 #user {
 
     position: absolute;
-    left: 45px;
+    left: 35px;
     top:-40px;
     
     
@@ -1095,6 +1160,76 @@ textarea.form-control {
     color: #3c8ae4;
     font-style: normal;
 }
+.disabled .gameButton-tag {
+    background: #999;
+}
+.gameButton-comingSoon {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 2px 0 5px 5px;
+    text-align: center;
+}
+#userCoupon {
+    position: absolute;
+    left: 20px;
+    top:68px;
+    line-height: 20px;
+    font-size: 12px;
+    width: 60px;
+    overflow: hidden;
+    text-align: center;
+}
+#userRank {
+    position: absolute;
+    left: 45px;
+    top:33px;
+    font-size: 12px;
+    color: #fff;
+}
+#userAward {
+    position: absolute;
+    right: 5px;
+    top:40px;
+    padding: 0 5px;
+    height: 18px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #221417;
+    background-color: #ffd800;
+    border:1px solid #221417;
+    border-radius: 50%;
+    line-height: 18px;
+    text-align: center;
+}
+#game-help {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    position: fixed;
+    background: rgba(0,0,0,0.8);
+    text-align: center;
+    left: 0;
+    top: 0;
+    overflow: scroll;
+}
+#game-help img {
+    width: 150px;
+    margin: 40px auto 0;
+}
+.game-help-text {
+    width: 80%;
+    color: #FFF;
+    font-size: 12px;
+    line-height: 18px;
+    position: absolute;
+    left: 10%;
+    top:150px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+#gameStart {
+    font-size: 18px;
+    display: none;
+}
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
     #header {
@@ -1128,6 +1263,7 @@ textarea.form-control {
     #gameNavigation {
         padding-top: 40px;
     }
+
     .gameButton {
         height: 120px;
         margin: 1.8em auto;
@@ -1216,6 +1352,7 @@ textarea.form-control {
 .btn-blue {
     padding: 5px;
 }
+
 .btn-inline {
     width: 150px;
     display: inline-block;
@@ -1240,7 +1377,7 @@ textarea.form-control {
     line-height: 30px;
     
 }
-#lottoBackHome,#winningBackHome {
+.backhome {
     width: 180px;
 }
 #lotto-info {
@@ -1393,5 +1530,50 @@ textarea.form-control {
 }
 .lotto-record {
     padding: 20px 15px;
+}
+.gameButton-comingSoon {
+    font-size: 16px;
+    line-height: 18px;
+    padding: 15px 0 0;
+}
+
+#userAward {
+    font-size: 18px;
+    line-height: 28px;
+    height: 28px;
+    top:75px;
+    right: 25px;
+    padding: 0 8px;
+}
+#game-help img {
+    width: 250px;
+}
+.btn-block {
+    max-width: 600px;
+}
+.game-help-text {
+    top: 220px;
+    font-size: 16px;
+    line-height: 24px;
+}
+.btn-block .btn-inner {
+    height: 45px;
+    line-height: 45px;
+}
+#game-topBar {
+    width: 700px;
+    left: 50%;
+    margin-left:-350px;
+}
+#userRank {
+    left: 70px;
+    top:55px;
+    font-size: 16px;
+}
+#userCoupon {
+    left: 40px;
+    top: 145px;
+    font-size: 16px;
+    width: 120px;
 }
 }

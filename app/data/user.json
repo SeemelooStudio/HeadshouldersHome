@@ -1,20 +1,21 @@
 {
-    
+
+    "userId":123,  
+    "numOfPrizes":3,
+    "numOfCoupons":2,  
     "accumulatePoints":345,
-    "accumulatePointsRanking":678,
+    "accumulatePointsRanking":1,
     "accumulateGamePlayed":14,
-    
+   
     "dribbleGameScore":10,
     "dribbleGameRanking":23,
     "dribbleGamePlayed":10,
-    
+   
     "passGameScore":0,
     "passGameRanking":3394,
-    "passGamePlayed":2,
-    
+    "passGamePlayed":14,
+   
     "shootGameScore":13,
     "shootGameRanking":245,
-    "shootGamePlayed":1,
-    
-    "winningRecordsCount":3
+    "shootGamePlayed":1
 }

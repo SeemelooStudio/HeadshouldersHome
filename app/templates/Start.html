@@ -1,16 +1,26 @@
 <div class="container">
-      <div id="plane" data-entranceAnimation="slideInRight" ><img src="app/img/plane.png" /></div>
+      <div id="plane" data-entranceAnimation="slideInRight" >
+      <img src="app/img/plane.png" />
+      <div id="userCoupon">{{numOfCoupons}}张奖券</div>
+      <div id="userAward">{{numOfPrizes}}</div>
+      </div>
       
       {{#isLogin}}
       <div id="user">
         <div id="user-avatar">
-        <img src="{{headimgurl}}" />
+        <img src="{{headImageUrl}}" />
         </div>
       </div>
       {{/isLogin}}
-      <div id="rule" data-entranceAnimation="slideInLeft" ><img src="app/img/rule.png" /></div>
+      <div id="rule" data-entranceAnimation="slideInLeft" >
+      <img src="app/img/rule.png" />
+      <div id="userRank">
+      实力榜排名45
+      </div>
+      </div>
 </div><!--/container-->
       <div  id="gameNavigation">
+      {{#dribbleGame.enabled}}
       <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble">
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game1-btn.png" />
@@ -26,7 +36,8 @@
             </div>
             {{/isLogin}}
         </a>
-        
+        {{/dribbleGame.enabled}}
+        {{#passGame.enabled}}
         <a class="gameButton" id="gameButton-pass" data-entranceAnimation="slideInLeft" data-target="gamePass">
             <div class="gameButton-innner">
                 <img id="gameButton-passLeft" src="app/img/game2-left.png" />
@@ -44,12 +55,44 @@
             </div>
             {{/isLogin}}
         </a>
-        
+        {{/passGame.enabled}}
+        {{^passGame.enabled}}
+        <a class="gameButton disabled" id="gameButton-pass" data-entranceAnimation="slideInLeft" data-target="gamePass">
+            <div class="gameButton-innner">
+                <img class="gameButton-img" src="app/img/game2-disabled.png" />
+            </div>
+            <div class="gameButton-tag">
+                <div class="gameButton-comingSoon">即将<br />开放</div>
+            </div>
+        </a>
+        {{/passGame.enabled}}
+        {{#shootGame.enabled}}
+        <a class="gameButton" id="gameButton-shoot" data-entranceAnimation="slideInLeft" data-target="gameShoot">
+            <div class="gameButton-innner">
+                <img class="gameButton-img" src="app/img/game3-btn2.png" />
+            </div>
+            {{#isLogin}}
+            <div class="gameButton-tag">
+                <div class="gameButton-small">
+                    世界排名
+                </div>
+                <div class="gameButton-large">
+                    {{shootGameRanking}}
+                </div>
+            </div>
+            {{/isLogin}}
+        </a>
+        {{/shootGame.enabled}}
+        {{^shootGame.enabled}}
         <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="slideInLeft"  data-target="gameShoot">
             <div class="gameButton-innner">
                 <img class="gameButton-img"  src="app/img/game3-btn.png" />
             </div>
+            <div class="gameButton-tag">
+                <div class="gameButton-comingSoon">即将<br />开放</div>
+            </div>
         </a>
+        {{/shootGame.enabled}}
       </div><!-- #gameNavigation -->
 
 

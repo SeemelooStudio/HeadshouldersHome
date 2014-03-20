@@ -1,5 +1,5 @@
-define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animationscheduler","hammerjs", "views/CardView", "models/Card"],
-    function ($, Backbone, Mustache, template, AnimationScheduler,Hammer, CardView, Card) {
+define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animationscheduler", "views/CardView", "models/Card"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, CardView, Card) {
         var LottoView = Backbone.View.extend({
             // The DOM Element associated with this view
             el: "#main",
@@ -29,10 +29,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.trigger("render");
                 return this;                
             },
-            postRender: function() {
-                this.$el.hammer();
-                Hammer.plugins.fakeMultitouch();
-                
+            postRender: function() {                
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#lotto"));
                 this.mainAnimationScheduler.animateIn();
                 

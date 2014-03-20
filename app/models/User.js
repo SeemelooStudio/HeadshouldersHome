@@ -16,7 +16,7 @@ define(["jquery", "backbone"],
                 if ( this.isWechat() ) {
                     var data = this.getParameterByName("userdata",window.location.href);
                     if ( data ) {
-                        user.parseUserdata(data);
+                        this.parseUserdata(data);
                     } else {
                         this.wechatLogin();
                     }
@@ -54,18 +54,16 @@ define(["jquery", "backbone"],
                 this.onLoginSuccess("0","本地测试用户名","test", "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/64"); 
                 return;
                 /* 
-                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-                */
+                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";*/
+                
             },
             onLoginSuccess: function(uid, name, type, avatar) {
                 var self = this;
                 this.set({
-                    "uid":uid,
-                    "name":name,
-                    "type":type,
-                    "headimgurl":avatar
+                    "userName":name,
+                    "headImageUrl":avatar
                 });
-                this.url = "app/data/user.json" + "?uid=" + uid + "&type=" + type;
+                this.url = "app/data/user.json";
                 this.fetch({
                     success: function(){
                         self.initLeaderSetting();
@@ -123,7 +121,6 @@ define(["jquery", "backbone"],
             },
             parseUserdata: function(userdata) {
                 $("#main").html(userdata);
-                alert(userdata);
                 this.set($.parseJSON(userdata));
                 this.set("isLogin", true);
                 

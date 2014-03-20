@@ -1,6 +1,6 @@
 // CardView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Card.html","hammerjs"],
+define(["jquery", "backbone", "mustache", "text!templates/Card.html"],
 
     function ($, Backbone, Mustache, template, Hammer) {
 

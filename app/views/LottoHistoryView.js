@@ -1,5 +1,5 @@
-define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "animationscheduler","hammerjs"],
-    function ($, Backbone, Mustache, template, AnimationScheduler,Hammer) {
+define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "animationscheduler"],
+    function ($, Backbone, Mustache, template, AnimationScheduler) {
         var LottoHistoryView = Backbone.View.extend({
             // The DOM Element associated with this view
             el: "#main",
@@ -44,7 +44,6 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
             },
             postRender: function() {
                 this.$el.hammer();
-                Hammer.plugins.fakeMultitouch();
                 $("#share").hide();
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#lottoHistory"));
                 this.mainAnimationScheduler.animateIn();

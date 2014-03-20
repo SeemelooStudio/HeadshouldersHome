@@ -12,7 +12,6 @@ require.config({
     "backbonetouch":"../vendor/backbone.touch",
     "hammerjs":"../vendor/hammer.min",
     "jqueryhammer":"../vendor/jquery.hammer.min",
-    "fakemultitouch":"../vendor/hammer.fakemultitouch",
     "animationscheduler":"../vendor/animationScheduler",
     "image": "../vendor/image",
     "crafty":"../vendor/bower/crafty/dist/crafty-min"
@@ -27,16 +26,6 @@ require.config({
 
       // This maps the global `Backbone` object to `require("backbone")`.
       exports: "Backbone",
-    },
-    "hammerjs": {
-      exports: 'Hammer'
-    },
-    "fakemultitouch": {
-        deps: ['hammerjs'],
-        exports:"Hammer.plugins.fakemultitouch"
-    },
-    "jqueryhammer": {
-        deps: ['hammerjs']
     }
     }
 });

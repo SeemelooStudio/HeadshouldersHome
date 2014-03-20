@@ -8,6 +8,7 @@ define(["jquery", "backbone","animationscheduler"],
                 this.headerAnimationScheduler = new AnimationScheduler(this.$el.find("#header"), {
                     hideAtFirst: false
                 });
+                this.$el.hammer();
             },
             // View Event Handlers
             events: {

@@ -5,7 +5,7 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   require("hammerjs");
   require("jqueryhammer");
-  require("fakemultitouch");
+  
   //views
   var MainView = require("views/MainView");
   var mainView;
@@ -24,7 +24,7 @@ define(function(require, exports, module) {
   //models
   var User = require("models/User");
   var user;
-  
+
   var Game = require("models/Game");
   var game;
   

@@ -1,5 +1,4 @@
-{
-    "games" : [{
+[{
         "id" : 1,
         "name": "dribble",
         "enabled": true
@@ -16,5 +15,4 @@
         "name": "shoot",
         "enabled": false
         
-    }]
-}
+}]

@@ -2,10 +2,10 @@
        
        <div class="clearfix lottoHistory-user">
             <div class="lottoHistory-avatar">
-                <img src="{{headimgurl}}" />
+                <img src="{{headImageUrl}}" />
             </div>
             <div class="lottoHistory-name">
-                <span class="username">{{name}}</span><br />您有{{winningRecordsCount}}条中奖记录
+                <span class="username">{{userName}}</span><br />您有{{numOfPrizes}}条中奖记录
             </div>
             <div class="lottoLogo">
                <img src="app/img/lottologo.png" />
@@ -17,7 +17,7 @@
                 <li class="lotto-record">
                     <div class="winning-time">{{time}}</div>
                     <div class="winning-name">{{name}} <small>x</small> {{quantity}}</div>
-                    {{#address}}<div class="winning-address">{{address}}</div>{{/address}}
+                    {{#shipTo}}<div class="winning-address">{{shipTo}} - {{phone}} - {{shippingAddress}}</div>{{/shipTo}}
                 </li>
             {{/records}}
             <li class="lotto-warning">
@@ -37,6 +37,6 @@
        </div>
 
 </div><!--/container-->
-<div id="winningBackHome">
+<div id="winningBackHome" class="backhome">
     <img src="app/img/lottoback.png" />
 </div>

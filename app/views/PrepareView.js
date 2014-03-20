@@ -2,7 +2,7 @@
 // -------
 define(["jquery", "backbone", "mustache", "text!templates/Prepare.html"],
 
-    function ($, Backbone, Mustache, template, Hammer) {
+    function ($, Backbone, Mustache, template) {
 
         var PrepareView = Backbone.View.extend({
 

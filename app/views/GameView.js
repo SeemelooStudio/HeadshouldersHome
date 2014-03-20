@@ -1,5 +1,5 @@
-define(["jquery", "backbone","mustache", "text!templates/Game.html","hammerjs", "crafty"],
-    function ($, Backbone, Mustache, template, Hammer, Crafty) {
+define(["jquery", "backbone","mustache", "text!templates/Game.html", "animationscheduler", "crafty"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, Crafty) {
         var GameView = Backbone.View.extend({
             // The DOM Element associated with this view
             el: "#main",
@@ -11,7 +11,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html","hammerjs", 
             },
             // View Event Handlers
             events: {
-
+                "tap #gameStart": "onClickStartGame",
+                "tap #gameBackHome": "onClickBackHome"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -20,12 +21,32 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html","hammerjs", 
                 return this;                
             },
             postRender: function() {
-                this.$el.hammer();
-                Hammer.plugins.fakeMultitouch();
+                var self = this;
+                $("#share").hide();
+                this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
+                this.mainAnimationScheduler.animateIn();
                 require(["games/game","games/components","games/scene-game","games/scene-loading","games/scene-over"],function(Game){
-                    Game.start();
+                    self.$el.find("#gameStart").fadeIn();
+                    self.Game = Game;
+                    
                 });
+            },
+            onClickStartGame: function(e) {
+                var self = this;
+                this.$el.find("#game-help").fadeOut(function(){
+                    self.Game.start();
+                });
+                
+            },
+            onClickBackHome: function(e) {
+                var self = this;
+                this.mainAnimationScheduler.animateOut(function(){
+                    $('body').scrollTop(0);
+                    Backbone.history.navigate("", { trigger: true, replace: true });
+                });
+                
             }
+            
         });
         // Returns the View class
         return GameView;

@@ -1,7 +1,7 @@
 // StartView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList","hammerjs"],
-    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList,Hammer) {
+define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList", "game-config"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList, GameConfig) {
         var StartView = Backbone.View.extend({
 
             el: "#main",
@@ -21,8 +21,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "touch #backHome":"onClickBackHome",
                 "touch .leaderboard-button":"onClickLeaderboardTab",
                 "touch #plane":"onClickLotto",
-                "swipedown #leaderboard":"onClickBackHome",
-                "touch .gameButton": "onClickGameButton"
+                "tap .gameButton": "onClickGameButton"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -32,13 +31,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 return this;
             },
             postRender: function() {
-                this.$el.hammer();
-                Hammer.plugins.fakeMultitouch();
-                
-                var self = this;
-
-                
-                
+                var self = this;                
                 this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#rule,#plane"));
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true});
                 
@@ -47,6 +40,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 });
             },
             ready: function(){
+                this.model.set(GameConfig);
                 this.render();
                 this.isReady = true;
             },
@@ -143,7 +137,6 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopDetect();
                 
                 var target = $(e.currentTarget).attr("data-target");
-                console.log(e);
                 Backbone.history.navigate(target, { trigger: true, replace: true });
             },
             onExit: function(e) {

@@ -1,7 +1,7 @@
 <div class="container">
       <div id="plane" data-entranceAnimation="slideInRight" >
       <img src="app/img/plane.png" />
-      <div id="userCoupon">{{numOfCoupons}}张奖券</div>
+      <div id="userCoupon">抽奖券<span class="lotto-pointsCount">{{numOfCoupons}}</span></div>
       <div id="userAward">{{numOfPrizes}}</div>
       </div>
       
@@ -15,7 +15,7 @@
       <div id="rule" data-entranceAnimation="slideInLeft" >
       <img src="app/img/rule.png" />
       <div id="userRank">
-      实力榜排名45
+      实力总排名 <span class="rank">45</span>
       </div>
       </div>
 </div><!--/container-->
@@ -28,7 +28,7 @@
             {{#isLogin}}
             <div class="gameButton-tag">
                 <div class="gameButton-small">
-                    世界排名
+                    实力排名
                 </div>
                 <div class="gameButton-large">
                     {{dribbleGameRanking}}
@@ -116,7 +116,7 @@
                         </li>
                         -->
                     </ul>
-                    <div class="leaderboardContainer">
+                    <div class="leaderboardContainer loading">
 
                     </div>
             </div>

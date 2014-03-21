@@ -1,5 +1,5 @@
-define(["jquery", "backbone","mustache", "text!templates/Game.html", "animationscheduler", "crafty"],
-    function ($, Backbone, Mustache, template, AnimationScheduler, Crafty) {
+define(["jquery", "backbone","mustache", "text!templates/Game.html", "animationscheduler", "crafty", "views/GameOverView"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, Crafty, GameOverView) {
         var GameView = Backbone.View.extend({
             // The DOM Element associated with this view
             el: "#main",
@@ -12,7 +12,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             // View Event Handlers
             events: {
                 "tap #gameStart": "onClickStartGame",
-                "tap #gameBackHome": "onClickBackHome"
+                "tap #gameBackHome": "onClickBackHome",
+                "tap #gameOver-lotto": "onClickLotto"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -23,7 +24,13 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             postRender: function() {
                 var self = this;
                 $("#share").hide();
-                this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
+                this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#game"));
+                this.gameAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
+                this.gameOverAnimationScheduler = new AnimationScheduler(this.$el.find("#gameOver"));
+                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp"),{
+                    "hideAtFirst":false
+                });
+                
                 this.mainAnimationScheduler.animateIn();
                 require(["games/game","games/components","games/scene-game","games/scene-loading","games/scene-over"],function(Game){
                     self.$el.find("#gameStart").fadeIn();
@@ -33,8 +40,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onClickStartGame: function(e) {
                 var self = this;
-                this.$el.find("#game-help").fadeOut(function(){
-                    self.Game.start();
+                this.helpAnimationScheduler.animateOut(function(){
+                    self.onGameOver();
                 });
                 
             },
@@ -42,9 +49,37 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
-                    Backbone.history.navigate("", { trigger: true, replace: true });
+                    Backbone.history.navigate("", { trigger: true, replace: false });
                 });
                 
+            },
+            onShowHelp: function() {
+                this.helpAnimationScheduler.animateIn();
+            },
+            onStartGame: function() {
+                var self = this;
+                this.gameStageAnimationScheduler.animateIn(function(){
+                    self.Game.start();
+                });
+            },
+            onGameOver: function() {
+                $("#loading").show();
+               var self = this; 
+               this.gameAnimationScheduler.animateOut();
+               this.gameOverAnimationScheduler.animateIn(function(){
+                   
+                   setTimeout(function(){
+                       var gameOverView = new GameOverView();
+                       $("#loading").hide();
+                   }, 1000);
+               });
+            },
+            onClickLotto: function() {
+                var self = this;
+                this.mainAnimationScheduler.animateOut(function(){
+                    $('body').scrollTop(0);
+                    Backbone.history.navigate("lottery", { trigger: true, replace: false });
+                });
             }
             
         });

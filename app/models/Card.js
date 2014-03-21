@@ -5,18 +5,7 @@ define(["jquery", "backbone"],
     function ($, Backbone) {
 
         var Card = Backbone.Model.extend({
-            default: {
-                "isWinner" : false
-            },
-            url: "app/data/card.json",
-            onFetchSuccess: function() {
-                if ( this.has("type") && this.get("type") > 1 ) {
-                    this.set("isWinner", true);
-                }
-                if ( this.has("type") && this.get("type")==1) {
-                    this.set("isConcrete", true);
-                }
-            }
+            url: "app/data/card.json"
         });
 
         return Card;

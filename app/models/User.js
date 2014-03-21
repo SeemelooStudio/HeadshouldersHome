@@ -1,12 +1,13 @@
 // User.js
 
-define(["jquery", "backbone"],
+define(["jquery", "backbone", "models/Card"],
 
-    function ($, Backbone) {
+    function ($, Backbone, Card) {
 
         var User = Backbone.Model.extend({
             default: {
-              "isLogin":false  
+              "isLogin":false,
+              "hasCoupon":false
             },
         
             initialize: function() {
@@ -28,6 +29,13 @@ define(["jquery", "backbone"],
             checkLogin: function(){
                 return this.get("isLogin");
             },
+            checkCoupon: function(){
+                if ( this.has("numOfCoupons") && this.get("numOfCoupons") > 0 ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
             weiboLogin: function(){
                 /*
                 var self = this;   
@@ -48,7 +56,11 @@ define(["jquery", "backbone"],
         
                     
                 });*/
-                this.wechatLogin();
+                var self = this;
+                setTimeout(function(){
+                    self.wechatLogin();
+                }, 2000);
+                
             },
             wechatLogin: function() {
                 this.onLoginSuccess("0","本地测试用户名","test", "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/64"); 
@@ -68,6 +80,7 @@ define(["jquery", "backbone"],
                     success: function(){
                         self.initLeaderSetting();
                         self.set("isLogin", true);
+                        self.set("hasCoupon", self.checkCoupon());
                         self.trigger("onFetchSuccess");
                         
                     }
@@ -122,10 +135,30 @@ define(["jquery", "backbone"],
             parseUserdata: function(userdata) {
                 $("#main").html(userdata);
                 this.set($.parseJSON(userdata));
-                this.set("isLogin", true);
                 
+                this.set("isLogin", true);
+                this.set("hasCoupon", this.checkCoupon());
+                              
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");
+            },
+            redeemACard: function(options){
+                var self = this;
+                setTimeout(function(){
+
+                    var card = new Card();
+                    card.fetch({
+                        success:function(){
+                            options.success(card);
+                            self.set("numOfCoupons", self.get("numOfCoupons") - 1);
+                            self.set("hasCoupon", self.checkCoupon());
+                        },
+                        error: function(){
+                            options.error("abcde");
+                        }
+                    });
+                }, 1000);
+                
             }
         });
 

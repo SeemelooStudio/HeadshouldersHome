@@ -8,19 +8,19 @@
        <div id="lottoActions" class="clearfix">
             <div id="btnLottoRule" class="btn btn-blue btn-inline">
                 <div class="btn-inner">
-                    规则说明
+                    抽奖说明
                 </div>
             </div>
             <div id="btnLottoHistory" class="btn btn-blue  btn-inline">
                 <div class="btn-inner">
-                    中奖记录
-                    {{#winningRecordsCount}}
-                    <span class="btn-notification">{{winningRecordsCount}}</span>
-                    {{/winningRecordsCount}}
+                    中奖历史
+                    {{#numOfPrizes}}
+                    <span class="btn-notification">{{numOfPrizes}}</span>
+                    {{/numOfPrizes}}
                 </div>
             </div>
        </div>
-       
+       {{#hasCoupon}}
        <div id="card">
         <div id="envelope-content">
 
@@ -38,7 +38,14 @@
             <div id="envelope-arrowPoints">1</div>
         </div>
        </div>
-       
+       {{/hasCoupon}}
+       {{^hasCoupon}}
+       <div id="noCoupon" class="cleafix">
+       (;_;)<br />
+       奖券不够啦<br />
+       玩游戏挣点儿吧！
+       </div>
+       {{/hasCoupon}}
        <div id="lottoAward">
         <div class="gameButton" >
             <div class="gameButton-innner">

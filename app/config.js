@@ -10,11 +10,11 @@ require.config({
     "mustache": '../../vendor/bower/mustache/mustache',
     "text": "../../vendor/bower/text/text",
     "backbonetouch":"../vendor/backbone.touch",
-    "hammerjs":"../vendor/hammer.min",
+    "hammerjs":"../vendor/bower/hammerjs/hammer.min",
     "jqueryhammer":"../vendor/jquery.hammer.min",
     "animationscheduler":"../vendor/animationScheduler",
     "image": "../vendor/image",
-    "crafty":"../vendor/bower/crafty/dist/crafty-min"
+    "crafty":"../vendor/bower/crafty/dist/crafty"
   },
 
   shim: {

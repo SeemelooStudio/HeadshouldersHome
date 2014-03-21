@@ -1,8 +1,8 @@
 {
-    "isWon":true,
-    "isVirtual":true,
-    "cardId":1,
-    "awardId":1,
-    "name":"海飞丝男士洗发套装",
-    "quantity":2    
+    "isWon":false,
+    "isVirtualPrize":false,
+    "prizeRedeemId":1,
+    "prizeId":1,
+    "prizeName":"海飞丝男士洗发套装",
+    "prizeImage":"award1.jpg"
 }

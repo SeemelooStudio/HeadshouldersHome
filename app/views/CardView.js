@@ -9,23 +9,12 @@ define(["jquery", "backbone", "mustache", "text!templates/Card.html"],
             el: "#envelope-content",
 
             initialize: function (options) {
-                this.listenTo(this.model, "change", this.render);
-                this.listenTo(this, "render", this.postRender);
+                this.render();
             },
-
-            events: {
-            },
-
             render: function () {
                 this.template = _.template(template, {});                
                 this.$el.html(Mustache.render(this.template, this.model.toJSON()));
-                this.trigger("render");
                 return this;
-
-            },
-            
-            postRender: function() {
-
             }
         });
 

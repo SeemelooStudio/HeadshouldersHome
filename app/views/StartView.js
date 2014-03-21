@@ -17,10 +17,10 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             },
             
             events: {
-                "touch #showTops":"onClickLeaderboard",
-                "touch #backHome":"onClickBackHome",
-                "touch .leaderboard-button":"onClickLeaderboardTab",
-                "touch #plane":"onClickLotto",
+                "tap #showTops,#rule":"onClickLeaderboard",
+                "tap #backHome":"onClickBackHome",
+                "tap .leaderboard-button":"onClickLeaderboardTab",
+                "tap #plane":"onClickLotto",
                 "tap .gameButton": "onClickGameButton"
             },
             render: function () {
@@ -32,8 +32,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             },
             postRender: function() {
                 var self = this;                
-                this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#rule,#plane"));
-                this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true});
+                this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#user,#rule,#plane"));
+                this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true,"sequentialDelay":350});
                 
                 this.lottoAnimationScheduler.animateIn(function(){
                     self.btnAnimationScheduler.animateIn();
@@ -56,7 +56,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 
             },
             showLeaderboard: function( leaderboardName ){
-            
+                $("#loading").show();
                 var tabId = "#leaderboard-buttonScore";
                 if ( leaderboardName ) {
     
@@ -70,11 +70,13 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     
                 }
                 var self = this;
-                this.$el.find("#leaderboard").addClass("expand");                
                 this.ranklist = new RankList();
                 this.ranklist.fetch({
                     success: function(){
+                        self.$el.find("#leaderboard").addClass("expand");
                         self.rankView = new RankView({model:self.ranklist, user: self.model});
+                        $("#loading").hide();
+                          
                         if ( tabId ) {
                             var e = {};
                             e.target = tabId;
@@ -95,16 +97,19 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 },500,
                 function(){
                     self.$el.find("#leaderboard").removeClass("expand");
-                    Backbone.history.navigate("", { trigger: false, replace: true });
+                    Backbone.history.navigate("", { trigger: false, replace: false });
                 }
                 );
                 
                 return false;
             },
             onClickLeaderboardTab: function(e) {
-                e.gesture.preventDefault();
-                e.gesture.stopPropagation(); 
-                e.gesture.stopDetect();
+                if ( e.gesture ) {
+                   e.gesture.preventDefault();
+                   e.gesture.stopPropagation(); 
+                   e.gesture.stopDetect(); 
+                }
+                
                 var self = this;
                 var tab = $(e.target);
                 var type =tab.attr("data-type");
@@ -116,7 +121,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 $(".leaderboard-content.current").removeClass("current");
                 $(id).addClass("current animated fadeIn");
                 
-                Backbone.history.navigate("leaderboard/" + type, { trigger: false, replace: true });
+                Backbone.history.navigate("leaderboard/" + type, { trigger: false, replace: false });
             },
             onSwipeLeaderboard: function(e) {
                 e.gesture.preventDefault();
@@ -126,7 +131,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                Backbone.history.navigate("lottery", { trigger: true, replace: true });
+                Backbone.history.navigate("lottery", { trigger: true, replace: false });
 
             },
             onClickGameButton: function(e) {
@@ -137,7 +142,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopDetect();
                 
                 var target = $(e.currentTarget).attr("data-target");
-                Backbone.history.navigate(target, { trigger: true, replace: true });
+                Backbone.history.navigate(target, { trigger: true, replace: false });
             },
             onExit: function(e) {
                 

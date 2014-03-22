@@ -41,7 +41,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             onClickStartGame: function(e) {
                 var self = this;
                 this.helpAnimationScheduler.animateOut(function(){
-                    self.onGameOver();
+                    self.onStartGame();
                 });
                 
             },
@@ -58,7 +58,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onStartGame: function() {
                 var self = this;
-                this.gameStageAnimationScheduler.animateIn(function(){
+                this.gameAnimationScheduler.animateIn(function(){
                     self.Game.start();
                 });
             },

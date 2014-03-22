@@ -10,6 +10,10 @@ Crafty.scene('Game', function() {
 	self.toBeRemoved = [];
 
 	self.generateHazard = function() {
+		if (Crafty.isPaused())
+		{
+			return;
+		}
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
 		var hazard;
 		if (seed % 3 !== 0)
@@ -18,7 +22,7 @@ Crafty.scene('Game', function() {
 		}
 		else
 		{
-			hazard = Crafty.e('Amateur').Amateur(PlayerConfig.head_configs.neymar, PlayerConfig.body_configs.yellow);
+			hazard = Crafty.e('Amateur').Amateur(PlayerConfig.head_configs.sushi, PlayerConfig.body_configs.amateur);
 		}
 		hazard.attr({x : Crafty.math.randomNumber(0, Game.width - hazard.width()), y : -50});
 		self.hazards.push(hazard);
@@ -58,19 +62,19 @@ Crafty.scene('Game', function() {
 
 		for( var i = 0; i < self.hazards.length; i++)
 		{
-			self.hazards[i].update(self.player, data.dt / 1000);
+			self.hazards[i].update(self.player, data.dt / 1000, data.frame);
 		}
 	};
 
 	self.player = Crafty.e('PlayerController');
-	self.player.attr({ x : Game.width / 2 - self.player.width() / 2, y : Game.height - self.player.height() });
+	self.player.attr({ x : Game.width / 2 - self.player.avatar.width() / 2, 
+					   y : Game.height - self.player.avatar.height() });
 
 	self.field = Crafty.e('Field');
-
 	self.generateHazardRoutine = setInterval(self.generateHazard, Game.configs.hazard_generate_interval);
 	self.bind('EnterFrame', self.onEnterFrame);
-
-}, function() { 
+}, 
+function() { 
 	var self = this;
 
 	clearInterval(self.generateHazardRoutine);

@@ -1,5 +1,5 @@
-define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animationscheduler", "views/CardView"],
-    function ($, Backbone, Mustache, template, AnimationScheduler, CardView) {
+define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animationscheduler", "views/CardView", "Utils"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, CardView, Utils) {
         var LottoView = Backbone.View.extend({
             // The DOM Element associated with this view
             el: "#main",
@@ -7,6 +7,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             initialize: function (options) {
                 this.listenTo(this, "render", this.postRender);
                 this.ready = false;
+                
                 if ( this.model.checkLogin() ) {
                     this.render();
                 } else {
@@ -28,11 +29,12 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.trigger("render");
                 return this;                
             },
-            postRender: function() {                
+            postRender: function() {
+                this.isEnvelopeSealed = true;            
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#lotto"));
                 this.mainAnimationScheduler.animateIn();
                 
-                this.miceAnimationScheduler = new AnimationScheduler(this.$el.find("#lottoLogo,#lotto-info,#lottoActions,#lottoAward"), {
+                this.miceAnimationScheduler = new AnimationScheduler(this.$el.find("#lottoLogo,#lotto-info,#lottoActions,#lottoAward,#lottoBackHome"), {
                     "hideAtFirst":false
                 });
 
@@ -41,30 +43,36 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                
                 var self = this;
                 
-                this.miceAnimationScheduler.animateOut();
-                this.$el.find("#envelope-arrow,#lottoBackHome").hide();
-                this.$el.find("#envelope-sealing").addClass("hinge animated");
-                $('#envelope-sealing').one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
-                    $(e.currentTarget).remove();
-                });
+                if ( this.isEnvelopeSealed && this.model.checkCoupon() ) {
+                    this.isEnvelopeSealed = false;
+                    this.miceAnimationScheduler.animateOut();
+                    
+                    this.$el.find("#envelope-arrow").remove();
+                    this.$el.find("#envelope-sealing").addClass("hinge animated");
+                    $('#envelope-sealing').one( Utils.animationEndTrigger , function(e){
+                        $(e.currentTarget).remove();
+                    });
                 
-                $("#share").hide();
-                $("#loading").show();           
+                    $("#share").hide();
+                    $("#loading").show();           
                 
-                this.model.redeemACard({
-                    success: function(card){
-                        $("#loading").hide();
-                        self.card = card;
-                        self.cardView = new CardView({ model: card });
-                        self.openCard();                    
-                    },
-                    error: function(erroMessage) {
-                        alert(erroMessage);
-                    }
-                });
+                    this.model.redeemACard({
+                        success: function(card){
+                            $("#loading").hide();
+                            self.card = card;
+                            self.cardView = new CardView({ model: card });
+                            self.openCard();                    
+                        },
+                        error: function(erroMessage) {
+                            Utils.showError(erroMessage);
+                        }
+                    });  
+                }
+                
+                
+                
                 
             },
             onClickBack: function(e) {
@@ -81,10 +89,10 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             openCard: function(e) {
                 var self =this;
                 this.$el.find("#card").addClass("opencard");                
-                $('#envelope-cover,#envelope-back,#envelope-front').one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
+                $('#envelope-cover,#envelope-back,#envelope-front').one(Utils.animationEndTrigger, function(e){
                     $(e.currentTarget).remove();
                 });
-                $("#envelope-content").one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e) {
+                $("#envelope-content").one(Utils.animationEndTrigger, function(e) {
                     $(this).find("#award-address,#award-action").fadeIn();
                 });
             },

@@ -1,8 +1,8 @@
 // User.js
 
-define(["jquery", "backbone", "models/Card"],
+define(["jquery", "backbone", "models/Card", "Utils"],
 
-    function ($, Backbone, Card) {
+    function ($, Backbone, Card, Utils) {
 
         var User = Backbone.Model.extend({
             default: {
@@ -14,8 +14,8 @@ define(["jquery", "backbone", "models/Card"],
                 this.login();
             },
             login: function() {
-                if ( this.isWechat() ) {
-                    var data = this.getParameterByName("userdata",window.location.href);
+                if ( Utils.isWechat() ) {
+                    var data = Utils.getParameterByName("userdata",window.location.href);
                     if ( data ) {
                         this.parseUserdata(data);
                     } else {
@@ -113,25 +113,6 @@ define(["jquery", "backbone", "models/Card"],
                     this.set("shootGameLeader",false);
                 }
             },
-            getParameterByName: function( name,href )
-            {
-              name = name.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");
-              var regexS = "[\\?&]"+name+"=([^&#]*)";
-              var regex = new RegExp( regexS );
-              var results = regex.exec( href );
-              if( results === null )
-                return "";
-              else
-                return decodeURIComponent(results[1].replace(/\+/g, " "));
-            },
-            isWechat: function() {
-                var ua = navigator.userAgent.toLowerCase();
-                if(ua.match(/MicroMessenger/i)=="micromessenger") {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
             parseUserdata: function(userdata) {
                 $("#main").html(userdata);
                 this.set($.parseJSON(userdata));
@@ -150,7 +131,11 @@ define(["jquery", "backbone", "models/Card"],
                     card.fetch({
                         success:function(){
                             options.success(card);
-                            self.set("numOfCoupons", self.get("numOfCoupons") - 1);
+                            if ( self.get("numOfCoupons") < 1 ) {
+                                self.set("numOfCoupons", 0 );
+                            } else {
+                                self.set("numOfCoupons", self.get("numOfCoupons") - 1);
+                            }
                             self.set("hasCoupon", self.checkCoupon());
                         },
                         error: function(){

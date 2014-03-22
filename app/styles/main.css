@@ -262,6 +262,7 @@ img {
     top:0;
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 #share .caret {
     position: absolute;
@@ -276,12 +277,13 @@ img {
     overflow: hidden;
     font-size: 0;
 }
-#share img {
-    width: 22px;
-    margin: 0 auto;
+#share .share-icon {
     position: relative;
-    left: 5px;
-    top: 5px;
+    color: #226a0e;
+    top:10px;
+    right: 8px;
+    float: right;
+
 }
 #shareText {
     font-size: 8px;
@@ -583,6 +585,9 @@ img {
 }
 #lottoActions {
     padding: 5px 0;
+}
+.btn {
+    cursor: pointer;
 }
 .btn-block {
     width: 80%;
@@ -894,6 +899,7 @@ img {
   100% {
     -webkit-transform:rotateX(180deg) translateY(-800px);
     transform:rotateX(180deg) translateY(-800px);
+    z-index: 0;
   }
 }
 @keyframes opencard {
@@ -912,6 +918,7 @@ img {
     -webkit-transform:rotateX(180deg) translateY(-800px);
     -ms-transform:rotateX(180deg) translateY(-800px);
     transform:rotateX(180deg) translateY(-800px);
+    z-index: 0;
   }
 }
 @-webkit-keyframes envelopeslideout {
@@ -983,7 +990,6 @@ img {
   animation:opencard 2s ; /* IE 10+ */
   animation-fill-mode:both;
   -webkit-animation-fill-mode:both; /* Safari and Chrome */
-  z-index: auto;
     
 }
 .opencard #envelope-front,.opencard #envelope-back{
@@ -1386,6 +1392,52 @@ textarea.form-control {
     position: absolute;
     top:240px;
     left: 0;
+}
+.yellow {
+    color: #ffd800;
+}
+.blue {
+    color: #3c8ae4;
+}
+.highlight {
+  -webkit-animation-duration: 500ms;
+  animation-duration: 500ms;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+#error {
+    position: absolute;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+}
+#errorDialog {
+    width: 240px;
+    position:absolute;
+    left: 50%;
+    margin-left: -130px;
+    background: #FFF;
+    top: 30%;
+    padding-bottom: 10px;
+    border-radius:20px 2px 20px 2px;
+}
+#errorContent {
+    padding: 15px 10px;
+    font-size: 14px;
+    line-height: 18px;
+}
+#errorTitle {
+    background: #004993;
+    border-radius: 15px 2px 0 0;
+    color: #FFF;
+    padding:10px;
+}
+#errorAction {
+    text-align: center;
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */

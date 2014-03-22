@@ -24,9 +24,6 @@ define(function(require, exports, module) {
   //models
   var User = require("models/User");
   var user;
-
-  var Game = require("models/Game");
-  var game;
   
   var LottoHistory = require("collections/WinningRecords");
   var lottoHistory;
@@ -37,11 +34,9 @@ define(function(require, exports, module) {
     initialize: function() {
         
         user = new User();
-        game = new Game();
-        lottoHistory = new LottoHistory();
-        
         mainView = new MainView();        
         prepareView = new PrepareView();
+        lottoHistory = new LottoHistory();
         
     },
     routes: {
@@ -88,8 +83,10 @@ define(function(require, exports, module) {
         });
     },
     gameDribble: function() {
-        mainView.hideHeader();
-        gameView = new GameView({ model: game, user : user });
+        prepareView.render();
+        mainView.hideHeader(function(){
+            gameView = new GameView({ user : user, gameTypeId : 1});
+        });
     },
     ready: function(){        
         startView.ready();

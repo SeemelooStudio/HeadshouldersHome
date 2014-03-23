@@ -131,6 +131,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
+                this.onExit();
                 Backbone.history.navigate("lottery", { trigger: true, replace: false });
 
             },
@@ -140,12 +141,12 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                
+                this.onExit();
                 var target = $(e.currentTarget).attr("data-target");
                 Backbone.history.navigate(target, { trigger: true, replace: false });
             },
             onExit: function(e) {
-                
+                this.isReady = false;
             }
         });
         return StartView;

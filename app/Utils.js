@@ -32,7 +32,7 @@ var Utils = {
     },
     setPageTitle: function(title) {
         if ( title ) {
-            $("")
+            $("title").html(title);
         }
     },
     getParameterByName: function( name,href )
@@ -46,8 +46,19 @@ var Utils = {
               else
                 return decodeURIComponent(results[1].replace(/\+/g, " "));
     },
-    showError: function( errorMessage, callback ) {
-        $("#errorContent").html(errorMessage);
+    showError: function(errorMessage, title, callback ) {
+        if ( errorMessage ) {
+            $("#errorContent").html(errorMessage);
+        } else {
+            $("#errorContent").html("网络有些问题，刷新页面看看吧");
+        }
+        
+        if ( title ) {
+            $("#errorTitle").text(title);
+        } else {
+            $("#errorTitle").text("( T-T) 出错了");
+        }
+        
         $("#error").show();
         $("#error .btn").one("tap", function(){
             $("#error").hide();

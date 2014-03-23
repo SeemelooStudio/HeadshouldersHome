@@ -29,7 +29,7 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
             },
             showHeader: function(callback) {
                 if ($("#header").is(":visible")) {
-                    callback();
+                    if ( callback) { callback();}
                 } else {
                 this.headerAnimationScheduler.animateIn(callback);
                 }

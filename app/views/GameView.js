@@ -65,6 +65,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         },
                         onPassWordclass: function() {
                             self.addScore(5);
+                        },
+                        onLoadComplete: function() {
+                            $("#loading").hide();
                         }
                     });
                     
@@ -73,7 +76,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
             },
             ready: function(){
-                this.clear();
+                this.onExit();
                 this.model = new Game({ gameId:this.gameId, user:this.user });
                 this.render();
             },
@@ -102,7 +105,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.start();
-                       $("#loading").hide();
                    },
                    error: function(msg) {
                        Utils.showError(msg);
@@ -136,6 +138,13 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             onClickReplay: function(e) {
                   this.ready();
             },
+            onClickLeaderboard: function(){
+                var self = this;
+                this.mainAnimationScheduler.animateOut(function(){
+                    $('body').scrollTop(0);
+                    Backbone.history.navigate("leaderboard/score", { trigger: true, replace: false });
+                });
+            },
             addScore: function( score ) {
                 this.model.addScore(score);
                 var newScore = this.model.get("score");
@@ -152,7 +161,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
             },
-            clear: function() {
+            onExit: function() {
                 if ( this.Game ) {
                     this.Game.clear();
                 }

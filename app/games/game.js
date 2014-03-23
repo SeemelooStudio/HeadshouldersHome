@@ -70,6 +70,9 @@ function ($, Crafty ) {
 			},
 			onGameOver : function() {
 			    console.log('game over');
+			},
+			onLoadComplete : function() {
+    			console.log('load complete');
 			}
 		},
 
@@ -93,6 +96,10 @@ function ($, Crafty ) {
 			if (events.onGameOver) {
 				Game.events.onGameOver = events.onGameOver;
 			}
+			
+			if (events.onLoadComplete ) {
+    			Game.events.onLoadComplete = events.onLoadComplete;
+			} 
 		},
 		clear: function() {
     		console.log("exit");

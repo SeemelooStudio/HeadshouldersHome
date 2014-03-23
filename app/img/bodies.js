@@ -1,4 +1,6 @@
-return {"frames": {
+define(function(require, exports, module) {
+  "use strict";
+  var bodies =  {"frames": {
 
 "bodyAmateur-1.png":
 {
@@ -97,4 +99,6 @@ return {"frames": {
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:2862f6fec44479f848ce1b490aeb3ae2$"
 }
-}
+};
+    return bodies;
+});

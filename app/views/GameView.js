@@ -137,7 +137,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 });
             },
             onClickReplay: function(e) {
-                  this.ready();
+                  window.location.reload();
             },
             onClickLeaderboard: function(){
                 var self = this;

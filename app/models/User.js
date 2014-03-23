@@ -47,8 +47,12 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 
             },
             wechatLogin: function() {
-                return;
+            /*
+                window.location.href="http://quiz.seemeloo.com/hs/#login/123";
+                */
+            /*
                 window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                */
                 
             },
             initLeaderSetting: function() {

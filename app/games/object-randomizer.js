@@ -6,11 +6,12 @@ Crafty.c('ObjectRandomizer', {
 	init : function() {},
 
     ObjectRandomizer : function(objects, probabilities, debug) {
-	    var self = this;
+        var self = this;
 		self.objects = objects;
 		self.debug = debug;
 
-		if (probabilities == null)
+
+        if ( !probabilities )
 		{
 			self.isEven = true;
 		}
@@ -34,22 +35,22 @@ Crafty.c('ObjectRandomizer', {
 			}
 
 			self.isEven = false;
-			self.probabilityBounds = new Array();
+			self.probabilityBounds = [];
 
 			var debugStr = "{ ";
-			for ( var i = 0; i < objects.length; i++)
+			for ( i = 0; i < objects.length; i++)
 			{
                 if (i < objects.length - 1)
                 {
                     var probability = probabilities[i];
-                    self.probabilityBounds.push(i == 0 ? probability : self.probabilityBounds[i - 1] + probability);
+                    self.probabilityBounds.push(i === 0 ? probability : self.probabilityBounds[i - 1] + probability);
                 }
                 else
                 {
                     self.probabilityBounds.push(1);
                 }
 
-                debugStr += (i == 0 ? ("[0 - " + self.probabilityBounds[0] + "] ") : 
+                debugStr += (i === 0 ? ("[0 - " + self.probabilityBounds[0] + "] ") : 
                                       ("[" + self.probabilityBounds[i - 1] + " - " + self.probabilityBounds[i] + "] "));
 			}
 
@@ -66,14 +67,14 @@ Crafty.c('ObjectRandomizer', {
 
 	get : function() {
 		var self = this;
-		if ( self.objects == null || self.objects.length == 0)
+		if ( !self.objects || self.objects.length === 0)
 		{
 			return null;
 		}
 
 		if (self.isEven)
 		{
-		    var seed = Math.floor(Crafty.math.randomNumber(0, self.objects.length));
+            var seed = Math.floor(Crafty.math.randomNumber(0, self.objects.length));
 			return self.objects[seed];
 		}
 		else

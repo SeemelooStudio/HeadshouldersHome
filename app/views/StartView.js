@@ -40,8 +40,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
-                "tap #plane":"onClickLotto",
-                "tap .gameButton": "onClickGameButton"
+                "tap #plane":"onClickLotto"
             },
             render: function () {
                 this.template = _.template(template, {});

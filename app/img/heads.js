@@ -1,4 +1,6 @@
-return {"frames": {
+define(function(require, exports, module) {
+  "use strict";
+  var heads =  {"frames": {
 
 "headMessi.png":
 {
@@ -73,4 +75,6 @@ return {"frames": {
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:859440c0f6774ed7c91323bc45f3c273$"
 }
-}
+};
+return heads;
+});

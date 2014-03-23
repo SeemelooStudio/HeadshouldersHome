@@ -28,7 +28,7 @@ Crafty.c('Body', {
 	Body: function(bodyConfig) {
 		this.requires('Actor, SpriteAnimation, ' + bodyConfig.sprite)
 			.reel('Run', 550, bodyConfig.runFrames);
-		if (bodyConfig.tackleFrames != null)
+		if (bodyConfig.tackleFrames )
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
 		}
@@ -37,7 +37,7 @@ Crafty.c('Body', {
 	},
 
 	run: function() {
-	    this.animate('Run', -1);
+    this.animate('Run', -1);
 	},
 
 	tackle: function() {
@@ -60,12 +60,12 @@ Crafty.c('Avatar', {
 	bodyRunPos : {
 				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_run.x) / 2,
 				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_run.y) / 2
-			 },
+				},
 
 	bodyTacklePos : {
 				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_tackle.x) / 2,
 				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_tackle.y) / 2
-			 },
+				},
 
 	width : function() {
 		return this.head._w;
@@ -135,7 +135,7 @@ Crafty.c('Avatar', {
 	
 	run : function() {
 		this.isRunning = true;
-	    this.body.run();
+		this.body.run();
 		this.body.attr({
 					x : this._x + this.bodyRunPos.x,
 					y : this._y + this.bodyRunPos.y,
@@ -162,7 +162,7 @@ Crafty.c('Avatar', {
 		if (this.isRunning)
 		{
 			this.body.x = this._x + this.bodyRunPos.x;
-	    }
+        }
 		if (this.ball)
 		{
 			this.ball.x = this._x + this.ballOffsetXLeft;
@@ -182,7 +182,7 @@ Crafty.c('Avatar', {
 	},
 
 	wander : function(wanderSpeed, deltaTime) {
-		if (this.centerX == null) 
+        if (!this.centerX ) 
 		{
 			this.centerX = this._x;
 		}
@@ -235,7 +235,7 @@ Crafty.c('PlayerController', {
 				.onHit('Amateur', this.hitComponent)
 				.onHit('WorldClass', this.hitComponent);
 
-		this.avatar.collision(this.avatar.boundBox)
+		this.avatar.collision(this.avatar.boundBox);
 
 		this.attach(this.avatar);
 
@@ -322,7 +322,7 @@ Crafty.c('Coin', {
 	speed: Game.configs.player_vertical_speed_per_frame,
 
 	width: function() {
-	    return this._w;
+    return this._w;
 	},
 
 	height : function() {
@@ -330,18 +330,18 @@ Crafty.c('Coin', {
 	},
 
 	init : function() {
-	    this.requires('Actor, SpriteHS, Collision, DebugCollision')
-		    .attr({ w: this._w / 2, h: this._h / 2});
+        this.requires('Actor, SpriteHS, Collision, DebugCollision')
+        .attr({ w: this._w / 2, h: this._h / 2});
 	},
 
 	update : function(player, deltaTime) {
-	    this.y += this.speed * deltaTime;
+        this.y += this.speed * deltaTime;
 	},
 
 	onPlayerHit : function(player) {
 		++Game.data.num_of_collected_coins;
 		Game.events.onCollectCoin(Game.data.num_of_collected_coins);
-	    this.destroy();
+        this.destroy();
 	}
 });
 

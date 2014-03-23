@@ -6,36 +6,36 @@ function ($, Crafty ) {
         height: $(window).height(),
 
 		ingame_width: 320,
-		player_bound_left: function() { return Game.width / 2 - Game.ingame_width / 2 },
-		player_bound_right: function() { return Game.width / 2 + Game.ingame_width / 2 },
+		player_bound_left: function() { return Game.width / 2 - Game.ingame_width / 2; },
+		player_bound_right: function() { return Game.width / 2 + Game.ingame_width / 2; },
 
         start: function() {
 			Game.reset();
 			console.log('start crafty game');
 			Crafty.init(Game.width, Game.height);
-			Crafty.background('#0000FF');
+			//Crafty.background('#0000FF');
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
 			Crafty.scene('Loading');
         },
 
 		pause: function() {
-		    Crafty.pause(true);
+            Crafty.pause(true);
 		},
 
 		unpause: function() {
-		    Crafty.pause(false);
+            Crafty.pause(false);
 		},
 
 		stop: function() {
 			//Crafty.scene('Over');
 			console.log('stop crafty game');
-		    Crafty.stop();
+			Crafty.stop();
 		},
 
 		restart: function() {
 		},
-
-	    reset: function() {
+		
+		reset: function() {
 			Game.data.num_of_passed_obstacle = 0;
 			Game.data.num_of_collected_coins = 0;
 			Game.data.num_of_passed_amateurs = 0;
@@ -65,7 +65,7 @@ function ($, Crafty ) {
             player_horizontal_speed_per_second : 3,
             player_vertical_speed_per_frame : 100,
 			amateur_horizontal_speed_per_frame : 100,
-		    worldclass_horizontal_speed_per_frame : 100,
+			worldclass_horizontal_speed_per_frame : 100,
             component_generate_interval : 2500
         },
 
@@ -80,13 +80,13 @@ function ($, Crafty ) {
 				console.log('pass worldclass: ' + totalCount);
 			},
 			onCollectCoin : function(totalCount) {
-				console.log('collect coin: ' + totalCount)
+                console.log('collect coin: ' + totalCount);
 			},
 			onGameOver : function() {
-			    console.log('game over');
+                console.log('game over');
 			},
 			onLoadComplete : function() {
-    			console.log('load complete');
+                console.log('load complete');
 			}
 		},
 
@@ -112,7 +112,7 @@ function ($, Crafty ) {
 			}
 			
 			if (events.onLoadComplete ) {
-    			Game.events.onLoadComplete = events.onLoadComplete;
+                Game.events.onLoadComplete = events.onLoadComplete;
 			} 
 		}
     };

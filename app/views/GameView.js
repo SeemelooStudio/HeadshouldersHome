@@ -33,7 +33,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#game"));
                 this.gameAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
                 this.gameOverAnimationScheduler = new AnimationScheduler(this.$el.find("#gameOver"));
-                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp"),{
+                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp,#gameBackHome"),{
                     "hideAtFirst":false
                 });
                 
@@ -41,6 +41,23 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 require(["games/game","games/components","games/scene-game","games/scene-loading","games/scene-over"],function(Game){
                     self.$el.find("#gameStart").fadeIn();
                     self.Game = Game;
+                    Game.events = {
+                        onGameOver: function() {
+                            self.gameOver();
+                        },
+                        onCollectCoin: function() {
+                            self.addCoupon();
+                        },
+                        onPassAmatur: function() {
+                            self.addScore(2);
+                        },
+                        onPassObstacle: function() {
+                            self.addScore(1);
+                        },
+                        onPassWordclass: function() {
+                            self.addScore(5);
+                        }
+                    }
                     
                 });
                 this.$score = this.$el.find("#game-topBar-score");
@@ -73,6 +90,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             startGame: function() {
                 var self = this;
                 $("#loading").show();
+                console.log("here");
                 this.model.startGame({
                    success: function(){
                        self.Game.start();

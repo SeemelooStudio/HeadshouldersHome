@@ -142,7 +142,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
-                    Backbone.history.navigate("leaderboard/score", { trigger: true, replace: false });
+                    Backbone.history.navigate("", { trigger: true, replace: false });
                 });
             },
             addScore: function( score ) {

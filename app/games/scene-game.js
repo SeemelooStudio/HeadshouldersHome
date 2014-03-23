@@ -6,43 +6,43 @@ function (Crafty, Game, PlayerConfig) {
 Crafty.scene('Game', function() {
 	var self = this;
 
-	self.hazards = [];
+	self.components = [];
 	self.toBeRemoved = [];
 
 	self.generateHazard = function() {
-		if (Crafty.isPaused())
-		{
-			return;
-		}
+		var component;
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
-		var hazard;
 		if (seed % 3 !== 0)
 		{
-			hazard = Crafty.e('Obstacle');
+			//component = Crafty.e('Obstacle');
+			component = Crafty.e('Coin');
 		}
 		else
 		{
-			hazard = Crafty.e('Amateur').Amateur(PlayerConfig.head_configs.sushi, PlayerConfig.body_configs.amateur);
+			component = Crafty.e('Amateur').Amateur(PlayerConfig.head_configs.sushi, PlayerConfig.body_configs.amateur);
 		}
-		hazard.attr({x : Crafty.math.randomNumber(0, Game.width - hazard.width()), y : -50});
-		self.hazards.push(hazard);
+		seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.worldclass_players.length));
+		var head = PlayerConfig.worldclass_players[seed];
+		component = Crafty.e('WorldClass').WorldClass(head, PlayerConfig.body_configs.pro);
+		component.attr({x : Crafty.math.randomNumber(0, Game.width - component.width()), y : -50});
+		self.components.push(component);
 	};
 
 	self.destroyHazardsOffScreen = function() {
-		for (var i = 0; i < self.hazards.length; i++)
+		for (var i = 0; i < self.components.length; i++)
 		{
-			var hazard = self.hazards[i];	
-			if (hazard._y > Game.height)
+			var component = self.components[i];	
+			if (component._y > Game.height)
 			{
-				self.toBeRemoved.push(hazard);
+				self.toBeRemoved.push(component);
 			}
 		}
 		for ( i = 0; i < self.toBeRemoved.length; i++)
 		{
-			var index = self.hazards.indexOf(self.toBeRemoved[i]);
+			var index = self.components.indexOf(self.toBeRemoved[i]);
 			if (i != -1)
 			{
-				self.hazards.splice(i, 1);
+				self.components.splice(i, 1);
 			}
 			self.toBeRemoved[i].destroy();
 		}
@@ -50,28 +50,28 @@ Crafty.scene('Game', function() {
 	};
 
 	self.destroyAllHazards = function() {
-		for (var i = 0; i < self.hazards.lenght; i++)
+		for (var i = 0; i < self.components.lenght; i++)
 		{
-			self.hazards[i].destroy();
+			self.components[i].destroy();
 		}
-		self.hazards = [];
+		self.components = [];
 	};
 
 	self.onEnterFrame = function(data) {
 		self.destroyHazardsOffScreen();
 
-		for( var i = 0; i < self.hazards.length; i++)
+		for( var i = 0; i < self.components.length; i++)
 		{
-			self.hazards[i].update(self.player, data.dt / 1000, data.frame);
+			self.components[i].update(self.player, data.dt / 1000, data.frame);
 		}
 	};
 
 	self.player = Crafty.e('PlayerController');
 	self.player.attr({ x : Game.width / 2 - self.player.avatar.width() / 2, 
-					   y : Game.height - self.player.avatar.height() });
+					   y : Game.height - self.player.avatar.height() * 1.5 });
 
 	self.field = Crafty.e('Field');
-	self.generateHazardRoutine = setInterval(self.generateHazard, Game.configs.hazard_generate_interval);
+	self.generateHazardRoutine = setInterval(self.generateHazard, Game.configs.component_generate_interval);
 	self.bind('EnterFrame', self.onEnterFrame);
 }, 
 function() { 

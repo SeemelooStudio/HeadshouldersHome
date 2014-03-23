@@ -28,6 +28,7 @@ Crafty.scene('Loading', function(){
 		'app/img/bodies.png',
 		'app/img/ball.png',
 		'app/img/grass.png',
+		'app/img/hs.png'
 		], function(){
 		// Once the images are loaded...
 
@@ -47,6 +48,10 @@ Crafty.scene('Loading', function(){
 
 		Crafty.sprite(35, 'app/img/ball.png', {
 			SpriteBall:     [0, 0],
+		});
+
+		Crafty.sprite(110, 200, 'app/img/hs.png', {
+			SpriteHS:     [0, 0],
 		});
 
 		loadAtlas('app/img/heads.png', headsAtlas);

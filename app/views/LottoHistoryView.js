@@ -56,7 +56,7 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
                 $('body').scrollTop(0);
                 this.$el.find("#winningBackHome").fadeOut();
                 this.mainAnimationScheduler.animateOut(function(){
-                    Backbone.history.navigate("", { trigger: true, replace: false });
+                    Backbone.history.navigate("", { trigger: true, replace: true });
                 });
                 
             },
@@ -67,7 +67,7 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
                 $('body').scrollTop(0);
                 this.$el.find("#winningBackHome").fadeOut();
                 this.mainAnimationScheduler.animateOut(function(){
-                    Backbone.history.navigate("lottery", { trigger: true, replace: false });
+                    Backbone.history.navigate("lottery", { trigger: true, replace: true });
                 });
                 
             },

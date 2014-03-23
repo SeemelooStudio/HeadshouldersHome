@@ -61,9 +61,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             self.addScore(2);
                         },
                         onPassObstacle: function() {
-                            self.addCoupon();
+                            self.addScore(1);
                         },
-                        onPassWordclass: function() {
+                        onPassWorldClass: function() {
                             self.addScore(5);
                         },
                         onLoadComplete: function() {
@@ -92,7 +92,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
-                    Backbone.history.navigate("", { trigger: true, replace: false });
+                    Backbone.history.navigate("", { trigger: true, replace: true });
                 });
                 
             },
@@ -116,6 +116,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             gameOver: function() {
                 var self = this;
                 $("#loading").show();
+                this.Game.stop();
                this.model.submitResult({
                    success: function(){
                        var gameOverView = new GameOverView({ model: self.model});
@@ -132,7 +133,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
-                    Backbone.history.navigate("lottery", { trigger: true, replace: false });
+                    Backbone.history.navigate("lottery", { trigger: true, replace: true });
                 });
             },
             onClickReplay: function(e) {
@@ -142,7 +143,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
-                    Backbone.history.navigate("", { trigger: true, replace: false });
+                    Backbone.history.navigate("", { trigger: true, replace: true });
                 });
             },
             addScore: function( score ) {

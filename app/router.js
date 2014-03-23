@@ -37,7 +37,6 @@ define(function(require, exports, module) {
         prepareView = new PrepareView();
         lottoHistory = new LottoHistory();
         
-        
     },
     routes: {
       "": "index",
@@ -52,7 +51,7 @@ define(function(require, exports, module) {
         prepareView.render();
         user.syncData();
         mainView.showHeader(function(){
-            startView = new StartView({ model: user });
+            startView = new StartView({ user: user });
         });
         
     },
@@ -75,7 +74,7 @@ define(function(require, exports, module) {
         user.syncData();
         mainView.showHeader();
         if ( !startView ) {
-            startView = new StartView({ model: user });
+            startView = new StartView({ user: user });
         }
         if ( !startView.isReady ) {
            startView.once("render", function(){

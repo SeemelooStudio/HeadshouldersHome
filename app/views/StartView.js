@@ -1,18 +1,38 @@
 // StartView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList", "game-config"],
-    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList, GameConfig) {
+define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList) {
+        var gameConfig = new Backbone.Model();
+        gameConfig.set({
+                "dribbleGame": {
+                    "id" : 1,
+                    "name": "dribble",
+                    "enabled": true
+                },
+                "passGame": {
+                    "id" : 2,
+                    "name": "pass",
+                    "enabled": false        
+                },
+                "shootGame": {
+                    "id" : 3,
+                    "name": "shoot",
+                    "enabled": false            
+                }
+        });
         var StartView = Backbone.View.extend({
 
             el: "#main",
             
-            initialize: function () {
+            initialize: function (options) {
+                this.user = options.user;
+                this.model = gameConfig;
                 this.listenTo(this, "render", this.postRender);
                 this.isReady = false;
-                if ( this.model.checkLogin() ) {
+                if ( this.user.checkLogin() ) {
                     this.ready();
                 } else {
-                    this.listenToOnce(this.model,"onFetchSuccess", this.ready);
+                    this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
             },
             
@@ -34,13 +54,13 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 var self = this;                
                 this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#user,#rule,#plane"));
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true,"sequentialDelay":350});
-                
+                $("#share").show();
                 this.lottoAnimationScheduler.animateIn(function(){
                     self.btnAnimationScheduler.animateIn();
                 });
             },
             ready: function(){
-                this.model.set(GameConfig);
+                this.model.set(this.user.toJSON());
                 this.render();
                 this.isReady = true;
             },
@@ -74,7 +94,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.ranklist.fetch({
                     success: function(){
                         self.$el.find("#leaderboard").addClass("expand");
-                        self.rankView = new RankView({model:self.ranklist, user: self.model});
+                        self.rankView = new RankView({model:self.ranklist, user: self.user});
                         $("#loading").hide();
                           
                         if ( tabId ) {
@@ -97,7 +117,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 },500,
                 function(){
                     self.$el.find("#leaderboard").removeClass("expand");
-                    Backbone.history.navigate("", { trigger: false, replace: false });
+                    Backbone.history.navigate("", { trigger: false, replace: true });
                 }
                 );
                 
@@ -121,7 +141,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 $(".leaderboard-content.current").removeClass("current");
                 $(id).addClass("current animated fadeIn");
                 
-                Backbone.history.navigate("leaderboard/" + type, { trigger: false, replace: false });
+                Backbone.history.navigate("leaderboard/" + type, { trigger: false, replace: true });
             },
             onSwipeLeaderboard: function(e) {
                 e.gesture.preventDefault();
@@ -132,7 +152,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 this.onExit();
-                Backbone.history.navigate("lottery", { trigger: true, replace: false });
+                Backbone.history.navigate("lottery", { trigger: true, replace: true });
 
             },
             onClickGameButton: function(e) {
@@ -143,7 +163,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopDetect();
                 this.onExit();
                 var target = $(e.currentTarget).attr("data-target");
-                Backbone.history.navigate(target, { trigger: true, replace: false });
+                Backbone.history.navigate(target, { trigger: true, replace: true });
             },
             onExit: function(e) {
                 this.isReady = false;

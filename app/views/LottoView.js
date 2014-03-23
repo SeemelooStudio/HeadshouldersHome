@@ -82,7 +82,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 $('body').scrollTop(0);
                 this.$el.find("#lottoBackHome").fadeOut();
                 this.mainAnimationScheduler.animateOut(function(){
-                    Backbone.history.navigate("", { trigger: true, replace: false });
+                    Backbone.history.navigate("", { trigger: true, replace: true });
                 });
                 
             },
@@ -105,7 +105,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
                     if ( self.card.get("isWon") )  {
-                        Backbone.history.navigate("winningRecords", { trigger: true, replace: false });
+                        Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
                     } else {
                         self.render();
                     }
@@ -119,7 +119,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 $('body').scrollTop(0);
                 this.$el.find("#lottoBackHome").fadeOut();
                 this.mainAnimationScheduler.animateOut(function(){
-                Backbone.history.navigate("winningRecords", { trigger: true, replace: false });
+                Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
                 });
             }
         });

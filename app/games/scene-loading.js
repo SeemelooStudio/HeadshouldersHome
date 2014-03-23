@@ -55,7 +55,8 @@ Crafty.scene('Loading', function(){
 		});
 
 		loadAtlas('app/img/heads.png', headsAtlas);
-
+        
+        Game.events.onLoadComplete();
 		// Now that our sprites are ready to draw, start the game
 		Crafty.scene('Game');
 	});

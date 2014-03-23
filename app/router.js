@@ -6,7 +6,6 @@ define(function(require, exports, module) {
   require("hammerjs");
   require("jqueryhammer");
   require("jquerycookie");
-  
   //views
   var MainView = require("views/MainView");
   var mainView;
@@ -46,9 +45,7 @@ define(function(require, exports, module) {
       "leaderboard/:type":"leaderboard",
       "lottery":"lottery",
       "winningRecords":"winningRecords",
-      "gameDribble":"gameDribble",
-      "gamePass":"gameDribble",
-      "gameShoot":"gameDribble"
+      "gameDribble":"gameDribble"
     },
 
     index: function() {
@@ -76,6 +73,7 @@ define(function(require, exports, module) {
     leaderboard: function(type) {
         prepareView.render();
         user.syncData();
+        mainView.showHeader();
         if ( !startView ) {
             startView = new StartView({ model: user });
         }
@@ -108,6 +106,20 @@ define(function(require, exports, module) {
         user.syncData();
         mainView.hideHeader(function(){
             gameView = new GameView({ user : user, gameTypeId : 1});
+        });
+    },
+    gamePass: function(){
+        prepareView.render();
+        user.syncData();
+        mainView.hideHeader(function(){
+            gameView = new GameView({ user : user, gameTypeId : 2});
+        });
+    },
+    gameShoot: function(){
+        prepareView.render();
+        user.syncData();
+        mainView.hideHeader(function(){
+            gameView = new GameView({ user : user, gameTypeId : 3});
         });
     }
   });

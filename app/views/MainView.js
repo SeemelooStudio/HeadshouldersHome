@@ -14,7 +14,8 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
             events: {
                 "click #logo":"onClickLogo",
                 "tap #shareOverlay":"onClickShareOverlay",
-                "tap .share":"onClickShare"
+                "tap .share":"onClickShare",
+                "tap #exitLink":"onClickExit"
             },
             onClickLogo: function() {
 
@@ -28,7 +29,7 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
             },
             showHeader: function(callback) {
                 if ($("#header").is(":visible")) {
-                    callback();
+                    if ( callback) { callback();}
                 } else {
                 this.headerAnimationScheduler.animateIn(callback);
                 }
@@ -40,6 +41,10 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
             onClickShare: function(e) {
                 var pic = $(e.currentTarget).attr("data-pic");
                 Utils.share(pic);
+            },
+            onClickExit: function(e) {
+                $.removeCookie("userId");
+                window.location.reload();
             }
         });
         // Returns the View class

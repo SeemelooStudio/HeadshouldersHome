@@ -44,7 +44,7 @@ define(["jquery", "backbone"],
                 this.set("score", this.get("score") + score);
             },
             addCoupon: function(){
-                this.set("coupon", this.get("coupon") + score);
+                this.set("coupon", this.get("coupon") + 1);
             },
             startGame: function(options){
                 var self = this;

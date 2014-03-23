@@ -17,8 +17,15 @@ function ($, Crafty ) {
 		    Crafty.pause(true);
 		},
 
+		unpause: function() {
+		    Crafty.pause(false);
+		},
+
 		stop: function() {
 		    Crafty.stop();
+		},
+
+		restart: function() {
 		},
 
 	    reset: function() {

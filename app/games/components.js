@@ -181,6 +181,41 @@ Crafty.c('Avatar', {
 		this.facingLeft = false;
 	},
 
+	wander : function(wanderSpeed, deltaTime) {
+		if (this.centerX == null) 
+		{
+			this.centerX = this._x;
+		}
+		else
+		{
+			if (this.facingLeft)
+			{
+				if ( this._x < this.centerX - this.wanderDistance)
+				{
+					this.x = this.centerX - this.wanderDistance;
+					this.faceRight();
+				}
+				else
+				{
+					this.x -= wanderSpeed * deltaTime;
+				}
+			}
+			else
+			{
+				if ( this._x > this.centerX + this.wanderDistance)
+				{
+					this.x = this.centerX + this.wanderDistance;
+					this.faceLeft();
+				}
+				else
+				{
+					this.x += wanderSpeed * deltaTime;
+				}
+			}
+		}
+	},
+
+
 	pauseAnim: function() {
 		this.body.pauseAnimation();
 	}
@@ -247,7 +282,7 @@ Crafty.c('PlayerController', {
 
 	hitComponent: function(data) {
 		var component = data[0].obj;
-		component.onPlayerHit();
+		component.onPlayerHit(this);
 	}
 });
 
@@ -272,7 +307,12 @@ Crafty.c('Obstacle', {
 		this.y += this.speed * deltaTime;
 	},
 
-	onPlayerHit: function() {
+	onDisappear : function(player) {
+		++Game.data.num_of_passed_obstacle;
+		Game.events.onPassObstacle(Game.data.num_of_passed_obstacle);
+	},
+
+	onPlayerHit: function(player) {
 		this.destroy();
 		Crafty.scene('Over');
 	}
@@ -298,9 +338,10 @@ Crafty.c('Coin', {
 	    this.y += this.speed * deltaTime;
 	},
 
-	onPlayerHit : function() {
+	onPlayerHit : function(player) {
+		++Game.data.num_of_collected_coins;
+		Game.events.onCollectCoin(Game.data.num_of_collected_coins);
 	    this.destroy();
-        // todo: add coin to player data
 	}
 });
 
@@ -336,44 +377,15 @@ Crafty.c('Amateur', {
 
 	update: function(player, deltaTime, frame) {
 		this.y += this.verticalSpeed * deltaTime;
-		this.wander(player, deltaTime);
+		this.wander(this.horizontalSpeed, deltaTime);
 	},
 
-	wander : function(player, deltaTime) {
-		if (this.centerX == null) 
-		{
-			this.centerX = this._x;
-		}
-		else
-		{
-			if (this.facingLeft)
-			{
-				if ( this._x < this.centerX - this.wanderDistance)
-				{
-					this.x = this.centerX - this.wanderDistance;
-					this.faceRight();
-				}
-				else
-				{
-					this.x -= this.horizontalSpeed * deltaTime;
-				}
-			}
-			else
-			{
-				if ( this._x > this.centerX + this.wanderDistance)
-				{
-					this.x = this.centerX + this.wanderDistance;
-					this.faceLeft();
-				}
-				else
-				{
-					this.x += this.horizontalSpeed * deltaTime;
-				}
-			}
-		}
+	onDisappear : function(player) {
+		++Game.data.num_of_passed_amateurs;
+		Game.events.onPassAmateur(Game.data.num_of_passed_amateurs);
 	},
 
-	onPlayerHit: function() {
+	onPlayerHit: function(player) {
 		this.destroy();
 		Crafty.scene('Over');
 	}
@@ -382,6 +394,7 @@ Crafty.c('Amateur', {
 Crafty.c('WorldClass', {
 	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
 	horizontalSpeed: Game.configs.worldclass_horizontal_speed_per_frame,
+	tackleSpeed: Game.configs.worldclass_horizontal_speed_per_frame,
 
 	wanderDistance : 50,
 	distanceToTackle : 50,
@@ -421,45 +434,20 @@ Crafty.c('WorldClass', {
 					this.faceRight();
 				}
 			}
-			this.x += this.horizontalSpeed * deltaTime * this.facingLeft ? -1 : 1;
+			this.x += this.tackleSpeed * deltaTime * this.facingLeft ? -1 : 1;
 		}
 		else
 		{
-			if (this.centerX == null) 
-			{
-				this.centerX = this._x;
-			}
-			else
-			{
-				if (this.facingLeft)
-				{
-					if ( this._x < this.centerX - this.wanderDistance)
-					{
-						this.x = this.centerX - this.wanderDistance;
-						this.faceRight();
-					}
-					else
-					{
-						this.x -= this.horizontalSpeed * deltaTime;
-					}
-				}
-				else
-				{
-					if ( this._x > this.centerX + this.wanderDistance)
-					{
-						this.x = this.centerX + this.wanderDistance;
-						this.faceLeft();
-					}
-					else
-					{
-						this.x += this.horizontalSpeed * deltaTime;
-					}
-				}
-			}
+			this.wander(this.horizontalSpeed, deltaTime);
 		}
 	},
 
-	onPlayerHit: function() {
+	onDisappear : function(player) {
+		++Game.data.num_of_passed_worldclass;
+		Game.events.onPassWorldClass(Game.data.num_of_passed_worldclass);
+	},
+
+	onPlayerHit: function(player) {
 		this.destroy();
 		Crafty.scene('Over');
 	}

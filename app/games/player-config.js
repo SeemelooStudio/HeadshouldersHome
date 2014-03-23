@@ -48,7 +48,7 @@ function (Crafty) {
             runFrames : [[1,2], [1,3], [2,2], [1,3]],
 			tackleFrames : [[2, 1]]
         },
-	 	pro : {
+	 	worldclass : {
             sprite : 'BodyPro',
             runFrames : [[1,0], [2,0], [0,1], [2,0]],
 			tackleFrames : [[0, 0]]

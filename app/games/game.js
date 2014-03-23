@@ -1,18 +1,39 @@
 define(["jquery", "crafty"],
-function ($, Crafty) {
+function ($, Crafty ) {
 
     var Game = {
         width: $(window).width(),
         height: $(window).height(),
-        // Initialize and start our game
+
         start: function() {
-            // Start crafty and set a background color so that we can see it's working
+			Game.reset();
             Crafty.init(Game.width, Game.height);
+			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
             //Crafty.background('rgb(87, 109, 20)');
-            
-            // Simply start the "Loading" scene to get things going
             Crafty.scene('Loading');
         },
+
+		pause: function() {
+		    Crafty.pause(true);
+		},
+
+		stop: function() {
+		    Crafty.stop();
+		},
+
+	    reset: function() {
+			Game.data.num_of_passed_obstacle = 0;
+			Game.data.num_of_collected_coins = 0;
+			Game.data.num_of_passed_amateurs = 0;
+			Game.data.num_of_passed_worldclass = 0;
+		},
+
+		data : {
+			num_of_passed_obstacle : 0,
+			num_of_collected_coins : 0,
+			num_of_passed_amateurs : 0,
+			num_of_passed_worldclass : 0,
+		},
         
         depth: {
             field : 0,
@@ -32,7 +53,47 @@ function ($, Crafty) {
 			amateur_horizontal_speed_per_frame : 100,
 		    worldclass_horizontal_speed_per_frame : 100,
             component_generate_interval : 2500
-        }
+        },
+
+		events: {
+			onPassObstacle : function(totalCount) {
+				console.log('pass obstacle: ' + totalCount);
+			},
+			onPassAmateur : function(totalCount) {
+				console.log('pass amateur: ' + totalCount);
+			},
+			onPassWorldClass : function(totalCount) {
+				console.log('pass worldclass: ' + totalCount);
+			},
+			onCollectCoin : function(totalCount) {
+				console.log('collect coin: ' + totalCount)
+			},
+			onGameOver : function() {
+			    console.log('game over');
+			}
+		},
+
+		registerEvents: function(events) {
+			if (events.onPassObstacle) {
+				Game.events.onPassObstacle = events.onPassObstacle;
+			}
+
+			if (events.onPassAmateur) {
+				Game.events.onPassAmateur = events.onPassAmateur;
+			}
+
+			if (events.onPassWorldClass) {
+				Game.events.onPassWorldClass = events.onPassWorldClass;
+			}
+
+			if (events.onCollectCoin) {
+				Game.events.onCollectCoin = events.onCollectCoin;
+			}
+
+			if (events.onGameOver) {
+				Game.events.onGameOver = events.onGameOver;
+			}
+		},
     };
     
     return Game;

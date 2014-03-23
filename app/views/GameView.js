@@ -61,7 +61,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             self.addScore(2);
                         },
                         onPassObstacle: function() {
-                            self.addScore(1);
+                            self.addCoupon();
                         },
                         onPassWordclass: function() {
                             self.addScore(5);
@@ -158,7 +158,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             addCoupon: function() {
                 this.model.addCoupon();
-                this.text(this.model.get("coupon"));
+                this.$coupon.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
             },
             onExit: function() {

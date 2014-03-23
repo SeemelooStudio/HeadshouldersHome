@@ -10,7 +10,7 @@ Crafty.c('Actor', {
 Crafty.c('DebugCollision', {
 	init: function() {
 		// turn below line off in production
-		this.requires('DebugCanvas, WiredHitBox');
+		//this.requires('DebugCanvas, WiredHitBox');
 	},
 });
 
@@ -28,8 +28,20 @@ Crafty.c('Body', {
 	Body: function(bodyConfig) {
 		this.requires('Actor, SpriteAnimation, ' + bodyConfig.sprite)
 			.reel('Run', 550, bodyConfig.runFrames);
+		if (bodyConfig.tackleFrames != null)
+		{
+			this.reel('Tackle', 550, bodyConfig.tackleFrames);
+		}
 		this.animate('Run', -1);
 		return this;
+	},
+
+	run: function() {
+	    this.animate('Run', -1);
+	},
+
+	tackle: function() {
+        this.animate('Tackle', -1);
 	}
 });
 
@@ -63,40 +75,42 @@ Crafty.c('Avatar', {
 		return this.body._h + this.bodyRunPos.y;
 	},
 
-	Avatar: function(headConfig, bodyConfig, withBall) {
+	Avatar: function(basicDepth, headConfig, bodyConfig, withBall) {
 		var self = this;
 
 		self.head = Crafty.e('Actor, ' + headConfig.sprite);
-		self.head.attr({w : self.head._w / 2, h : self.head._h / 2, z : Game.depth.head});
+		self.head.attr({w : self.head._w / 2, h : self.head._h / 2, z : basicDepth + Game.depth.head});
 		self.body = Crafty.e('Body').Body(bodyConfig);
 		self.body.attr({
 					w : self.body._w / 2, 
 					h : self.body._h / 2, 
-					x : self.bodyRunPos.x,
-					y : self.bodyRunPos.y,
-					z : Game.depth.body});
+					z : basicDepth + Game.depth.body});
 		self.attach(self.head);
 		self.attach(self.body);
+		self.run();
 
 		if (withBall)
 		{
 			self.ball = Crafty.e('Actor, Tween, SpriteBall').attr(
 				{ x : self.ballOffsetXLeft,
                   y : self.ballOffsetY,
-                  z : Game.depth.ball
+                  z : basicDepth + Game.depth.ball
 				});
 			self.ball.origin('center');
 			self.attach(self.ball);
 		}
 
 		self.body.bind('FrameChange', function(data) {
-			if (data.currentFrame == 1 || data.currentFrame == 3)
+			if (self.isRunning)
 			{
-				self.head.attr({x : self._x, y: self._y - self.headJitter});
-			}
-			else
-			{
-				self.head.attr({x : self._x, y: self._y});
+				if (data.currentFrame == 1 || data.currentFrame == 3)
+				{
+					self.head.attr({x : self._x, y: self._y - self.headJitter});
+				}
+				else
+				{
+					self.head.attr({x : self._x, y: self._y});
+				}
 			}
 		});
 		
@@ -118,11 +132,37 @@ Crafty.c('Avatar', {
 			this.ball.rotation += this.ballSpinSpeed * data.dt * (this.facingLeft ? -1 : 1);
 		}
 	},
+	
+	run : function() {
+		this.isRunning = true;
+	    this.body.run();
+		this.body.attr({
+					x : this._x + this.bodyRunPos.x,
+					y : this._y + this.bodyRunPos.y,
+		});
+	},
+
+	tackle : function() {
+		if (this.ball)
+		{
+			// not allow to tackle when player is dribbling
+			return;
+		}
+		this.isRunning = false;
+		this.body.tackle();
+		this.body.attr({
+					x : this._x + this.bodyTacklePos.x,
+					y : this._y + this.bodyTacklePos.y,
+		});
+	},
 
 	faceLeft: function() {
 		this.body.unflip('X');
-		this.body.x = this._x + this.bodyRunPos.x;
 		this.head.unflip('X');
+		if (this.isRunning)
+		{
+			this.body.x = this._x + this.bodyRunPos.x;
+	    }
 		if (this.ball)
 		{
 			this.ball.x = this._x + this.ballOffsetXLeft;
@@ -150,13 +190,15 @@ Crafty.c('Avatar', {
 Crafty.c('PlayerController', {
 	init: function() {
 		this.requires('Actor, Draggable, DebugArea')
-				.attr({w: 80, h: 120})
+				.attr({w: 80, h: 180, z: Game.depth.controller})
 				.dragDirection({x:1, y:0});
 
 		this.avatar = Crafty.e('Avatar, Collision, DebugCollision')
-				.Avatar(PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true)
-				.onHit('Obstacle', this.hitObstacle)
-				.onHit('Amateur', this.hitObstacle);
+				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true)
+				.onHit('Obstacle', this.hitComponent)
+				.onHit('Coin', this.hitComponent)
+				.onHit('Amateur', this.hitComponent)
+				.onHit('WorldClass', this.hitComponent);
 
 		this.avatar.collision(this.avatar.boundBox)
 
@@ -203,9 +245,9 @@ Crafty.c('PlayerController', {
 		});
 	},
 
-	hitObstacle: function(data) {
-		var obstacle = data[0].obj;
-		obstacle.onPlayerHit();
+	hitComponent: function(data) {
+		var component = data[0].obj;
+		component.onPlayerHit();
 	}
 });
 
@@ -236,9 +278,35 @@ Crafty.c('Obstacle', {
 	}
 });
 
+Crafty.c('Coin', {
+	speed: Game.configs.player_vertical_speed_per_frame,
+
+	width: function() {
+	    return this._w;
+	},
+
+	height : function() {
+		return this._h;
+	},
+
+	init : function() {
+	    this.requires('Actor, SpriteHS, Collision, DebugCollision')
+		    .attr({ w: this._w / 2, h: this._h / 2});
+	},
+
+	update : function(player, deltaTime) {
+	    this.y += this.speed * deltaTime;
+	},
+
+	onPlayerHit : function() {
+	    this.destroy();
+        // todo: add coin to player data
+	}
+});
+
 Crafty.c('Amateur', {
 	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
-	horizontalSpeed: Game.configs.player_vertical_speed_per_frame,
+	horizontalSpeed: Game.configs.amateur_horizontal_speed_per_frame,
 
 	wanderDistance : 50,
 
@@ -248,7 +316,7 @@ Crafty.c('Amateur', {
 	},
 
 	Amateur : function(headConfig, bodyConfig) {
-		this.Avatar(headConfig, bodyConfig, false);
+		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
 		this.collision(this.boundBox);
 
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
@@ -268,6 +336,10 @@ Crafty.c('Amateur', {
 
 	update: function(player, deltaTime, frame) {
 		this.y += this.verticalSpeed * deltaTime;
+		this.wander(player, deltaTime);
+	},
+
+	wander : function(player, deltaTime) {
 		if (this.centerX == null) 
 		{
 			this.centerX = this._x;
@@ -309,6 +381,10 @@ Crafty.c('Amateur', {
 
 Crafty.c('WorldClass', {
 	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
+	horizontalSpeed: Game.configs.worldclass_horizontal_speed_per_frame,
+
+	wanderDistance : 50,
+	distanceToTackle : 50,
 
 	init: function() {
 		this.requires('Avatar, Collision, DebugCollision, DebugArea')
@@ -316,7 +392,7 @@ Crafty.c('WorldClass', {
 	},
 
 	WorldClass : function(headConfig, bodyConfig) {
-		this.Avatar(headConfig, bodyConfig, false);
+		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
 		this.collision(this.boundBox);
 
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
@@ -327,10 +403,60 @@ Crafty.c('WorldClass', {
 
 		return this;
 	},
-	
 
 	update: function(player, deltaTime) {
 		this.y += this.verticalSpeed * deltaTime;
+
+		if (player._y - this._y < this.distanceToTackle)
+		{
+			if (this.isRunning)
+			{
+				this.tackle();
+				if (player._x < this._x)
+				{
+					this.faceLeft();
+				}
+				else
+				{
+					this.faceRight();
+				}
+			}
+			this.x += this.horizontalSpeed * deltaTime * this.facingLeft ? -1 : 1;
+		}
+		else
+		{
+			if (this.centerX == null) 
+			{
+				this.centerX = this._x;
+			}
+			else
+			{
+				if (this.facingLeft)
+				{
+					if ( this._x < this.centerX - this.wanderDistance)
+					{
+						this.x = this.centerX - this.wanderDistance;
+						this.faceRight();
+					}
+					else
+					{
+						this.x -= this.horizontalSpeed * deltaTime;
+					}
+				}
+				else
+				{
+					if ( this._x > this.centerX + this.wanderDistance)
+					{
+						this.x = this.centerX + this.wanderDistance;
+						this.faceLeft();
+					}
+					else
+					{
+						this.x += this.horizontalSpeed * deltaTime;
+					}
+				}
+			}
+		}
 	},
 
 	onPlayerHit: function() {

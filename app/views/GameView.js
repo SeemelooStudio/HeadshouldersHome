@@ -164,7 +164,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onExit: function() {
                 if ( this.Game ) {
-                    this.Game.clear();
+                    this.Game.stop();
                 }
             }
             

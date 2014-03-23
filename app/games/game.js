@@ -7,10 +7,11 @@ function ($, Crafty ) {
 
         start: function() {
 			Game.reset();
-            Crafty.init(Game.width, Game.height);
+			console.log('start crafty game');
+			Crafty.init(Game.width, Game.height, 'cr_stage');
+			Crafty.background('#0000FF');
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
-            //Crafty.background('rgb(87, 109, 20)');
-            Crafty.scene('Loading');
+			Crafty.scene('Loading');
         },
 
 		pause: function() {
@@ -22,6 +23,8 @@ function ($, Crafty ) {
 		},
 
 		stop: function() {
+			//Crafty.scene('Over');
+			console.log('stop crafty game');
 		    Crafty.stop();
 		},
 
@@ -107,10 +110,6 @@ function ($, Crafty ) {
 			if (events.onLoadComplete ) {
     			Game.events.onLoadComplete = events.onLoadComplete;
 			} 
-		},
-		clear: function() {
-    		console.log("exit");
-    		this.reset();
 		}
     };
     

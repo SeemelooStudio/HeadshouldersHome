@@ -11,18 +11,24 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
         
             initialize: function() {
-                this.login();
+            },
+            syncData: function() {
+                if ( this.checkLogin() ) {
+                    this.fetchDataByUserId();
+                } else {
+                    this.login();
+                }
             },
             login: function() {
+                var cookieId = $.cookie("userId");
+                if ( cookieId ) {
+                    this.fetchDataByUserId({
+                       userId: cookieId
+                    });
+                }
                 if ( Utils.isWechat() ) {
-                    var data = Utils.getParameterByName("userdata",window.location.href);
-                    if ( data ) {
-                        this.parseUserdata(data);
-                    } else {
-                        this.wechatLogin();
-                    }
+                    this.wechatLogin();
                 } else {
-                    //get weibo info
                     this.weiboLogin();
                 }
             },
@@ -37,56 +43,14 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function(){
-                /*
-                var self = this;   
-                WB2.login(function(){
-                    WB2.anyWhere(function(W){
-                        W.parseCMD("/account/get_uid.json", function(sResult, bStatus){
-                                var uid = sResult.uid;
-                                WB2.anyWhere(function(W){
-                                    W.parseCMD("/users/show.json", function(sResult, bStatus){
-                                        self.onLoginSuccess(uid, sResult.name, "weibo", sResult.profile_image_url);
-                                        
-                                    },{uid:uid},{method:'GET'});
-        
-                                });
-                            
-                        },{},{method: 'GET'});
-                    });
-        
-                    
-                });*/
-                var self = this;
-                setTimeout(function(){
-                    self.wechatLogin();
-                }, 2000);
+                this.wechatLogin();
                 
             },
             wechatLogin: function() {
-                this.onLoginSuccess("0","本地测试用户名","test", "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/64"); 
                 return;
-                /* 
-                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";*/
+                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 
             },
-            onLoginSuccess: function(uid, name, type, avatar) {
-                var self = this;
-                this.set({
-                    "userName":name,
-                    "headImageUrl":avatar
-                });
-                this.url = "app/data/user.json";
-                this.fetch({
-                    success: function(){
-                        self.initLeaderSetting();
-                        self.set("isLogin", true);
-                        self.set("hasCoupon", self.checkCoupon());
-                        self.trigger("onFetchSuccess");
-                        
-                    }
-                });                
-            },
-            
             initLeaderSetting: function() {
                 var leadershipRank = 6;
                 if ( this.get("accumulatePointsRanking") < leadershipRank ) {
@@ -113,9 +77,39 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     this.set("shootGameLeader",false);
                 }
             },
+            setUserId: function(userId) {
+                this.set("userId", userId);
+                $.cookie("userId", userId);
+            },
+            fetchDataByUserId: function(options) {
+                var self = this;
+                if ( options && options.userId ) {
+                    this.setUserId(options.userId);
+                }
+                $.ajax({
+                  url: "app/data/user.json",
+                  dataType:"json",
+                  data: {
+                      "userId":this.get("userId")
+                  },
+                  success: function(data, textStatus, jqXHR){
+                    self.parseUserdata(data);
+                    if ( options && options.success ) {
+                       options.success(); 
+                    }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                    if ( options && options.error ) {
+                        options.error( textStatus + ": " + errorThrown);
+                    } else {
+                        console.log(errorThrown);
+                    }
+                      
+                  }
+                });                
+            },
             parseUserdata: function(userdata) {
-                $("#main").html(userdata);
-                this.set($.parseJSON(userdata));
+                this.set(userdata);
                 
                 this.set("isLogin", true);
                 this.set("hasCoupon", this.checkCoupon());
@@ -125,10 +119,9 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             redeemACard: function(options){
                 var self = this;
-                setTimeout(function(){
 
-                    var card = new Card();
-                    card.fetch({
+                var card = new Card();
+                card.fetch({
                         success:function(){
                             options.success(card);
                             if ( self.get("numOfCoupons") < 1 ) {
@@ -141,8 +134,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                         error: function(){
                             options.error("abcde");
                         }
-                    });
-                }, 1000);
+                });
                 
             }
         });

@@ -5,6 +5,7 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   require("hammerjs");
   require("jqueryhammer");
+  require("jquerycookie");
   
   //views
   var MainView = require("views/MainView");
@@ -32,15 +33,16 @@ define(function(require, exports, module) {
   // Defining the application router.
   module.exports = Backbone.Router.extend({
     initialize: function() {
-        
         user = new User();
         mainView = new MainView();        
         prepareView = new PrepareView();
         lottoHistory = new LottoHistory();
         
+        
     },
     routes: {
       "": "index",
+      "login/:userId":"login",
       "leaderboard/:type":"leaderboard",
       "lottery":"lottery",
       "winningRecords":"winningRecords",
@@ -50,13 +52,30 @@ define(function(require, exports, module) {
     },
 
     index: function() {
+        prepareView.render();
+        user.syncData();
         mainView.showHeader(function(){
-            prepareView.render();
             startView = new StartView({ model: user });
         });
         
     },
+    login: function(userId) {
+        prepareView.render();
+        user.setUserId(userId);
+        user.fetchDataByUserId({
+            success:function(){
+                Backbone.history.navigate("", { trigger: true, replace: true });
+            },
+            error: function(){
+                alert("服务器出错了");
+            }
+        });
+        
+        
+    },
     leaderboard: function(type) {
+        prepareView.render();
+        user.syncData();
         if ( !startView ) {
             startView = new StartView({ model: user });
         }
@@ -70,6 +89,7 @@ define(function(require, exports, module) {
     },
     lottery: function() {
         prepareView.render();
+        user.syncData();
         mainView.hideHeader(function(){
             lottoView = new LottoView( { model: user });
         });
@@ -77,6 +97,7 @@ define(function(require, exports, module) {
     },
     winningRecords: function() {
         prepareView.render();
+        user.syncData();
         mainView.hideHeader(function(){
             lottoHistoryView = new LottoHistoryView( { collection:lottoHistory, user: user });
 
@@ -84,12 +105,10 @@ define(function(require, exports, module) {
     },
     gameDribble: function() {
         prepareView.render();
+        user.syncData();
         mainView.hideHeader(function(){
             gameView = new GameView({ user : user, gameTypeId : 1});
         });
-    },
-    ready: function(){        
-        startView.ready();
     }
   });
 });

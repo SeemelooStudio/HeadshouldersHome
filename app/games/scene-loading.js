@@ -1,5 +1,17 @@
-define(["crafty", "games/game", "games/player-config"],
-function (Crafty, Game, PlayerConfig) {
+define(["crafty", "games/game", "games/player-config", "img/heads", "img/bodies"],
+function (Crafty, Game, PlayerConfig, headsAtlas, bodiesAtlas) {
+
+var loadAtlas = function(imageFileName, atlas) {
+	var sprites = {};
+	for (var spriteName in atlas['frames']) 
+	{
+		frame = atlas['frames'][spriteName]['frame'];
+		sprites[spriteName] = [frame['x'], frame['y'], frame['w'], frame['h']];
+	};
+
+	Crafty.sprite(imageFileName, sprites);
+ }
+
 // Loading scene
 // -------------
 // Handles the loading of binary assets such as images and audio files
@@ -12,8 +24,8 @@ Crafty.scene('Loading', function(){
 	// Load our sprite map image
 	Crafty.load([
 		'app/img/obstacle.png',
-		'app/img/head.png',
-		'app/img/body.png',
+		'app/img/heads.png',
+		'app/img/bodies.png',
 		'app/img/ball.png',
 		'app/img/grass.png',
 		], function(){
@@ -23,14 +35,10 @@ Crafty.scene('Loading', function(){
 			SpriteObstacle:    [0, 0],
 		});
 
-		Crafty.sprite(150, 'app/img/head.png', {
-			SpriteMessi:	[1, 0],
-			SpriteNeymar:   [0, 0],
-		});
-
-		Crafty.sprite(150, 256, 'app/img/body.png', {
-			SpriteBlue:     [1, 0],
-			SpriteYellow:   [4, 0],
+		Crafty.sprite(140, 110, 'app/img/bodies.png', {
+			BodyMessi:     [1, 1],
+			BodyAmateur:   [1, 2],
+			BodyPro:       [1, 0]
 		});
 
 		Crafty.sprite(80, 145, 'app/img/grass.png', {
@@ -40,6 +48,8 @@ Crafty.scene('Loading', function(){
 		Crafty.sprite(35, 'app/img/ball.png', {
 			SpriteBall:     [0, 0],
 		});
+
+		loadAtlas('app/img/heads.png', headsAtlas);
 
 		// Now that our sprites are ready to draw, start the game
 		Crafty.scene('Game');

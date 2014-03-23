@@ -237,10 +237,9 @@ Crafty.c('Obstacle', {
 });
 
 Crafty.c('Amateur', {
-	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
-	horizontalSpeed: Game.configs.player_vertical_speed_per_frame,
+	speed: Game.configs.player_vertical_speed_per_frame,
 
-	wanderDistance : 50,
+	wanderDistance : 3,
 
 	init: function() {
 		this.requires('Avatar, Collision, DebugCollision, DebugArea')
@@ -257,6 +256,10 @@ Crafty.c('Amateur', {
 			this.faceRight();
 		}
 
+		this.attr.bind('Change', function(data) {
+			console.log(data);
+		});
+
 		return this;
 	},
 	
@@ -267,7 +270,7 @@ Crafty.c('Amateur', {
 	},
 
 	update: function(player, deltaTime, frame) {
-		this.y += this.verticalSpeed * deltaTime;
+		this.y += this.speed * deltaTime;
 		if (this.centerX == null) 
 		{
 			this.centerX = this._x;
@@ -283,7 +286,7 @@ Crafty.c('Amateur', {
 				}
 				else
 				{
-					this.x -= this.horizontalSpeed * deltaTime;
+					this.x -= this.speed * deltaTime;
 				}
 			}
 			else
@@ -291,11 +294,11 @@ Crafty.c('Amateur', {
 				if ( this._x > this.centerX + this.wanderDistance)
 				{
 					this.x = this.centerX + this.wanderDistance;
-					this.faceLeft();
+					this.faceRight();
 				}
 				else
 				{
-					this.x += this.horizontalSpeed * deltaTime;
+					this.x -= this.speed * deltaTime;
 				}
 			}
 		}
@@ -308,29 +311,14 @@ Crafty.c('Amateur', {
 });
 
 Crafty.c('WorldClass', {
-	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
+	speed: Game.configs.player_vertical_speed_per_frame,
 
 	init: function() {
-		this.requires('Avatar, Collision, DebugCollision, DebugArea')
-				.attr({w: 80, h: 120});
+		this.requires('Actor');
 	},
 
-	WorldClass : function(headConfig, bodyConfig) {
-		this.Avatar(headConfig, bodyConfig, false);
-		this.collision(this.boundBox);
-
-		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
-		if (seed % 2 === 0)
-		{
-			this.faceRight();
-		}
-
-		return this;
-	},
-	
-
-	update: function(player, deltaTime) {
-		this.y += this.verticalSpeed * deltaTime;
+	update: function(player) {
+		this.y += this.speed * deltaTime;
 	},
 
 	onPlayerHit: function() {

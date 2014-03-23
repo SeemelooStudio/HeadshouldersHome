@@ -19,7 +19,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             events: {
                 "tap #gameStart": "onClickStartGame",
                 "tap #gameBackHome": "onClickBackHome",
-                "tap #gameOver-lotto": "onClickLotto"
+                "tap #gameOver-lotto": "onClickLotto",
+                "tap #gameOver-replay,#game-replay" : "onClickReplay",
+                "tap #gameOver-leaderboard,#game-leaderboard": "onClickLeaderboard"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -36,19 +38,26 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp,#gameBackHome"),{
                     "hideAtFirst":false
                 });
+                this.$score = this.$el.find("#game-topBar-score");
+                this.$highestScore = this.$el.find("#game-topBar-high");
+                this.$coupon = this.$el.find("#game-topBar-coupon");
                 
                 this.mainAnimationScheduler.animateIn();
+                
+                if ( this.Game ) {
+                    self.$el.find("#gameStart").fadeIn();
+                } else {
                 require(["games/game","games/components","games/scene-game","games/scene-loading","games/scene-over"],function(Game){
                     self.$el.find("#gameStart").fadeIn();
                     self.Game = Game;
-                    Game.events = {
+                    Game.registerEvents({
                         onGameOver: function() {
                             self.gameOver();
                         },
                         onCollectCoin: function() {
                             self.addCoupon();
                         },
-                        onPassAmatur: function() {
+                        onPassAmateur: function() {
                             self.addScore(2);
                         },
                         onPassObstacle: function() {
@@ -57,14 +66,14 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         onPassWordclass: function() {
                             self.addScore(5);
                         }
-                    }
+                    });
                     
                 });
-                this.$score = this.$el.find("#game-topBar-score");
-                this.$highestScore = this.$el.find("#game-topBar-high");
-                this.$coupon = this.$el.find("#game-topBar-coupon");
+                }
+                
             },
             ready: function(){
+                this.clear();
                 this.model = new Game({ gameId:this.gameId, user:this.user });
                 this.render();
             },
@@ -90,7 +99,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             startGame: function() {
                 var self = this;
                 $("#loading").show();
-                console.log("here");
                 this.model.startGame({
                    success: function(){
                        self.Game.start();
@@ -108,7 +116,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 $("#loading").show();
                this.model.submitResult({
                    success: function(){
-                       var gameOverView = new GameOverView({ model: self.model});
+                       //var gameOverView = new GameOverView({ model: self.model});
                        $("#loading").hide();
                    },
                    error: function(msg) {
@@ -124,6 +132,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     $('body').scrollTop(0);
                     Backbone.history.navigate("lottery", { trigger: true, replace: false });
                 });
+            },
+            onClickReplay: function(e) {
+                  this.ready();
             },
             addScore: function( score ) {
                 this.model.addScore(score);
@@ -141,11 +152,10 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
             },
-            pause: function() {
-                
-            },
-            restart: function(){
-                
+            clear: function() {
+                if ( this.Game ) {
+                    this.Game.clear();
+                }
             }
             
         });

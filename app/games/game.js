@@ -94,6 +94,10 @@ function ($, Crafty ) {
 				Game.events.onGameOver = events.onGameOver;
 			}
 		},
+		clear: function() {
+    		console.log("exit");
+    		this.reset();
+		}
     };
     
     return Game;

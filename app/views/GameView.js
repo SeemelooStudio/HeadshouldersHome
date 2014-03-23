@@ -116,7 +116,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 $("#loading").show();
                this.model.submitResult({
                    success: function(){
-                       //var gameOverView = new GameOverView({ model: self.model});
+                       var gameOverView = new GameOverView({ model: self.model});
                        $("#loading").hide();
                    },
                    error: function(msg) {

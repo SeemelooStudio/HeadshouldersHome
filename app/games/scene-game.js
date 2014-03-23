@@ -93,7 +93,6 @@ Crafty.scene('Game', function() {
 	};
 
 	self.onEnterFrame = function(data) {
-		console.log("on enter frame of game");
 		self.elapsedTimeSinceLastGeneration += data.dt;
         if (self.elapsedTimeSinceLastGeneration >= Game.configs.component_generate_interval)
         {

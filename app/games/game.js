@@ -8,7 +8,7 @@ function ($, Crafty ) {
         start: function() {
 			Game.reset();
 			console.log('start crafty game');
-			Crafty.init(Game.width, Game.height, 'cr_stage');
+			Crafty.init(Game.width, Game.height);
 			Crafty.background('#0000FF');
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
 			Crafty.scene('Loading');

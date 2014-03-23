@@ -5,6 +5,7 @@ function (Crafty, Game, PlayerConfig, ObjectRandomizer) {
 // -------------
 // Runs the core gameplay loop
 Crafty.scene('Game', function() {
+	console.log("enter scene game");
 	var self = this;
 
 	self.components = [];
@@ -13,6 +14,7 @@ Crafty.scene('Game', function() {
 
 	self.resetGame = function() {
 		self.numOfComponentsGenerated = 0;
+		self.elapsedTimeSinceLastGeneration = 0;
 		self.destroyAllComponents();
 	},
 
@@ -91,6 +93,14 @@ Crafty.scene('Game', function() {
 	};
 
 	self.onEnterFrame = function(data) {
+		console.log("on enter frame of game");
+		self.elapsedTimeSinceLastGeneration += data.dt;
+        if (self.elapsedTimeSinceLastGeneration >= Game.configs.component_generate_interval)
+        {
+			self.generateComponent();
+			self.elapsedTimeSinceLastGeneration = 0;
+		}
+
 		self.destroyComponentsOffScreen();
 
 		for( var i = 0; i < self.components.length; i++)
@@ -102,18 +112,16 @@ Crafty.scene('Game', function() {
 		}
 	};
 
+	self.resetGame();
 	self.player = Crafty.e('PlayerController');
 	self.player.attr({ x : Game.width / 2 - self.player.avatar.width() / 2, 
 					   y : Game.height - self.player.avatar.height() * 1.5 });
 
 	self.field = Crafty.e('Field');
-	self.generateComponentRoutine = setInterval(self.generateComponent, Game.configs.component_generate_interval);
 	self.bind('EnterFrame', self.onEnterFrame);
 }, 
 function() { 
 	var self = this;
-
-	clearInterval(self.generateComponentRoutine);
 	self.resetGame();
 	self.unbind('EnterFrame', self.onEnterFrame);
 });

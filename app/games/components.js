@@ -247,13 +247,13 @@ Crafty.c('PlayerController', {
 
 		this.bind('Dragging', function(data) {
 			// clamp player in the field
-			if (this._x < 0) 
+			if (this._x < Game.player_bound_left()) 
 			{
-				this.x = 0;
+				this.x = Game.player_bound_left();
 			}
-			else if (this._x > Game.width - this.avatar.width()) 
+			else if (this._x > Game.player_bound_right() - this.avatar.width()) 
 			{
-				this.x = Game.width - this.avatar.width();
+				this.x = Game.player_bound_right() - this.avatar.width();
 			}
 
 			// detect player direction based on dragging
@@ -468,24 +468,29 @@ Crafty.c('Field', {
 		self.group1 = Crafty.e('Actor');
 		self.group2 = Crafty.e('Actor');
 
-		for (var i = 0; i < 8; i++)
-		{
-			var group = i < 4 ? self.group1 : self.group2;
+		var numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
+		var numOfTilesPerColumn = 10;
+		var numOfTilesHalfColumn = numOfTilesPerColumn / 2;
+		console.log(numOfTilesPerRow);
 
-			for (var j = 0; j < 5; j++)
+		for (var i = 0; i < numOfTilesPerColumn; i++)
+		{
+			var group = i < numOfTilesHalfColumn ? self.group1 : self.group2;
+
+			for (var j = 0; j < numOfTilesPerRow; j++)
 			{
 				var tile = Crafty.e('Actor, SpriteGrass').attr(
 				{
                     w : self.tileWidth,
                     h : self.tileHeight,
                     x : j * self.tileWidth,
-                    y : (i % 4) * self.tileHeight,
+                    y : (i % numOfTilesHalfColumn) * self.tileHeight,
                     z : Game.depth.field });
                     group.attach(tile);
                 }
 		}
 
-		self.group2.y = this.group1.y - self.tileHeight * 4;
+		self.group2.y = this.group1.y - self.tileHeight * numOfTilesHalfColumn;
 
 		self.bind('EnterFrame', function(data) {
 			var delta = Game.configs.player_vertical_speed_per_frame * data.dt / 1000;
@@ -493,11 +498,11 @@ Crafty.c('Field', {
 			this.group2.y += delta;
 			if (this.group1.y > Game.height)
 			{
-				self.group1.y = this.group2.y - self.tileHeight * 4;
+				self.group1.y = this.group2.y - self.tileHeight * numOfTilesHalfColumn;
 			}
 			else if (this.group2.y > Game.height)
 			{
-				self.group2.y = this.group1.y - self.tileHeight * 4;
+				self.group2.y = this.group1.y - self.tileHeight * numOfTilesHalfColumn;
 			}
 		});
 	},

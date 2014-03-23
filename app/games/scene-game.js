@@ -54,7 +54,7 @@ Crafty.scene('Game', function() {
 		{
 			component = self.randomizerStep2.get()();
 		}
-		component.attr({x : Crafty.math.randomNumber(0, Game.width - component.width()), y : -50});
+		component.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - component.width()), y : -50});
 		self.components.push(component);
 		++self.numOfComponentsGenerated;
 	};

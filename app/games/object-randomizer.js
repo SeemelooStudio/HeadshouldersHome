@@ -111,7 +111,7 @@ Crafty.c('ObjectRandomizer', {
 		}
 	}
 });
-}
+};
 
 return InitObjectRandomizer;
 });

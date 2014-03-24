@@ -1,5 +1,5 @@
-define(["crafty", "games/game", "games/player-config", "games/object-randomizer"],
-function (Crafty, Game, PlayerConfig, ObjectRandomizer) {
+define(["crafty", "games/game", "games/player-config"],
+function (Crafty, Game, PlayerConfig) {
 
 // Game scene
 // -------------

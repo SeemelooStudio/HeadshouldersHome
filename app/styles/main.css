@@ -262,6 +262,9 @@ img {
 .gameButton:active,.gameButton:focus{
     background-color: #ffd800;
 }
+.gameButton.disabled:active,.gameButton.disabled:focus{
+    background: #d4d4d4;
+}
 .gameButton-innner {
     width: 100%;
     height: 100%;
@@ -660,6 +663,7 @@ img {
 }
 #lottoLogo {
     width: 120px;
+    height: 111px;
     margin: 5px auto;
 }
 #lottoActions {
@@ -1493,6 +1497,7 @@ textarea.form-control {
     height: 100%;
     background: rgba(0,0,0,0.8);
     display: none;
+    z-index: 99;
 }
 #errorDialog {
     width: 240px;
@@ -1632,6 +1637,7 @@ textarea.form-control {
     }
     #lottoLogo {
     width: 240px;
+    height: 223px;
     margin: 0 auto;
     }
 #lottoActions {
@@ -1768,6 +1774,7 @@ textarea.form-control {
     position: absolute;
     border-radius: 40px 15px 15px 15px;
     font-size: 14px;
+    margin-bottom: 40px;
 
 }
 
@@ -1865,5 +1872,136 @@ textarea.form-control {
     top: 145px;
     font-size: 16px;
     width: 120px;
+}
+#instruction {
+    top:170px;
+    width: 200px;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-left: -112px;
+    border-width: 2px;
+    cursor: pointer;
+}
+#instruction:hover {
+    background-color: #ffd800;
+    color: #221714;
+}
+#userRank .rank {
+    font-size: 20px;
+}
+#userRank {
+    line-height: 24px;
+}
+#userCoupon {
+    line-height: 24px;
+}
+#plane:hover #userCoupon {
+    color: #0454b7;
+}
+#plane:hover #userAward {
+    background: #0454b7;
+}
+#userCoupon .lotto-pointsCount {
+    font-size: 20px;
+}
+#userRank:hover {
+    color: #ffd800;
+}
+#share .caret {
+    border-top-width: 90px;
+    border-left-width: 90px;
+}
+#share .share-icon {
+    top: 18px;
+    right: 15px;
+}
+.gameButton:hover {
+    background-color: #ffd800;
+}
+.gameButton.disabled:hover {
+    background: #d4d4d4;
+}
+#copyright {
+    padding: 10px 15px;
+    right: 5%;
+    font-size: 14px;
+    line-height: 20px;
+    height: 40px;
+    width: 140px;
+}
+#exitLink {
+    left: 5%;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+}
+#exitLink:hover {
+    color: #ffd800;
+}
+#game-actionBar {
+    width: 60px;
+}
+#game-replay {
+    width: 60px;
+    height: 60px;
+    background-size: 150px 60px;
+    margin-bottom: 15px;
+}
+#game-leaderboard {
+    width: 60px;
+    height: 75px;
+    background-size: 180px 75px;
+}
+#gameOver-replay {
+    width: 150px;
+}
+#gameOver-leaderboard {
+    width: 180px;
+}
+#gameOver-lotto {
+    margin: 30px auto;
+}
+.bar {
+    height: 50px;
+    border-radius: 30px 2px 30px 2px;
+}
+.gameOver-bar {
+    line-height: 50px;
+}
+.gameOver-bar-title {
+    font-size: 18px;
+    border-radius: 28px 2px 28px 2px;
+}
+.gameOver-bar-content {
+    font-size: 20px;
+}
+.gameOver-bar-content small {
+    font-size: 14px;
+}
+#game-topBar-score, #game-topBar-high, #game-topBar-coupon {
+    height: 45px;
+    line-height: 50px;
+    font-size: 24px;
+    background-position: left center;
+    padding-right: 1%;
+    background-size: 30px 30px;
+    padding-left: 32px;
+}
+#game-topBar-score {
+    left: 20%;
+}
+#game-topBar #game-topBar-Logo {
+    width: 100px;
+    left: -25px;
+    top: -2px;
+}
+.bar-inner {
+    border-radius: 28px 2px 28px 2px;
+}
+#gameOverTop {
+    width: 200px;
+}
+#award-action {
+    bottom: -25px;
 }
 }

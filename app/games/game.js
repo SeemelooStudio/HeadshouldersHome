@@ -11,9 +11,11 @@ function ($, Crafty ) {
 
         start: function() {
 			Game.reset();
-			console.log('start crafty game');
+			
 			Crafty.init(Game.width, Game.height);
-			//Crafty.background('#0000FF');
+			if ( Crafty.isPaused() ) {
+    			this.unpause();
+			}
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
 			Crafty.scene('Loading');
         },
@@ -28,11 +30,14 @@ function ($, Crafty ) {
 
 		stop: function() {
 			//Crafty.scene('Over');
-			console.log('stop crafty game');
+			//Crafty.stop();
 			Crafty.stop();
 		},
 
 		restart: function() {
+		    this.reset();
+		    this.unpause();
+		    Crafty.scene('Game');
 		},
 		
 		reset: function() {

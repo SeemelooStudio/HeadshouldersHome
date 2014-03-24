@@ -1,6 +1,6 @@
 define(["crafty", "games/game", "games/player-config"],
 function (Crafty, Game, PlayerConfig) {
-
+var InitComponents = function() {
 Crafty.c('Actor', {
 	init: function() {
 		this.requires('2D, Canvas');
@@ -507,5 +507,6 @@ Crafty.c('Field', {
 		});
 	},
 });
-
+};
+return InitComponents;
 });

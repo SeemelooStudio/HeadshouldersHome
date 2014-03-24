@@ -15,20 +15,20 @@
         {{^isVirtualPrize}}
         <div id="award-address">
                 <p>请填写你的收货地址，否则奖品就寄不到了哦！</p>
-                <p><input class="form-control" type="text" placeholder="姓名" /></p>
-                <p><input class="form-control" type="text"  placeholder="联系电话" /></p>
-                <p><textarea class="form-control" rows="3" placeholder="邮寄地址"></textarea></p>
+                <p><input id="shipTo" class="form-control" type="text" placeholder="姓名" /></p>
+                <p><input id="phone" class="form-control" type="text"  placeholder="联系电话" /></p>
+                <p><textarea id="shippingAddress" class="form-control" rows="3" placeholder="邮寄地址"></textarea></p>
         </div>
         {{/isVirtualPrize}}
         <div id="award-action" class="clearfix">
             <div id="btnAwardOK" class="btn btn-blue btn-inline">
                 <div class="btn-inner">
-                    欢乐地确定
+                    欢乐的确定
                 </div>
             </div>
-            <div id="btnAwardShare" class="btn btn-red  btn-inline"  data-pic="app/img/{{prizeImage}}" data-title="我抽到了{{prizeName}}！">
+            <div class="btn btn-red  btn-inline share"  data-pic="app/img/{{prizeImage}}">
                 <div class="btn-inner">
-                    分享
+                     <i class="fa fa-share-square-o"></i> 分享
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                     伤心离开
                 </div>
             </div>
-             <div class="btn btn-red btn-inline share" data-pic="app/img/award0.jpg" data-title="我只抽到了无限安慰奖，求手气!">
+             <div class="btn btn-red btn-inline share" data-pic="app/img/award0.jpg">
                 <div class="btn-inner">
                     <i class="fa fa-share-square-o"></i>分享求手气
                 </div>

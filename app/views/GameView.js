@@ -44,11 +44,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
                 this.mainAnimationScheduler.animateIn();
                 
-                if ( this.Game ) {
-                    self.$el.find("#gameStart").fadeIn();
-                } else {
-                require(["games/game","games/components","games/scene-game","games/scene-loading","games/scene-over"],function(Game){
-                    self.$el.find("#gameStart").fadeIn();
+
+                require(["games/game", "games/components", "games/object-randomizer"],function(Game, InitComponents, InitObjectRandomizer){
+                    
                     self.Game = Game;
                     Game.registerEvents({
                         onGameOver: function() {
@@ -70,9 +68,15 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             $("#loading").hide();
                         }
                     });
+
+                    InitComponents();
+                    InitObjectRandomizer();
+
+                    require(["games/scene-game","games/scene-loading","games/scene-over"], function(){
+                        self.$el.find("#gameStart").fadeIn();
+                    });
                     
                 });
-                }
                 
             },
             ready: function(){
@@ -116,7 +120,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             gameOver: function() {
                 var self = this;
                 $("#loading").show();
-                this.Game.stop();
                this.model.submitResult({
                    success: function(){
                        var gameOverView = new GameOverView({ model: self.model});
@@ -131,16 +134,20 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onClickLotto: function() {
                 var self = this;
+                this.onExit();
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
                     Backbone.history.navigate("lottery", { trigger: true, replace: true });
                 });
             },
             onClickReplay: function(e) {
-                  window.location.reload();
+                  this.gameOverAnimationScheduler.animateOut();
+                  this.gameAnimationScheduler.animateIn();
+                  this.Game.restart();
             },
             onClickLeaderboard: function(){
                 var self = this;
+                this.onExit();
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
                     Backbone.history.navigate("", { trigger: true, replace: true });

@@ -40,7 +40,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
-                "tap #plane":"onClickLotto"
+                "tap #ruleButton":"onClickLotto"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -55,8 +55,9 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true,"sequentialDelay":350});
                 $("#share").show();
                 this.lottoAnimationScheduler.animateIn(function(){
-                    self.btnAnimationScheduler.animateIn();
+                    
                 });
+                this.btnAnimationScheduler.animateIn();
             },
             ready: function(){
                 this.model.set(this.user.toJSON());

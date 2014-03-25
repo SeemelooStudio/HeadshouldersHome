@@ -100,7 +100,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                
+                var self = this;
                 if ( this.card.get("isWon") ) { 
                     if ( this.validateAddress() ) {
                         this.saveAddress();
@@ -108,7 +108,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 } else {
                     this.mainAnimationScheduler.animateOut(function(){
                            $('body').scrollTop(0);
-                           this.render();
+                           self.render();
                     });
                 }
                 

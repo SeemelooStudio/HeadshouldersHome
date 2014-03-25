@@ -1,11 +1,11 @@
         <div class="clearfix bar bar-blue gameOver-bar">
             <div class="bar-inner clearfix">
-                <div class="gameOver-bar-title">最终成绩</div><div class="gameOver-bar-content">{{score}}</div><div class="gameOver-bar-content"><small>总积分</small>{{accumulatePoints}}</div>
+                <div class="gameOver-bar-title">本局成绩</div><div class="gameOver-bar-content">{{score}}</div><div class="gameOver-bar-content"><small>游戏排名</small>{{gameRanking}}</div>
             </div>
         </div>
         <div class="clearfix bar bar-blue gameOver-bar">
             <div class="bar-inner clearfix">
-                <div class="gameOver-bar-title">实力排名</div><div class="gameOver-bar-content">{{gameRanking}}</div><div class="gameOver-bar-content"><small>总排名</small>{{totalRanking}}</div></div>
+                <div class="gameOver-bar-title">总积分</div><div class="gameOver-bar-content">{{accumulatePoints}}</div><div class="gameOver-bar-content"><small>总积分排名</small>{{totalRanking}}</div></div>
             </div>
         </div>
         <div id="gameOver-action" class="clearfix container">
@@ -18,7 +18,12 @@
         </div>
         <div id="gameOver-lotto" class="btn btn-blue btn-block">
             <div class="btn-inner">
-                    去抽奖
-                    <br /><small>你有{{coupon}}张奖券</small>
+                    你有{{coupon}}张奖券 去抽奖
+            </div>
+        </div>
+        
+        <div id="gameOver-share" class="btn btn-red btn-block">
+            <div class="btn-inner">
+                    <i class="fa fa-share-square-o"></i> 分享成绩
             </div>
         </div>

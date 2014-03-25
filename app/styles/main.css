@@ -28,7 +28,7 @@ img {
 #logo {
     width: 187px;
     margin: 0 auto;
-    padding-top: 5px;
+    top:-15px;
     position: relative;
     left: -5px;
 }
@@ -64,7 +64,6 @@ img {
     top:-15px;
 }
 #gameNavigation {
-    padding-top: 25px;
     padding-bottom: 80px;
 }
 #game-topBar {
@@ -435,6 +434,9 @@ img {
     text-align: center;
     
 }
+.leaderboard-button:first-child {
+    width: 15%;
+}
 #icon-trophy {
     position: relative;
 }
@@ -562,8 +564,8 @@ img {
     border-bottom: none;
 }
 .leaderboard-header {
-    height: 30px;
-    line-height: 30px;
+    height: 20px;
+    line-height: 20px;
     font-size: 11px;
 }
 .leaderboard-header .leaderboard-col2,.leaderboard-header .leaderboard-col3 {
@@ -659,6 +661,7 @@ img {
 
 #gameNavigation {
     height: 300px;
+    margin-top: -20px;
     
 }
 #leaderboard {
@@ -692,7 +695,7 @@ img {
 #lottoLogo {
     width: 120px;
     height: 111px;
-    margin: 5px auto;
+    margin: 0 auto 10px;
 }
 #lottoActions {
     padding: 5px 0;
@@ -772,7 +775,7 @@ img {
     width: 254px;
     height: 170px;
     margin-left: -127px;
-    top: 220px;
+    top: 175px;
     left: 50%;
 }
 #envelope-cover {
@@ -825,16 +828,17 @@ img {
     background-color: #ffd800;    
 }
 #lotto-info {
-    padding: 5px 10px;
-    margin: 10px auto;
+    padding: 5px 5%;
+    position: absolute;
     height: 18px;
     line-height: 18px;
-    border-radius: 5px;
-    background: rgba(0,0,0,0.5);
-    color: #FFF;
+    
     font-size: 12px;
     text-align: center;
-    width: 224px;
+    width: 80%;
+    left: 5%;
+    z-index: 1;
+    bottom: 5px;
 }
 #envelope-sealingInner {
     border:2px dotted #FFF;
@@ -1062,7 +1066,7 @@ img {
     left: 0;
   }
   100% {
-    top:-200px;
+    top:-150px;
     left: 0;
   }
 }
@@ -1072,7 +1076,7 @@ img {
     left: 0;
   }
   100% {
-    top:-200px;
+    top:-150px;
     left: 0;
   }
 }
@@ -1082,7 +1086,7 @@ img {
     left: 0;
   }
   100% {
-    top:-350px;
+    top:-300px;
     left: 0;
   }
 }
@@ -1092,7 +1096,7 @@ img {
     left: 0;
   }
   100% {
-    top:-350px;
+    top:-300px;
     left: 0;
   }
 }
@@ -1195,8 +1199,9 @@ img {
 #user {
 
     position: absolute;
-    left: 35px;
-    top:-40px;
+    left: 50%;
+    margin-left: -10px;
+    top:-15px;
     
     
 }
@@ -1206,6 +1211,7 @@ img {
     border-radius: 50%;
     border:1px solid #221714;
     overflow: hidden;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
 }
 #user-name {
  position: absolute;
@@ -1424,9 +1430,10 @@ textarea.form-control {
 }
 .gameOver-bar {
     width: 90%;
-    margin: 1em auto;
+    margin: 10px auto;
     max-width: 740px;
-    line-height: 30px;
+    line-height: 40px;
+    height: 40px;
 }
 .gameOver-bar-title {
     width: 25%;
@@ -1445,7 +1452,7 @@ textarea.form-control {
     float: left;
     height: 100%;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     text-shadow: 1px 1px solid rgba(0,0,0,0.5);
     font-style: italic;
@@ -1550,6 +1557,46 @@ textarea.form-control {
 }
 #errorAction {
     text-align: center;
+}
+#ruleButton {
+    height: 45px;
+}
+#ruleButton .gameButton-img{
+    width: 179px;
+    margin-left: -90px;
+    bottom: 5px;
+}
+#ruleImgLeft,#ruleImgRight {
+    position: absolute;
+}
+#ruleImgRight {
+    width: 45px;
+    right: 5px;
+    top: -30px;
+}
+#ruleImgLeft {
+    width: 45px;
+    left: 5px;
+    top: -20px;
+}
+#ruleLinkLeft,#ruleLinkRight {
+    position: absolute;
+    background: #ffd800;
+    border:1px solid #221714;
+    padding: 2px 5px;
+    font-size: 10px;
+    color: #221714;
+    border-radius: 10px 2px 10px 2px;
+}
+#ruleLinkLeft {
+    left: -10px;
+    bottom: 0px;
+}
+#ruleLinkRight {
+    right: -10px;
+    padding: 2px 10px;
+    bottom: 0px;
+    
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */

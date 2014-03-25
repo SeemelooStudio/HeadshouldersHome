@@ -116,12 +116,32 @@ img {
     line-height: 16px;
     padding: 5px 0;
 }
-#leaderboard-adLeft {
+#leaderboard-adLeft img{
     width: 82px;
     height: 28px;
+    
+}
+#leaderboard-adLeft {
+    width: 180px;
+    height: 28px;
+    vertical-align: bottom;
     float: left;
     cursor: pointer;
     margin-left: 50px;
+    
+}
+#leaderboard-adRight {
+    float: right;
+    width: 65px;
+    margin-right: 10px;
+}
+#leaderboard-adLeft span {
+    line-height: 28px;
+    position: relative;
+    top: 8px;
+    color: #ffd800;
+    font-size: 12px;
+    font-style: italic;
 }
 #copyright {
     width: 100px;
@@ -411,7 +431,7 @@ img {
     line-height: 35px;
     float: left;
     display: inline-block;
-    
+    cursor: pointer;
     text-align: center;
     
 }
@@ -421,7 +441,7 @@ img {
 #icon-trophy img{
     max-width: 45px;
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     left: 0;
 }
 #leaderboard-ad {

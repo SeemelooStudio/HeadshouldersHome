@@ -43,18 +43,14 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function(){
-                window.location.href= window.location.origin + window.location.pathname + "#login/123";
-                /*
+                //window.location.href= window.location.origin + window.location.pathname + "#login/123";
                 window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
-                */
             },
             wechatLogin: function() {
             
-                window.location.href= window.location.origin + window.location.pathname + "#login/123";
-                /*
+                //window.location.href= window.location.origin + window.location.pathname + "#login/123";
             
                 window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-                */
             },
             initLeaderSetting: function() {
                 var leadershipRank = 6;
@@ -85,6 +81,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             setUserId: function(userId) {
                 this.set("userId", userId);
                 $.cookie("userId", userId);
+                this.set("isLogin", true);
             },
             fetchDataByUserId: function(options) {
                 var self = this;
@@ -116,9 +113,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             parseUserdata: function(userdata) {
                 this.set(userdata);
                 
-                this.set("isLogin", true);
                 this.set("hasCoupon", this.checkCoupon());
-                              
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");
             },
@@ -137,7 +132,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                             self.set("hasCoupon", self.checkCoupon());
                         },
                         error: function(){
-                            options.error("abcde");
+                            options.error("抽奖失败");
                         }
                 });
                 

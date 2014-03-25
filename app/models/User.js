@@ -43,8 +43,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function(){
-                //window.location.href= window.location.origin + window.location.pathname + "#login/123";
-                window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                window.location.href= window.location.origin + window.location.pathname + "#login/123";
+                //window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=1356830721&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
             

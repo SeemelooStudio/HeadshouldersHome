@@ -116,7 +116,13 @@ img {
     line-height: 16px;
     padding: 5px 0;
 }
-
+#leaderboard-adLeft {
+    width: 82px;
+    height: 28px;
+    float: left;
+    cursor: pointer;
+    margin-left: 50px;
+}
 #copyright {
     width: 100px;
     background-color: rgba(0,0,0,.5);
@@ -415,10 +421,12 @@ img {
 #icon-trophy img{
     max-width: 45px;
     position: absolute;
-    bottom: -15px;
+    bottom: 10px;
     left: 0;
 }
-
+#leaderboard-ad {
+    margin-bottom: 5px;
+}
 .leaderboard-button.current {
 
    color: #1a2b4d;

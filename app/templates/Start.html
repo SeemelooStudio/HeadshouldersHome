@@ -1,3 +1,4 @@
+    <!--
 <div class="container">
       <div id="plane" data-entranceAnimation="slideInRight" >
       <img src="app/img/plane.png" />
@@ -19,7 +20,22 @@
       </div>
       </div>
 </div><!--/container-->
+
       <div  id="gameNavigation">
+      <div class="gameButton" id="ruleButton" data-entranceAnimation="slideInLeft"  data-target="gameDribble">
+            <div class="gameButton-innner">
+              <div id="user">
+                <div id="user-avatar">
+                <img src="{{headImageUrl}}" />
+                </div>
+              </div>
+                <img id="ruleImgLeft" src="app/img/rule-left.png" />
+                <img id="ruleImgRight" src="app/img/rule-right.png" />
+                <img class="gameButton-img" src="app/img/ruleimg.png" />
+                <div id="ruleLinkLeft">大奖规则</div>
+                <div id="ruleLinkRight">去抽奖</div>
+            </div>
+        </div>
       {{#dribbleGame.enabled}}
       <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble" href="#gameDribble">
             <div class="gameButton-innner">

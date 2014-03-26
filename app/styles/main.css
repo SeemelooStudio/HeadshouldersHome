@@ -270,7 +270,8 @@ img {
 }
 .gameButton {
     background-color:#3c8ae4;
-    margin: 1em 1em;
+    margin: 1em auto;
+    width: 85%;
     height: 70px;
     border-radius: 20px 2px 20px 2px;
     border:2px solid #221714;
@@ -1560,6 +1561,7 @@ textarea.form-control {
 }
 #ruleButton {
     height: 45px;
+    margin-bottom: 1.5em;
 }
 #ruleButton .gameButton-img{
     width: 179px;
@@ -2074,7 +2076,11 @@ textarea.form-control {
     border-radius: 28px 2px 28px 2px;
 }
 #gameOverTop {
-    width: 200px;
+    width: 170px;
+}
+#gameOverBelt {
+    width: 231px;
+    margin: 0 auto;
 }
 #award-action {
     bottom: -25px;

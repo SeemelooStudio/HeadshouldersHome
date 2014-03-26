@@ -35,8 +35,9 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
             },
-            
+
             events: {
+
                 "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
@@ -92,6 +93,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 var self = this;
                 this.ranklist = new RankList();
                 this.ranklist.fetch({
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
                     success: function(){
                         self.$el.find("#leaderboard").addClass("expand");
                         self.rankView = new RankView({model:self.ranklist, user: self.user});

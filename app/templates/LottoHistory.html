@@ -15,8 +15,8 @@
         <ul id="lotto-records">
             {{#records}}
                 <li class="lotto-record">
-                    <div class="winning-time">{{time}}</div>
-                    <div class="winning-name">{{name}} <small>x</small> {{quantity}}</div>
+                    <div class="winning-time">{{createdAt}}</div>
+                    <div class="winning-name">{{prizeName}} <small>x</small> 1</div>
                     {{#shipTo}}<div class="winning-address">{{shipTo}} - {{phone}} - {{shippingAddress}}</div>{{/shipTo}}
                 </li>
             {{/records}}

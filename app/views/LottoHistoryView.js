@@ -9,18 +9,23 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
                 this.user = options.user;
                 var self = this;
                 if ( this.user.checkLogin() ) {
-                    
+                    this.collection.userId = this.user.get("userId");
                     this.collection.fetch({
+                        dataType:"json",
+                        contentType:"application/json; charset=UTF-8",
                         success: function(){
                             self.render();
                         }
                     });
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", function(){
+                        self.collection.userId = self.user.get("userId");
                         self.collection.fetch({
-                        success: function(){
-                            self.render();
-                        }
+                            dataType:"json",
+                            contentType:"application/json; charset=UTF-8",
+                            success: function(){
+                                self.render();
+                            }
                     });
                     });
                 }                

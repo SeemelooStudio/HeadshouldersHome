@@ -81,7 +81,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             ready: function(){
                 this.onExit();
-                this.model = new Game({ gameId:this.gameId, user:this.user });
+                this.model = new Game({ gameId:this.gameId, user:this.user, gameTypeId : this.gameTypeId });
                 this.render();
             },
             onClickStartGame: function(e) {

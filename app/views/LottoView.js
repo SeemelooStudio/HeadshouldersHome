@@ -100,7 +100,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                
+                var self = this;
                 if ( this.card.get("isWon") ) { 
                     if ( this.validateAddress() ) {
                         this.saveAddress();
@@ -108,7 +108,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 } else {
                     this.mainAnimationScheduler.animateOut(function(){
                            $('body').scrollTop(0);
-                           this.render();
+                           self.render();
                     });
                 }
                 
@@ -120,17 +120,15 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                     phone: this.phone,
                     shippingAddress: this.shippingAddress,
                     success: function() {
-                           self.mainAnimationScheduler.animateOut(function(){
-                            $('body').scrollTop(0);
-                            Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
-                           });
-                       },
-                       error: function(msg) {
-                           Utils.showError(msg + "<br />服务器好像有些问题，请试试点击【确定】按钮");
-                       }
-                    });
-                
-              
+                        self.mainAnimationScheduler.animateOut(function(){
+                        $('body').scrollTop(0);
+                        Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
+                        });
+                    },
+                    error: function(msg) {
+                        Utils.showError(msg + "<br />服务器好像有些问题，请试试点击【确定】按钮");
+                    }
+                });
             },
             onClickLottoHistory: function(e) {
                 e.gesture.preventDefault();

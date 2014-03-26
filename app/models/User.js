@@ -43,12 +43,12 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function(){
-                window.location.href= window.location.origin + window.location.pathname + "#login/123";
-                //window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=1356830721&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                window.location.href= window.location.origin + window.location.pathname + "#login/3";
+               // window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=1356830721&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
             
-                //window.location.href= window.location.origin + window.location.pathname + "#login/123";
+               // window.location.href= window.location.origin + window.location.pathname + "#login/3";
             
                 window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             },
@@ -89,11 +89,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     this.setUserId(options.userId);
                 }
                 $.ajax({
-                  url: "app/data/user.json",
-                  dataType:"json",
-                  data: {
-                      "userId":this.get("userId")
-                  },
+                  url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
+                  dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);
                     if ( options && options.success ) {
@@ -122,6 +119,10 @@ define(["jquery", "backbone", "models/Card", "Utils"],
 
                 var card = new Card();
                 card.fetch({
+                        data: JSON.stringify({ userId: self.get("userId") }),
+                        contentType: "application/json; charset=utf-8",
+                        type: 'POST',
+                        dataType : "json",
                         success:function(){
                             options.success(card);
                             if ( self.get("numOfCoupons") < 1 ) {
@@ -136,6 +137,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                         }
                 });
                 
+
             }
         });
 

@@ -706,13 +706,15 @@ img {
 }
 .btn-block {
     width: 80%;
-    margin: 10px auto;
+    margin: 15px auto;
     display: block;
     text-align: center;
+    border-radius: 20px 2px;
 }
 .btn-block .btn-inner {
-    height: 35px;
-    line-height: 35px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 18px 2px;
 }
 .btn-blue {
     background-color: #3c8ae4;
@@ -725,6 +727,17 @@ img {
     padding: 3px;
     border:2px solid #221714;
     box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.btn-yellow {
+    background-color: #ffd800;
+    padding: 3px;
+    border:2px solid #221714;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.btn-yellow .btn-inner {
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+    color: #744404;
+    
 }
 .btn-blue:active {
     background-color: #ffd800;    
@@ -742,8 +755,6 @@ img {
     background-size: 100% 100%;
     color: #FFF;
     font-size: 16px;
-    font-style: italic;
-    font-weight: bold;
     text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
     position: relative;
 
@@ -1108,7 +1119,7 @@ img {
     left: 0;
   }
   100% {
-    top:-300px;
+    top:-260px;
     left: 0;
   }
 }
@@ -1118,7 +1129,7 @@ img {
     left: 0;
   }
   100% {
-    top:-300px;
+    top:-260px;
     left: 0;
   }
 }
@@ -1450,58 +1461,10 @@ textarea.form-control {
     padding-top: 20px;
     padding-bottom: 10px;
 }
-.gameOver-bar {
-    width: 90%;
-    margin: 10px auto;
-    max-width: 740px;
-    line-height: 40px;
-    height: 40px;
-}
-.gameOver-bar-title {
-    width: 25%;
-    height: 100%;
-    float: left;
-    background: #fff;
-    border-radius: 18px 2px 18px 2px;
-    color: #00429a;
-    text-align: center;
-    font-size: 12px;
-    font-style: italic;
 
-}
-.gameOver-bar-content {
-    width: 20%;
-    float: left;
-    height: 100%;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    text-shadow: 1px 1px solid rgba(0,0,0,0.5);
-    font-style: italic;
-}
-.gameOver-bar-content small {
-    font-size: 10px;
-    text-shadow: none;
-    font-weight:normal;
-}
-.gameOver-bar .gameOver-bar-content:last-child {
-    width: 54%;
-}
-#gameOver-action {
-    width: 80%;
-    margin: 30px auto 0;
-    max-width: 740px;
-}
-#gameOver-replay {
-    width: 100px;
-    float: left;
-    position: relative;
-    top:11px;
-}
-#gameOver-leaderboard {
-    width: 120px;
-    float: right;
-}
+
+
+
 #shareOverlay {
     position: absolute;
     position: fixed;
@@ -1673,6 +1636,7 @@ textarea.form-control {
     }
     #logo {
         width: 340px;
+        top:-30px;
     }
     #plane {
         width: 200px;
@@ -1694,13 +1658,16 @@ textarea.form-control {
         left: 10%;
     }
     #gameNavigation {
-        padding-top: 40px;
+        margin-top:-40px;
     }
 
     .gameButton {
         height: 120px;
         margin: 1.8em auto;
         border-radius: 50px 2px 50px 2px;
+    }
+    #ruleButton {
+        margin-bottom: 2.5em;
     }
     .gameButton-innner{
         border-radius: 50px 2px 50px 2px;
@@ -1823,7 +1790,7 @@ textarea.form-control {
     width: 508px;
     height: 340px;
     margin-left: -254px;
-    top:380px;
+    top:310px;
 }
 #envelope-back {
     width: 500px;
@@ -1986,7 +1953,12 @@ textarea.form-control {
     width: 250px;
 }
 .btn-block {
-    max-width: 600px;
+    max-width: 480px;
+    border-radius: 22px 2px;
+    margin-bottom: 20px;
+}
+.btn-block .btn-inner {
+    border-radius: 18px 2px;
 }
 .gameHelp-text {
     top: 220px;
@@ -2092,31 +2064,12 @@ textarea.form-control {
     height: 75px;
     background-size: 180px 75px;
 }
-#gameOver-replay {
-    width: 150px;
-}
-#gameOver-leaderboard {
-    width: 180px;
-}
-#gameOver-lotto {
-    margin: 30px auto;
-}
+
+
+
 .bar {
     height: 50px;
     border-radius: 30px 2px 30px 2px;
-}
-.gameOver-bar {
-    line-height: 50px;
-}
-.gameOver-bar-title {
-    font-size: 18px;
-    border-radius: 28px 2px 28px 2px;
-}
-.gameOver-bar-content {
-    font-size: 20px;
-}
-.gameOver-bar-content small {
-    font-size: 14px;
 }
 #game-topBar-score, #game-topBar-high, #game-topBar-coupon {
     height: 45px;
@@ -2141,5 +2094,35 @@ textarea.form-control {
 
 #award-action {
     bottom: -25px;
+}
+#gameOverTop {
+    width: 300px;
+    height: 300px;
+}
+#gameOverBelt {
+    width: 462px;
+    height: 200px;
+    background-size: 462px 200px;
+    top:-80px;
+}
+#gameOverBg {
+    width: 400px;
+    height: 400px;
+    background-size: 100% 100%;
+    margin-left: -200px;
+    top:0;
+}
+#gameOverScore {
+    font-size: 72px;
+    height: 80px;
+    line-height: 72px;
+    padding-top: 25px;
+}
+#gameOverScore small {
+    font-size: 14px;
+    top:-30px;
+}
+#gameOverRanking {
+    font-size: 14px;
 }
 }

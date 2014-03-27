@@ -10,7 +10,7 @@ Crafty.c('Actor', {
 Crafty.c('DebugCollision', {
 	init: function() {
 		// turn below line off in production
-		//this.requires('DebugCanvas, WiredHitBox');
+		this.requires('DebugCanvas, WiredHitBox');
 	},
 });
 
@@ -21,7 +21,7 @@ Crafty.c('DebugArea', {
 	},
 });
 
-Crafty.c('Body', {
+Crafty.c('Body', { 
 	init: function() {
 	},
 	
@@ -118,8 +118,8 @@ Crafty.c('Avatar', {
 		self.facingLeft = true;
 	
 		self.boundBox = new Crafty.polygon(
-				[20,10], 
-				[self.width() - 20, 10], 
+				[20,90], 
+				[self.width() - 20, 90], 
 				[self.width() - 20, self.height() - 10], 
 				[20, self.height() - 10]);
 
@@ -225,8 +225,7 @@ Crafty.c('Avatar', {
 Crafty.c('PlayerController', {
 	init: function() {
 		this.requires('Actor, Draggable, DebugArea')
-				.attr({w: 80, h: 180, z: Game.depth.controller})
-				.dragDirection({x:1, y:0});
+				.attr({w: 80, h: 180, z: Game.depth.controller});
 
 		this.avatar = Crafty.e('Avatar, Collision, DebugCollision')
 				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true)

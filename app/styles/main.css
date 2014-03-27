@@ -280,7 +280,7 @@ img {
     padding: 2px;
     position: relative;
     display: block;
-    max-width: 740px;
+    max-width: 600px;
 }
 .gameButton.disabled {
     background: #d4d4d4;
@@ -1002,6 +1002,27 @@ img {
   animation:         float 1s infinite; /* IE 10+ */
 
 }
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to { 
+    transform: rotate(360deg);
+  }
+}
+.rotate {
+  -webkit-animation: rotate 6s infinite linear; /* Safari 4+ */
+  animation:         rotate 6s infinite linear; /* IE 10+ */
+
+}
 @-webkit-keyframes opencard {
   0% {
     -webkit-transform: rotateX(0deg);
@@ -1509,7 +1530,7 @@ textarea.form-control {
     line-height: 24px;
     width: 100%;
     position: absolute;
-    top:240px;
+    top:320px;
     left: 0;
 }
 .yellow {
@@ -1600,16 +1621,58 @@ textarea.form-control {
     bottom: 0px;
     
 }
+#gameOverTop {
+    width: 180px;
+    height: 180px;
+    position: relative;
+}
+#gameOverBelt {
+    width: 231px;
+    height: 100px;
+    margin: 0 auto;
+    background: url(../../app/img/gameoverbelt.png) no-repeat center center;
+    background-size: 231px 100px;
+    text-align: center;
+    top:-50px;
+    position: relative;
+    color: #FFF;
+}
+#gameOverBg {
+    background: url(../../app/img/gameoverbg.png) no-repeat center center;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    margin-left:-150px;
+    top: -20px;
+}
+#gameOverScore {
+    font-size: 34px;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    padding-top: 15px;
+    line-height: 36px;
+    height: 36px;
+}
+#gameOverScore small {
+    font-size: 10px;
+    text-shadow: none;
+    position: relative;
+    top: -12px;
+    right: -2px;
+}
+#gameOverRanking {
+    font-size: 10px;
+}
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
     #header {
-        background-size: 100% auto;
+        background-size: 100% 100%;
         background-position: center center;
         height: 250px; 
     }
     #logo {
         width: 340px;
-        padding-top: 35px;
     }
     #plane {
         width: 200px;
@@ -1835,13 +1898,13 @@ textarea.form-control {
     font-size: 12px;
 }
 #user {
-    top: -85px;
-    left: 51px;
-    font-size: 18px;
+    top: -30px;
+    left: 50%;
+    margin-left: -25px;
 }
 #user-avatar {
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: 50px;
 }
 #user-name {
     
@@ -2075,13 +2138,7 @@ textarea.form-control {
 .bar-inner {
     border-radius: 28px 2px 28px 2px;
 }
-#gameOverTop {
-    width: 170px;
-}
-#gameOverBelt {
-    width: 231px;
-    margin: 0 auto;
-}
+
 #award-action {
     bottom: -25px;
 }

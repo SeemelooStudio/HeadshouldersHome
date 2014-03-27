@@ -1,8 +1,8 @@
-define(["jquery", "backbone","mustache", "text!templates/GameOver.html"],
-    function ($, Backbone, Mustache, template) {
+define(["jquery", "backbone","mustache", "text!templates/GameOver.html", "animationscheduler"],
+    function ($, Backbone, Mustache, template, AnimationScheduler) {
         var GameOverView = Backbone.View.extend({
             // The DOM Element associated with this view
-            el: "#gameOverContent",
+            el: "#gameOver",
             // View constructor
             initialize: function () {
                 this.listenTo(this, "render", this.postRender);
@@ -15,6 +15,17 @@ define(["jquery", "backbone","mustache", "text!templates/GameOver.html"],
                 return this;                
             },
             postRender: function() {
+                var self = this;
+                this.mainAnimation = new AnimationScheduler(this.$el.find(".container"));
+                this.mainAnimation.animateIn(function(){
+                    self.$el.find("#gameOverBg").removeClass("hidden").fadeIn(function(){
+                        $(this).addClass("rotate");
+                        self.$el.find("#gameOverScore").addClass("animated tada");
+                    });
+                });
+            },
+            onExit: function() {
+                this.mainAnimation.animateOut();
             }
             
         });

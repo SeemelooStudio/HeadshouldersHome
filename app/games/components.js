@@ -10,7 +10,7 @@ Crafty.c('Actor', {
 Crafty.c('DebugCollision', {
 	init: function() {
 		// turn below line off in production
-		this.requires('DebugCanvas, WiredHitBox');
+		//this.requires('DebugCanvas, WiredHitBox');
 	},
 });
 
@@ -313,7 +313,7 @@ Crafty.c('Obstacle', {
 
 	onPlayerHit: function(player) {
 		this.destroy();
-		Crafty.scene('Over');
+		Game.events.onGameOver();
 	}
 });
 
@@ -386,7 +386,7 @@ Crafty.c('Amateur', {
 
 	onPlayerHit: function(player) {
 		this.destroy();
-		Crafty.scene('Over');
+		Game.events.onGameOver();
 	}
 });
 
@@ -448,7 +448,7 @@ Crafty.c('WorldClass', {
 
 	onPlayerHit: function(player) {
 		this.destroy();
-		Crafty.scene('Over');
+		Game.events.onGameOver();
 	}
 });
 

@@ -11,11 +11,7 @@ function ($, Crafty ) {
 
         start: function() {
 			Game.reset();
-			
 			Crafty.init(Game.width, Game.height);
-			if ( Crafty.isPaused() ) {
-                this.unpause();
-			}
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
 			Crafty.scene('Loading');
         },

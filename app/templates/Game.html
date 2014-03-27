@@ -1,6 +1,7 @@
 <div id="game">
 <div id="gameStage">
 <div id="cr-stage"></div>
+<!--
 <div id="game-topBar" class="container bar bar-blue">
     <div class="bar-inner clearfix">
     <div id="game-topBar-Logo"><img src="app/img/gamelogo.png" /></div>
@@ -8,12 +9,16 @@
     <div id="game-topBar-high">{{highestScore}}</div>
     <div id="game-topBar-coupon">{{coupon}}</div>
     </div>
+</div>-->
+<div id="gameStatus">
+    <div id="game-logo"><img src="app/img/gamelogo.png" /></div>
+    <div id="game-scoreTitle">本轮成绩</div>
+    <div id="game-score">{{score}}</div>
+    <div id="game-coupon">{{coupon}}</div>
 </div>
-
 <div id="game-actionBar">
-    <div id="game-replay">
-    </div>
-    <div id="game-leaderboard">
+    <div id="game-home">
+        <i class="fa fa-home fa-2x"></i>
     </div>
 </div>
 </div><!-- gameStage -->
@@ -29,17 +34,10 @@
     </div>
 
 </div><!-- gameHelp -->
+<div id="gameOverWhistle" data-entranceAnimation="lightSpeedIn highlight">
+    <img src="app/img/gameover.png" />
+</div><!-- gameOverWhistle -->
 <div id="gameOver">
-    <div class="container">
-        <div id="gameOverBg" class="rotate"></div>
-        <div id="gameOverTop">
-            <img src="app/img/gameovertop.png" />
-        </div>
-        <div id="gameOverContent">
-
-        </div><!-- gameOverContent -->
-
-    </div><!-- container -->
 </div><!-- gameOver -->
 <div id="gameBackHome"  class="backhome">
         <img src="app/img/lottoback.png" />

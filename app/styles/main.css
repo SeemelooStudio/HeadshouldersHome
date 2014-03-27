@@ -71,6 +71,7 @@ img {
     top: 1em;
     left: 8%;
     width: 85%;
+    z-index: 99;
 }
 #game-topBar #game-topBar-Logo{
     width: 70px;
@@ -166,9 +167,10 @@ img {
     width: 40px;
     position: absolute;
     z-index: 99;
-    right: 2%;
-    top: 80px;
+    left: 2%;
+    top: 10px;
 }
+
 #game-replay {
     width: 40px;
     height: 40px;
@@ -1627,6 +1629,75 @@ textarea.form-control {
 #gameOverRanking {
     font-size: 10px;
 }
+#gameOverWhistle {
+    width: 100%;
+    height: 10px;
+    border-bottom:25px solid #ffd800;
+    border-top:15px solid #dfab27;
+    background: #c17510;
+    position: absolute;
+    left: 0;
+    top:40%;
+    text-align: center;
+}
+#gameOverWhistle img {
+    width: 110px;
+    height: 102px;
+    position: relative;
+    top:-60px;
+}
+#gameOver-coupon {
+    text-align: center;
+    color: #FFF;
+    margin-top:-60px;
+}
+#game-score {
+    font-size: 56px;
+    line-height: 60px;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+    top: 55px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+    font-weight: bold;
+}
+#game-scoreTitle {
+    font-size: 10px;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+    top: 45px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+#game-logo {
+    position: absolute;
+    left: 50%;
+    top:10px;
+    width: 55px;
+    margin-left:-35px;
+    
+}
+#game-home {
+    color: #144901;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+}
+#game-coupon {
+    color: #144901;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+    position: absolute;
+    right: 2%;
+    top: 10px;
+    
+    padding-top: 18px;
+    background:url(../../app/img/score-icon.png) left top no-repeat;
+    background-size: 18px 18px;
+    font-size: 16px;
+}
+@media only screen and (max-width: 750px) {
+
+}
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
     #header {
@@ -2116,7 +2187,7 @@ textarea.form-control {
     font-size: 72px;
     height: 80px;
     line-height: 72px;
-    padding-top: 25px;
+    padding-top: 30px;
 }
 #gameOverScore small {
     font-size: 14px;
@@ -2124,5 +2195,12 @@ textarea.form-control {
 }
 #gameOverRanking {
     font-size: 14px;
+}
+#game-score {
+    font-size: 72px;
+}
+#game-logo  {
+    width: 110px;
+    margin-left: -55px;
 }
 }

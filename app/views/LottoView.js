@@ -8,7 +8,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.listenTo(this, "render", this.postRender);
                 this.ready = false;
                 
-                if ( this.model.checkLogin() ) {
+                if ( this.model.get("hasData") ) {
                     this.render();
                 } else {
                     this.listenToOnce(this.model,"onFetchSuccess", this.render);

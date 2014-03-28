@@ -7,7 +7,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
         var User = Backbone.Model.extend({
             default: {
               "isLogin":false,
-              "hasCoupon":false
+              "hasCoupon":false,
+              "hasData":false
             },
         
             initialize: function() {
@@ -92,16 +93,19 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 if ( options && options.userId ) {
                     this.setUserId(options.userId);
                 }
+                console.log(this.get("userId"));
                 $.ajax({
                   url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
                   dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);
+                    self.set("hasData", true);
                     if ( options && options.success ) {
                        options.success(); 
                     }
                   },
                   error: function(jqXHR, textStatus, errorThrown){
+                    this.set("hasData", false);
                     if ( options && options.error ) {
                         options.error( textStatus + ": " + errorThrown);
                     } else {

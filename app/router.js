@@ -19,7 +19,7 @@ define(function(require, exports, module) {
   var prepareView;
   
   var GameView = require("views/GameView");
-  var gameView;
+  var gameView = null;
   
   //models
   var User = require("models/User");
@@ -48,6 +48,9 @@ define(function(require, exports, module) {
     },
 
     index: function() {
+        if ( gameView ) {
+            window.location.reload();
+        }
         prepareView.render();
         user.syncData();
         mainView.showHeader(function(){
@@ -70,6 +73,9 @@ define(function(require, exports, module) {
         
     },
     leaderboard: function(type) {
+        if ( gameView ) {
+            window.location.reload();
+        }
         prepareView.render();
         user.syncData();
         mainView.showHeader();
@@ -85,6 +91,9 @@ define(function(require, exports, module) {
         }
     },
     lottery: function() {
+        if ( gameView ) {
+            window.location.reload();
+        }
         prepareView.render();
         user.syncData();
         mainView.hideHeader(function(){
@@ -93,6 +102,9 @@ define(function(require, exports, module) {
         
     },
     winningRecords: function() {
+        if ( gameView ) {
+            window.location.reload();
+        }
         prepareView.render();
         user.syncData();
         mainView.hideHeader(function(){

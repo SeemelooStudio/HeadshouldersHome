@@ -29,7 +29,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.model = gameConfig;
                 this.listenTo(this, "render", this.postRender);
                 this.isReady = false;
-                if ( this.user.checkLogin() ) {
+                if ( this.user.get("hasData") ) {
                     this.ready();
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);

@@ -8,7 +8,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.user = options.user;
                 this.gameTypeId = options.gameTypeId;
                 this.listenTo(this, "render", this.postRender);
-                if ( this.user.checkLogin() ) {
+                if ( this.user.get("hasData") ) {
                     this.ready();
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
@@ -56,13 +56,12 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             self.addCoupon();
                         },
                         onPassAmateur: function() {
-                            self.addScore(2);
-                        },
-                        onPassObstacle: function() {
                             self.addScore(1);
                         },
+                        onPassObstacle: function() {
+                        },
                         onPassWorldClass: function() {
-                            self.addScore(5);
+                            self.addScore(1);
                         },
                         onLoadComplete: function() {
                             $("#loading").hide();

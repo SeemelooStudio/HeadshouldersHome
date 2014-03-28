@@ -226,7 +226,7 @@ Crafty.c('Avatar', {
 	}, 
 	
 	changeDepth: function(newDepth) {
-    	this.head.z = newDepth + Game.depth.head;
+        this.head.z = newDepth + Game.depth.head;
 		this.body.z = newDepth + Game.depth.body;
 	}
 });
@@ -389,7 +389,7 @@ Crafty.c('Amateur', {
 		this.wander(this.horizontalSpeed, deltaTime);
 		
 		if ( !this.isPassed && player._y < this._y ) {
-		    this.onPassed(player);
+            this.onPassed(player);
 		}
 	},
     onPassed: function(player) {
@@ -458,7 +458,7 @@ Crafty.c('WorldClass', {
 			this.wander(this.horizontalSpeed, deltaTime);
 		}
 		if ( !this.isPassed && player._y < this._y ) {
-		    this.onPassed(player);
+            this.onPassed(player);
 		}
 	},
     onPassed: function(player) {

@@ -117,9 +117,14 @@ Crafty.c('Avatar', {
 		self.bind('EnterFrame', self.onEnterFrame);
 		self.facingLeft = true;
 	
-		self.boundBox = new Crafty.polygon(
-				[20,90], 
-				[self.width() - 20, 90], 
+		self.fullBoundBox = new Crafty.polygon(
+				[20,10], 
+				[self.width() - 20, 10], 
+				[self.width() - 20, self.height() - 10], 
+				[20, self.height() - 10]);
+        self.halfBoundBox = new Crafty.polygon(
+                [20,80], 
+				[self.width() - 20, 80], 
 				[self.width() - 20, self.height() - 10], 
 				[20, self.height() - 10]);
 
@@ -234,7 +239,7 @@ Crafty.c('PlayerController', {
 				.onHit('Amateur', this.hitComponent)
 				.onHit('WorldClass', this.hitComponent);
 
-		this.avatar.collision(this.avatar.boundBox);
+		this.avatar.collision(this.avatar.halfBoundBox);
 
 		this.attach(this.avatar);
 
@@ -357,7 +362,7 @@ Crafty.c('Amateur', {
 
 	Amateur : function(headConfig, bodyConfig) {
 		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
-		this.collision(this.boundBox);
+		this.collision(this.fullBoundBox);
 
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
 		if (seed % 2 === 0)
@@ -405,7 +410,7 @@ Crafty.c('WorldClass', {
 
 	WorldClass : function(headConfig, bodyConfig) {
 		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
-		this.collision(this.boundBox);
+		this.collision(this.fullBoundBox);
 
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
 		if (seed % 2 === 0)

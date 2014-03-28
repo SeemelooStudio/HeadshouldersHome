@@ -18,9 +18,10 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             // View Event Handlers
             events: {
                 "tap #gameStart": "onClickStartGame",
-                "tap #gameBackHome": "onClickBackHome",
+                "tap .backhome": "onClickBackHome",
                 "tap #gameOver-lotto": "onClickLotto",
-                "tap #gameOver-replay,#game-replay" : "onClickReplay"
+                "tap #gameOver-replay,#game-replay" : "onClickReplay",
+                "tap #game-share":"onClickShare"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -34,7 +35,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#game"));
                 this.gameAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
                 this.gameOverAnimationScheduler = new AnimationScheduler(this.$el.find("#gameOverWhistle"));
-                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp,#gameBackHome"),{
+                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp"),{
                     "hideAtFirst":false
                 });
                 this.$score = this.$el.find("#game-score");
@@ -93,8 +94,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             onClickBackHome: function(e) {
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
-                    $('body').scrollTop(0);
-                    Backbone.history.navigate("", { trigger: true, replace: true });
+                    Backbone.history.navigate("", { trigger: false, replace: true });
+                    window.location.reload();
                 });
                 
             },
@@ -209,6 +210,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.addCoupon();
                 this.$coupon.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
+            },
+            onClickShare: function() {
+                this.Game.pause();
             }
             
         });

@@ -11,6 +11,10 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
         
             initialize: function() {
+                var cookieId = $.cookie("userId");
+                if ( cookieId ) {
+                    this.setUserId(cookieId);
+                }
             },
             syncData: function() {
                 if ( this.checkLogin() ) {

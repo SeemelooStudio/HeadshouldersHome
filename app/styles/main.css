@@ -1506,7 +1506,7 @@ textarea.form-control {
     line-height: 24px;
     width: 100%;
     position: absolute;
-    top:320px;
+    top:200px;
     left: 0;
 }
 .yellow {
@@ -2247,5 +2247,8 @@ textarea.form-control {
 #gameOver-coupon {
     font-size: 18px;
     margin-top:-80px;
+}
+#noCoupon {
+    top:320px;
 }
 }

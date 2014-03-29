@@ -68,7 +68,7 @@ function ($, Crafty ) {
 			amateur_vertical_speed_per_frame: 50,
 			worldclass_horizontal_speed_per_frame : 100,
 			worldclass_vertical_speed_per_frame: 50,
-			worldclass_tackle_horizontal_speed_per_frame: 300,
+			worldclass_tackle_horizontal_speed_per_frame: 200,
             component_generate_interval : 1000
         },
 

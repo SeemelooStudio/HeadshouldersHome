@@ -5,7 +5,7 @@ function (Crafty, Game, PlayerConfig) {
 // -------------
 // Runs the core gameplay loop
 Crafty.scene('Game', function() {
-	console.log("enter scene game");
+	//console.log("enter scene game");
 	var self = this;
 
 	self.components = [];
@@ -33,6 +33,8 @@ Crafty.scene('Game', function() {
 		return Crafty.e('WorldClass').WorldClass(head, PlayerConfig.body_configs.worldclass);
 	};
 
+	self.randomizerEven = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			[self.obstacleCreator, self.amateurCreator, self.worldclassCreator]);
 	self.randomizerStep1 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
 			[self.obstacleCreator, self.amateurCreator, self.coinCreator],
 			[0.2, 0.78]);
@@ -40,8 +42,7 @@ Crafty.scene('Game', function() {
 			[self.obstacleCreator, self.amateurCreator, self.worldclassCreator, self.coinCreator],
 			[0.2, 0.35, 0.4]);
 
-	self.generateComponent = function() {
-		var component;
+	var generateSingleComponent = function() {
 		if (self.numOfComponentsGenerated < 3)
 		{
 			component = self.obstacleCreator();
@@ -57,6 +58,30 @@ Crafty.scene('Game', function() {
 		component.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - component.width()), y : -50});
 		self.components.push(component);
 		++self.numOfComponentsGenerated;
+	};
+
+	var generateDoubleComponents = function() {
+		var component1 = self.randomizerEven.get()();
+		var component2 = self.randomizerEven.get()();
+		component1.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.width / 2 - component1.width()), 
+						 y : -50 + Crafty.math.randomNumber(-20, 20)});
+		component2.attr({x : Crafty.math.randomNumber(Game.width / 2, Game.player_bound_right() - component2.width()), 
+		                 y : -50 + Crafty.math.randomNumber(-20, 20)});
+		self.components.push(component1);
+		self.components.push(component2);
+		self.numOfComponentsGenerated += 2;
+	};
+
+	self.generateComponent = function() {
+		//generateDoubleComponents();
+		if (self.numOfComponentsGenerated < 10)
+		{
+			generateSingleComponent()
+		}
+		else
+		{
+			generateDoubleComponents();
+		}
 	};
 
 	self.destroyComponentsOffScreen = function() {
@@ -75,9 +100,9 @@ Crafty.scene('Game', function() {
 		for ( i = 0; i < self.toBeRemoved.length; i++)
 		{
 			var index = self.components.indexOf(self.toBeRemoved[i]);
-			if (i != -1)
+			if (index != -1)
 			{
-				self.components.splice(i, 1);
+				self.components.splice(index, 1);
 			}
 			self.toBeRemoved[i].destroy();
 		}
@@ -100,8 +125,6 @@ Crafty.scene('Game', function() {
 			self.elapsedTimeSinceLastGeneration = 0;
 		}
 
-		self.destroyComponentsOffScreen();
-
 		for( var i = 0; i < self.components.length; i++)
 		{
 			if (self.components[i].update)
@@ -109,6 +132,8 @@ Crafty.scene('Game', function() {
 				self.components[i].update(self.player, data.dt / 1000, data.frame);
 			}
 		}
+		
+		self.destroyComponentsOffScreen();
 	};
 
 	self.resetGame();

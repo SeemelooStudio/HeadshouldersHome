@@ -117,11 +117,6 @@ Crafty.c('Avatar', {
 		self.bind('EnterFrame', self.onEnterFrame);
 		self.facingLeft = true;
 	
-		self.fullBoundBox = new Crafty.polygon(
-				[20,10], 
-				[self.width() - 20, 10], 
-				[self.width() - 20, self.height() - 10], 
-				[20, self.height() - 10]);
         self.halfBoundBox = new Crafty.polygon(
                 [20,80], 
 				[self.width() - 20, 80], 
@@ -237,14 +232,16 @@ Crafty.c('PlayerController', {
 		this.requires('Actor, Draggable, DebugArea')
 				.attr({w: 80, h: 180, z: Game.depth.controller});
 
-		this.avatar = Crafty.e('Avatar, Collision, DebugCollision')
-				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true)
+		this.avatar = Crafty.e('Avatar')
+				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true);
+		var ballWidth = this.avatar.ball._w;
+		var ballHeight = this.avatar.ball._h;
+		this.avatar.ball.requires('Collision, DebugCollision')
+		        .collision([5, ballHeight - 5], [ballWidth - 5, ballHeight - 5], [ballWidth - 5, 5], [5, 5])
 				.onHit('Obstacle', this.hitComponent)
 				.onHit('Coin', this.hitComponent)
 				.onHit('Amateur', this.hitComponent)
 				.onHit('WorldClass', this.hitComponent);
-
-		this.avatar.collision(this.avatar.halfBoundBox);
 
 		this.attach(this.avatar);
 
@@ -308,8 +305,8 @@ Crafty.c('Obstacle', {
 
 	init: function() {
 		this.requires('Actor, SpriteObstacle, Collision, DebugCollision')
-			.collision( new Crafty.polygon([10, 40], [65, 40], [65,77.5], [10,77.5]) )
-			.attr({ w: 75, h: 77.5 });
+			.attr({ w: 75, h: 77.5 })
+			.collision( new Crafty.polygon([37.5, 30], [60, 70], [15, 70]) );
 	},
 
 	update: function(player, deltaTime) {
@@ -437,9 +434,11 @@ Crafty.c('WorldClass', {
 	update: function(player, deltaTime) {
 		this.y += this.verticalSpeed * deltaTime;
 
-		if (player._y - this._y < this.distanceToTackle)
+		if (this.isRunning)
 		{
-			if (this.isRunning)
+			this.wander(this.horizontalSpeed, deltaTime);
+
+			if (player._y - this._y < this.distanceToTackle)
 			{
 				this.tackle();
 				if (player._x < this._x)
@@ -451,11 +450,10 @@ Crafty.c('WorldClass', {
 					this.faceRight();
 				}
 			}
-			this.x += this.tackleSpeed * deltaTime * this.facingLeft ? -1 : 1;
 		}
 		else
 		{
-			this.wander(this.horizontalSpeed, deltaTime);
+			this.x += this.tackleSpeed * deltaTime * (this.facingLeft ? -1 : 1);
 		}
 		if ( !this.isPassed && player._y < this._y ) {
             this.onPassed(player);
@@ -482,8 +480,6 @@ Crafty.c('Field', {
 
 	tileHeight : 145,
 
-	moveSpeed : 5,
-
 	init: function() {
 		var self = this;
 
@@ -495,7 +491,7 @@ Crafty.c('Field', {
 		var numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
 		var numOfTilesPerColumn = 10;
 		var numOfTilesHalfColumn = numOfTilesPerColumn / 2;
-		console.log(numOfTilesPerRow);
+		//console.log(numOfTilesPerRow);
 
 		for (var i = 0; i < numOfTilesPerColumn; i++)
 		{

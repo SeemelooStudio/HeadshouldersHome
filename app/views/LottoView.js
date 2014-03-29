@@ -8,7 +8,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.listenTo(this, "render", this.postRender);
                 this.ready = false;
                 
-                if ( this.model.checkLogin() ) {
+                if ( this.model.get("hasData") ) {
                     this.render();
                 } else {
                     this.listenToOnce(this.model,"onFetchSuccess", this.render);
@@ -19,7 +19,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             events: {
                 "touch #lottoBackHome":"onClickBack",
                 "touch #envelope-sealing" :"onClickCard",
-                "touch #btnAwardOK,#btnAwardShare":"onClickAwardOk",
+                "touch #btnAwardOK":"onClickAwardOK",
                 "touch #btnLottoHistory" : "onClickLottoHistory"
             },
             render: function(){
@@ -96,20 +96,38 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                     $(this).find("#award-address,#award-action").fadeIn();
                 });
             },
-            onClickAwardOk: function(e) {
+            onClickAwardOK: function(e) {
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 var self = this;
-                
-                this.mainAnimationScheduler.animateOut(function(){
-                    $('body').scrollTop(0);
-                    if ( self.card.get("isWon") )  {
-                        Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
-                    } else {
-                        self.render();
+                if ( this.card.get("isWon") ) { 
+                    if ( this.validateAddress() ) {
+                        this.saveAddress();
                     }
-                    
+                } else {
+                    this.mainAnimationScheduler.animateOut(function(){
+                           $('body').scrollTop(0);
+                           self.render();
+                    });
+                }
+                
+            },
+            saveAddress: function(){
+                var self = this;
+                this.card.saveAddress({
+                    shipTo:this.shipTo,
+                    phone: this.phone,
+                    shippingAddress: this.shippingAddress,
+                    success: function() {
+                        self.mainAnimationScheduler.animateOut(function(){
+                        $('body').scrollTop(0);
+                        Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
+                        });
+                    },
+                    error: function(msg) {
+                        Utils.showError(msg + "<br />服务器好像有些问题，请试试点击【确定】按钮");
+                    }
                 });
             },
             onClickLottoHistory: function(e) {
@@ -121,6 +139,32 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 this.mainAnimationScheduler.animateOut(function(){
                 Backbone.history.navigate("winningRecords", { trigger: true, replace: true });
                 });
+            },
+            validateAddress: function() {
+                this.shipTo = this.$el.find("#shipTo").val();
+                this.phone = this.$el.find("#phone").val();
+                this.shippingAddress = this.$el.find("#shippingAddress").val();
+                var self = this;
+                if ( !Utils.validateName(this.shipTo) ) {
+                    
+                    Utils.showError("请填写正确的收件人姓名", null, function(){
+                        self.$el.find("#shipTo").focus();
+                    });
+                    return false;
+                }
+                if ( !Utils.validatePhone(this.phone) ) {
+                    Utils.showError("请填写正确的电话号码<br />例如：<br />手机号：13100000000<br />座机号：010-86000000<br />0591-2600000-3213等", null, function(){
+                        self.$el.find("#phone").focus();
+                    });
+                    return false;
+                } 
+                if ( !Utils.validateAddress(this.shippingAddress) ) {
+                    Utils.showError("请填写能收快件的详细地址，<br />具体到省、市、街道、门牌号等", null, function(){
+                        self.$el.find("#phone").focus();
+                    });
+                    return false;
+                }
+                return true;
             }
         });
         // Returns the View class

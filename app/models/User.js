@@ -7,10 +7,15 @@ define(["jquery", "backbone", "models/Card", "Utils"],
         var User = Backbone.Model.extend({
             default: {
               "isLogin":false,
-              "hasCoupon":false
+              "hasCoupon":false,
+              "hasData":false
             },
         
             initialize: function() {
+                var cookieId = $.cookie("userId");
+                if ( cookieId ) {
+                    this.setUserId(cookieId);
+                }
             },
             syncData: function() {
                 if ( this.checkLogin() ) {
@@ -43,13 +48,14 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function(){
-                this.wechatLogin();
-                
+                window.location.href= window.location.origin + window.location.pathname + "#login/3";
+               // window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=1356830721&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
-                return;
-                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-                
+
+                window.location.href= window.location.origin + window.location.pathname + "#login/3";
+
+                //window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             },
             initLeaderSetting: function() {
                 var leadershipRank = 6;
@@ -80,25 +86,26 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             setUserId: function(userId) {
                 this.set("userId", userId);
                 $.cookie("userId", userId);
+                this.set("isLogin", true);
             },
             fetchDataByUserId: function(options) {
                 var self = this;
                 if ( options && options.userId ) {
                     this.setUserId(options.userId);
                 }
+                console.log(this.get("userId"));
                 $.ajax({
-                  url: "app/data/user.json",
-                  dataType:"json",
-                  data: {
-                      "userId":this.get("userId")
-                  },
+                  url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
+                  dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);
+                    self.set("hasData", true);
                     if ( options && options.success ) {
                        options.success(); 
                     }
                   },
                   error: function(jqXHR, textStatus, errorThrown){
+                    this.set("hasData", false);
                     if ( options && options.error ) {
                         options.error( textStatus + ": " + errorThrown);
                     } else {
@@ -111,9 +118,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             parseUserdata: function(userdata) {
                 this.set(userdata);
                 
-                this.set("isLogin", true);
                 this.set("hasCoupon", this.checkCoupon());
-                              
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");
             },
@@ -122,6 +127,10 @@ define(["jquery", "backbone", "models/Card", "Utils"],
 
                 var card = new Card();
                 card.fetch({
+                        data: JSON.stringify({ userId: self.get("userId") }),
+                        contentType: "application/json; charset=utf-8",
+                        type: 'POST',
+                        dataType : "json",
                         success:function(){
                             options.success(card);
                             if ( self.get("numOfCoupons") < 1 ) {
@@ -132,10 +141,11 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                             self.set("hasCoupon", self.checkCoupon());
                         },
                         error: function(){
-                            options.error("abcde");
+                            options.error("抽奖失败");
                         }
                 });
                 
+
             }
         });
 

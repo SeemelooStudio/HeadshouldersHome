@@ -5,7 +5,7 @@ define(["jquery", "backbone"],
     function ($, Backbone) {
 
         var Rank = Backbone.Model.extend({
-            url: "app/data/ranklist.json",
+            url: "http://192.168.1.100:8008/footballgameService/Games/Top/5",
         });
 
         return Rank;

@@ -6,9 +6,9 @@ function ObjectRecycler(creator, initCapacity, onAlloc, onFree)
 	//! class constructor
 	var Constructor = function()
 	{
-		objects = new Array();
+		objects = [];
 
-		if (initCapacity == null ) { return; }
+		if (!initCapacity ) { return; }
 		for( var i = 0; i < initCapacity; i++)
 		{
 			var obj = creator();
@@ -21,13 +21,13 @@ function ObjectRecycler(creator, initCapacity, onAlloc, onFree)
 		var obj = null;
 		for (var i = 0; i < objects.length; i++)
 		{
-			if (objects[i].active == false)
+			if (objects[i].active === false)
 			{
 				obj = objects[i];
 				break;
 			}
 		}
-		if (obj == null)
+		if (!obj)
 		{
 			obj = creator();
 			objects.push(obj);
@@ -35,7 +35,7 @@ function ObjectRecycler(creator, initCapacity, onAlloc, onFree)
 
 		obj.active = true;
 
-		if (onAlloc != null)
+		if (onAlloc)
 		{
 			onAlloc(obj);
 		}
@@ -44,11 +44,11 @@ function ObjectRecycler(creator, initCapacity, onAlloc, onFree)
 	};
 
 	self.free = function(obj) {
-		if ( onFree != null )
+		if ( onFree )
 		{
-			onFree( obj )
+			onFree( obj );
 		}
-		obj.active = false
+		obj.active = false;
 	};
 
 	self.freeAll = function() {

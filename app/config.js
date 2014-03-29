@@ -14,7 +14,7 @@ require.config({
     "jqueryhammer":"../vendor/jquery.hammer.min",
     "animationscheduler":"../vendor/animationScheduler",
     "image": "../vendor/image",
-    "crafty":"../vendor/bower/crafty/dist/crafty-min",
+    "crafty":"../vendor/bower/crafty/dist/crafty",
     "jquerycookie":"../vendor/bower/jquery-cookie/jquery.cookie"
   },
 

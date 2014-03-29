@@ -1,24 +1,33 @@
-        <div class="clearfix bar bar-blue gameOver-bar">
-            <div class="bar-inner clearfix">
-                <div class="gameOver-bar-title">最终成绩</div><div class="gameOver-bar-content">{{score}}</div><div class="gameOver-bar-content"><small>总积分</small>{{accumulatePoints}}</div>
+<div class="container" data-entranceAnimation="bounceInDown"  data-exitAnimation="bounceOutUp">
+        <div id="gameOverBg" class="hidden"></div>
+        <div id="gameOverTop">
+            <img src="app/img/gameovertop.png" />
+        </div>
+        <div id="gameOverContent">
+        <div id="gameOverBelt">
+            <div id="gameOverScore">
+                {{score}}<small>分</small>
+            </div>
+            <div id="gameOverRanking">
+                实力总排名：{{totalRanking}}
             </div>
         </div>
-        <div class="clearfix bar bar-blue gameOver-bar">
-            <div class="bar-inner clearfix">
-                <div class="gameOver-bar-title">实力排名</div><div class="gameOver-bar-content">{{gameRanking}}</div><div class="gameOver-bar-content"><small>总排名</small>{{totalRanking}}</div></div>
-            </div>
+
+        <div id="gameOver-coupon">
+            奖券{{coupon}}张
         </div>
-        <div id="gameOver-action" class="clearfix container">
-            <div id="gameOver-replay">
-                <img src="app/img/replay.png" />
-            </div>
-            <div id="gameOver-leaderboard">
-                <img src="app/img/leaderboard.png" />
-            </div>
-        </div>
-        <div id="gameOver-lotto" class="btn btn-blue btn-block">
+
+        
+        <div id="gameOver-share" class="btn btn-yellow btn-block share">
             <div class="btn-inner">
-                    去抽奖
-                    <br /><small>你有{{coupon}}张奖券</small>
+                    <i class="fa fa-share-square-o"></i> 晒成绩 得奖券
             </div>
         </div>
+        <div id="gameOver-replay" class="btn btn-blue btn-block">
+            <div class="btn-inner">
+                    <i class="fa fa-refresh"></i> 重玩
+            </div>
+        </div>
+        </div><!-- gameOverContent -->
+
+</div><!-- container -->

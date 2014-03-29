@@ -29,19 +29,19 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.model = gameConfig;
                 this.listenTo(this, "render", this.postRender);
                 this.isReady = false;
-                if ( this.user.checkLogin() ) {
+                if ( this.user.get("hasData") ) {
                     this.ready();
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
             },
-            
+
             events: {
+
                 "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
-                "tap #plane":"onClickLotto",
-                "tap .gameButton": "onClickGameButton"
+                "tap #ruleButton":"onClickLotto"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -56,8 +56,9 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true,"sequentialDelay":350});
                 $("#share").show();
                 this.lottoAnimationScheduler.animateIn(function(){
-                    self.btnAnimationScheduler.animateIn();
+                    
                 });
+                this.btnAnimationScheduler.animateIn();
             },
             ready: function(){
                 this.model.set(this.user.toJSON());
@@ -92,6 +93,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 var self = this;
                 this.ranklist = new RankList();
                 this.ranklist.fetch({
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
                     success: function(){
                         self.$el.find("#leaderboard").addClass("expand");
                         self.rankView = new RankView({model:self.ranklist, user: self.user});

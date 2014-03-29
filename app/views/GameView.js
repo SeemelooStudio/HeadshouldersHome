@@ -8,7 +8,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.user = options.user;
                 this.gameTypeId = options.gameTypeId;
                 this.listenTo(this, "render", this.postRender);
-                if ( this.user.checkLogin() ) {
+                if ( this.user.get("hasData") ) {
                     this.ready();
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
@@ -18,10 +18,10 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             // View Event Handlers
             events: {
                 "tap #gameStart": "onClickStartGame",
-                "tap #gameBackHome": "onClickBackHome",
+                "tap .backhome": "onClickBackHome",
                 "tap #gameOver-lotto": "onClickLotto",
                 "tap #gameOver-replay,#game-replay" : "onClickReplay",
-                "tap #gameOver-leaderboard,#game-leaderboard": "onClickLeaderboard"
+                "tap #game-share":"onClickShare"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -34,21 +34,19 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 $("#share").hide();
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#game"));
                 this.gameAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
-                this.gameOverAnimationScheduler = new AnimationScheduler(this.$el.find("#gameOver"));
-                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp,#gameBackHome"),{
+                this.gameOverAnimationScheduler = new AnimationScheduler(this.$el.find("#gameOverWhistle"));
+                this.helpAnimationScheduler = new AnimationScheduler(this.$el.find("#gameHelp"),{
                     "hideAtFirst":false
                 });
-                this.$score = this.$el.find("#game-topBar-score");
+                this.$score = this.$el.find("#game-score");
                 this.$highestScore = this.$el.find("#game-topBar-high");
-                this.$coupon = this.$el.find("#game-topBar-coupon");
+                this.$coupon = this.$el.find("#game-coupon");
                 
                 this.mainAnimationScheduler.animateIn();
                 
-                if ( this.Game ) {
-                    self.$el.find("#gameStart").fadeIn();
-                } else {
-                require(["games/game","games/components","games/scene-game","games/scene-loading","games/scene-over"],function(Game){
-                    self.$el.find("#gameStart").fadeIn();
+
+                require(["games/game", "games/components", "games/object-randomizer"],function(Game, InitComponents, InitObjectRandomizer){
+                    
                     self.Game = Game;
                     Game.registerEvents({
                         onGameOver: function() {
@@ -58,26 +56,30 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             self.addCoupon();
                         },
                         onPassAmateur: function() {
-                            self.addScore(2);
-                        },
-                        onPassObstacle: function() {
                             self.addScore(1);
                         },
+                        onPassObstacle: function() {
+                        },
                         onPassWorldClass: function() {
-                            self.addScore(5);
+                            self.addScore(1);
                         },
                         onLoadComplete: function() {
                             $("#loading").hide();
                         }
                     });
+
+                    InitComponents();
+                    InitObjectRandomizer();
+
+                    require(["games/scene-game","games/scene-loading","games/scene-over"], function(){
+                        self.$el.find("#gameStart").fadeIn();
+                    });
                     
                 });
-                }
                 
             },
             ready: function(){
-                this.onExit();
-                this.model = new Game({ gameId:this.gameId, user:this.user });
+                this.model = new Game({ gameId:this.gameId, user:this.user, gameTypeId : this.gameTypeId });
                 this.render();
             },
             onClickStartGame: function(e) {
@@ -91,8 +93,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             onClickBackHome: function(e) {
                 var self = this;
                 this.mainAnimationScheduler.animateOut(function(){
-                    $('body').scrollTop(0);
-                    Backbone.history.navigate("", { trigger: true, replace: true });
+                    Backbone.history.navigate("", { trigger: false, replace: true });
+                    window.location.reload();
                 });
                 
             },
@@ -105,6 +107,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.start();
+                       //self.Game.pause();
                    },
                    error: function(msg) {
                        Utils.showError(msg);
@@ -115,36 +118,81 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             gameOver: function() {
                 var self = this;
-                $("#loading").show();
-                this.Game.stop();
+                var isTimeUp = false;
+                var isSubmited = false;
                this.model.submitResult({
                    success: function(){
-                       var gameOverView = new GameOverView({ model: self.model});
+                       isSubmited = true;
+                       if ( isTimeUp ) {
+                           self.gameAnimationScheduler.animateOut();
+                           self.gameOverAnimationScheduler.animateOut();
+                           self.gameOverView = new GameOverView({ model: self.model});
+                           isGameOverShown = true;
+                       }
+                       
                        $("#loading").hide();
                    },
                    error: function(msg) {
                        Utils.showError(msg);
                    }
                });
-               this.gameAnimationScheduler.animateOut();
-               this.gameOverAnimationScheduler.animateIn();
+               
+               this.gameOverAnimationScheduler.animateIn( function(){
+                   var timeout = setTimeout(function(){
+                       isTimeUp = true;
+                       clearTimeout(timeout);
+                       if ( isSubmited ) {
+                            self.gameAnimationScheduler.animateOut();
+                            self.gameOverAnimationScheduler.animateOut();
+                            self.gameOverView = new GameOverView({ model: self.model});
+                           
+                       } else {
+                           $("#loading").hide();
+                       }
+                       
+                   }, 500);
+               });
+               self.Game.pause();
             },
             onClickLotto: function() {
                 var self = this;
+                this.onExit();
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
                     Backbone.history.navigate("lottery", { trigger: true, replace: true });
                 });
             },
             onClickReplay: function(e) {
-                  this.ready();
+                  if ( this.gameOverView ) {
+                      this.gameOverView.onExit();
+                  }
+                  this.restartGame();
+                  this.gameAnimationScheduler.animateIn();
+                  
             },
             onClickLeaderboard: function(){
                 var self = this;
+                this.onExit();
                 this.mainAnimationScheduler.animateOut(function(){
                     $('body').scrollTop(0);
                     Backbone.history.navigate("", { trigger: true, replace: true });
                 });
+            },
+            restartGame: function(){
+                var self = this;
+                $("#loading").show();
+                this.$score.text("0");
+                this.$coupon.text( this.model.get("originCoupon"));
+                this.model.startGame({
+                   success: function(){
+                       self.Game.restart();
+                       $("#loading").hide();
+                   },
+                   error: function(msg) {
+                       Utils.showError(msg);
+                   }
+               });
+                
             },
             addScore: function( score ) {
                 this.model.addScore(score);
@@ -162,10 +210,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.$coupon.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
             },
-            onExit: function() {
-                if ( this.Game ) {
-                    this.Game.stop();
-                }
+            onClickShare: function() {
+                this.Game.pause();
             }
             
         });

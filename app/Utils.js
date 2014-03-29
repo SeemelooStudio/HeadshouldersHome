@@ -72,6 +72,24 @@ var Utils = {
         $el.one(this.animationEndTrigger, function(e){
             $el.removeClass("highlight tada " + color);
         });
+    },
+    validateName: function(name) {
+        var regex = /^([\u4E00-\u9FA5]+|[a-zA-Z]+)$/;
+        var results = regex.test( name );
+        return results;
+    },
+    validatePhone: function(phone) {
+       var regex= /(^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$)|(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/;
+       var results = regex.test( phone );
+       return results;
+
+    },
+    validateAddress: function(address) {
+        if (address.length < 15 ) {
+            return false;
+        } else {
+            return true;
+        }
     }
 };
   

@@ -2,21 +2,20 @@
        <div id="lottoLogo">
        <img src="app/img/lottologo.png" />
        </div>
-        <div id="lotto-info">
-            {{userName}}，您的奖券数 <span class="lotto-pointsCount">{{numOfCoupons}}</span>
-        </div>
+        
        <div id="lottoActions" class="clearfix">
-            <div id="btnLottoRule" class="btn btn-blue btn-inline">
-                <div class="btn-inner">
-                    抽奖说明
-                </div>
-            </div>
+            
             <div id="btnLottoHistory" class="btn btn-blue  btn-inline">
                 <div class="btn-inner">
                     中奖历史
                     {{#numOfPrizes}}
                     <span class="btn-notification">{{numOfPrizes}}</span>
                     {{/numOfPrizes}}
+                </div>
+            </div>
+            <div id="btnLottoRule" class="btn btn-red btn-inline share">
+                <div class="btn-inner">
+                    <i class="fa fa-share-square-o"></i>分享得奖券
                 </div>
             </div>
        </div>
@@ -36,6 +35,9 @@
         <div id="envelope-arrow" class="float">
             <div id="envelope-arrowCaret"></div>
             <div id="envelope-arrowPoints">1</div>
+        </div>
+        <div id="lotto-info">
+            <span class="lotto-pointsCount">{{userName}}，您还有{{numOfCoupons}}张奖券</span>
         </div>
        </div>
        {{/hasCoupon}}
@@ -75,5 +77,5 @@
        </div>
 </div><!--/container-->
 <div id="lottoBackHome"  class="backhome">
-    <img src="app/img/lottoback.png" />
+    <i class="fa fa-home fa-lg"></i>
 </div>

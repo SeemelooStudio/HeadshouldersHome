@@ -1,6 +1,6 @@
 define(["crafty", "games/game", "games/player-config"],
 function (Crafty, Game, PlayerConfig) {
-
+var InitComponents = function() {
 Crafty.c('Actor', {
 	init: function() {
 		this.requires('2D, Canvas');
@@ -21,14 +21,14 @@ Crafty.c('DebugArea', {
 	},
 });
 
-Crafty.c('Body', {
+Crafty.c('Body', { 
 	init: function() {
 	},
 	
 	Body: function(bodyConfig) {
 		this.requires('Actor, SpriteAnimation, ' + bodyConfig.sprite)
 			.reel('Run', 550, bodyConfig.runFrames);
-		if (bodyConfig.tackleFrames != null)
+		if (bodyConfig.tackleFrames )
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
 		}
@@ -37,7 +37,7 @@ Crafty.c('Body', {
 	},
 
 	run: function() {
-	    this.animate('Run', -1);
+    this.animate('Run', -1);
 	},
 
 	tackle: function() {
@@ -56,16 +56,16 @@ Crafty.c('Avatar', {
 	ballOffsetXRight : 45,
 	ballOffsetY : 80,
 	ballSpinSpeed : 0.3,
-
+    isPassed: false,
 	bodyRunPos : {
 				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_run.x) / 2,
 				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_run.y) / 2
-			 },
+				},
 
 	bodyTacklePos : {
 				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_tackle.x) / 2,
 				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_tackle.y) / 2
-			 },
+				},
 
 	width : function() {
 		return this.head._w;
@@ -117,9 +117,14 @@ Crafty.c('Avatar', {
 		self.bind('EnterFrame', self.onEnterFrame);
 		self.facingLeft = true;
 	
-		self.boundBox = new Crafty.polygon(
+		self.fullBoundBox = new Crafty.polygon(
 				[20,10], 
 				[self.width() - 20, 10], 
+				[self.width() - 20, self.height() - 10], 
+				[20, self.height() - 10]);
+        self.halfBoundBox = new Crafty.polygon(
+                [20,80], 
+				[self.width() - 20, 80], 
 				[self.width() - 20, self.height() - 10], 
 				[20, self.height() - 10]);
 
@@ -135,7 +140,7 @@ Crafty.c('Avatar', {
 	
 	run : function() {
 		this.isRunning = true;
-	    this.body.run();
+		this.body.run();
 		this.body.attr({
 					x : this._x + this.bodyRunPos.x,
 					y : this._y + this.bodyRunPos.y,
@@ -162,7 +167,7 @@ Crafty.c('Avatar', {
 		if (this.isRunning)
 		{
 			this.body.x = this._x + this.bodyRunPos.x;
-	    }
+        }
 		if (this.ball)
 		{
 			this.ball.x = this._x + this.ballOffsetXLeft;
@@ -182,7 +187,7 @@ Crafty.c('Avatar', {
 	},
 
 	wander : function(wanderSpeed, deltaTime) {
-		if (this.centerX == null) 
+        if (!this.centerX ) 
 		{
 			this.centerX = this._x;
 		}
@@ -218,6 +223,11 @@ Crafty.c('Avatar', {
 
 	pauseAnim: function() {
 		this.body.pauseAnimation();
+	}, 
+	
+	changeDepth: function(newDepth) {
+        this.head.z = newDepth + Game.depth.head;
+		this.body.z = newDepth + Game.depth.body;
 	}
 });
 
@@ -225,8 +235,7 @@ Crafty.c('Avatar', {
 Crafty.c('PlayerController', {
 	init: function() {
 		this.requires('Actor, Draggable, DebugArea')
-				.attr({w: 80, h: 180, z: Game.depth.controller})
-				.dragDirection({x:1, y:0});
+				.attr({w: 80, h: 180, z: Game.depth.controller});
 
 		this.avatar = Crafty.e('Avatar, Collision, DebugCollision')
 				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true)
@@ -235,7 +244,7 @@ Crafty.c('PlayerController', {
 				.onHit('Amateur', this.hitComponent)
 				.onHit('WorldClass', this.hitComponent);
 
-		this.avatar.collision(this.avatar.boundBox)
+		this.avatar.collision(this.avatar.halfBoundBox);
 
 		this.attach(this.avatar);
 
@@ -313,8 +322,8 @@ Crafty.c('Obstacle', {
 	},
 
 	onPlayerHit: function(player) {
-		this.destroy();
-		Crafty.scene('Over');
+		//this.destroy();
+		Game.events.onGameOver();
 	}
 });
 
@@ -322,7 +331,7 @@ Crafty.c('Coin', {
 	speed: Game.configs.player_vertical_speed_per_frame,
 
 	width: function() {
-	    return this._w;
+    return this._w;
 	},
 
 	height : function() {
@@ -330,26 +339,26 @@ Crafty.c('Coin', {
 	},
 
 	init : function() {
-	    this.requires('Actor, SpriteHS, Collision, DebugCollision')
-		    .attr({ w: this._w / 2, h: this._h / 2});
+        this.requires('Actor, SpriteHS, Collision, DebugCollision')
+        .attr({ w: this._w / 2, h: this._h / 2});
 	},
 
 	update : function(player, deltaTime) {
-	    this.y += this.speed * deltaTime;
+        this.y += this.speed * deltaTime;
 	},
 
 	onPlayerHit : function(player) {
 		++Game.data.num_of_collected_coins;
 		Game.events.onCollectCoin(Game.data.num_of_collected_coins);
-	    this.destroy();
+        this.destroy();
 	}
 });
 
 Crafty.c('Amateur', {
-	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
+	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.amateur_vertical_speed_per_frame,
 	horizontalSpeed: Game.configs.amateur_horizontal_speed_per_frame,
 
-	wanderDistance : 50,
+	wanderDistance : 80,
 
 	init: function() {
 		this.requires('Avatar, Collision, DebugCollision, DebugArea')
@@ -358,7 +367,7 @@ Crafty.c('Amateur', {
 
 	Amateur : function(headConfig, bodyConfig) {
 		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
-		this.collision(this.boundBox);
+		this.collision(this.halfBoundBox);
 
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
 		if (seed % 2 === 0)
@@ -378,25 +387,33 @@ Crafty.c('Amateur', {
 	update: function(player, deltaTime, frame) {
 		this.y += this.verticalSpeed * deltaTime;
 		this.wander(this.horizontalSpeed, deltaTime);
+		
+		if ( !this.isPassed && player._y < this._y ) {
+            this.onPassed(player);
+		}
 	},
-
+    onPassed: function(player) {
+        this.isPassed = true;
+        this.changeDepth( Game.depth.passed);
+        ++Game.data.num_of_passed_amateurs;
+        Game.events.onPassAmateur(Game.data.num_of_passed_amateurs);
+    },
 	onDisappear : function(player) {
-		++Game.data.num_of_passed_amateurs;
-		Game.events.onPassAmateur(Game.data.num_of_passed_amateurs);
+		
 	},
 
 	onPlayerHit: function(player) {
-		this.destroy();
-		Crafty.scene('Over');
+		//this.destroy();
+		Game.events.onGameOver();
 	}
 });
 
 Crafty.c('WorldClass', {
-	verticalSpeed: Game.configs.player_vertical_speed_per_frame,
+	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.worldclass_vertical_speed_per_frame,
 	horizontalSpeed: Game.configs.worldclass_horizontal_speed_per_frame,
-	tackleSpeed: Game.configs.worldclass_horizontal_speed_per_frame,
+	tackleSpeed: Game.configs.worldclass_tackle_horizontal_speed_per_frame ,
 
-	wanderDistance : 50,
+	wanderDistance : 80,
 	distanceToTackle : 50,
 
 	init: function() {
@@ -406,7 +423,7 @@ Crafty.c('WorldClass', {
 
 	WorldClass : function(headConfig, bodyConfig) {
 		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
-		this.collision(this.boundBox);
+		this.collision(this.halfBoundBox);
 
 		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
 		if (seed % 2 === 0)
@@ -440,16 +457,23 @@ Crafty.c('WorldClass', {
 		{
 			this.wander(this.horizontalSpeed, deltaTime);
 		}
+		if ( !this.isPassed && player._y < this._y ) {
+            this.onPassed(player);
+		}
 	},
-
+    onPassed: function(player) {
+        this.isPassed = true;
+        this.changeDepth( Game.depth.passed);
+        ++Game.data.num_of_passed_amateurs;
+        Game.events.onPassWorldClass(Game.data.num_of_passed_amateurs);
+    },
 	onDisappear : function(player) {
-		++Game.data.num_of_passed_worldclass;
-		Game.events.onPassWorldClass(Game.data.num_of_passed_worldclass);
+
 	},
 
 	onPlayerHit: function(player) {
-		this.destroy();
-		Crafty.scene('Over');
+		//this.destroy();
+		Game.events.onGameOver();
 	}
 });
 
@@ -507,5 +531,6 @@ Crafty.c('Field', {
 		});
 	},
 });
-
+};
+return InitComponents;
 });

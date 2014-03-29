@@ -3,14 +3,14 @@ function (Crafty, Game, PlayerConfig, headsAtlas, bodiesAtlas) {
 
 var loadAtlas = function(imageFileName, atlas) {
 	var sprites = {};
-	for (var spriteName in atlas['frames']) 
+	for (var spriteName in atlas.frames) 
 	{
-		frame = atlas['frames'][spriteName]['frame'];
-		sprites[spriteName] = [frame['x'], frame['y'], frame['w'], frame['h']];
-	};
+		frame = atlas.frames[spriteName].frame;
+		sprites[spriteName] = [frame.x, frame.y, frame.w, frame.h];
+	}
 
 	Crafty.sprite(imageFileName, sprites);
- }
+ };
 
 // Loading scene
 // -------------

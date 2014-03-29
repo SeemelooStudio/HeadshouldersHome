@@ -95,7 +95,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
                 console.log(this.get("userId"));
                 $.ajax({
-                  url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
+                  url:"app/data/user.json",
+                  //url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
                   dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);

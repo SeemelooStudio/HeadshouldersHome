@@ -54,6 +54,7 @@ define(["jquery", "backbone"],
                 this.set("coupon", this.get("originCoupon"));
                 $.ajax({
                     url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    url: "app/data/startgame.json",
                     dataType: "json",
                     data: JSON.stringify({
                         gameTypeId: self.get("gameTypeId"),
@@ -82,6 +83,7 @@ define(["jquery", "backbone"],
                     }));
                 $.ajax({
                     url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    url: "app/data/gameresult.json",
                     dataType: "json",
                     data: JSON.stringify({
                         gameId: self.get("gameId"),

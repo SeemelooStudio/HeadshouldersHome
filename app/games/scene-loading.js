@@ -38,7 +38,8 @@ Crafty.scene('Loading', function(){
 		Crafty.sprite(140, 110, 'app/img/bodies.png', {
 			BodyMessi:     [1, 1],
 			BodyAmateur:   [1, 2],
-			BodyPro:       [1, 0]
+			BodyPro:       [1, 0],
+			BodyRabbit:    [0, 1]
 		});
 
 		Crafty.sprite(320, 145, 'app/img/grassx4.png', {

@@ -30,7 +30,10 @@ Crafty.scene('Game', function() {
 	self.worldclassCreator = function() {
 		var seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.worldclass_players.length));
 		var head = PlayerConfig.worldclass_players[seed];
-		return Crafty.e('WorldClass').WorldClass(head, PlayerConfig.body_configs.worldclass);
+		var body = head === PlayerConfig.head_configs.rabbit ? 
+			                    PlayerConfig.body_configs.rabbit :
+								PlayerConfig.body_configs.worldclass;
+		return Crafty.e('WorldClass').WorldClass(head, body);
 	};
 
 	//self.randomizerEven = Crafty.e('ObjectRandomizer').ObjectRandomizer(

@@ -53,14 +53,14 @@ define(["jquery", "backbone"],
                 this.set("score",0);
                 this.set("coupon", this.get("originCoupon"));
                 $.ajax({
-                    url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    //url: "http://192.168.1.100:8008/footballgameservice/Games",
                     url: "app/data/startgame.json",
                     dataType: "json",
                     data: JSON.stringify({
                         gameTypeId: self.get("gameTypeId"),
                         userId: self.get("userId")
                     }),
-                    type: "POST",
+                    //type: "POST",
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         console.log(data.gameId);
@@ -82,7 +82,7 @@ define(["jquery", "backbone"],
                         coupon: self.get("coupon") - self.get("originCoupon")
                     }));
                 $.ajax({
-                    url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    //url: "http://192.168.1.100:8008/footballgameservice/Games",
                     url: "app/data/gameresult.json",
                     dataType: "json",
                     data: JSON.stringify({
@@ -92,7 +92,7 @@ define(["jquery", "backbone"],
                         score: self.get("score"),
                         coupon: self.get("coupon") - self.get("originCoupon")
                     }),
-                    type: 'PUT',
+                    //type: 'PUT',
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         self.processSuccessData(data);

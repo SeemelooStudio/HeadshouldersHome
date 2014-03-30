@@ -370,28 +370,19 @@ img {
     position: absolute;
     right: 0;
     top:0;
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     cursor: pointer;
+    background: url(../../app/img/share.png) no-repeat right top;
+    background-size: 60px 60px;
 }
-#share .caret {
-    position: absolute;
-    right: 0;
-    top:0;
-    border-top:60px solid #ffd800;
-    border-left:60px solid transparent;
-    border-right: none;
-    border-bottom: none;
-    height: 0;
-    line-height: 0;
-    overflow: hidden;
-    font-size: 0;
-}
+
 #share .share-icon {
     position: relative;
-    color: #226a0e;
-    top:10px;
-    right: 8px;
+    color: #c07410;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+    top:12px;
+    right: 5px;
     float: right;
 
 }

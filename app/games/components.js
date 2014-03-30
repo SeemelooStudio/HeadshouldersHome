@@ -237,7 +237,7 @@ Crafty.c('PlayerController', {
 		var ballWidth = this.avatar.ball._w;
 		var ballHeight = this.avatar.ball._h;
 		this.avatar.ball.requires('Collision, DebugCollision')
-		        .collision([5, ballHeight - 5], [ballWidth - 5, ballHeight - 5], [ballWidth - 5, 5], [5, 5])
+            .collision([5, ballHeight - 5], [ballWidth - 5, ballHeight - 5], [ballWidth - 5, 5], [5, 5])
 				.onHit('Obstacle', this.hitComponent)
 				.onHit('Coin', this.hitComponent)
 				.onHit('Amateur', this.hitComponent)

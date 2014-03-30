@@ -64,9 +64,9 @@ Crafty.scene('Game', function() {
 		var component1 = self.randomizerEven.get()();
 		var component2 = self.randomizerEven.get()();
 		component1.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.width / 2 - component1.width()), 
-						 y : -50 + Crafty.math.randomNumber(-20, 20)});
+                y : -50 + Crafty.math.randomNumber(-20, 20)});
 		component2.attr({x : Crafty.math.randomNumber(Game.width / 2, Game.player_bound_right() - component2.width()), 
-		                 y : -50 + Crafty.math.randomNumber(-20, 20)});
+                y : -50 + Crafty.math.randomNumber(-20, 20)});
 		self.components.push(component1);
 		self.components.push(component2);
 		self.numOfComponentsGenerated += 2;
@@ -76,7 +76,7 @@ Crafty.scene('Game', function() {
 		//generateDoubleComponents();
 		if (self.numOfComponentsGenerated < 10)
 		{
-			generateSingleComponent()
+            generateSingleComponent();
 		}
 		else
 		{

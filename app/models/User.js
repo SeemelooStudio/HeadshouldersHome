@@ -130,7 +130,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 card.fetch({
                         data: JSON.stringify({ userId: self.get("userId") }),
                         contentType: "application/json; charset=utf-8",
-                        type: 'POST',
+                        //type: 'POST',
                         dataType : "json",
                         success:function(){
                             options.success(card);

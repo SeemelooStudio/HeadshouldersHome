@@ -1,5 +1,4 @@
 // User.js
-
 define(["jquery", "backbone", "models/Card", "Utils"],
 
     function ($, Backbone, Card, Utils) {
@@ -8,7 +7,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             default: {
               "isLogin":false,
               "hasCoupon":false,
-              "hasData":false
+              "hasData":false,
+              "cardPrice":10
             },
         
             initialize: function() {
@@ -41,7 +41,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 return this.get("isLogin");
             },
             checkCoupon: function(){
-                if ( this.has("numOfCoupons") && this.get("numOfCoupons") > 0 ) {
+                if ( this.has("numOfCoupons") && this.get("numOfCoupons") > this.get("cardPrice") ) {
                     return true;
                 } else {
                     return false;

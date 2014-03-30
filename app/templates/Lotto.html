@@ -34,7 +34,7 @@
         </div>
         <div id="envelope-arrow" class="float">
             <div id="envelope-arrowCaret"></div>
-            <div id="envelope-arrowPoints">1</div>
+            <div id="envelope-arrowPoints">{{cardPrice}}</div>
         </div>
         <div id="lotto-info">
             <span class="lotto-pointsCount">{{userName}}，您还有{{numOfCoupons}}张奖券</span>
@@ -44,8 +44,9 @@
        {{^hasCoupon}}
        <div id="noCoupon" class="cleafix">
        (;_;)<br />
-       奖券不够啦<br />
-       玩游戏挣点儿吧！
+       抽一次奖需要10张奖券<br />
+       你只有{{numOfCoupons}}张<br />
+       分享一下可以送奖券哦！
        </div>
        {{/hasCoupon}}
        <div id="lottoAward">

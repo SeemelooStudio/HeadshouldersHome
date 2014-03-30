@@ -39,8 +39,7 @@ function (Crafty) {
         PlayerConfig.head_configs.ribery,
         PlayerConfig.head_configs.robben,
         PlayerConfig.head_configs.rooney,
-        PlayerConfig.head_configs.suarez,
-        PlayerConfig.head_configs.rabbit,
+        PlayerConfig.head_configs.suarez
 	];
 
     PlayerConfig.body_configs = {

@@ -30,10 +30,10 @@ Crafty.scene('Game', function() {
 	self.worldclassCreator = function() {
 		var seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.worldclass_players.length));
 		var head = PlayerConfig.worldclass_players[seed];
-		var body = head === PlayerConfig.head_configs.rabbit ? 
-			                    PlayerConfig.body_configs.rabbit :
-								PlayerConfig.body_configs.worldclass;
-		return Crafty.e('WorldClass').WorldClass(head, body);
+		return Crafty.e('WorldClass').WorldClass(head, PlayerConfig.body_configs.worldclass);
+	};
+	self.rabbitCreator = function() {
+		return Crafty.e('WorldClass').WorldClass(PlayerConfig.head_configs.rabbit, PlayerConfig.body_configs.rabbit);
 	};
 
 	//self.randomizerEven = Crafty.e('ObjectRandomizer').ObjectRandomizer(
@@ -69,10 +69,19 @@ Crafty.scene('Game', function() {
 	var generateDoubleComponents = function() {
 		var component1;
 		var component2;
-		if (self.numOfComponentsGenerated % 50 < 10)
+		var seed = self.numOfComponentsGenerated % 60;
+		if (seed < 10)
 		{
-			component1 = self.coinCreator();
-			component2 = self.coinCreator();
+			if (seed < 2)
+			{
+				component1 = self.rabbitCreator();
+				component2 = self.rabbitCreator();
+			}
+			else
+			{
+				component1 = self.coinCreator();
+				component2 = self.coinCreator();
+			}
 		}
 		else
 		{

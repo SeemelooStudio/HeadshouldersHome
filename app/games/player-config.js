@@ -4,28 +4,29 @@ function (Crafty) {
 
     PlayerConfig.head_configs = {
         messi : {
-            sprite : 'headMessi.png'
+            sprite : [2, 2],
+			cry : [2, 1],
         },
         neymar : {
-            sprite : 'headNeymar.png'
+		    sprite : [1, 2]
         },
         ozil : {
-            sprite : 'headOzil.png'
+            sprite : [1, 1] 
         },
         ribery : {
-            sprite : 'headRibery.png'
+            sprite : [2, 0] 
         },
         robben : {
-            sprite : 'headRobben.png'
+            sprite : [1, 0] 
         },
         rooney : {
-            sprite : 'headRooney.png'
+            sprite : [0, 2] 
         },
         suarez : {
-            sprite : 'headSuarez.png'
+            sprite : [0, 1] 
         },
         sushi : {
-            sprite : 'headSushi.png'
+            sprite : [0, 0] 
         },
     };
 

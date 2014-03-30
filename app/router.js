@@ -27,8 +27,6 @@ define(function(require, exports, module) {
   
   var LottoHistory = require("collections/WinningRecords");
   var lottoHistory;
-  
-  
   // Defining the application router.
   module.exports = Backbone.Router.extend({
     initialize: function() {

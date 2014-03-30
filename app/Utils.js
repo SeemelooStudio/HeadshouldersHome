@@ -67,6 +67,40 @@ var Utils = {
             }
         });
     },
+    showConfirm: function( options ) {
+        if ( options.content ) {
+            $("#confirmContent").html(options.content);
+        } 
+        if ( options.title ) {
+            $("#confirmTitle").text(options.title);
+        } else {
+            $("#confirmTitle").text("( T-T)");
+        }
+        if ( options.okText ) {
+            $("#confirmOk .btn-inner").text(options.okText);
+        } else {
+            $("#confirmOk .btn-inner").text("确定");
+        }
+        if ( options.cancelText ) {
+            $("#confirmCancel .btn-inner").text(options.cancelText);
+        } else {
+            $("#confirmCancel .btn-inner").text("取消");
+        }
+        
+        $("#confirm").show();
+        $("#confirmOk").one("tap", function(){
+            $("#confirm").hide();
+            if (options.ok) {
+                options.ok();
+            }
+        });
+        $("#confirmCancel").one("tap", function(){
+            $("#confirm").hide();
+            if (options.cancel) {
+                options.cancel();
+            }
+        });
+    },
     highlight: function($el, color) {
         $el.addClass("highlight tada " + color);
         $el.one(this.animationEndTrigger, function(e){

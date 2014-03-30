@@ -14,6 +14,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
                 
+                this.defaultReviveCouponNum = 10;
+                this.reviveCouponNum = this.defaultReviveCouponNum;
             },
             // View Event Handlers
             events: {
@@ -50,7 +52,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     self.Game = Game;
                     Game.registerEvents({
                         onGameOver: function() {
-                            self.gameOver();
+                            self.onGameOver();
                         },
                         onCollectCoin: function() {
                             self.addCoupon();
@@ -183,6 +185,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 $("#loading").show();
                 this.$score.text("0");
                 this.$coupon.text( this.model.get("originCoupon"));
+                this.reviveCouponNum = this.defaultReviveCouponNum;
                 this.model.startGame({
                    success: function(){
                        self.Game.restart();
@@ -212,6 +215,32 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onClickShare: function() {
                 this.Game.pause();
+            },
+            onGameOver: function() {
+                var self = this;
+                this.Game.pause();
+                if ( this.model.get("coupon") > this.reviveCouponNum ) {
+                Utils.showConfirm({
+                    title: "好可惜啊！",
+                    content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",
+                    okText:"潇洒地花掉",
+                    cancelText:"算了",
+                    ok: function() {
+                        self.continueGame();
+                    },
+                    cancel: function() {
+                        self.gameOver();
+                    }
+                });
+                } else {
+                    this.gameOver();
+                }
+            },
+            continueGame: function() {
+                this.model.revive(this.reviveCouponNum);
+                this.$coupon.text( this.model.get("coupon"));
+                this.reviveCouponNum  = this.reviveCouponNum * 2;
+                this.Game.restart();
             }
             
         });

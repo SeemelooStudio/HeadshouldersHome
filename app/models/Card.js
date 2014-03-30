@@ -1,7 +1,6 @@
 // Card.js
 
 define(["jquery", "backbone"],
-
     function ($, Backbone) {
 
         var Card = Backbone.Model.extend({

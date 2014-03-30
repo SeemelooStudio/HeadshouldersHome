@@ -1512,7 +1512,7 @@ textarea.form-control {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-#error {
+#error,#confirm {
     position: absolute;
     position: fixed;
     left: 0;
@@ -1523,7 +1523,7 @@ textarea.form-control {
     display: none;
     z-index: 99;
 }
-#errorDialog {
+#errorDialog,#confirmDialog {
     width: 240px;
     position:absolute;
     left: 50%;
@@ -1533,18 +1533,18 @@ textarea.form-control {
     padding-bottom: 10px;
     border-radius:20px 2px 20px 2px;
 }
-#errorContent {
+#errorContent,#confirmContent {
     padding: 15px 10px;
     font-size: 14px;
     line-height: 18px;
 }
-#errorTitle {
+#errorTitle,#confirmTitle {
     background: #004993;
     border-radius: 15px 2px 0 0;
     color: #FFF;
     padding:10px;
 }
-#errorAction {
+#errorAction,#confirmAction {
     text-align: center;
 }
 #ruleButton {
@@ -1600,7 +1600,7 @@ textarea.form-control {
     background: url(../../app/img/gameoverbelt.png) no-repeat center center;
     background-size: 231px 100px;
     text-align: center;
-    top:-50px;
+    top:-35px;
     position: relative;
     color: #FFF;
 }
@@ -1651,7 +1651,7 @@ textarea.form-control {
 #gameOver-coupon {
     text-align: center;
     color: #FFF;
-    margin-top:-60px;
+    margin-top:-45px;
 }
 #game-score {
     font-size: 56px;
@@ -1773,8 +1773,10 @@ textarea.form-control {
         width: 140px;
     }
     #share {
-        border-radius: 0 0 30px 2px;
         padding-bottom: 10px;
+        width: 80px;
+        height: 80px;
+        background-size: 80px 80px;
     }
     #share img {
         width: 30px;

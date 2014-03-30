@@ -40,7 +40,6 @@ define(["jquery", "backbone"],
                     "coupon": options.user.get("numOfCoupons"),
                     "userId": options.user.get("userId")
                 });
-                console.log( this.get("coupon"));
             },
             addScore: function (score) {
                 this.set("score", this.get("score") + score);
@@ -63,7 +62,6 @@ define(["jquery", "backbone"],
                     //type: "POST",
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
-                        console.log(data.gameId);
                         self.set("gameId", data.gameId);
                         options.success();
                     },
@@ -74,13 +72,6 @@ define(["jquery", "backbone"],
             },
             submitResult: function (options) {
                 var self = this;
-                console.log(JSON.stringify({
-                        gameId: self.get("gameId"),
-                        gameTypeId: self.get("gameTypeId"),
-                        userId: self.get("userId"),
-                        score: self.get("score"),
-                        coupon: self.get("coupon") - self.get("originCoupon")
-                    }));
                 $.ajax({
                     //url: "http://192.168.1.100:8008/footballgameservice/Games",
                     url: "app/data/gameresult.json",
@@ -110,6 +101,10 @@ define(["jquery", "backbone"],
                 this.set("originTotalRanking", this.get("totalRanking"));
                 var accumulatePoints = this.get("score") + this.get("originTotalScore");
                 this.set("accumulatePoints", accumulatePoints);
+            },
+            revive: function(reviveCouponNum) {
+                this.set("coupon", this.get("coupon") - reviveCouponNum);
+                console.log(this.get("coupon"));
             }
         });
 

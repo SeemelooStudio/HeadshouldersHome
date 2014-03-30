@@ -91,11 +91,15 @@ Crafty.c('Ball', {
 		}
 	},
 
-	startRolling: function(direction){
+	setRollingDirection: function(direction) {
+	    this.rollingDirection = direction;
+	},
+
+	startRolling: function(){
 		if (!this.isRolling)
 		{
 			this.bind('EnterFrame', this.onEnterFrame);
-			this.direction = direction;
+			this.rollingDirection = this.rollingDirection || 1;
 			this.isRolling = true;
 		}
 	},
@@ -108,7 +112,7 @@ Crafty.c('Ball', {
 	onEnterFrame : function(data) {
 		if (this.isRolling)
 		{
-			this.rotation += this.ballSpinSpeed * data.dt * this.direction;
+			this.rotation += this.ballSpinSpeed * data.dt * this.rollingDirection;
 		}
 	},
 	
@@ -124,7 +128,6 @@ Crafty.c('Avatar', {
 	ballOffsetXLeft : -5,
 	ballOffsetXRight : 45,
 	ballOffsetY : 80,
-	ballSpinSpeed : 0.3,
     isPassed: false,
 	bodyRunPos : {
 				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_run.x) / 2,
@@ -144,7 +147,7 @@ Crafty.c('Avatar', {
 		return this.body._h + this.bodyRunPos.y;
 	},
 
-	Avatar: function(basicDepth, headConfig, bodyConfig, withBall) {
+	Avatar: function(basicDepth, headConfig, bodyConfig, ball) {
 		var self = this;
 
 		self.head = Crafty.e('Head').Head(headConfig);
@@ -161,16 +164,16 @@ Crafty.c('Avatar', {
 		self.attach(self.body);
 		self.run();
 
-		if (withBall)
+		if (ball)
 		{
-			self.ball = Crafty.e('Actor, Tween, SpriteBall').attr(
+			self.ball = ball;
+			self.ball.attr(
 				{ x : self.ballOffsetXLeft,
                   y : self.ballOffsetY,
                   z : basicDepth + Game.depth.ball
 				});
-			self.ball.origin('center');
-			self.ball.owner = self;
-			self.attach(self.ball);
+			self.ball.setOwner(self);
+			self.ball.startRolling();
 		}
 
 		self.body.bind('FrameChange', function(data) {
@@ -187,8 +190,7 @@ Crafty.c('Avatar', {
 			}
 		});
 		
-		self.bind('EnterFrame', self.onEnterFrame);
-		self.facingLeft = true;
+		self.faceLeft();
 	
         self.halfBoundBox = new Crafty.polygon(
                 [20,80], 
@@ -199,13 +201,6 @@ Crafty.c('Avatar', {
 		return self;
 	},
 
-	onEnterFrame : function(data) {
-		if (this.ball)
-		{
-			this.ball.rotation += this.ballSpinSpeed * data.dt * (this.facingLeft ? -1 : 1);
-		}
-	},
-	
 	run : function() {
 		this.isRunning = true;
 		this.body.run();
@@ -239,6 +234,7 @@ Crafty.c('Avatar', {
 		if (this.ball)
 		{
 			this.ball.x = this._x + this.ballOffsetXLeft;
+			this.ball.setRollingDirection(-1);
 		}
 		this.facingLeft = true;
 	},
@@ -250,6 +246,7 @@ Crafty.c('Avatar', {
 		if (this.ball)
 		{
 			this.ball.x = this._x + this.ballOffsetXRight;
+			this.ball.setRollingDirection(1);
 		}
 		this.facingLeft = false;
 	},
@@ -305,8 +302,9 @@ Crafty.c('DribbleController', {
 		this.requires('Actor, Draggable, DebugArea')
 				.attr({w: 80, h: 180, z: Game.depth.controller});
 
+        this.ball = Crafty.e('Ball');
 		this.avatar = Crafty.e('Avatar')
-				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true);
+				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, this.ball);
 		var ballWidth = this.avatar.ball._w;
 		var ballHeight = this.avatar.ball._h;
 		this.avatar.head.setNormal();

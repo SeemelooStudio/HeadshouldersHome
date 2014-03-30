@@ -33,6 +33,9 @@ Crafty.scene('Game', function() {
 		return Crafty.e('WorldClass').WorldClass(head, PlayerConfig.body_configs.worldclass);
 	};
 
+	//self.randomizerEven = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			//[self.obstacleCreator, self.amateurCreator, self.worldclassCreator, self.coinCreator],
+			//[0.32, 0.32, 0.32]);
 	self.randomizerEven = Crafty.e('ObjectRandomizer').ObjectRandomizer(
 			[self.obstacleCreator, self.amateurCreator, self.worldclassCreator]);
 	self.randomizerStep1 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
@@ -61,8 +64,18 @@ Crafty.scene('Game', function() {
 	};
 
 	var generateDoubleComponents = function() {
-		var component1 = self.randomizerEven.get()();
-		var component2 = self.randomizerEven.get()();
+		var component1;
+		var component2;
+		if (self.numOfComponentsGenerated % 50 < 10)
+		{
+			component1 = self.coinCreator();
+			component2 = self.coinCreator();
+		}
+		else
+		{
+			component1 = self.randomizerEven.get()();
+			component2 = self.randomizerEven.get()();
+		}
 		component1.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.width / 2 - component1.width()), 
                 y : -50 + Crafty.math.randomNumber(-20, 20)});
 		component2.attr({x : Crafty.math.randomNumber(Game.width / 2, Game.player_bound_right() - component2.width()), 
@@ -73,8 +86,7 @@ Crafty.scene('Game', function() {
 	};
 
 	self.generateComponent = function() {
-		//generateDoubleComponents();
-		if (self.numOfComponentsGenerated < 10)
+		if (self.numOfComponentsGenerated < 15)
 		{
             generateSingleComponent();
 		}
@@ -137,7 +149,7 @@ Crafty.scene('Game', function() {
 	};
 
 	self.resetGame();
-	self.player = Crafty.e('PlayerController');
+	self.player = Crafty.e('DribbleController');
 	self.player.attr({ x : Game.width / 2 - self.player.avatar.width() / 2, 
         y : Game.height - self.player.avatar.height() * 1.5 });
 

@@ -21,6 +21,33 @@ Crafty.c('DebugArea', {
 	},
 });
 
+Crafty.c('Head', {
+	init: function() {
+	},
+
+	Head: function(headConfig) {
+		this.requires('Actor, Sprite, HeadDefault');
+		this.normal_cell = headConfig.sprite;
+		this.cry_cell = headConfig.cry;
+		this.setNormal();
+		return this;
+	},
+
+	setNormal: function() {
+	    if (this.normal_cell)
+		{
+		    this.sprite(this.normal_cell[0], this.normal_cell[1]);
+		}
+	},
+
+	setCry: function() {
+	    if (this.cry_cell)
+		{
+		    this.sprite(this.cry_cell[0], this.cry_cell[1]);
+		}
+	},
+});
+
 Crafty.c('Body', { 
 	init: function() {
 	},
@@ -43,6 +70,48 @@ Crafty.c('Body', {
 	tackle: function() {
         this.animate('Tackle', -1);
 	}
+});
+
+Crafty.c('Ball', {
+	ballSpinSpeed : 0.3,
+
+	init: function() {
+		this.requires('Actor, Tween, SpriteBall').origin('center');
+	},
+	
+	setOwner: function(owner) {
+	    this.owner = owner;
+		this.owner.attach(this);
+	},
+
+	kick: function(kickForce) {
+	    if (this.owner)
+		{
+		    this.owner.detach(this);
+		}
+	},
+
+	startRolling: function(direction){
+		if (!this.isRolling)
+		{
+			this.bind('EnterFrame', this.onEnterFrame);
+			this.direction = direction;
+			this.isRolling = true;
+		}
+	},
+
+	stopRolling: function() {
+		this.unbind('EnterFrame', this.onEnterFrame);
+		this.isRolling = false;
+	},
+
+	onEnterFrame : function(data) {
+		if (this.isRolling)
+		{
+			this.rotation += this.ballSpinSpeed * data.dt * this.direction;
+		}
+	},
+	
 });
 
 Crafty.c('Avatar', {
@@ -78,8 +147,11 @@ Crafty.c('Avatar', {
 	Avatar: function(basicDepth, headConfig, bodyConfig, withBall) {
 		var self = this;
 
-		self.head = Crafty.e('Actor, ' + headConfig.sprite);
-		self.head.attr({w : self.head._w / 2, h : self.head._h / 2, z : basicDepth + Game.depth.head});
+		self.head = Crafty.e('Head').Head(headConfig);
+		self.head.attr({
+                    w : self.head._w / 2, 
+					h : self.head._h / 2, 
+					z : basicDepth + Game.depth.head});
 		self.body = Crafty.e('Body').Body(bodyConfig);
 		self.body.attr({
 					w : self.body._w / 2, 
@@ -97,6 +169,7 @@ Crafty.c('Avatar', {
                   z : basicDepth + Game.depth.ball
 				});
 			self.ball.origin('center');
+			self.ball.owner = self;
 			self.attach(self.ball);
 		}
 
@@ -227,7 +300,7 @@ Crafty.c('Avatar', {
 });
 
 // This is the player-controlled character
-Crafty.c('PlayerController', {
+Crafty.c('DribbleController', {
 	init: function() {
 		this.requires('Actor, Draggable, DebugArea')
 				.attr({w: 80, h: 180, z: Game.depth.controller});
@@ -236,6 +309,7 @@ Crafty.c('PlayerController', {
 				.Avatar(Game.depth.controller, PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, true);
 		var ballWidth = this.avatar.ball._w;
 		var ballHeight = this.avatar.ball._h;
+		this.avatar.head.setNormal();
 		this.avatar.ball.requires('Collision, DebugCollision')
             .collision([5, ballHeight - 5], [ballWidth - 5, ballHeight - 5], [ballWidth - 5, 5], [5, 5])
 				.onHit('Obstacle', this.hitComponent)
@@ -287,8 +361,14 @@ Crafty.c('PlayerController', {
 	},
 
 	hitComponent: function(data) {
+		// 'this' would be the ball in this function
 		var component = data[0].obj;
-		component.onPlayerHit(this);
+		if (component.onPlayerHit(this))
+		{
+			this.owner.ball.visible = false;
+			this.owner.head.setCry();
+			Game.events.onGameOver();
+		}
 	}
 });
 
@@ -319,8 +399,7 @@ Crafty.c('Obstacle', {
 	},
 
 	onPlayerHit: function(player) {
-		//this.destroy();
-		Game.events.onGameOver();
+		return true;
 	}
 });
 
@@ -348,6 +427,7 @@ Crafty.c('Coin', {
 		++Game.data.num_of_collected_coins;
 		Game.events.onCollectCoin(Game.data.num_of_collected_coins);
         this.destroy();
+		return false;
 	}
 });
 
@@ -400,8 +480,7 @@ Crafty.c('Amateur', {
 	},
 
 	onPlayerHit: function(player) {
-		//this.destroy();
-		Game.events.onGameOver();
+		return true;
 	}
 });
 
@@ -470,13 +549,12 @@ Crafty.c('WorldClass', {
 	},
 
 	onPlayerHit: function(player) {
-		//this.destroy();
-		Game.events.onGameOver();
+		return true;
 	}
 });
 
 Crafty.c('Field', {
-	tileWidth  : 80,
+	tileWidth  : 320,
 
 	tileHeight : 145,
 
@@ -489,9 +567,9 @@ Crafty.c('Field', {
 		self.group2 = Crafty.e('Actor');
 
 		var numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
-		var numOfTilesPerColumn = 10;
+		var numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
 		var numOfTilesHalfColumn = numOfTilesPerColumn / 2;
-		//console.log(numOfTilesPerRow);
+		console.log('football field [' + numOfTilesPerRow + 'x' + numOfTilesPerColumn + ']');
 
 		for (var i = 0; i < numOfTilesPerColumn; i++)
 		{

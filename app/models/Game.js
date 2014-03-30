@@ -104,7 +104,9 @@ define(["jquery", "backbone"],
             },
             revive: function(reviveCouponNum) {
                 this.set("coupon", this.get("coupon") - reviveCouponNum);
-                console.log(this.get("coupon"));
+                if ( this.get("coupon") < 0 ) {
+                    this.set("coupon", 0);
+                }
             }
         });
 

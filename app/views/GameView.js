@@ -14,7 +14,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
                 
-                this.defaultReviveCouponNum = 10;
+                this.defaultReviveCouponNum = 20;
                 this.reviveCouponNum = this.defaultReviveCouponNum;
             },
             // View Event Handlers
@@ -220,18 +220,18 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 this.Game.pause();
                 if ( this.model.get("coupon") > this.reviveCouponNum ) {
-                Utils.showConfirm({
-                    title: "好可惜啊！",
-                    content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",
-                    okText:"潇洒地花掉",
-                    cancelText:"算了",
-                    ok: function() {
-                        self.continueGame();
-                    },
-                    cancel: function() {
-                        self.gameOver();
-                    }
-                });
+                    Utils.showConfirm({
+                        title: "好可惜啊！",
+                        content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",
+                        okText:"潇洒地花掉",
+                        cancelText:"算了",
+                        ok: function() {
+                            self.continueGame();
+                        },
+                        cancel: function() {
+                            self.gameOver();
+                        }
+                    });
                 } else {
                     this.gameOver();
                 }

@@ -8,7 +8,7 @@ function (Crafty) {
 			cry : [2, 2],
         },
         neymar : {
-		    sprite : [1, 2]
+            sprite : [1, 2]
         },
         ozil : {
             sprite : [0, 2] 

@@ -48,8 +48,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function(){
-                window.location.href= window.location.origin + window.location.pathname + "#login/3";
-               // window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=1356830721&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                //window.location.href= window.location.origin + window.location.pathname + "#login/3";
+                window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
 
@@ -95,8 +95,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
                 console.log(this.get("userId"));
                 $.ajax({
-                  url:"app/data/user.json",
-                  //url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
+                  //url:"app/data/user.json",
+                  url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
                   dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);

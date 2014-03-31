@@ -34,16 +34,16 @@ Crafty.c('Head', {
 	},
 
 	setNormal: function() {
-	    if (this.normal_cell)
+        if (this.normal_cell)
 		{
-		    this.sprite(this.normal_cell[0], this.normal_cell[1]);
+            this.sprite(this.normal_cell[0], this.normal_cell[1]);
 		}
 	},
 
 	setCry: function() {
-	    if (this.cry_cell)
+        if (this.cry_cell)
 		{
-		    this.sprite(this.cry_cell[0], this.cry_cell[1]);
+            this.sprite(this.cry_cell[0], this.cry_cell[1]);
 		}
 	},
 });
@@ -80,19 +80,19 @@ Crafty.c('Ball', {
 	},
 	
 	setOwner: function(owner) {
-	    this.owner = owner;
+        this.owner = owner;
 		this.owner.attach(this);
 	},
 
 	kick: function(kickForce) {
-	    if (this.owner)
+        if (this.owner)
 		{
-		    this.owner.detach(this);
+            this.owner.detach(this);
 		}
 	},
 
 	setRollingDirection: function(direction) {
-	    this.rollingDirection = direction;
+        this.rollingDirection = direction;
 	},
 
 	startRolling: function(){

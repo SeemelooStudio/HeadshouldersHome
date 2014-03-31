@@ -85,6 +85,6 @@ define(function(require, exports, module) {
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:57fc9174b148af820075bca573b16ce4$"
 }
-}
+};
 return heads;
 });

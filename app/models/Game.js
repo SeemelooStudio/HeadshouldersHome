@@ -59,7 +59,7 @@ define(["jquery", "backbone"],
                         gameTypeId: self.get("gameTypeId"),
                         userId: self.get("userId")
                     }),
-                    //type: "POST",
+                    type: "POST",
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         self.set("gameId", data.gameId);
@@ -83,7 +83,7 @@ define(["jquery", "backbone"],
                         score: self.get("score"),
                         coupon: self.get("coupon") - self.get("originCoupon")
                     }),
-                    //type: 'PUT',
+                    type: 'PUT',
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         self.processSuccessData(data);

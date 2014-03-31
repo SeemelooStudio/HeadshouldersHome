@@ -4,7 +4,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
     function ($, Backbone, Card, Utils) {
 
         var User = Backbone.Model.extend({
-            default: {
+            defaults: {
               "isLogin":false,
               "hasCoupon":false,
               "hasData":false,
@@ -120,6 +120,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 this.set(userdata);
                 
                 this.set("hasCoupon", this.checkCoupon());
+                
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");
             },
@@ -130,7 +131,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 card.fetch({
                         data: JSON.stringify({ userId: self.get("userId") }),
                         contentType: "application/json; charset=utf-8",
-                        //type: 'POST',
+                        type: 'POST',
                         dataType : "json",
                         success:function(){
                             options.success(card);
@@ -147,6 +148,29 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 });
                 
 
+            },
+            share: function(options){
+                var self = this;
+                $.ajax({
+                  url:"app/data/shareresult.json",
+                  dataType : "json",
+                  success: function(data, textStatus, jqXHR){
+                    if ( data.coupons && data.coupons > 0) {
+                        self.set("numOfCoupons", self.get("numOfCoupons") + data.coupons);
+                    }
+                    if ( options && options.success ) {
+                       options.success(data.coupons); 
+                    }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                    if ( options && options.error ) {
+                        options.error( textStatus + ": " + errorThrown);
+                    } else {
+                        console.log(errorThrown);
+                    }
+                      
+                  }
+                });                   
             }
         });
 

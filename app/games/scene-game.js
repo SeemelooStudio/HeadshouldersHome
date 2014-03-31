@@ -69,7 +69,7 @@ Crafty.scene('Game', function() {
 	var generateDoubleComponents = function() {
 		var component1;
 		var component2;
-		var seed = self.numOfComponentsGenerated % 60;
+		var seed = self.numOfComponentsGenerated % 50;
 		if (seed < 10)
 		{
 			if (seed < 2)
@@ -82,6 +82,10 @@ Crafty.scene('Game', function() {
 				component1 = self.coinCreator();
 				component2 = self.coinCreator();
 			}
+		}
+		else if( seed == 25 ){
+            component1 = self.rabbitCreator();
+			component2 = self.coinCreator();
 		}
 		else
 		{

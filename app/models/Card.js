@@ -12,7 +12,7 @@ define(["jquery", "backbone"],
                   url: "http://192.168.1.100:8008/footballGameService/Prizes",
                   //url: "app/data/card.json",
                   dataType: "json",
-                  //type: 'PUT',
+                  type: 'PUT',
                   contentType: "application/json; charset=utf-8",
                   data: JSON.stringify({
                       prizeRedeemId: this.get("prizeRedeemId"),

@@ -56,7 +56,7 @@ var Utils = {
         if ( title ) {
             $("#errorTitle").text(title);
         } else {
-            $("#errorTitle").text("( T-T) 出错了");
+            $("#errorTitle").text("(>﹏<) 小海好像出错了");
         }
         
         $("#error").show();

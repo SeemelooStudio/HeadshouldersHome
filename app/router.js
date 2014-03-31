@@ -31,7 +31,7 @@ define(function(require, exports, module) {
   module.exports = Backbone.Router.extend({
     initialize: function() {
         user = new User();
-        mainView = new MainView();        
+        mainView = new MainView({user:user});        
         prepareView = new PrepareView();
         lottoHistory = new LottoHistory();
         

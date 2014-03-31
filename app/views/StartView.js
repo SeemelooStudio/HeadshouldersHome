@@ -41,7 +41,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
-                "tap #ruleButton":"onClickLotto"
+                "tap #ruleRight":"onClickLotto",
+                "tap #ruleLeft":"onClickLeaderboard"
             },
             render: function () {
                 this.template = _.template(template, {});

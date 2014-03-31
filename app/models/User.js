@@ -155,11 +155,11 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                   url:"app/data/shareresult.json",
                   dataType : "json",
                   success: function(data, textStatus, jqXHR){
-                    if ( data.coupons && data.coupons > 0) {
-                        self.set("numOfCoupons", self.get("numOfCoupons") + data.coupons);
+                    if ( data.numOfCoupons && data.numOfCoupons > 0) {
+                        self.set("numOfCoupons", self.get("numOfCoupons") + data.numOfCoupons);
                     }
                     if ( options && options.success ) {
-                       options.success(data.coupons); 
+                       options.success(data.numOfCoupons); 
                     }
                   },
                   error: function(jqXHR, textStatus, errorThrown){

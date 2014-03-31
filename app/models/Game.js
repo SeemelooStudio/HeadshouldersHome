@@ -81,7 +81,7 @@ define(["jquery", "backbone"],
                         gameTypeId: self.get("gameTypeId"),
                         userId: self.get("userId"),
                         score: self.get("score"),
-                        coupon: self.get("coupon") - self.get("originCoupon")
+                        numOfCoupons: self.get("coupon") - self.get("originCoupon")
                     }),
                     type: 'PUT',
                     contentType: "application/json; charset=utf-8",

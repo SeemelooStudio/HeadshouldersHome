@@ -314,6 +314,7 @@ img {
     padding: 3px 5px 0 0;
     text-align: center;
     overflow: hidden;
+
 }
 .gameButton-small {
     font-size: 8px;
@@ -1269,7 +1270,7 @@ img {
     overflow: hidden;
     box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
     padding: 2px;
-    background-color: #ef550f;
+    background-color: #fff;
 }
 #user-avatar img {
     border-radius: 50%;
@@ -1582,14 +1583,14 @@ textarea.form-control {
     top: -35px;
 }
 #ruleImgLeft {
-    width: 45px;
-    left: 0px;
-    top: -20px;
+    width: 40px;
+    left: 5px;
+    top: -15px;
 }
 #ruleLinkLeft,#ruleLinkRight {
     position: absolute;
     font-size: 10px;
-    color: #c07410;
+    color: #221417;
 
     width: 30px;
     height: 30px;
@@ -1732,14 +1733,17 @@ textarea.form-control {
     min-width: 26px;
 }
 #ruleButton {
-    background: #0e4593;
+    background: #0454b7;
     border:2px solid #221417;
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
     margin: 0.5em auto 1.5em;
     position: relative;
-
+    background: -webkit-linear-gradient(#0454b7 40%, #004090 40%); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0454b7 40%, #004090 40%); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0454b7 40%, #004090 40%); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0454b7 40%, #004090 40%); /* Standard syntax */
 }
 #shareOk {
     display: none;

@@ -77,8 +77,10 @@ define(["jquery", "backbone"],
                 var self = this;
                 if ( this.originGameId == this.get("gameId") ) {
                     //is Submitted
+                    $("#loading").hide();
                     return;
                 } else {
+                    self.originGameId = self.get("gameId");
                     $.ajax({
                         url: "http://192.168.1.100:8008/footballgameservice/Games",
                         //url: "app/data/gameresult.json",
@@ -94,7 +96,6 @@ define(["jquery", "backbone"],
                         contentType: "application/json; charset=utf-8",
                         success: function (data, textStatus, jqXHR) {
                             self.processSuccessData(data);
-                            self.originGameId = self.get("gameId");
                             options.success();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {

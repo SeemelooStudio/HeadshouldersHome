@@ -9,8 +9,14 @@
                 {{score}}<small>分</small>
             </div>
             <div id="gameOverRanking">
-                实力总排名：{{totalRanking}}
+                总积分排名：{{totalRanking}} 
+                {{#isRankUp}}
+                (<span class="yellow"> {{rankGap}} <i class="fa fa-arrow-up"></i></span> )
+                {{/isRankUp}}
             </div>
+            {{#isBreakRecord}}
+            <div id="gameOver-newRecord" class="newRecord">新纪录</div>
+            {{/isBreakRecord}}
         </div>
 
         <div id="gameOver-coupon">
@@ -20,7 +26,7 @@
         
         <div id="gameOver-share" class="btn btn-blue btn-block share">
             <div class="btn-inner">
-                    <i class="fa fa-share-square-o"></i> 晒成绩 得奖券
+                    <i class="fa fa-share-square-o"></i> 晒成绩 挣奖券
             </div>
         </div>
         <div id="gameOver-replay" class="btn btn-yellow btn-block">

@@ -16,6 +16,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
                 this.defaultReviveCouponNum = 20;
                 this.reviveCouponNum = this.defaultReviveCouponNum;
+                this.isSubmiting = false;
             },
             // View Event Handlers
             events: {
@@ -41,7 +42,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     "hideAtFirst":false
                 });
                 this.$score = this.$el.find("#game-score");
-                this.$highestScore = this.$el.find("#game-topBar-high");
+                this.$newRecord = this.$el.find("#game-newRecord");
                 this.$coupon = this.$el.find("#game-coupon");
                 
                 this.mainAnimationScheduler.animateIn();
@@ -186,6 +187,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 $("#loading").show();
                 this.$score.text("0");
                 this.$coupon.text( this.model.get("originCoupon"));
+                this.$newRecord.hide();
                 this.reviveCouponNum = this.defaultReviveCouponNum;
                 this.model.startGame({
                    success: function(){
@@ -201,10 +203,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             addScore: function( score ) {
                 this.model.addScore(score);
                 var newScore = this.model.get("score");
-                if ( newScore > this.model.get("highestScore") ) {
-                    this.model.set("highestScore", newScore);
-                    this.$highestScore.text(newScore);
-                    Utils.highlight( this.$highestScore, "yellow");
+                if ( this.model.get("isBreakRecord") ) {
+                    this.$newRecord.show();
                 }
                 this.$score.text( newScore );
                 Utils.highlight( this.$score, "yellow");

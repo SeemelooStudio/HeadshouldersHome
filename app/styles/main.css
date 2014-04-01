@@ -1,6 +1,12 @@
 ::selection {
     background: none;
 }
+/* FA 4.0.0 and newer */
+.fa {
+  text-rendering: auto;
+  font-variant: normal;
+  font-family: 'FontAwesome'
+}
 #header {
     background: #90daf7 url(../../app/img/topbg.png) no-repeat center bottom;
     background-size: 100% 100%;
@@ -1314,7 +1320,7 @@ textarea.form-control {
     margin-left: -10px;
 }
 #lottoHistory {
-    padding: 80px 0 0;
+    padding: 80px 0 80px;
 }
 .lottoHistory-user {
     width: 90%;
@@ -1590,7 +1596,7 @@ textarea.form-control {
 #ruleLinkLeft,#ruleLinkRight {
     position: absolute;
     font-size: 10px;
-    color: #221417;
+    color: #c07410;
 
     width: 30px;
     height: 30px;
@@ -1733,20 +1739,51 @@ textarea.form-control {
     min-width: 26px;
 }
 #ruleButton {
-    background: #0454b7;
-    border:2px solid #221417;
+    
+    border:1px solid #221417;
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
     margin: 0.5em auto 1.5em;
     position: relative;
-    background: -webkit-linear-gradient(#0454b7 40%, #004090 40%); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#0454b7 40%, #004090 40%); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#0454b7 40%, #004090 40%); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#0454b7 40%, #004090 40%); /* Standard syntax */
+    
+    background: -webkit-linear-gradient(#405c96 40%, #1a2b4d 40%); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#405c96 40%, #1a2b4d 40%); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#405c96 40%, #1a2b4d 40%); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#405c96 40%, #1a2b4d 40%); /* Standard syntax */
+    background-color: #0454b7;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
 }
 #shareOk {
     display: none;
+}
+.newRecord {
+position: absolute;
+left: 50%;
+background-color: #c01f2e;
+-webkit-border-radius: 50%;
+border-radius: 50%;
+width: 40px;
+height: 40px;
+color: #FFF;
+text-align: center;
+font-size: 10px;
+line-height: 40px;
+box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+-webkit-transform: rotate(15deg);
+display: none;
+}
+#game-newRecord {
+top: 30px;
+margin-left: 25px;
+}
+#gameOver-newRecord {
+    top: 0;
+    margin-left:-80px;
+    -webkit-transform: rotate(-15deg);
+}
+.red {
+color: #c01f2e;    
 }
 @media only screen and (max-width: 750px) {
 
@@ -1760,10 +1797,10 @@ textarea.form-control {
     #header {
         background-size: 100% 100%;
         background-position: center center;
-        height: 200px; 
+        height: 220px; 
     }
     #logo {
-        width: 300px;
+        width: 320px;
         top:-30px;
     }
     #plane {
@@ -2332,5 +2369,27 @@ textarea.form-control {
 #errorContent, #confirmContent {
     font-size: 16px;
     line-height: 24px;
+}
+.gameButton-innner {
+    border-radius: 48px 2px;
+}
+.newRecord {
+
+width: 60px;
+height: 60px;
+font-size: 14px;
+line-height: 60px;
+box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+-webkit-transform: rotate(15deg);
+display: none;
+}
+#game-newRecord {
+top: 40px;
+margin-left: 50px;
+}
+#gameOver-newRecord {
+    top: 0;
+    margin-left:-100px;
+    -webkit-transform: rotate(-15deg);
 }
 }

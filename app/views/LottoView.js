@@ -101,7 +101,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 var self = this;
-                if ( this.card.get("isWon") ) { 
+                if ( this.card.get("isWon") && this.card.get("isVirtualPrize") ) { 
                     if ( this.validateAddress() ) {
                         this.saveAddress();
                     }

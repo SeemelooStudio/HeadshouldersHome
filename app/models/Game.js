@@ -7,7 +7,8 @@ define(["jquery", "backbone"],
         var Game = Backbone.Model.extend({
             defaults: {
                 "score": 0,
-                "coupon": 0
+                "coupon": 0,
+                "isBreakRecord": false
             },
             initialize: function (options) {
                 switch (options.gameTypeId) {
@@ -45,6 +46,11 @@ define(["jquery", "backbone"],
             },
             addScore: function (score) {
                 this.set("score", this.get("score") + score);
+                var newScore = this.get("score");
+                if ( newScore > this.get("highestScore") ) {
+                    this.set("highestScore", newScore);
+                    this.set("isBreakRecord", true);
+                }
             },
             addCoupon: function () {
                 this.set("coupon", this.get("coupon") + 1);
@@ -108,6 +114,16 @@ define(["jquery", "backbone"],
             },
             processSuccessData: function (data) {
                 this.set(data);
+                var totalRanking = this.get("totalRanking");
+                var originTotalRanking = this.get("originTotalRanking");
+                
+                if ( totalRanking < originTotalRanking ) {
+                    this.set("isRankUp", true);
+                    this.set("rankGap", originTotalRanking - totalRanking);
+                } else {
+                    this.set("isRankUp", false);
+                    this.set("rankGap", 0);
+                }
                 this.set("originCoupon", this.get("coupon"));
                 this.set("originGameRanking", this.get("gameRanking"));
                 this.set("originTotalRanking", this.get("totalRanking"));

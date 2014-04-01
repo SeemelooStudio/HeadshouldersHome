@@ -40,6 +40,8 @@ define(["jquery", "backbone"],
                     "coupon": options.user.get("numOfCoupons"),
                     "userId": options.user.get("userId")
                 });
+                this.isResultSubmitted = false;
+                this.originGameId = 0;
             },
             addScore: function (score) {
                 this.set("score", this.get("score") + score);
@@ -63,6 +65,7 @@ define(["jquery", "backbone"],
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         self.set("gameId", data.gameId);
+                        
                         options.success();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -72,27 +75,35 @@ define(["jquery", "backbone"],
             },
             submitResult: function (options) {
                 var self = this;
-                $.ajax({
-                    url: "http://192.168.1.100:8008/footballgameservice/Games",
-                    //url: "app/data/gameresult.json",
-                    dataType: "json",
-                    data: JSON.stringify({
-                        gameId: self.get("gameId"),
-                        gameTypeId: self.get("gameTypeId"),
-                        userId: self.get("userId"),
-                        score: self.get("score"),
-                        numOfCoupons: self.get("coupon") - self.get("originCoupon")
-                    }),
-                    type: 'PUT',
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data, textStatus, jqXHR) {
-                        self.processSuccessData(data);
-                        options.success();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        options.error(textStatus + ": " + errorThrown);
-                    }
-                });
+                if ( this.originGameId == this.get("gameId") ) {
+                    //is Submitted
+                    return;
+                } else {
+                    $.ajax({
+                        url: "http://192.168.1.100:8008/footballgameservice/Games",
+                        //url: "app/data/gameresult.json",
+                        dataType: "json",
+                        data: JSON.stringify({
+                            gameId: self.get("gameId"),
+                            gameTypeId: self.get("gameTypeId"),
+                            userId: self.get("userId"),
+                            score: self.get("score"),
+                            numOfCoupons: self.get("coupon") - self.get("originCoupon")
+                        }),
+                        type: 'PUT',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data, textStatus, jqXHR) {
+                            self.processSuccessData(data);
+                            self.originGameId = self.get("gameId");
+                            options.success();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            options.error(textStatus + ": " + errorThrown);
+                        }
+                    });                    
+                }
+                
+
             },
             processSuccessData: function (data) {
                 this.set(data);

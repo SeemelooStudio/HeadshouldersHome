@@ -94,8 +94,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onClickBackHome: function(e) {
                 var self = this;
+                this.Game.pause();
+                Backbone.history.navigate("", { trigger: false, replace: true });
                 this.mainAnimationScheduler.animateOut(function(){
-                    Backbone.history.navigate("", { trigger: false, replace: true });
                     window.location.reload();
                 });
                 
@@ -119,19 +120,17 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
 
             },
             gameOver: function() {
-                var self = this;
-                var isTimeUp = false;
-                var isSubmited = false;
+               var self = this;
+               var isTimeUp = false;
+               var isSubmited = false;
+               self.Game.pause();
+               
                this.model.submitResult({
                    success: function(){
                        isSubmited = true;
                        if ( isTimeUp ) {
-                           self.gameAnimationScheduler.animateOut();
-                           self.gameOverAnimationScheduler.animateOut();
-                           self.gameOverView = new GameOverView({ model: self.model});
-                           isGameOverShown = true;
+                           self.showGameOverView();
                        }
-                       
                        $("#loading").hide();
                    },
                    error: function(msg) {
@@ -144,17 +143,19 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                        isTimeUp = true;
                        clearTimeout(timeout);
                        if ( isSubmited ) {
-                            self.gameAnimationScheduler.animateOut();
-                            self.gameOverAnimationScheduler.animateOut();
-                            self.gameOverView = new GameOverView({ model: self.model});
-                           
+                            self.showGameOverView();
                        } else {
-                           $("#loading").hide();
+                           $("#loading").show();
                        }
                        
                    }, 500);
                });
-               self.Game.pause();
+               
+            },
+            showGameOverView: function() {
+                this.gameAnimationScheduler.animateOut();
+                this.gameOverAnimationScheduler.animateOut();
+                this.gameOverView = new GameOverView({ model: this.model});
             },
             onClickLotto: function() {
                 var self = this;

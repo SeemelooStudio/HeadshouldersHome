@@ -1732,13 +1732,14 @@ textarea.form-control {
     min-width: 26px;
 }
 #ruleButton {
-    background: #1a2b4d;
+    background: #0e4593;
     border:2px solid #221417;
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
     margin: 0.5em auto 1.5em;
     position: relative;
+
 }
 #shareOk {
     display: none;
@@ -1748,13 +1749,17 @@ textarea.form-control {
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
+    body {
+        height: 100%;
+        overflow: scroll;
+    }
     #header {
         background-size: 100% 100%;
         background-position: center center;
-        height: 250px; 
+        height: 200px; 
     }
     #logo {
-        width: 340px;
+        width: 300px;
         top:-30px;
     }
     #plane {
@@ -1781,7 +1786,7 @@ textarea.form-control {
     }
 
     .gameButton {
-        height: 120px;
+        height: 100px;
         margin: 1.8em auto;
         border-radius: 50px 2px 50px 2px;
     }
@@ -1814,18 +1819,18 @@ textarea.form-control {
         right: 20px;
     }
     #gameButton-dribble .gameButton-img {
-        width: 335px;
-        margin-left: -154px;
+        width: 300px;
+        margin-left: -120px;
     }
     #gameButton-pass .gameButton-img {
-        width: 160px;
-        margin-left: -75px;
-        bottom: 20px;
+        width: 140px;
+        margin-left: -70px;
+        bottom: 15px;
     }
     #gameButton-shoot .gameButton-img {
         width: 320px;
         margin-left: -160px;
-        bottom: 20px;
+        bottom: 15px;
     }
     #gameButton-passLeft, #gameButton-passRight {
         width: 140px;

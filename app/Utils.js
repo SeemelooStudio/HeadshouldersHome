@@ -60,7 +60,11 @@ var Utils = {
         }
         
         $("#error").show();
-        $("#error .btn").one("tap", function(){
+        $("#error .btn").one("tap", function(e){
+            e.gesture.preventDefault();
+            e.gesture.stopPropagation(); 
+            e.gesture.stopDetect();
+            
             $("#error").hide();
             if (callback) {
                 callback();
@@ -88,13 +92,21 @@ var Utils = {
         }
         
         $("#confirm").show();
-        $("#confirmOk").one("tap", function(){
+        $("#confirmOk").one("tap", function(e){
+            e.gesture.preventDefault();
+            e.gesture.stopPropagation(); 
+            e.gesture.stopDetect();
+            
             $("#confirm").hide();
             if (options.ok) {
                 options.ok();
             }
         });
-        $("#confirmCancel").one("tap", function(){
+        $("#confirmCancel").one("tap", function(e){
+            e.gesture.preventDefault();
+            e.gesture.stopPropagation(); 
+            e.gesture.stopDetect();
+            
             $("#confirm").hide();
             if (options.cancel) {
                 options.cancel();

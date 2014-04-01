@@ -1,8 +1,18 @@
 define(function(require, exports, module) {
   "use strict";
-  var heads =  {"frames": {
+  var heads =  
+  
+{"frames": {
 
 "headMessi.png":
+{
+	"frame": {"x":300,"y":300,"w":150,"h":150},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":150,"h":150},
+	"sourceSize": {"w":150,"h":150}
+},
+"headMessi_cry.png":
 {
 	"frame": {"x":300,"y":150,"w":150,"h":150},
 	"rotated": false,
@@ -73,7 +83,7 @@ define(function(require, exports, module) {
 	"format": "RGBA8888",
 	"size": {"w":450,"h":450},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:859440c0f6774ed7c91323bc45f3c273$"
+	"smartupdate": "$TexturePacker:SmartUpdate:57fc9174b148af820075bca573b16ce4$"
 }
 };
 return heads;

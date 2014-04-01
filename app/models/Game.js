@@ -49,8 +49,11 @@ define(["jquery", "backbone"],
             },
             startGame: function (options) {
                 var self = this;
+                this.set("score",0);
+                this.set("coupon", this.get("originCoupon"));
                 $.ajax({
                     url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    //url: "app/data/startgame.json",
                     dataType: "json",
                     data: JSON.stringify({
                         gameTypeId: self.get("gameTypeId"),
@@ -59,7 +62,6 @@ define(["jquery", "backbone"],
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
-                        console.log(data.gameId);
                         self.set("gameId", data.gameId);
                         options.success();
                     },
@@ -72,6 +74,7 @@ define(["jquery", "backbone"],
                 var self = this;
                 $.ajax({
                     url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    //url: "app/data/gameresult.json",
                     dataType: "json",
                     data: JSON.stringify({
                         gameId: self.get("gameId"),
@@ -93,8 +96,17 @@ define(["jquery", "backbone"],
             },
             processSuccessData: function (data) {
                 this.set(data);
+                this.set("originCoupon", this.get("coupon"));
+                this.set("originGameRanking", this.get("gameRanking"));
+                this.set("originTotalRanking", this.get("totalRanking"));
                 var accumulatePoints = this.get("score") + this.get("originTotalScore");
                 this.set("accumulatePoints", accumulatePoints);
+            },
+            revive: function(reviveCouponNum) {
+                this.set("coupon", this.get("coupon") - reviveCouponNum);
+                if ( this.get("coupon") < 0 ) {
+                    this.set("coupon", 0);
+                }
             }
         });
 

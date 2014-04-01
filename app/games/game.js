@@ -11,11 +11,7 @@ function ($, Crafty ) {
 
         start: function() {
 			Game.reset();
-			
 			Crafty.init(Game.width, Game.height);
-			if ( Crafty.isPaused() ) {
-                this.unpause();
-			}
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
 			Crafty.scene('Loading');
         },
@@ -29,8 +25,6 @@ function ($, Crafty ) {
 		},
 
 		stop: function() {
-			//Crafty.scene('Over');
-			//Crafty.stop();
 			Crafty.stop();
 		},
 
@@ -56,10 +50,11 @@ function ($, Crafty ) {
         
         depth: {
             field : 0,
-			controller : 10,
+			controller : 40,
             obstacle : 20,
 			coin : 30,
-			npc : 40,
+			npc : 10,
+			passed: 50,
 
             body : 1,
             head : 2,
@@ -67,11 +62,14 @@ function ($, Crafty ) {
         },
         
         configs: {
-            player_horizontal_speed_per_second : 3,
-            player_vertical_speed_per_frame : 100,
+            player_horizontal_speed_per_second : 2,
+            player_vertical_speed_per_frame : 150,
 			amateur_horizontal_speed_per_frame : 100,
+			amateur_vertical_speed_per_frame: 50,
 			worldclass_horizontal_speed_per_frame : 100,
-            component_generate_interval : 2500
+			worldclass_vertical_speed_per_frame: 50,
+			worldclass_tackle_horizontal_speed_per_frame: 200,
+            component_generate_interval : 1000
         },
 
 		events: {

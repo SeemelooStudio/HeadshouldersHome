@@ -56,7 +56,7 @@ var Utils = {
         if ( title ) {
             $("#errorTitle").text(title);
         } else {
-            $("#errorTitle").text("( T-T) 出错了");
+            $("#errorTitle").text("(>﹏<) 小海好像出错了");
         }
         
         $("#error").show();
@@ -64,6 +64,40 @@ var Utils = {
             $("#error").hide();
             if (callback) {
                 callback();
+            }
+        });
+    },
+    showConfirm: function( options ) {
+        if ( options.content ) {
+            $("#confirmContent").html(options.content);
+        } 
+        if ( options.title ) {
+            $("#confirmTitle").text(options.title);
+        } else {
+            $("#confirmTitle").text("( T-T)");
+        }
+        if ( options.okText ) {
+            $("#confirmOk .btn-inner").text(options.okText);
+        } else {
+            $("#confirmOk .btn-inner").text("确定");
+        }
+        if ( options.cancelText ) {
+            $("#confirmCancel .btn-inner").text(options.cancelText);
+        } else {
+            $("#confirmCancel .btn-inner").text("取消");
+        }
+        
+        $("#confirm").show();
+        $("#confirmOk").one("tap", function(){
+            $("#confirm").hide();
+            if (options.ok) {
+                options.ok();
+            }
+        });
+        $("#confirmCancel").one("tap", function(){
+            $("#confirm").hide();
+            if (options.cancel) {
+                options.cancel();
             }
         });
     },

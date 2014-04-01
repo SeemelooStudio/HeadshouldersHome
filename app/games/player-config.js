@@ -4,29 +4,33 @@ function (Crafty) {
 
     PlayerConfig.head_configs = {
         messi : {
-            sprite : 'headMessi.png'
+            sprite : [0, 3],
+			cry : [2, 2],
         },
         neymar : {
-            sprite : 'headNeymar.png'
+            sprite : [1, 2]
         },
         ozil : {
-            sprite : 'headOzil.png'
+            sprite : [0, 2] 
         },
         ribery : {
-            sprite : 'headRibery.png'
+            sprite : [1, 1] 
         },
         robben : {
-            sprite : 'headRobben.png'
+            sprite : [0, 1] 
         },
         rooney : {
-            sprite : 'headRooney.png'
+            sprite : [0, 2] 
         },
         suarez : {
-            sprite : 'headSuarez.png'
+            sprite : [0, 1] 
         },
         sushi : {
-            sprite : 'headSushi.png'
+            sprite : [0, 0] 
         },
+		rabbit : {
+			sprite : [2, 1]
+		}
     };
 
 	PlayerConfig.worldclass_players = [
@@ -35,23 +39,28 @@ function (Crafty) {
         PlayerConfig.head_configs.ribery,
         PlayerConfig.head_configs.robben,
         PlayerConfig.head_configs.rooney,
-        PlayerConfig.head_configs.suarez,
+        PlayerConfig.head_configs.suarez
 	];
 
     PlayerConfig.body_configs = {
         messi : {
             sprite : 'BodyMessi',
-            runFrames : [[0,2], [0,3], [1, 1], [0,3]]
+            runFrames : [[2,2], [0,3], [1, 3], [0,3]]
         },
         amateur : {
             sprite : 'BodyAmateur',
-            runFrames : [[1,2], [1,3], [2,2], [1,3]],
-			tackleFrames : [[2, 1]]
+            runFrames : [[0,4], [1,4], [2,4], [1,4]],
+			tackleFrames : [[2, 3]]
         },
         worldclass : {
             sprite : 'BodyPro',
+            runFrames : [[2,1], [0,2], [1,2], [0,2]],
+			tackleFrames : [[1, 1]]
+		},
+		rabbit : {
+            sprite : 'BodyRabbit',
             runFrames : [[1,0], [2,0], [0,1], [2,0]],
-			tackleFrames : [[0, 0]]
+			tackleFrames : [[2, 3]]
 		},
     };
 

@@ -1,6 +1,7 @@
 <div id="game">
 <div id="gameStage">
 <div id="cr-stage"></div>
+<!--
 <div id="game-topBar" class="container bar bar-blue">
     <div class="bar-inner clearfix">
     <div id="game-topBar-Logo"><img src="app/img/gamelogo.png" /></div>
@@ -8,14 +9,14 @@
     <div id="game-topBar-high">{{highestScore}}</div>
     <div id="game-topBar-coupon">{{coupon}}</div>
     </div>
+</div>-->
+<div id="gameStatus">
+    <div id="game-logo"><img src="app/img/gamelogo.png" /></div>
+    <div id="game-scoreTitle">本轮成绩</div>
+    <div id="game-score">{{score}}</div>
+    <div id="game-coupon">{{coupon}}</div>
 </div>
 
-<div id="game-actionBar">
-    <div id="game-replay">
-    </div>
-    <div id="game-leaderboard">
-    </div>
-</div>
 </div><!-- gameStage -->
 <div id="gameHelp">
     <img src="app/img/help-1.png" />
@@ -23,24 +24,18 @@
         左右移动梅西，过掉路障和防守球员。<br />接到海飞丝可以拿到抽奖奖券哦！
     </div>
     <div id="gameStart" class="btn btn-blue btn-block">
-        <div class="btn-inner">
-                    开始游戏
-        </div>
+        <div class="btn-inner">开始游戏</div>
     </div>
-
 </div><!-- gameHelp -->
+
+<div id="gameOverWhistle" data-entranceAnimation="lightSpeedIn highlight">
+    <img src="app/img/gameover.png" />
+</div><!-- gameOverWhistle -->
 <div id="gameOver">
-    <div class="container">
-        <div id="gameOverTop">
-            <img src="app/img/gameover.png" />
-        </div>
-        <div id="gameOverContent">
-
-        </div><!-- gameOverContent -->
-
-    </div><!-- container -->
 </div><!-- gameOver -->
+
+
 <div id="gameBackHome"  class="backhome">
-        <img src="app/img/lottoback.png" />
+        <i class="fa fa-home fa-lg"></i>
 </div>
 </div><!-- game -->

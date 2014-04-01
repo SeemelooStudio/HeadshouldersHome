@@ -31,13 +31,18 @@ Crafty.scene('Loading', function(){
 			SpriteObstacle:    [0, 0],
 		});
 
+		Crafty.sprite(150, 150, 'app/img/heads.png', {
+			HeadDefault: [0, 0],
+		});
+
 		Crafty.sprite(140, 110, 'app/img/bodies.png', {
 			BodyMessi:     [1, 1],
 			BodyAmateur:   [1, 2],
-			BodyPro:       [1, 0]
+			BodyPro:       [1, 0],
+			BodyRabbit:    [0, 1]
 		});
 
-		Crafty.sprite(80, 145, 'app/img/grass.png', {
+		Crafty.sprite(320, 145, 'app/img/grassx4.png', {
 			SpriteGrass:    [0, 0],
 		});
 
@@ -49,7 +54,7 @@ Crafty.scene('Loading', function(){
 			SpriteHS:     [0, 0],
 		});
 
-		loadAtlas('app/img/heads.png', headsAtlas);
+		//loadAtlas('app/img/heads.png', headsAtlas);
         
         Game.events.onLoadComplete();
 		// Now that our sprites are ready to draw, start the game

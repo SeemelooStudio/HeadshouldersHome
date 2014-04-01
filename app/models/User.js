@@ -1,16 +1,21 @@
 // User.js
-
 define(["jquery", "backbone", "models/Card", "Utils"],
 
     function ($, Backbone, Card, Utils) {
 
         var User = Backbone.Model.extend({
-            default: {
+            defaults: {
               "isLogin":false,
-              "hasCoupon":false
+              "hasCoupon":false,
+              "hasData":false,
+              "cardPrice":10
             },
         
             initialize: function() {
+                var cookieId = $.cookie("userId");
+                if ( cookieId ) {
+                    this.setUserId(cookieId);
+                }
             },
             syncData: function() {
                 if ( this.checkLogin() ) {
@@ -36,15 +41,15 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 return this.get("isLogin");
             },
             checkCoupon: function(){
-                if ( this.has("numOfCoupons") && this.get("numOfCoupons") > 0 ) {
+                if ( this.has("numOfCoupons") && this.get("numOfCoupons") > this.get("cardPrice") ) {
                     return true;
                 } else {
                     return false;
                 }
             },
             weiboLogin: function(){
-                window.location.href= window.location.origin + window.location.pathname + "#login/3";
-               // window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=1356830721&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                //window.location.href= window.location.origin + window.location.pathname + "#login/3";
+                window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
 
@@ -88,16 +93,20 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 if ( options && options.userId ) {
                     this.setUserId(options.userId);
                 }
+                console.log(this.get("userId"));
                 $.ajax({
+                  //url:"app/data/user.json",
                   url: "http://192.168.1.100:8008/footballgameService/users/"+this.get("userId"),
                   dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);
+                    self.set("hasData", true);
                     if ( options && options.success ) {
                        options.success(); 
                     }
                   },
                   error: function(jqXHR, textStatus, errorThrown){
+                    this.set("hasData", false);
                     if ( options && options.error ) {
                         options.error( textStatus + ": " + errorThrown);
                     } else {
@@ -111,6 +120,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 this.set(userdata);
                 
                 this.set("hasCoupon", this.checkCoupon());
+                
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");
             },
@@ -138,6 +148,29 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 });
                 
 
+            },
+            share: function(options){
+                var self = this;
+                $.ajax({
+                  url:"app/data/shareresult.json",
+                  dataType : "json",
+                  success: function(data, textStatus, jqXHR){
+                    if ( data.coupons && data.coupons > 0) {
+                        self.set("numOfCoupons", self.get("numOfCoupons") + data.coupons);
+                    }
+                    if ( options && options.success ) {
+                       options.success(data.coupons); 
+                    }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown){
+                    if ( options && options.error ) {
+                        options.error( textStatus + ": " + errorThrown);
+                    } else {
+                        console.log(errorThrown);
+                    }
+                      
+                  }
+                });                   
             }
         });
 

@@ -22,8 +22,8 @@
 </div><!--/container-->
 
       <div  id="gameNavigation">
-      <div class="gameButton" id="ruleButton" data-entranceAnimation="slideInLeft"  data-target="gameDribble">
-            <div class="gameButton-innner">
+      <div id="ruleButton" data-entranceAnimation="slideInLeft" >
+            <div class="ruleButton-inner">
               <div id="user">
                 <div id="user-avatar">
                 <img src="{{headImageUrl}}" />
@@ -31,9 +31,13 @@
               </div>
                 <img id="ruleImgLeft" src="app/img/rule-left.png" />
                 <img id="ruleImgRight" src="app/img/rule-right.png" />
-                <img class="gameButton-img" src="app/img/ruleimg.png" />
-                <div id="ruleLinkLeft">大奖规则</div>
-                <div id="ruleLinkRight">去抽奖</div>
+                <img class="gameButton-img" src="app/img/luckytxt.png" />
+                <div id="ruleLinkLeft"><i class="fa fa-chevron-down fa-lg"></i></div>
+                <div id="ruleLinkRight"><i class="fa fa-chevron-right fa-lg"></i></div>
+                <div id="ruleLeft">游戏赢巴西游</div>
+                <div id="ruleRight">抽奖抢梅西球衣</div>
+                
+                
             </div>
         </div>
       {{#dribbleGame.enabled}}
@@ -116,8 +120,8 @@
     <div id="showTops" ><img src="app/img/showtops.png" /></div>
             <div id="leaderboard-main" >
                     <div id="leaderboard-ad" class="clearfix">
-                        <div id="leaderboard-adLeft"><img src="app/img/leaderboardtitle.png" /> <span>查看大奖规则</span></div>
-                        <div id="leaderboard-adRight"><img src="app/img/leaderboardplane.png" /> </div>
+                        <div id="leaderboard-adLeft"><img src="app/img/leaderboardtitle.png" /> </div>
+                        <div id="leaderboard-adRight"><span>奖励规则</span></div>
                     </div>
                     <ul id="leaderboard-buttons" class="clearfix">
                         <li class="leaderboard-button" id="icon-trophy"><img src="app/img/trophy.png"/></li>
@@ -141,10 +145,14 @@
                     </div>
             </div>
     <div id="backHome"><img src="app/img/backhome.png" /></div>
+
+<a id="copyright" href="http://www.head-shoulders.com.cn/" target="_blank">
+            © 2014 宝洁（中国）有限公司 版权所有 
+</a>
 </div><!--/leaderboard-->
 <div id="exitLink">
     <i class="fa fa-sign-out">退出登陆</i>
 </div>
-<a id="copyright" href="http://www.head-shoulders.com.cn/" target="_blank">
-            © 2014 宝洁（中国）有限公司 版权所有 
-</a>
+  <div id="share" class="share">
+    <i class="share-icon fa fa-share-square-o fa-lg"></i>
+  </div><!-- share -->

@@ -118,15 +118,12 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             parseUserdata: function(userdata) {
                 this.set(userdata);
-                
                 this.set("hasCoupon", this.checkCoupon());
-                
                 this.initLeaderSetting();
                 this.trigger("onFetchSuccess");
             },
             redeemACard: function(options){
                 var self = this;
-
                 var card = new Card();
                 card.fetch({
                         data: JSON.stringify({ userId: self.get("userId") }),
@@ -138,7 +135,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                             if ( self.get("numOfCoupons") < 1 ) {
                                 self.set("numOfCoupons", 0 );
                             } else {
-                                self.set("numOfCoupons", self.get("numOfCoupons") - 1);
+                                self.set("numOfCoupons", self.get("numOfCoupons") - 10);
                             }
                             self.set("hasCoupon", self.checkCoupon());
                         },
@@ -146,30 +143,30 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                             options.error("抽奖失败");
                         }
                 });
-                
-
             },
             share: function(options){
                 var self = this;
                 $.ajax({
-                  url:"app/data/shareresult.json",
-                  dataType : "json",
-                  success: function(data, textStatus, jqXHR){
-                    if ( data.numOfCoupons && data.numOfCoupons > 0) {
-                        self.set("numOfCoupons", self.get("numOfCoupons") + data.numOfCoupons);
+                    url: "http://192.168.1.100:8008/footballgameService/coupons",
+                    data: JSON.stringify({ userId: self.get("userId") }),
+                    contentType: "application/json; charset=utf-8",
+                    type: 'POST',
+                    dataType : "json",
+                    success: function(data, textStatus, jqXHR){
+                        if ( data.numOfCoupons && data.numOfCoupons > 0) {
+                            self.set("numOfCoupons", self.get("numOfCoupons") + data.numOfCoupons);
+                        }
+                        if ( options && options.success ) {
+                           options.success(data.numOfCoupons); 
+                        }
+                     },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        if ( options && options.error ) {
+                            options.error( textStatus + ": " + errorThrown);
+                        } else {
+                            console.log(errorThrown);
+                        }
                     }
-                    if ( options && options.success ) {
-                       options.success(data.numOfCoupons); 
-                    }
-                  },
-                  error: function(jqXHR, textStatus, errorThrown){
-                    if ( options && options.error ) {
-                        options.error( textStatus + ": " + errorThrown);
-                    } else {
-                        console.log(errorThrown);
-                    }
-                      
-                  }
                 });                   
             }
         });

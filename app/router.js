@@ -21,6 +21,8 @@ define(function(require, exports, module) {
   var GameView = require("views/GameView");
   var gameView = null;
   
+  var RuleView = require("views/RuleView");
+  
   //models
   var User = require("models/User");
   var user;
@@ -42,7 +44,8 @@ define(function(require, exports, module) {
       "leaderboard/:type":"leaderboard",
       "lottery":"lottery",
       "winningRecords":"winningRecords",
-      "gameDribble":"gameDribble"
+      "gameDribble":"gameDribble",
+      "rule":"rule"
     },
 
     index: function() {
@@ -130,6 +133,9 @@ define(function(require, exports, module) {
         mainView.hideHeader(function(){
             gameView = new GameView({ user : user, gameTypeId : 3});
         });
+    },
+    rule: function() {
+        var ruleView = new RuleView();
     }
   });
 });

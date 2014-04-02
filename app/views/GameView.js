@@ -125,12 +125,13 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                var isTimeUp = false;
                var isSubmited = false;
                self.Game.pause();
-               
+               Utils.setPageTitle("#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了"+ self.model.get("score") +"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？");
                this.model.submitResult({
                    success: function(){
                        isSubmited = true;
                        if ( isTimeUp ) {
                            self.showGameOverView();
+
                        }
                        $("#loading").hide();
                    },
@@ -145,6 +146,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                        clearTimeout(timeout);
                        if ( isSubmited ) {
                             self.showGameOverView();
+                            
                        } else {
                            $("#loading").show();
                        }

@@ -60,14 +60,15 @@ function (Crafty) {
 		rabbit : {
             sprite : 'BodyRabbit',
             runFrames : [[1,0], [2,0], [0,1], [2,0]],
-			tackleFrames : [[2, 3]]
+			tackleFrames : [[0, 0]]
 		},
     };
 
 	PlayerConfig.joints = {
 		head: { x : 80, y : 140 },
 		body_run: { x : 70, y : 10 },
-		body_tackle: { x : 85, y : 50 }
+		body_tackle: { x : 85, y : 50 },
+		body_jump:{ x:70, y:15}
 	};
     
     return PlayerConfig;

@@ -11,17 +11,14 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
                 this.$el.hammer();
                 this.user = options.user;
                 this.isSharing = false;
+                Utils.setPageTitle("#海飞丝巴西实力挑战赛#大家快来看这里！我发现了一个炒鸡逗比的游戏！听这名字“过得去算你NB”就感觉充满了恶意，最牛的还能赢巴西游，不服输的你们怎么能不来玩玩呢？");
             },
             // View Event Handlers
             events: {
-                "click #logo":"onClickLogo",
                 "tap #shareOverlay,#shareCancel":"onClickShareOverlay",
                 "tap #shareOk":"onClickShareOk",
                 "tap .share":"onClickShare",
-                "tap #exitLink":"onClickExit"
-            },
-            onClickLogo: function() {
-
+                "tap #rule":"onClickExit"
             },
             hideHeader: function(callback) {
                 if ($("#header").is(":hidden")) {

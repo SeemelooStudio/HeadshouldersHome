@@ -1,18 +1,22 @@
-    <!--
+
 <div class="container">
       <div id="plane" data-entranceAnimation="slideInRight" >
       <img src="app/img/plane.png" />
-      <div id="userCoupon">抽奖券<span class="lotto-pointsCount">{{numOfCoupons}}</span></div>
+      <div id="userCoupon">奖券<span class="lotto-pointsCount">{{numOfCoupons}}</span></div>
       <div id="userAward">{{numOfPrizes}}</div>
       </div>
       
-      {{#isLogin}}
+
       <div id="user">
+        <div id="exitLink">
+            <i class="fa fa-sign-out"></i> 登出
+        </div>
         <div id="user-avatar">
         <img src="{{headImageUrl}}" />
         </div>
+        
       </div>
-      {{/isLogin}}
+
       <div id="rule" data-entranceAnimation="slideInLeft" >
       <img src="app/img/rule.png" />
       <div id="userRank">
@@ -22,6 +26,7 @@
 </div><!--/container-->
 
       <div  id="gameNavigation">
+      <!--
       <div id="ruleButton" data-entranceAnimation="slideInLeft" >
             <div class="ruleButton-inner">
               <div id="user">
@@ -40,8 +45,9 @@
                 
             </div>
         </div>
+        -->
       {{#dribbleGame.enabled}}
-      <a class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble" href="#gameDribble">
+      <div class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble">
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game1-btn.png" />
             </div>
@@ -55,10 +61,10 @@
                 </div>
             </div>
             {{/isLogin}}
-        </a>
+        </div>
         {{/dribbleGame.enabled}}
         {{#passGame.enabled}}
-        <a class="gameButton" id="gameButton-pass" data-entranceAnimation="slideInLeft" data-target="gamePass" href="#gameDribble">
+        <div class="gameButton" id="gameButton-pass" data-entranceAnimation="slideInLeft" data-target="gamePass">
             <div class="gameButton-innner">
                 <img id="gameButton-passLeft" src="app/img/game2-left.png" />
                 <img id="gameButton-passRight" src="app/img/game2-right.png" />
@@ -74,20 +80,20 @@
                 </div>
             </div>
             {{/isLogin}}
-        </a>
+        </div>
         {{/passGame.enabled}}
         {{^passGame.enabled}}
-        <a class="gameButton disabled" id="gameButton-pass" data-entranceAnimation="slideInLeft" data-target="gamePass">
+        <div class="gameButton disabled" id="gameButton-pass" data-entranceAnimation="slideInLeft">
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game2-disabled.png" />
             </div>
             <div class="gameButton-tag">
                 <div class="gameButton-comingSoon">即将<br />开放</div>
             </div>
-        </a>
+        </div>
         {{/passGame.enabled}}
         {{#shootGame.enabled}}
-        <a class="gameButton" id="gameButton-shoot" data-entranceAnimation="slideInLeft" data-target="gameShoot" href="#gameDribble">
+        <div class="gameButton" id="gameButton-shoot" data-entranceAnimation="slideInLeft" data-target="gameShoot">
             <div class="gameButton-innner">
                 <img class="gameButton-img" src="app/img/game3-btn2.png" />
             </div>
@@ -101,17 +107,17 @@
                 </div>
             </div>
             {{/isLogin}}
-        </a>
+        </div>
         {{/shootGame.enabled}}
         {{^shootGame.enabled}}
-        <a class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="slideInLeft"  data-target="gameShoot">
+        <div class="gameButton disabled" id="gameButton-shoot" data-entranceAnimation="slideInLeft">
             <div class="gameButton-innner">
                 <img class="gameButton-img"  src="app/img/game3-btn.png" />
             </div>
             <div class="gameButton-tag">
                 <div class="gameButton-comingSoon">即将<br />开放</div>
             </div>
-        </a>
+        </div>
         {{/shootGame.enabled}}
       </div><!-- #gameNavigation -->
 
@@ -146,13 +152,12 @@
             </div>
     <div id="backHome"><img src="app/img/backhome.png" /></div>
 
-<a id="copyright" href="http://www.head-shoulders.com.cn/" target="_blank">
-            © 2014 宝洁（中国）有限公司 版权所有 
-</a>
+
 </div><!--/leaderboard-->
-<div id="exitLink">
-    <i class="fa fa-sign-out">退出登陆</i>
-</div>
+
   <div id="share" class="share">
     <i class="share-icon fa fa-share-square-o fa-lg"></i>
   </div><!-- share -->
+  <div id="ruleConner">
+    <i class="share-icon fa fa-gift fa-lg"></i>
+  </div><!-- ruleConner -->

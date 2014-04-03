@@ -168,7 +168,7 @@ img {
     text-decoration: none;
     display: block;
     position: relative;
-    top:-25px;
+    top:-45px;
 }
 #copyright img {
     max-height: 100%;
@@ -1833,8 +1833,27 @@ margin-bottom: 60px;
     position: relative;
     top: -100px;
 }
-@media only screen and (max-width: 750px) {
-
+.sideLine {
+        display: none;
+}
+@media only screen and (min-width: 324px) {
+    .sideLine {
+        position: fixed;
+        height: 100%;
+        width: 1px;
+        
+        left: 50%;
+        top: 0;
+        display: block;
+    }
+    #game-lineLeft {
+        margin-left: -160px;
+        border-left:2px dashed rgba(255,255,255,0.3);
+    }
+    #game-lineRight {
+        margin-left: 160px;
+        border-right:2px dashed rgba(255,255,255,0.3);
+    }
 }
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
@@ -2293,8 +2312,7 @@ margin-bottom: 60px;
     background: #d4d4d4;
 }
 #copyright {
-    height: 30px;
-    width: 66px;
+    height: 29px;
 }
 #exitLink {
     width: 80px;
@@ -2461,5 +2479,9 @@ margin-left: 50px;
 }
 #ruleMain ol, #ruleMain ul {
     padding-left: 60px;
+}
+#slogen {
+    top:160px;
+    font-size: 14px;
 }
 }

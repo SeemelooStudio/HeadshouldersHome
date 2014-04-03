@@ -17,7 +17,7 @@ define(["jquery", "backbone"],
                   data: JSON.stringify({
                       prizeRedeemId: this.get("prizeRedeemId"),
                       shipTo: options.shipTo,
-                      phone: options.phone,
+                      phoneNumber: options.phone,
                       shippingAddress:options.shippingAddress
                   }),
                   success: function(data, textStatus, jqXHR){

@@ -7,7 +7,8 @@ define(["jquery", "backbone"],
         var Game = Backbone.Model.extend({
             defaults: {
                 "score": 0,
-                "coupon": 0
+                "coupon": 0,
+                "isBreakRecord": false
             },
             initialize: function (options) {
                 switch (options.gameTypeId) {
@@ -45,6 +46,11 @@ define(["jquery", "backbone"],
             },
             addScore: function (score) {
                 this.set("score", this.get("score") + score);
+                var newScore = this.get("score");
+                if ( newScore > this.get("highestScore") ) {
+                    this.set("highestScore", newScore);
+                    this.set("isBreakRecord", true);
+                }
             },
             addCoupon: function () {
                 this.set("coupon", this.get("coupon") + 1);
@@ -77,8 +83,10 @@ define(["jquery", "backbone"],
                 var self = this;
                 if ( this.originGameId == this.get("gameId") ) {
                     //is Submitted
+                    $("#loading").hide();
                     return;
                 } else {
+                    self.originGameId = self.get("gameId");
                     $.ajax({
                         url: "http://192.168.1.100:8008/footballgameservice/Games",
                         //url: "app/data/gameresult.json",
@@ -94,7 +102,6 @@ define(["jquery", "backbone"],
                         contentType: "application/json; charset=utf-8",
                         success: function (data, textStatus, jqXHR) {
                             self.processSuccessData(data);
-                            self.originGameId = self.get("gameId");
                             options.success();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -107,6 +114,16 @@ define(["jquery", "backbone"],
             },
             processSuccessData: function (data) {
                 this.set(data);
+                var totalRanking = this.get("totalRanking");
+                var originTotalRanking = this.get("originTotalRanking");
+                
+                if ( totalRanking < originTotalRanking ) {
+                    this.set("isRankUp", true);
+                    this.set("rankGap", originTotalRanking - totalRanking);
+                } else {
+                    this.set("isRankUp", false);
+                    this.set("rankGap", 0);
+                }
                 this.set("originCoupon", this.get("coupon"));
                 this.set("originGameRanking", this.get("gameRanking"));
                 this.set("originTotalRanking", this.get("totalRanking"));

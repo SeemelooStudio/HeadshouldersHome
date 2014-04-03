@@ -1,7 +1,7 @@
 // StartView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList"],
-    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList) {
+define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animationscheduler", "views/RankView", "models/RankList", "Utils"],
+    function ($, Backbone, Mustache, template, AnimationScheduler, RankView, RankList, Utils) {
         var gameConfig = new Backbone.Model();
         gameConfig.set({
                 "dribbleGame": {
@@ -34,15 +34,18 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
+                
             },
 
             events: {
 
-                "tap #showTops,#rule":"onClickLeaderboard",
+                "tap #showTops":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
-                "tap #ruleRight":"onClickLotto",
-                "tap #ruleLeft":"onClickLeaderboard"
+                "tap #plane":"onClickLotto",
+                "tap .gameButton-tag":"onClickLeaderboard",
+                "tap #ruleConner,#leaderboard-adRight": "onClickRule",
+                "tap .gameButton": "onClickGameButton"
             },
             render: function () {
                 this.template = _.template(template, {});
@@ -52,6 +55,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 return this;
             },
             postRender: function() {
+                Utils.setPageTitle("#海飞丝巴西实力挑战赛#大家快来看这里！我发现了一个炒鸡逗比的游戏！听这名字“过得去算你NB”就感觉充满了恶意，最牛的还能赢巴西游，不服输的你们怎么能不来玩玩呢？");
                 var self = this;                
                 this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#user,#rule,#plane"));
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true,"sequentialDelay":350});
@@ -76,6 +80,10 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 this.showLeaderboard();
                 return false;
                 
+            },
+            onClickRule: function() {
+                this.onExit();
+                Backbone.history.navigate("rule", { trigger: true, replace: true });
             },
             showLeaderboard: function( leaderboardName ){
                 $("#loading").show();
@@ -165,11 +173,15 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.preventDefault();
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
-                this.onExit();
+                
                 var target = $(e.currentTarget).attr("data-target");
-                Backbone.history.navigate(target, { trigger: true, replace: true });
+                if ( target) {
+                    Backbone.history.navigate(target, { trigger: true, replace: true });
+                }
+                
             },
             onExit: function(e) {
+                $("body").scrollTop(0);
                 this.isReady = false;
             }
         });

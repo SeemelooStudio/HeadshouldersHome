@@ -12,7 +12,6 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
 
                 this.user = options.user;
                 this.model.set(this.user.toJSON());
-                console.log(this.model);
                 this.listenTo(this, "render", this.postRender);
                 this.render();
             },

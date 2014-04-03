@@ -38,6 +38,7 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
             },
             render: function(){
                 this.template = _.template(template, {});
+                
                 this.$el.html(Mustache.render(this.template, { 
                 "userName" : this.user.get("userName"),
                 "headImageUrl": this.user.get("headImageUrl"),
@@ -60,9 +61,7 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
                 e.gesture.stopDetect();
                 $('body').scrollTop(0);
                 this.$el.find("#winningBackHome").fadeOut();
-                this.mainAnimationScheduler.animateOut(function(){
-                    Backbone.history.navigate("", { trigger: true, replace: true });
-                });
+                Backbone.history.navigate("", { trigger: true, replace: true });
                 
             },
             onClickBackLotto : function(e) {

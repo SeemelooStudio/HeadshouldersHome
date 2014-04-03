@@ -16,8 +16,8 @@
             {{#records}}
                 <li class="lotto-record">
                     <div class="winning-time">{{createdAt}}</div>
-                    <div class="winning-name">{{prizeName}} <small>x</small> 1</div>
-                    {{#shipTo}}<div class="winning-address">{{shipTo}} - {{phone}} - {{shippingAddress}}</div>{{/shipTo}}
+                    <div class="winning-name">{{prizeName}}</div>
+                    {{#shipTo}}<div class="winning-address">{{shipTo}} - {{phoneNumber}} - {{shippingAddress}}</div>{{/shipTo}}
                 </li>
             {{/records}}
             <li class="lotto-warning">
@@ -37,6 +37,6 @@
        </div>
 
 </div><!--/container-->
-<div id="lottoBackHome"  class="backhome">
+<div id="winningBackHome"  class="backhome">
     <i class="fa fa-home fa-lg"></i>
 </div>

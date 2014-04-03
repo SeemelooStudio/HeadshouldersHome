@@ -16,6 +16,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
                 this.defaultReviveCouponNum = 20;
                 this.reviveCouponNum = this.defaultReviveCouponNum;
+                this.isGameover = false;
             },
             // View Event Handlers
             events: {
@@ -41,7 +42,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     "hideAtFirst":false
                 });
                 this.$score = this.$el.find("#game-score");
-                this.$highestScore = this.$el.find("#game-topBar-high");
+                this.$newRecord = this.$el.find("#game-newRecord");
                 this.$coupon = this.$el.find("#game-coupon");
                 
                 this.mainAnimationScheduler.animateIn();
@@ -124,12 +125,13 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                var isTimeUp = false;
                var isSubmited = false;
                self.Game.pause();
-               
+               Utils.setPageTitle("#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了"+ self.model.get("score") +"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？");
                this.model.submitResult({
                    success: function(){
                        isSubmited = true;
                        if ( isTimeUp ) {
                            self.showGameOverView();
+
                        }
                        $("#loading").hide();
                    },
@@ -144,6 +146,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                        clearTimeout(timeout);
                        if ( isSubmited ) {
                             self.showGameOverView();
+                            
                        } else {
                            $("#loading").show();
                        }
@@ -183,9 +186,11 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             restartGame: function(){
                 var self = this;
+                this.isGameover = false;
                 $("#loading").show();
                 this.$score.text("0");
                 this.$coupon.text( this.model.get("originCoupon"));
+                this.$newRecord.hide();
                 this.reviveCouponNum = this.defaultReviveCouponNum;
                 this.model.startGame({
                    success: function(){
@@ -201,10 +206,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             addScore: function( score ) {
                 this.model.addScore(score);
                 var newScore = this.model.get("score");
-                if ( newScore > this.model.get("highestScore") ) {
-                    this.model.set("highestScore", newScore);
-                    this.$highestScore.text(newScore);
-                    Utils.highlight( this.$highestScore, "yellow");
+                if ( this.model.get("isBreakRecord") ) {
+                    this.$newRecord.show();
                 }
                 this.$score.text( newScore );
                 Utils.highlight( this.$score, "yellow");
@@ -219,23 +222,31 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onGameOver: function() {
                 var self = this;
-                this.Game.pause();
-                if ( this.model.get("coupon") > this.reviveCouponNum ) {
-                    Utils.showConfirm({
-                        title: "好可惜啊！",
-                        content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",
-                        okText:"潇洒地花掉",
-                        cancelText:"算了",
-                        ok: function() {
-                            self.continueGame();
-                        },
-                        cancel: function() {
-                            self.gameOver();
-                        }
-                    });
+                this.isGameover = false;
+                
+                if ( this.isGameover ) {
+                    return;
                 } else {
-                    this.gameOver();
+                    this.Game.pause();
+                    this.isGameover = true;
+                    if ( this.model.get("coupon") > this.reviveCouponNum ) {
+                        Utils.showConfirm({
+                            title: "好可惜啊！",
+                            content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",
+                            okText:"潇洒地花掉",
+                            cancelText:"算了",
+                            ok: function() {
+                                self.continueGame();
+                            },
+                            cancel: function() {
+                                self.gameOver();
+                            }
+                        });
+                    } else {
+                        this.gameOver();
+                    }                    
                 }
+
             },
             continueGame: function() {
                 this.model.revive(this.reviveCouponNum);

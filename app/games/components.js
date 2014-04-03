@@ -365,6 +365,7 @@ Crafty.c('DribbleController', {
 		{
 			this.owner.ball.visible = false;
 			this.owner.head.setCry();
+			Game.pause();
 			Game.events.onGameOver();
 		}
 	}

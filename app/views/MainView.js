@@ -14,14 +14,10 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
             },
             // View Event Handlers
             events: {
-                "click #logo":"onClickLogo",
                 "tap #shareOverlay,#shareCancel":"onClickShareOverlay",
                 "tap #shareOk":"onClickShareOk",
                 "tap .share":"onClickShare",
-                "tap #exitLink":"onClickExit"
-            },
-            onClickLogo: function() {
-
+                "tap #rule":"onClickExit"
             },
             hideHeader: function(callback) {
                 if ($("#header").is(":hidden")) {

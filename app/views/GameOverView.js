@@ -21,6 +21,7 @@ define(["jquery", "backbone","mustache", "text!templates/GameOver.html", "animat
                     self.$el.find("#gameOverBg").removeClass("hidden").fadeIn(function(){
                         $(this).addClass("rotate");
                         self.$el.find("#gameOverScore").addClass("animated tada");
+                        self.$el.find("#gameOver-newRecord").show().addClass("animated rollIn");
                     });
                 });
             },

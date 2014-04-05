@@ -28,6 +28,7 @@ Crafty.c('Head', {
 		this.requires('Actor, Sprite, HeadDefault');
 		this.normal_cell = headConfig.sprite;
 		this.cry_cell = headConfig.cry;
+		this.kiss_cell = headConfig.kiss;
 		this.setNormal();
 		return this;
 	},
@@ -45,6 +46,12 @@ Crafty.c('Head', {
             this.sprite(this.cry_cell[0], this.cry_cell[1]);
 		}
 	},
+	setKiss: function() {
+	if (this.kiss_cell)
+	{
+	this.sprite(this.kiss_cell[0], this.kiss_cell[1]);
+	}
+	}
 });
 
 Crafty.c('Body', { 
@@ -207,6 +214,7 @@ Crafty.c('Avatar', {
 					x : this._x + this.bodyRunPos.x,
 					y : this._y + this.bodyRunPos.y,
 		});
+		this.head.setNormal();
 	},
 
 	tackle : function() {
@@ -221,6 +229,7 @@ Crafty.c('Avatar', {
 					x : this._x + this.bodyTacklePos.x,
 					y : this._y + this.bodyTacklePos.y,
 		});
+		this.head.setKiss();
 	},
 
 	faceLeft: function() {
@@ -607,7 +616,7 @@ Crafty.c('Rabbit', {
 		}
 		else
 		{
-            this.y += (Game.configs.player_vertical_speed_per_frame + this.traceSpeed) * deltaTime;
+            this.y += (Game.configs.player_vertical_speed_per_frame) * deltaTime;
             this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
 
             if (!this.isPassed)

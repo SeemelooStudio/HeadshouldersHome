@@ -29,7 +29,8 @@ function (Crafty) {
             sprite : [0, 0] 
         },
 		rabbit : {
-			sprite : [2, 1]
+			sprite : [2, 1],
+			kiss: [1, 3]
 		}
     };
 

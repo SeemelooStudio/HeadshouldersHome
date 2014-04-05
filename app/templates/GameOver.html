@@ -1,10 +1,10 @@
 <div class="container" data-entranceAnimation="bounceInDown"  data-exitAnimation="bounceOutUp">
-        {{^isBad}}
+
         <div id="gameOverBg" class="hidden"></div>
-        {{/isBad}}
+
         <div id="gameOverTop">
             {{#isBad}}
-            <img src="app/img/gameovertop.png" />
+            <img src="app/img/gameoverpoor.png" />
             {{/isBad}}
             {{^isBad}}
             <img src="app/img/gameovertop.png" />
@@ -12,12 +12,15 @@
             
             <div id="gameOverDialog">
                 {{#isBad}}
-                    你在搞笑吧
+                    桑心史了!!
                 {{/isBad}}
                 {{^isBad}}
-                {{#isBreakRecord}}
-                    太nb啦！
-                {{/isBreakRecord}}
+                    {{#isBreakRecord}}
+                    太NB啦！
+                    {{/isBreakRecord}}
+                    {{^isBreakRecord}}
+                    继续努力哦！
+                    {{/isBreakRecord}}
                 {{/isBad}}
             </div>
             

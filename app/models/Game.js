@@ -64,8 +64,12 @@ define(["jquery", "backbone"],
             },
             startGame: function (options) {
                 var self = this;
-                this.set("score",0);
-                this.set("coupon", this.get("originCoupon"));
+                this.set({
+                "score":0,
+                "coupon":this.get("originCoupon"),
+                "isBad": false
+                });
+
                 $.ajax({
                     url: "http://192.168.1.100:8008/footballgameservice/Games",
                     //url: "app/data/startgame.json",
@@ -126,6 +130,8 @@ define(["jquery", "backbone"],
                 
                 if ( this.get("score") < GameConfig.badScoreLine ) {
                     this.set("isBad", true);
+                } else {
+                    this.set("isBad", false);
                 }
                 if ( totalRanking < originTotalRanking ) {
                     this.set("isRankUp", true);

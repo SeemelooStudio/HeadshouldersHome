@@ -39,8 +39,23 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
                 var top = $("#leaderboard-main").offset().top;
                 $('body').animate({
                     scrollTop: top
-                }, 500
+                }, 500, function(){
+                    $(window).on("scroll", function() {
+                       var $win = $(window);
+                       if ($win.scrollTop()  < (top - 50 ) ) {
+                           $('body').animate({
+                                scrollTop:0
+                            },500,
+                            function(){
+                                $("#leaderboard").removeClass("expand");
+                                Backbone.history.navigate("", { trigger: false, replace: true });
+                            });
+                            $win.off("scroll");
+                       } 
+                    });
+                }
                 );
+
                 //add class to first three lines
                 this.$el.find('.leaderboard-list').each(function () {
                     $(this).find('.leaderboard-item').first().next().addClass('first').next().addClass('second').next().addClass('third');

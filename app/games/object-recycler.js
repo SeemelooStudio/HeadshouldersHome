@@ -65,4 +65,4 @@ function ObjectRecycler(creator, initCapacity, onAlloc, onFree)
 	Constructor();
 }
 
-return ObjectRecycler;
+//return ObjectRecycler;

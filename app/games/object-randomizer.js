@@ -1,6 +1,5 @@
 define(["crafty"],
 function (Crafty) {
-var InitObjectRandomizer = function () {
 // use this component to get rondom element from a list
 Crafty.c('ObjectRandomizer', {
 	init : function() {},
@@ -111,7 +110,5 @@ Crafty.c('ObjectRandomizer', {
 		}
 	}
 });
-};
 
-return InitObjectRandomizer;
 });

@@ -69,27 +69,30 @@ function ($, Crafty ) {
 			worldclass_horizontal_speed_per_frame : 100,
 			worldclass_vertical_speed_per_frame: 50,
 			worldclass_tackle_horizontal_speed_per_frame: 200,
+            rabbit_vertical_speed_per_frame : 20,
+			rabbit_horizontal_speed_per_frame : 10,
+			rabbit_trace_speed_per_frame: 100,
             component_generate_interval : 1000
         },
 
 		events: {
 			onPassObstacle : function(totalCount) {
-				console.log('pass obstacle: ' + totalCount);
+				//console.log('pass obstacle: ' + totalCount);
 			},
 			onPassAmateur : function(totalCount) {
-				console.log('pass amateur: ' + totalCount);
+				//console.log('pass amateur: ' + totalCount);
 			},
 			onPassWorldClass : function(totalCount) {
-				console.log('pass worldclass: ' + totalCount);
+				//console.log('pass worldclass: ' + totalCount);
 			},
 			onCollectCoin : function(totalCount) {
-                console.log('collect coin: ' + totalCount);
+                //console.log('collect coin: ' + totalCount);
 			},
 			onGameOver : function() {
-                console.log('game over');
+                //console.log('game over');
 			},
 			onLoadComplete : function() {
-                console.log('load complete');
+                //console.log('load complete');
 			}
 		},
 

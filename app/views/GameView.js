@@ -48,7 +48,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.mainAnimationScheduler.animateIn();
                 
 
-                require(["games/game", "games/components", "games/object-randomizer"],function(Game, InitComponents, InitObjectRandomizer){
+                require(["games/game", "games/components", "games/object-randomizer", "games/scene-loading", "games/scene-game"],function(Game){
                     
                     self.Game = Game;
                     Game.registerEvents({
@@ -71,12 +71,12 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         }
                     });
 
-                    InitComponents();
-                    InitObjectRandomizer();
+                    //InitComponents();
+                    //InitObjectRandomizer();
 
-                    require(["games/scene-game","games/scene-loading","games/scene-over"], function(){
+                    //require([], function(){
                         self.$el.find("#gameStart").fadeIn();
-                    });
+                    //});
                     
                 });
                 

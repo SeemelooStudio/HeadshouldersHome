@@ -1,6 +1,5 @@
 define(["crafty", "games/game", "games/player-config"],
 function (Crafty, Game, PlayerConfig) {
-var InitComponents = function() {
 Crafty.c('Actor', {
 	init: function() {
 		this.requires('2D, Canvas');
@@ -64,7 +63,7 @@ Crafty.c('Body', {
 	},
 
 	run: function() {
-    this.animate('Run', -1);
+        this.animate('Run', -1);
 	},
 
 	tackle: function() {
@@ -313,7 +312,8 @@ Crafty.c('DribbleController', {
 				.onHit('Obstacle', this.hitComponent)
 				.onHit('Coin', this.hitComponent)
 				.onHit('Amateur', this.hitComponent)
-				.onHit('WorldClass', this.hitComponent);
+				.onHit('WorldClass', this.hitComponent)
+				.onHit('Rabbit', this.hitComponent);
 
 		this.attach(this.avatar);
 
@@ -468,6 +468,7 @@ Crafty.c('Amateur', {
             this.onPassed(player);
 		}
 	},
+
     onPassed: function(player) {
         this.isPassed = true;
         this.changeDepth( Game.depth.passed);
@@ -552,6 +553,124 @@ Crafty.c('WorldClass', {
 	}
 });
 
+Crafty.c('Rabbit', {
+	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.rabbit_vertical_speed_per_frame,
+	horizontalSpeed: Game.configs.rabbit_horizontal_speed_per_frame,
+	traceSpeed: Game.configs.rabbit_trace_speed_per_frame ,
+
+	wanderDistance : 30,
+	distanceToTrace : 200,
+    distanceToTackle : 100,
+
+    isTracing : false,
+    faceLeftFrame : 0,
+    faceRightFrame : 0,
+
+	init: function() {
+		this.requires('Avatar, Collision, DebugCollision, DebugArea')
+				.attr({w: 80, h: 120});
+	},
+
+	Rabbit : function(headConfig, bodyConfig) {
+		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
+		this.collision(this.halfBoundBox);
+
+		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
+		if (seed % 2 === 0)
+		{
+			this.faceRight();
+		}
+
+        this.isTracing = false;
+
+		return this;
+	},
+
+	update: function(player, deltaTime) {
+		if (!this.isTracing)
+		{
+            this.y += this.verticalSpeed * deltaTime;
+			this.wander(this.horizontalSpeed, deltaTime);
+
+			if (player._y - this._y < this.distanceToTrace)
+			{
+                this.isTracing = true;
+				if (player._x < this._x)
+				{
+					this.faceLeft();
+				}
+				else
+				{
+					this.faceRight();
+				}
+			}
+		}
+		else
+		{
+            this.y += (Game.configs.player_vertical_speed_per_frame + this.traceSpeed) * deltaTime;
+            this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
+
+            if (!this.isPassed)
+            {
+                this.trace(player, deltaTime);
+
+                if (this.isRunning && player._y - this._y < this.distanceToTackle)
+                {
+                    this.tackle();
+                }
+            }
+            else
+            {
+                if (!this.isRunning)
+                {
+                    this.run();
+                }
+            }
+		}
+
+		if ( !this.isPassed && player._y - this._y < -this.distanceToTackle / 2 ) 
+        {
+            this.onPassed(player);
+		}
+	},
+
+    trace: function(player, deltaTime) {
+        if (player._x < this._x)
+        {
+            this.faceRightFrame = 0;
+            ++this.faceLeftFrame;
+            if (this.faceLeftFrame > 3)
+            {
+                this.faceLeft();
+            }
+        }
+        else
+        {
+            this.faceLeftFrame = 0;
+            ++this.faceRightFrame;
+            if (this.faceRightFrame > 3)
+            {
+                this.faceRight();
+            }
+        }
+    },
+
+    onPassed: function(player) {
+        this.isPassed = true;
+        this.changeDepth( Game.depth.passed);
+        ++Game.data.num_of_passed_amateurs;
+        Game.events.onPassWorldClass(Game.data.num_of_passed_amateurs);
+    },
+              
+	onDisappear : function(player) {
+
+	},
+
+	onPlayerHit: function(player) {
+		return true;
+	}
+});
+
 Crafty.c('Field', {
 	tileWidth  : 320,
 
@@ -604,6 +723,4 @@ Crafty.c('Field', {
 		});
 	},
 });
-};
-return InitComponents;
 });

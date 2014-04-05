@@ -53,6 +53,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     self.Game = Game;
                     Game.registerEvents({
                         onGameOver: function() {
+                            console.log("gameOver");
                             self.onGameOver();
                         },
                         onCollectCoin: function() {
@@ -252,6 +253,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.$coupon.text( this.model.get("coupon"));
                 this.reviveCouponNum  = this.reviveCouponNum * 2;
                 this.Game.restart();
+                this.isGameover = false;
             }
             
         });

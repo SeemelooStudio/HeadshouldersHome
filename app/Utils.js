@@ -96,6 +96,7 @@ var Utils = {
             e.gesture.preventDefault();
             e.gesture.stopPropagation(); 
             e.gesture.stopDetect();
+            console.log("here");
             
             $("#confirm").hide();
             if (options.ok) {

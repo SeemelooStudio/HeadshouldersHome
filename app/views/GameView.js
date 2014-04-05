@@ -222,7 +222,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             },
             onGameOver: function() {
                 var self = this;
-                this.isGameover = false;
                 
                 if ( this.isGameover ) {
                     return;

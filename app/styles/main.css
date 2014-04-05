@@ -199,19 +199,7 @@ img {
     background-size: 120px 50px;    
 }
 #exitLink {
-    position: absolute;
-    color: #fff;
-    width: 50px;
-    text-align: right;
-    padding:2px 5px;
-    border-radius: 10px;
-    border:1px solid #221417;
-    background: #c01f2e;
-    top:15px;
-    left: 20px;
-    font-size: 10px;
-    line-height: 15px;
-    height: 15px;
+    display: none;
 }
 #instruction {
     padding: 3px 0px;
@@ -676,7 +664,7 @@ img {
 
 
 #gameNavigation {
-    height: 300px;
+    height: 250px;
     padding-top: 20px;
     
 }
@@ -799,15 +787,13 @@ img {
     height: 40px;
     background: url(../../app/img/lottoback.png) right center no-repeat;
     background-size:90px 40px;
-    padding-left: 10px;
     color: #744404;
-    line-height: 50px;
+    line-height: 40px;
+    font-size: 12px;
+    padding-left:10px;
     text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
 }
-.backhome .fa-lg {
-    line-height: 40px;
-    vertical-align: top;
-}
+
 #card {
     position: absolute;
     width: 254px;
@@ -1257,8 +1243,8 @@ img {
 }
 #user {
     position: absolute;
-    left: 30px;
-    top:-40px;
+    left: 40px;
+    top:-45px;
 }
 #ruleLeft,#ruleRight {
     position: absolute;
@@ -1836,6 +1822,16 @@ margin-bottom: 60px;
 .sideLine {
         display: none;
 }
+#gameOverDialog {
+position: absolute;
+background: #FFF;
+z-index: 1;
+padding: 10px;
+border-radius: 10px;
+left: 0;
+top: 0;
+font-size: 12px;
+}
 @media only screen and (min-width: 324px) {
     .sideLine {
         position: fixed;
@@ -2039,6 +2035,7 @@ margin-bottom: 60px;
     line-height: 50px;
     background-size: 180px 50px;
     padding-left: 20px;
+    font-size: 14px;
     
 }
 .backhome .fa-lg {
@@ -2315,10 +2312,19 @@ margin-bottom: 60px;
     height: 29px;
 }
 #exitLink {
-    width: 80px;
+    position: absolute;
+    color: #fff;
+    text-align: right;
+    border-radius: 10px;
+    border:1px solid #221417;
+    background: #c01f2e;
+    left: 20px;
+    line-height: 15px;
+    height: 15px;
     padding: 5px 8px;
     font-size: 14px;
     top: 22px;
+    display: block;
 }
 #exitLink:hover {
     color: #ffd800;

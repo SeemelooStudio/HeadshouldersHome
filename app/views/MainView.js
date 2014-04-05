@@ -62,7 +62,7 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
                             $("#shareOk").show();
                         }
                         clearTimeout(timeout);
-                    }, 2000);
+                    }, 4000);
                 }
                 var pic = $(e.currentTarget).attr("data-pic");
                 Utils.share(pic);

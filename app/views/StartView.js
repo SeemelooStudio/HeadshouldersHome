@@ -12,7 +12,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "passGame": {
                     "id" : 2,
                     "name": "pass",
-                    "enabled": false        
+                    "enabled": true        
                 },
                 "shootGame": {
                     "id" : 3,

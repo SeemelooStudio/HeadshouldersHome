@@ -3,34 +3,41 @@
 define(["jquery", "backbone"],
 
     function ($, Backbone) {
-
+        var GameConfig = {
+            badScoreLine : 6
+        };
         var Game = Backbone.Model.extend({
             defaults: {
                 "score": 0,
                 "coupon": 0,
-                "isBreakRecord": false
+                "isBreakRecord": false,
+                "isBad": false
             },
             initialize: function (options) {
                 switch (options.gameTypeId) {
                     case 1:
                         this.set({
                             "highestScore": options.user.get("dribbleGameScore"),
-                            "originGameRanking": options.user.get("dribbleGameRanking")
-                        });
+                            "originGameRanking": options.user.get("dribbleGameRanking"),
+                            "isDribbleGame": true
+                            });
                         break;
 
                     case 2:
                         this.set({
                             "highestScore": options.user.get("passGameScore"),
-                            "originGameRanking": options.user.get("passGameRanking")
+                            "originGameRanking": options.user.get("passGameRanking"),
+                            "isPassGame": true
+
                         });
                         break;
 
                     default:
                         this.set({
                             "highestScore": options.user.get("shootGameScore"),
-                            "originGameRanking": options.user.get("shootGameRanking")
-                        });
+                            "originGameRanking": options.user.get("shootGameRanking"),
+                            "isShootGame": true
+                            });
                         break;
                 }
                 this.set({
@@ -117,6 +124,9 @@ define(["jquery", "backbone"],
                 var totalRanking = this.get("totalRanking");
                 var originTotalRanking = this.get("originTotalRanking");
                 
+                if ( this.get("score") < GameConfig.badScoreLine ) {
+                    this.set("isBad", true);
+                }
                 if ( totalRanking < originTotalRanking ) {
                     this.set("isRankUp", true);
                     this.set("rankGap", originTotalRanking - totalRanking);

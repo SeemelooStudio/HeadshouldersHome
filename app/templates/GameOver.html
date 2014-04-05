@@ -1,7 +1,26 @@
 <div class="container" data-entranceAnimation="bounceInDown"  data-exitAnimation="bounceOutUp">
+        {{^isBad}}
         <div id="gameOverBg" class="hidden"></div>
+        {{/isBad}}
         <div id="gameOverTop">
+            {{#isBad}}
             <img src="app/img/gameovertop.png" />
+            {{/isBad}}
+            {{^isBad}}
+            <img src="app/img/gameovertop.png" />
+            {{/isBad}}
+            
+            <div id="gameOverDialog">
+                {{#isBad}}
+                    你在搞笑吧
+                {{/isBad}}
+                {{^isBad}}
+                {{#isBreakRecord}}
+                    太nb啦！
+                {{/isBreakRecord}}
+                {{/isBad}}
+            </div>
+            
         </div>
         <div id="gameOverContent">
         <div id="gameOverBelt">

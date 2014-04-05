@@ -11,7 +11,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Rule.html", "animation
             },
 
             events: {
-                "tap #ruleBackHome": "onBackHome"
+                "tap #ruleBackHome,#ruleBackHomeTop": "onBackHome"
             },
             render: function () {
                 this.template = _.template(template, {});

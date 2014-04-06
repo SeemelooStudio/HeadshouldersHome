@@ -4,7 +4,7 @@ function (Crafty, Game, PlayerConfig) {
 // Game scene
 // -------------
 // Runs the core gameplay loop
-Crafty.scene('Game', function() {
+Crafty.scene('DribbleGame', function() {
 	//console.log("enter scene game");
 	var self = this;
 
@@ -178,6 +178,7 @@ Crafty.scene('Game', function() {
         y : Game.height - self.player.avatar.height() * 1.5 });
 
 	self.field = Crafty.e('Field');
+    self.field.startAnimating();
 	self.bind('EnterFrame', self.onEnterFrame);
 }, 
 function() { 

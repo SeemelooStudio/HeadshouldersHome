@@ -1,5 +1,4 @@
-define(["crafty", "games/game", "games/player-config"],
-function (Crafty, Game, PlayerConfig) {
+define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, PlayerConfig) {
 Crafty.c('Actor', {
 	init: function() {
 		this.requires('2D, Canvas');
@@ -60,7 +59,8 @@ Crafty.c('Body', {
 	
 	Body: function(bodyConfig) {
 		this.requires('Actor, SpriteAnimation, ' + bodyConfig.sprite)
-			.reel('Run', 550, bodyConfig.runFrames);
+			.reel('Run', 550, bodyConfig.runFrames)
+            .reel('Standby', 550, [bodyConfig.runFrames[1]]);
 		if (bodyConfig.tackleFrames )
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
@@ -68,6 +68,10 @@ Crafty.c('Body', {
 		this.animate('Run', -1);
 		return this;
 	},
+
+    standby: function() {
+        this.animate('Standby', -1);
+    },
 
 	run: function() {
         this.animate('Run', -1);
@@ -78,25 +82,13 @@ Crafty.c('Body', {
 	}
 });
 
-Crafty.c('Ball', {
-	ballSpinSpeed : 0.3,
+Crafty.c('RollingActor', {
+	spinSpeed : 0.3,
 
 	init: function() {
-		this.requires('Actor, Tween, SpriteBall').origin('center');
+		this.requires('Actor, Tween');
 	},
 	
-	setOwner: function(owner) {
-        this.owner = owner;
-		this.owner.attach(this);
-	},
-
-	kick: function(kickForce) {
-        if (this.owner)
-		{
-            this.owner.detach(this);
-		}
-	},
-
 	setRollingDirection: function(direction) {
         this.rollingDirection = direction;
 	},
@@ -104,24 +96,99 @@ Crafty.c('Ball', {
 	startRolling: function(){
 		if (!this.isRolling)
 		{
-			this.bind('EnterFrame', this.onEnterFrame);
 			this.rollingDirection = this.rollingDirection || 1;
 			this.isRolling = true;
 		}
 	},
 
 	stopRolling: function() {
-		this.unbind('EnterFrame', this.onEnterFrame);
-		this.isRolling = false;
+        if (this.isRolling)
+        {
+            this.isRolling = false;
+        }
 	},
 
-	onEnterFrame : function(data) {
+	roll : function(data) {
 		if (this.isRolling)
 		{
-			this.rotation += this.ballSpinSpeed * data.dt * this.rollingDirection;
+			this.rotation += this.spinSpeed * data.dt * this.rollingDirection;
 		}
 	},
 	
+});
+
+Crafty.c('Ball', {
+    acceleration: new Crafty.math.Vector2D(),
+
+    velocity: new Crafty.math.Vector2D(),
+
+    friction : -1.5,
+
+    isStill : true,
+
+    onBecomeStillWithoutTrap : function() {},
+
+	init: function() {
+		this.requires('RollingActor, SpriteBall').origin('center').
+             bind('EnterFrame', this.onEnterFrame);
+	},
+	
+	setPlayer: function(player) {
+        this.player = player;
+	},
+
+    trap: function() {
+        this.isStill = true;
+        this.velocity.setValues(0, 0);
+        this.stopRolling();
+    },
+
+    placeAt: function(x, y) {
+        this.velocity.setValues(0, 0);
+        this.attr({x : x, y : y});
+    },
+
+	kick: function(kickForce, direction) {
+        if (this.player)
+		{
+            this.player.ball = null;
+            this.player.detach(this);
+            this.player = null;
+		}
+
+        this.spinSpeed = 1;
+        this.startRolling();
+
+        this.acceleration.setValues(direction);
+        this.acceleration.normalize();
+        var mass = 1;
+        this.velocity.setValues(this.acceleration);
+        this.acceleration.scale(this.friction);
+        this.velocity.scale(kickForce / mass);
+        //console.log(this.acceleration);
+        //console.log(this.velocity);
+
+        this.isStill = false;
+	},
+
+    onEnterFrame: function(data)
+    {
+        this.roll(data);
+
+        if (this.velocity.magnitudeSq() > this.friction * this.friction)
+        {
+            this.velocity.add(this.acceleration);
+            this.attr({ x: this._x + this.velocity.x, y: this._y + this.velocity.y });
+        }
+        else
+        {
+            if (!this.isStill)
+            {
+                this.trap();
+                this.onBecomeStillWithoutTrap();
+            }
+        }
+    }
 });
 
 Crafty.c('Avatar', {
@@ -156,6 +223,7 @@ Crafty.c('Avatar', {
 	Avatar: function(basicDepth, headConfig, bodyConfig, ball) {
 		var self = this;
 
+        self.basicDepth = basicDepth;
 		self.head = Crafty.e('Head').Head(headConfig);
 		self.head.attr({
                     w : self.head._w / 2, 
@@ -172,14 +240,7 @@ Crafty.c('Avatar', {
 
 		if (ball)
 		{
-			self.ball = ball;
-			self.ball.attr(
-				{ x : self.ballOffsetXLeft,
-                  y : self.ballOffsetY,
-                  z : basicDepth + Game.depth.ball
-				});
-			self.ball.setOwner(self);
-			self.ball.startRolling();
+            self.attachBall(ball);
 		}
 
 		self.body.bind('FrameChange', function(data) {
@@ -206,6 +267,36 @@ Crafty.c('Avatar', {
 
 		return self;
 	},
+
+    attachBall : function(ball) {
+		if (ball)
+		{
+            var self = this;
+			self.ball = ball;
+            self.attach(self.ball);
+
+			self.ball.attr(
+				{ x : self._x + (self.facingLeft ? self.ballOffsetXLeft : self.ballOffsetXRight),
+                  y : self._y + self.ballOffsetY,
+                  z : self.basicDepth + Game.depth.ball
+				});
+			self.ball.setPlayer(self);
+			self.ball.startRolling();
+		}
+    },
+
+    detachBall : function() {
+        self.ball = null;
+    },
+
+    standby : function() {
+        this.run();
+        this.body.standby();
+        if (this.ball)
+        {
+            this.ball.trap();
+        }
+    },
 
 	run : function() {
 		this.isRunning = true;
@@ -304,7 +395,7 @@ Crafty.c('Avatar', {
 	}
 });
 
-// This is the player-controlled character
+// This is the player-controlled character for dribble game
 Crafty.c('DribbleController', {
 	init: function() {
 		this.requires('Actor, Draggable, DebugArea')
@@ -372,8 +463,8 @@ Crafty.c('DribbleController', {
 		var component = data[0].obj;
 		if (component.onPlayerHit(this))
 		{
-			this.owner.ball.visible = false;
-			this.owner.head.setCry();
+			this.player.ball.visible = false;
+			this.player.head.setCry();
 			Game.pause();
 			Game.events.onGameOver();
 		}
@@ -685,6 +776,14 @@ Crafty.c('Field', {
 
 	tileHeight : 145,
 
+    isAnimating : false,
+
+    numOfTilesPerRow : 2,
+
+    numOfTilesPerColumn : 10,
+
+    numOfTilesHalfColumn : 5,
+
 	init: function() {
 		var self = this;
 
@@ -693,43 +792,76 @@ Crafty.c('Field', {
 		self.group1 = Crafty.e('Actor');
 		self.group2 = Crafty.e('Actor');
 
-		var numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
-		var numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
-		var numOfTilesHalfColumn = numOfTilesPerColumn / 2;
-		console.log('football field [' + numOfTilesPerRow + 'x' + numOfTilesPerColumn + ']');
+		self.numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
+		self.numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
+		self.numOfTilesHalfColumn = self.numOfTilesPerColumn / 2;
+		console.log('football field [' + self.numOfTilesPerRow + 'x' + self.numOfTilesPerColumn + ']');
 
-		for (var i = 0; i < numOfTilesPerColumn; i++)
+		for (var i = 0; i < self.numOfTilesPerColumn; i++)
 		{
-			var group = i < numOfTilesHalfColumn ? self.group1 : self.group2;
+			var group = i < self.numOfTilesHalfColumn ? self.group1 : self.group2;
 
-			for (var j = 0; j < numOfTilesPerRow; j++)
+			for (var j = 0; j < self.numOfTilesPerRow; j++)
 			{
 				var tile = Crafty.e('Actor, SpriteGrass').attr(
 				{
                     w : self.tileWidth,
                     h : self.tileHeight,
                     x : j * self.tileWidth,
-                    y : (i % numOfTilesHalfColumn) * self.tileHeight,
+                    y : (i % self.numOfTilesHalfColumn) * self.tileHeight,
                     z : Game.depth.field });
                     group.attach(tile);
                 }
 		}
 
-		self.group2.y = this.group1.y - self.tileHeight * numOfTilesHalfColumn;
-
-		self.bind('EnterFrame', function(data) {
-			var delta = Game.configs.player_vertical_speed_per_frame * data.dt / 1000;
-			this.group1.y += delta;
-			this.group2.y += delta;
-			if (this.group1.y > Game.height)
-			{
-				self.group1.y = this.group2.y - self.tileHeight * numOfTilesHalfColumn;
-			}
-			else if (this.group2.y > Game.height)
-			{
-				self.group2.y = this.group1.y - self.tileHeight * numOfTilesHalfColumn;
-			}
-		});
+		self.group2.y = this.group1.y - self.tileHeight * self.numOfTilesHalfColumn;
 	},
+
+    keepInViewport : function() {
+        var self = this;
+        if (self.group1._y + Crafty.viewport._y > Game.height)
+        {
+            self.group1.y = self.group2.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+        else if (self.group2._y + Crafty.viewport._y > Game.height)
+        {
+            self.group2.y = self.group1.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+    },
+
+    startAnimating : function() {
+        if (!this.isAnimating)
+        {
+            this.isAnimating = true;
+            this.bind('EnterFrame', this.keepAnimating);
+        }
+    },
+
+    stopAnimating: function() {
+        if (this.isAnimating)
+        {
+            this.isAnimating = false;
+            this.unbind('EnterFrame', this.keepAnimating);
+        }
+    },
+
+    keepAnimating: function(data) {
+        this.moveY(Game.configs.player_vertical_speed_per_frame * data.dt / 1000);
+    },
+
+    moveY : function(delta) {
+        var self = this;
+        self.group1.y += delta;
+        self.group2.y += delta;
+        if (self.group1.y > Game.height)
+        {
+            self.group1.y = self.group2.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+        else if (self.group2.y > Game.height)
+        {
+            self.group2.y = self.group1.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+    }
 });
+
 });

@@ -616,7 +616,7 @@ Crafty.c('Rabbit', {
 		}
 		else
 		{
-            this.y += (Game.configs.player_vertical_speed_per_frame) * deltaTime;
+            this.y += (Game.configs.player_vertical_speed_per_frame + this.traceSpeed) * deltaTime;
             this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
 
             if (!this.isPassed)

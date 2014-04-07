@@ -4,31 +4,40 @@ function (Crafty) {
 
     PlayerConfig.head_configs = {
         messi : {
+            id: '梅西',
             sprite : [0, 3],
 			cry : [2, 2],
         },
         neymar : {
+            id: '外马尔',
             sprite : [1, 2]
         },
         ozil : {
+            id: '鱼乞儿',
             sprite : [0, 2] 
         },
         ribery : {
+            id: '里贝外',
             sprite : [1, 1] 
         },
         robben : {
+            id: '裸奔',
             sprite : [0, 1] 
         },
         rooney : {
-            sprite : [0, 2] 
+            id: '撸尼',
+            sprite : [2, 0] 
         },
         suarez : {
-            sprite : [0, 1] 
+            id: '龅牙蕾丝',
+            sprite : [1, 0] 
         },
         sushi : {
+            id: '香川寿司',
             sprite : [0, 0] 
         },
 		rabbit : {
+            id: '兔兔爱西西',
 			sprite : [2, 1],
 			kiss: [1, 3]
 		}

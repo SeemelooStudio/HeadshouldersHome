@@ -3,6 +3,17 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
     Crafty.scene('PassGame', function() {
         var self = this;
 
+        self.configs = {
+            player_distance_step_1 : 150,
+            player_distance_step_2 : 220,
+            player_distance_step_3 : 350,
+            num_of_players_to_enter_step_2 : 8,
+            num_of_players_to_enter_step_3 : 15,
+            player_distance_noise : 5,
+            ball_kick_force : 20,
+            ball_friction : -0.5
+        };
+
         self.players = [];
         self.toBeRemoved = [];
         self.numOfPlayersGenerated = 0;
@@ -40,7 +51,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             else
             {
                 var seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
-                while( PlayerConfig.allHeads[seed] == self.lastPlayerHead)
+                while( PlayerConfig.allHeads[seed] === self.lastPlayerHead)
                 {
                     seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
                 }
@@ -51,9 +62,36 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 player.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - player.width()), y : self.nextGenerateY});
             }
 
-            self.nextGenerateY -= 150;
+            var seed = Math.floor(Crafty.math.randomNumber(0, 100));
+            if (seed % 2 == 0 &&
+                self.numOfPlayersGenerated > self.configs.num_of_players_to_enter_step_2)
+            {
+                var lastPlayer = self.players[self.players.length - 1];
+                if (lastPlayer._y - player._y > 160)
+                {
+                    Crafty.e('Coin').attr({x: (lastPlayer._x + player._x) / 2, y: (lastPlayer._y + player._y) / 2});
+                }
+            }
+
+            self.nextGenerateY -= self.getPlayerDistance();
             self.players.push(player);
             ++self.numOfPlayersGenerated;
+        };
+
+        self.getPlayerDistance = function() {
+            var noise = Math.floor(Crafty.math.randomNumber(-self.configs.player_distance_noise, self.configs.player_distance_noise));
+            if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)
+            {
+                return self.configs.player_distance_step_1 + noise;
+            }
+            else if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_3)
+            {
+                return self.configs.player_distance_step_2 + noise * 2;
+            }
+            else
+            {
+                return self.configs.player_distance_step_3 + noise * 3;
+            }
         };
 
         self.destroyPlayersOffScreen = function() {
@@ -90,6 +128,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.currentController.collision([0,0], [0,0]); // disable collision of controller
             self.currentController.attachBall(self.ball);
             self.currentController.standby();
+            self.currentController.isWandering = false;
             self.highlightRing.startRolling();
             self.highlightRing.setPlayer(self.currentController);
 
@@ -99,17 +138,29 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.onMouseDown = function(e) {
             self.highlightRing.stopRolling();
-            self.ball.kick(40, self.highlightRing.getDirection());
+            if (self.currentController != null)
+            {
+                self.currentController.kickBall(self.configs.ball_kick_force, self.highlightRing.getDirection());
+            }
         };
 
         self.onHitPasser = function(data) {
             var player = data[0].obj;
-            self.ball.trap();
-            self.setCurrentController(player);
+            if (player._y < self.currentController._y)
+            {
+                self.ball.trap();
+                self.setCurrentController(player);
+            }
+        };
+
+        self.onHitCoin = function(data) {
+            ++Game.data.num_of_collected_coins;
+            Game.events.onCollectCoin(Game.data.num_of_collected_coins);
+            var coin = data[0].obj;
+            coin.destroy();
         };
 
         self.gameover = function() {
-            console.log("game over");
             Game.pause();
             Game.events.onGameOver();
         };
@@ -127,7 +178,9 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.ball.requires('Collision, DebugCollision')
             .collision([5, self.ball._h - 5], [self.ball._w - 5, self.ball._h - 5], [self.ball._w - 5, 5], [5, 5])
             .attr({z : Game.depth.controller})
-            .onHit('Passer', self.onHitPasser);
+            .onHit('Passer', self.onHitPasser)
+            .onHit('Coin', self.onHitCoin);
+        self.ball.friction = self.configs.ball_friction;
         self.ball.onBecomeStillWithoutTrap = function() {
             self.gameover();
         };

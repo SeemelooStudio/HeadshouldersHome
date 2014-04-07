@@ -53,12 +53,9 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             }
             else
             {
-<<<<<<< HEAD
-                seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
-=======
                 // make should two concecutive players are different
-                var seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
->>>>>>> 93072616d2e3195a204c6559a62934bda8c43f20
+                seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
+
                 while( PlayerConfig.allHeads[seed] === self.lastPlayerHead)
                 {
                     seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
@@ -79,7 +76,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 }
                 else
                 {
-                    if (seed % 2 == 0 &&
+                    if (seed % 2 === 0 &&
                         self.numOfPlayersGenerated > self.configs.num_of_players_to_enter_step_2)
                     {
                         body = PlayerConfig.body_configs.worldclass;
@@ -91,14 +88,10 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                              y : self.nextGenerateY});
             }
 
-<<<<<<< HEAD
+
+            // try generate coins between players
             seed = Math.floor(Crafty.math.randomNumber(0, 100));
             if (seed % 2 === 0 &&
-=======
-            // try generate coins between players
-            var seed = Math.floor(Crafty.math.randomNumber(0, 100));
-            if (seed % 2 == 0 &&
->>>>>>> 93072616d2e3195a204c6559a62934bda8c43f20
                 self.numOfPlayersGenerated > self.configs.num_of_players_to_enter_step_2)
             {
                 var lastPlayer = self.players[self.players.length - 1];
@@ -135,6 +128,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.destroyElementsOffScreen = function() {
             self.toBeRemoved = [];
+            var index = 0;
             for (var i = 0; i < self.players.length; i++)
             {
                 var player = self.players[i];	
@@ -145,7 +139,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             }
             for ( i = 0; i < self.toBeRemoved.length; i++)
             {
-                var index = self.players.indexOf(self.toBeRemoved[i]);
+                index = self.players.indexOf(self.toBeRemoved[i]);
                 if (index != -1)
                 {
                     self.players.splice(index, 1);
@@ -153,7 +147,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 self.toBeRemoved[i].destroy();
             }
             self.toBeRemoved = [];
-            for (var i = 0; i < self.coins.length; i++)
+            for (i = 0; i < self.coins.length; i++)
             {
                 var coin = self.coins[i];	
                 if (self.ifPassedLoadBuffer(coin))
@@ -163,7 +157,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             }
             for ( i = 0; i < self.toBeRemoved.length; i++)
             {
-                var index = self.coins.indexOf(self.toBeRemoved[i]);
+                index = self.coins.indexOf(self.toBeRemoved[i]);
                 if (index != -1)
                 {
                     self.coins.splice(index, 1);
@@ -225,12 +219,12 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             if ( value < min ) { value = min; }
             if ( value > max ) { value = max; }
             return value;
-        }
+        };
 
         self.lerp = function( a, b, t ) {
-            t = self.clamp( t, 0, 1 )
+            t = self.clamp( t, 0, 1 );
             return ( a + t * ( b - a ) );
-        }
+        };
 
         self.onEnterFrame = function(data) {
 			if (self.ball._x < Game.player_bound_left() - 50 ||

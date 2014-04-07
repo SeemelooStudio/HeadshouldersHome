@@ -17,7 +17,7 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
                 "tap #shareOverlay,#shareCancel":"onClickShareOverlay",
                 "tap #shareOk":"onClickShareOk",
                 "tap .share":"onClickShare",
-                "tap #rule":"onClickExit"
+                "tap #exitLink":"onClickExit"
             },
             hideHeader: function(callback) {
                 if ($("#header").is(":hidden")) {

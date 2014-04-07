@@ -93,7 +93,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             
             $text_css = { 'size': '12px', 'family': 'Arial', 'color': 'red', 'text-align': 'center' };
             this.nameHud = Crafty.e('2D, DOM, Text')
-			                     .attr({ x: 0, y: -10, w: 80 })
+                                 .attr({ x: 0, y: -10, w: 80 })
                                  .text(headConfig.id)
                                  .textFont($text_css);
             this.attach(this.nameHud);

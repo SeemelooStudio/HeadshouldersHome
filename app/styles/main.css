@@ -34,7 +34,7 @@ img {
 #logo {
     width: 170px;
     margin: 0 auto;
-    top:-15px;
+    top:-12px;
     position: relative;
     left:0px;
 }
@@ -45,7 +45,7 @@ img {
     top:90px;
     left: 50%;
     width: 100px;
-    margin-left: -40px;
+    margin-left: -50px;
     color: #226a0e;
     font-weight:bold;
     border-radius: 5px;
@@ -57,18 +57,18 @@ img {
     top:50px;
 }
 #plane {
-    width: 90px;
+    width: 80px;
     position: absolute;
     right:2%;
     top:-65px;
     cursor: pointer;
 }
 #rule {
-    width: 150px;
-    height: 56px;
+    width: 120px;
+    height: 50px;
     position: absolute;
     left: 2%;
-    top:-32px;
+    top:-34px;
     cursor: pointer;
 }
 #rule #userRank:active {
@@ -281,8 +281,8 @@ img {
 .gameButton {
     background-color:#3c8ae4;
     margin: 1em auto;
-    width: 85%;
-    height: 65px;
+    width: 80%;
+    height: 55px;
     border-radius: 20px 2px 20px 2px;
     border:2px solid #221714;
     box-shadow: 2px 4px 0 rgba(0,0,0,0.5);
@@ -311,29 +311,28 @@ img {
 }
 .gameButton-tag {
     position: absolute;
-    left: 5%;
-    top:-5px;
+    left: 2%;
+    top:-3px;
     border-radius: 0 0 20px 0;
-    height: 40px;
+    height: 32px;
     background: #1a2b4d;
-    width: 45px;
+    width: 40px;
     border:1px solid #221714;
     box-shadow: 1px 2px 0 rgba(0,0,0,0.5);
-    padding: 3px 5px 0 0;
+    padding: 5px 2px 0;
     text-align: center;
     overflow: hidden;
 
 }
 .gameButton-small {
-    font-size: 8px;
-    line-height: 12px;
-    height: 12px;
+    font-size: 7px;
+    line-height: 10px;
+    height: 10px;
     overflow: hidden;
-    padding-top: 2px;
 }
 .gameButton-large {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 12px;
+    line-height: 18px;
     font-style: italic;
     font-weight: normal;
 }
@@ -343,24 +342,24 @@ img {
     left: 50%;
 }
 #gameButton-dribble .gameButton-img {
-    width: 185px;
-    margin-left:-80px;
+    width: 155px;
+    margin-left:-65px;
 }
 #gameButton-pass .gameButton-img {
-    width: 94px;
-    bottom: 8px;
-    margin-left: -45px;
+    width: 75px;
+    bottom: 10px;
+    margin-left: -38px;
     
 }
 #gameButton-shoot .gameButton-img {
-    width: 180px;
+    width: 160px;
     bottom: 10px;
-    margin-left: -90px;
+    margin-left: -80px;
 }
 #gameButton-passLeft,#gameButton-passRight {
     position: absolute;
     bottom: 0;
-    width: 75px;
+    width: 65px;
 }
 #gameButton-passLeft {
     left: 0;
@@ -1417,33 +1416,34 @@ textarea.form-control {
     background: #999;
 }
 .gameButton-comingSoon {
-    font-size: 12px;
-    line-height: 16px;
-    padding: 2px 0 5px 5px;
+    font-size: 10px;
+    line-height: 12px;
     text-align: center;
 }
 #userCoupon {
     position: absolute;
     left: 0px;
-    top:60px;
+    top:52px;
     line-height: 20px;
-    font-size: 10px;
-    width: 90px;
+    font-size: 8px;
+    width: 80px;
     overflow: hidden;
     text-align: center;
 }
 #userCoupon .lotto-pointsCount {
-    font-size: 12px;
+    font-size: 10px;
+    background-size: 16px 16px;
+    padding-left: 16px;
 }
 #userRank {
     position: absolute;
-    left: 41px;
-    top:30px;
-    font-size: 10px;
+    left: 33px;
+    top:22px;
+    font-size: 8px;
     color: #fff;
 }
 #userRank .rank {
-    font-size: 12px;
+    font-size: 10px;
     color: #ffd800;
 }
 #userAward {
@@ -1905,7 +1905,27 @@ display: none;
 .current .bottomCaret {
     display: block;
 }
-@media only screen and (min-width: 324px) {
+#cr-stage {
+    color: #fff;
+}
+#game-dialog {
+    border:1px solid #221417;
+    background:#ffd800;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+    width: 120px;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    margin-left: -70px;
+    font-size: 10px;
+    line-height: 12px;
+    color: #221417;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+}
+@media only screen and (min-width: 340px) {
     .sideLine {
         position: fixed;
         height: 100%;
@@ -1942,14 +1962,14 @@ display: none;
         top:-30px;
     }
     #plane {
-        width: 180px;
+        width: 160px;
         right: 0;
-        top:-140px;
+        top:-120px;
     }
     #rule {
-        width: 260px;
-        top:-65px;
-        left: 0;
+        width: 230px;
+        top:-55px;
+        left: 2%;
     }
     #belt {
         width: 320px;
@@ -2326,15 +2346,14 @@ display: none;
     margin-left:-350px;
 }
 #userRank {
-    left: 70px;
-    top:55px;
+    left: 60px;
+    top:46px;
     font-size: 16px;
 }
 #userCoupon {
-    left: 30px;
-    top: 130px;
+    top: 115px;
     font-size: 16px;
-    width: 120px;
+    width: 160px;
 }
 #instruction {
     top:170px;

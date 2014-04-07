@@ -42,6 +42,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.generatePlayer = function() {
             var player;
+            var seed;
             if (self.numOfPlayersGenerated === 0)
             {
                 player = Crafty.e('Passer').Passer(PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi);
@@ -50,7 +51,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             }
             else
             {
-                var seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
+                seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
                 while( PlayerConfig.allHeads[seed] === self.lastPlayerHead)
                 {
                     seed = Math.floor(Crafty.math.randomNumber(0, PlayerConfig.allHeads.length));
@@ -62,8 +63,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 player.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - player.width()), y : self.nextGenerateY});
             }
 
-            var seed = Math.floor(Crafty.math.randomNumber(0, 100));
-            if (seed % 2 == 0 &&
+            seed = Math.floor(Crafty.math.randomNumber(0, 100));
+            if (seed % 2 === 0 &&
                 self.numOfPlayersGenerated > self.configs.num_of_players_to_enter_step_2)
             {
                 var lastPlayer = self.players[self.players.length - 1];
@@ -138,7 +139,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.onMouseDown = function(e) {
             self.highlightRing.stopRolling();
-            if (self.currentController != null)
+            if (self.currentController !== null)
             {
                 self.currentController.kickBall(self.configs.ball_kick_force, self.highlightRing.getDirection());
             }

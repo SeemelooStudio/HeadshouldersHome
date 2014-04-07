@@ -39,7 +39,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
 
             events: {
 
-                "tap #showTops":"onClickLeaderboard",
+                "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
                 "tap #plane":"onClickLotto",

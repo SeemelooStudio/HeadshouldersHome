@@ -47,7 +47,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
                 this.mainAnimationScheduler.animateIn();
                 
-
+                
                 require(["games/game", "games/components", "games/components-pass", "games/object-randomizer", "games/scene-loading", "games/scene-dribble", "games/scene-pass"],function(Game){
                     
                     self.Game = Game;
@@ -69,6 +69,10 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         },
                         onLoadComplete: function() {
                             $("#loading").hide();
+                        },
+                        onPlayerTrapBall: function(playerId) {
+                            self.addScore(1);
+                            self.onPlayerTrapBall();
                         }
                     });
 
@@ -112,6 +116,10 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.start(self.model.get("sceneName"));
+                       if ( self.gameTypeId == 2 ) {
+                           self.onPlayerTrapBall(1);
+                       }
+                       
                        //self.Game.pause();
                    },
                    error: function(msg) {
@@ -120,6 +128,15 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                });
                 this.gameAnimationScheduler.animateIn();
 
+            },
+            onPlayerTrapBall: function() {
+                
+                $("#game-dialog").show().addClass("animated bounceInDown");
+
+                var timeout = setTimeout(function(){
+                    $("#game-dialog").removeClass("animated bounceInDown").hide();
+                    clearTimeout(timeout);
+                }, 2000);                
             },
             gameOver: function() {
                var self = this;
@@ -204,6 +221,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.restart();
+                       if ( self.gameTypeId == 2 ) {
+                           self.onPlayerTrapBall(1);
+                       }
                        $("#loading").hide();
                    },
                    error: function(msg) {

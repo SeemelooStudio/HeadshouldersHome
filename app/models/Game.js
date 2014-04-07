@@ -19,7 +19,7 @@ define(["jquery", "backbone"],
             shoot_share_result_text_begin:"#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了",
             shoot_share_result_text_end:"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？",
             shoot_bad_text:"难过史了!!",
-            shoot_good_text:"好NB呀!!",
+            shoot_good_text:"好NB呀!!"
         };
         var Game = Backbone.Model.extend({
             defaults: {

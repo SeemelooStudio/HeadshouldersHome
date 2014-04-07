@@ -2083,9 +2083,9 @@ display: none;
 }
 
 .btn-inline {
-    width: 150px;
+    width: 180px;
     display: inline-block;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 .btn-inline:last-child {
     margin-right: 0;
@@ -2572,5 +2572,16 @@ margin-left: 50px;
     top: 200px;
     font-size: 16px;
     padding: 8px 15px;
+}
+.game-help-text {
+    top: 220px;
+    font-size: 16px;
+}
+.leaderboardPrize {
+    width: 120px;
+    top: -40px;
+}
+#leaderboardPrize-shirt {
+    top: -70px;
 }
 }

@@ -1686,6 +1686,11 @@ textarea.form-control {
     left: 0;
     top:40%;
     text-align: center;
+    z-index: 11;
+}
+#gameStatus {
+    z-index: 11;
+    position: relative;
 }
 #gameOverWhistle img {
     width: 110px;

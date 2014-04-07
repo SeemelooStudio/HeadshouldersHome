@@ -45,6 +45,8 @@ define(function(require, exports, module) {
       "lottery":"lottery",
       "winningRecords":"winningRecords",
       "gameDribble":"gameDribble",
+      "gamePass":"gamePass",
+      "gameShoot":"gameShoot",
       "rule":"rule"
     },
 

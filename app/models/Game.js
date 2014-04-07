@@ -3,34 +3,75 @@
 define(["jquery", "backbone"],
 
     function ($, Backbone) {
-
+        var GameConfig = {
+            badScoreLine : 6,
+            dribble_share_default_text: "",
+            dribble_share_result_text_begin:"我竟然晃过了",
+            dribble_share_result_text_end:"个足坛巨星！你也过得去算你NB！",
+            dribble_bad_text:"难过史了!!",
+            dribble_good_text:"NB不是一两天!",
+            pass_share_default_text: "",
+            pass_share_result_text_begin:"我在竟然过了",
+            pass_share_result_text_end:"个足坛巨星！你敢试试么？",
+            pass_bad_text:"传你妹阿!!",
+            pass_good_text:"NB不是一两天",
+            shoot_share_default_text: "",
+            shoot_share_result_text_begin:"#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了",
+            shoot_share_result_text_end:"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？",
+            shoot_bad_text:"难过史了!!",
+            shoot_good_text:"好NB呀!!",
+        };
         var Game = Backbone.Model.extend({
             defaults: {
                 "score": 0,
                 "coupon": 0,
-                "isBreakRecord": false
+                "isBreakRecord": false,
+                "isBad": false,
+                "sceneName":"DribbleGame"
             },
             initialize: function (options) {
                 switch (options.gameTypeId) {
                     case 1:
                         this.set({
                             "highestScore": options.user.get("dribbleGameScore"),
-                            "originGameRanking": options.user.get("dribbleGameRanking")
-                        });
+                            "originGameRanking": options.user.get("dribbleGameRanking"),
+                            "isDribbleGame": true,
+                            "shareDefaultText": GameConfig.dribble_share_default_text,
+                            "shareResultBegin": GameConfig.dribble_share_result_text_begin,
+                            "shareResultEnd": GameConfig.dribble_share_result_text_end,
+                            "badText":GameConfig.dribble_bad_text,
+                            "goodText":GameConfig.dribble_good_text,
+                            "sceneName":"DribbleGame"
+                            });
                         break;
 
                     case 2:
                         this.set({
                             "highestScore": options.user.get("passGameScore"),
-                            "originGameRanking": options.user.get("passGameRanking")
+                            "originGameRanking": options.user.get("passGameRanking"),
+                            "isPassGame": true,
+                            "shareDefaultText": GameConfig.pass_share_default_text,
+                            "shareResultBegin": GameConfig.pass_share_result_text_begin,
+                            "shareResultEnd": GameConfig.pass_share_result_text_end,
+                            "badText":GameConfig.pass_bad_text,
+                            "goodText":GameConfig.pass_good_text,
+                            "sceneName":"PassGame"
+
                         });
                         break;
 
                     default:
                         this.set({
                             "highestScore": options.user.get("shootGameScore"),
-                            "originGameRanking": options.user.get("shootGameRanking")
-                        });
+                            "originGameRanking": options.user.get("shootGameRanking"),
+                            "isShootGame": true,
+                            "shareDefaultText": GameConfig.shoot_share_default_text,
+                            "shareResultBegin": GameConfig.shoot_share_result_text_begin,
+                            "shareResultEnd": GameConfig.shoot_share_result_text_end,
+                            "badText":GameConfig.shoot_bad_text,
+                            "goodText":GameConfig.shoot_good_text,
+                            "sceneName":"PassGame"
+                            });
                         break;
                 }
                 this.set({
@@ -57,8 +98,12 @@ define(["jquery", "backbone"],
             },
             startGame: function (options) {
                 var self = this;
-                this.set("score",0);
-                this.set("coupon", this.get("originCoupon"));
+                this.set({
+                "score":0,
+                "coupon":this.get("originCoupon"),
+                "isBad": false
+                });
+
                 $.ajax({
                     url: "http://192.168.1.100:8008/footballgameservice/Games",
                     //url: "app/data/startgame.json",
@@ -117,6 +162,11 @@ define(["jquery", "backbone"],
                 var totalRanking = this.get("totalRanking");
                 var originTotalRanking = this.get("originTotalRanking");
                 
+                if ( this.get("score") < GameConfig.badScoreLine ) {
+                    this.set("isBad", true);
+                } else {
+                    this.set("isBad", false);
+                }
                 if ( totalRanking < originTotalRanking ) {
                     this.set("isRankUp", true);
                     this.set("rankGap", originTotalRanking - totalRanking);

@@ -20,8 +20,16 @@ define(["jquery", "backbone","mustache", "text!templates/GameOver.html", "animat
                 this.mainAnimation.animateIn(function(){
                     self.$el.find("#gameOverBg").removeClass("hidden").fadeIn(function(){
                         $(this).addClass("rotate");
-                        self.$el.find("#gameOverScore").addClass("animated tada");
-                        self.$el.find("#gameOver-newRecord").show().addClass("animated rollIn");
+                        if ( self.model.get("isBad") ) {
+                            self.$el.find("#gameOverDialog").show().addClass("animated bounceInDown");
+                        } else if ( self.model.get("isBreakRecord") ) {
+                            self.$el.find("#gameOverDialog").show();
+                            self.$el.find("#gameOver-newRecord").show().addClass("animated rollIn");
+                        } else {
+                            self.$el.find("#gameOverScore").addClass("animated tada");
+                        }
+                        
+                        
                     });
                 });
             },

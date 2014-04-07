@@ -1,7 +1,26 @@
 <div class="container" data-entranceAnimation="bounceInDown"  data-exitAnimation="bounceOutUp">
+
         <div id="gameOverBg" class="hidden"></div>
+
         <div id="gameOverTop">
+            {{#isBad}}
+            <img src="app/img/gameoverpoor.png" />
+            {{/isBad}}
+            {{^isBad}}
             <img src="app/img/gameovertop.png" />
+            {{/isBad}}
+            
+            <div id="gameOverDialog">
+                {{#isBad}}
+                    {{badText}}
+                {{/isBad}}
+                {{^isBad}}
+                    {{#isBreakRecord}}
+                        {{goodText}}
+                    {{/isBreakRecord}}
+                {{/isBad}}
+            </div>
+            
         </div>
         <div id="gameOverContent">
         <div id="gameOverBelt">
@@ -9,7 +28,7 @@
                 {{score}}<small>分</small>
             </div>
             <div id="gameOverRanking">
-                总积分排名：{{totalRanking}} 
+                总榜排名：{{totalRanking}} 
                 {{#isRankUp}}
                 (<span class="yellow"> {{rankGap}} <i class="fa fa-arrow-up"></i></span> )
                 {{/isRankUp}}
@@ -26,12 +45,12 @@
         
         <div id="gameOver-share" class="btn btn-blue btn-block share">
             <div class="btn-inner">
-                    <i class="fa fa-share-square-o"></i> 晒成绩 挣奖券
+                    <i class="icon icon-share"></i> 晒成绩 挣奖券
             </div>
         </div>
         <div id="gameOver-replay" class="btn btn-yellow btn-block">
             <div class="btn-inner">
-                    <i class="fa fa-refresh"></i> 重玩
+                    <i class="icon icon-refresh"></i> 重玩
             </div>
         </div>
         </div><!-- gameOverContent -->

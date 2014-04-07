@@ -96,6 +96,7 @@ var Utils = {
             e.gesture.preventDefault();
             e.gesture.stopPropagation(); 
             e.gesture.stopDetect();
+            console.log("here");
             
             $("#confirm").hide();
             if (options.ok) {
@@ -111,6 +112,7 @@ var Utils = {
             if (options.cancel) {
                 options.cancel();
             }
+            $("#confirmOk").unbind("tap");
         });
     },
     highlight: function($el, color) {

@@ -1,6 +1,4 @@
-define(["crafty", "games/game", "games/player-config"],
-function (Crafty, Game, PlayerConfig) {
-var InitComponents = function() {
+define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, PlayerConfig) {
 Crafty.c('Actor', {
 	init: function() {
 		this.requires('2D, Canvas');
@@ -29,6 +27,7 @@ Crafty.c('Head', {
 		this.requires('Actor, Sprite, HeadDefault');
 		this.normal_cell = headConfig.sprite;
 		this.cry_cell = headConfig.cry;
+		this.kiss_cell = headConfig.kiss;
 		this.setNormal();
 		return this;
 	},
@@ -46,6 +45,12 @@ Crafty.c('Head', {
             this.sprite(this.cry_cell[0], this.cry_cell[1]);
 		}
 	},
+	setKiss: function() {
+	if (this.kiss_cell)
+	{
+	this.sprite(this.kiss_cell[0], this.kiss_cell[1]);
+	}
+	}
 });
 
 Crafty.c('Body', { 
@@ -54,17 +59,41 @@ Crafty.c('Body', {
 	
 	Body: function(bodyConfig) {
 		this.requires('Actor, SpriteAnimation, ' + bodyConfig.sprite)
-			.reel('Run', 550, bodyConfig.runFrames);
+			.reel('Run', 550, bodyConfig.runFrames)
+            .reel('Standby', 550, [bodyConfig.runFrames[1]])
+            .reel('Kick', 100, [bodyConfig.runFrames[2]]);
 		if (bodyConfig.tackleFrames )
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
 		}
 		this.animate('Run', -1);
+
+        this.bind('AnimationEnd', this.onAnimationEnd);
 		return this;
 	},
 
+    onAnimationEnd: function(data) {
+        if (data.id === 'Kick')
+        {
+            if (this.onKickEnd)
+            {
+                this.onKickEnd();
+            }
+            this.standby();
+        }
+    },
+
+    standby: function() {
+        this.animate('Standby', -1);
+    },
+
+    kick: function(onKickEnd) {
+        this.onKickEnd = onKickEnd;
+        this.animate('Kick', 1);
+    },
+
 	run: function() {
-    this.animate('Run', -1);
+        this.animate('Run', -1);
 	},
 
 	tackle: function() {
@@ -72,25 +101,13 @@ Crafty.c('Body', {
 	}
 });
 
-Crafty.c('Ball', {
-	ballSpinSpeed : 0.3,
+Crafty.c('RollingActor', {
+	spinSpeed : 0.3,
 
 	init: function() {
-		this.requires('Actor, Tween, SpriteBall').origin('center');
+		this.requires('Actor, Tween');
 	},
 	
-	setOwner: function(owner) {
-        this.owner = owner;
-		this.owner.attach(this);
-	},
-
-	kick: function(kickForce) {
-        if (this.owner)
-		{
-            this.owner.detach(this);
-		}
-	},
-
 	setRollingDirection: function(direction) {
         this.rollingDirection = direction;
 	},
@@ -98,24 +115,99 @@ Crafty.c('Ball', {
 	startRolling: function(){
 		if (!this.isRolling)
 		{
-			this.bind('EnterFrame', this.onEnterFrame);
 			this.rollingDirection = this.rollingDirection || 1;
 			this.isRolling = true;
 		}
 	},
 
 	stopRolling: function() {
-		this.unbind('EnterFrame', this.onEnterFrame);
-		this.isRolling = false;
+        if (this.isRolling)
+        {
+            this.isRolling = false;
+        }
 	},
 
-	onEnterFrame : function(data) {
+	roll : function(data) {
 		if (this.isRolling)
 		{
-			this.rotation += this.ballSpinSpeed * data.dt * this.rollingDirection;
+			this.rotation += this.spinSpeed * data.dt * this.rollingDirection;
 		}
 	},
 	
+});
+
+Crafty.c('Ball', {
+    acceleration: new Crafty.math.Vector2D(),
+
+    velocity: new Crafty.math.Vector2D(),
+
+    friction : -1.5,
+
+    isStill : true,
+
+    onBecomeStillWithoutTrap : function() {},
+
+	init: function() {
+		this.requires('RollingActor, SpriteBall').origin('center').
+             bind('EnterFrame', this.onEnterFrame);
+	},
+	
+	setPlayer: function(player) {
+        this.player = player;
+	},
+
+    trap: function() {
+        this.isStill = true;
+        this.velocity.setValues(0, 0);
+        this.stopRolling();
+    },
+
+    placeAt: function(x, y) {
+        this.velocity.setValues(0, 0);
+        this.attr({x : x, y : y});
+    },
+
+	kick: function(kickForce, direction) {
+        if (this.player)
+		{
+            this.player.ball = null;
+            this.player.detach(this);
+            this.player = null;
+		}
+
+        this.spinSpeed = 1;
+        this.startRolling();
+
+        this.acceleration.setValues(direction);
+        this.acceleration.normalize();
+        var mass = 1;
+        this.velocity.setValues(this.acceleration);
+        this.acceleration.scale(this.friction);
+        this.velocity.scale(kickForce / mass);
+        //console.log(this.acceleration);
+        //console.log(this.velocity);
+
+        this.isStill = false;
+	},
+
+    onEnterFrame: function(data)
+    {
+        this.roll(data);
+
+        if (this.velocity.magnitudeSq() > this.friction * this.friction)
+        {
+            this.velocity.add(this.acceleration);
+            this.attr({ x: this._x + this.velocity.x, y: this._y + this.velocity.y });
+        }
+        else
+        {
+            if (!this.isStill)
+            {
+                this.trap();
+                this.onBecomeStillWithoutTrap();
+            }
+        }
+    }
 });
 
 Crafty.c('Avatar', {
@@ -150,6 +242,7 @@ Crafty.c('Avatar', {
 	Avatar: function(basicDepth, headConfig, bodyConfig, ball) {
 		var self = this;
 
+        self.basicDepth = basicDepth;
 		self.head = Crafty.e('Head').Head(headConfig);
 		self.head.attr({
                     w : self.head._w / 2, 
@@ -166,14 +259,7 @@ Crafty.c('Avatar', {
 
 		if (ball)
 		{
-			self.ball = ball;
-			self.ball.attr(
-				{ x : self.ballOffsetXLeft,
-                  y : self.ballOffsetY,
-                  z : basicDepth + Game.depth.ball
-				});
-			self.ball.setOwner(self);
-			self.ball.startRolling();
+            self.attachBall(ball);
 		}
 
 		self.body.bind('FrameChange', function(data) {
@@ -201,6 +287,46 @@ Crafty.c('Avatar', {
 		return self;
 	},
 
+    attachBall : function(ball) {
+		if (ball)
+		{
+            var self = this;
+			self.ball = ball;
+            self.attach(self.ball);
+
+			self.ball.attr(
+				{ x : self._x + (self.facingLeft ? self.ballOffsetXLeft : self.ballOffsetXRight),
+                  y : self._y + self.ballOffsetY,
+                  z : self.basicDepth + Game.depth.ball
+				});
+			self.ball.setPlayer(self);
+			self.ball.startRolling();
+		}
+    },
+
+    detachBall : function() {
+        self.ball = null;
+    },
+
+    standby : function() {
+        this.run();
+        this.body.standby();
+        if (this.ball)
+        {
+            this.ball.trap();
+        }
+    },
+
+    kickBall: function(kickForce, direction) {
+        var self = this;
+        self.body.kick(function() {
+            if (self.ball)
+            {
+                self.ball.kick(kickForce, direction);
+            }
+        });
+    },
+
 	run : function() {
 		this.isRunning = true;
 		this.body.run();
@@ -208,6 +334,7 @@ Crafty.c('Avatar', {
 					x : this._x + this.bodyRunPos.x,
 					y : this._y + this.bodyRunPos.y,
 		});
+		this.head.setNormal();
 	},
 
 	tackle : function() {
@@ -222,6 +349,7 @@ Crafty.c('Avatar', {
 					x : this._x + this.bodyTacklePos.x,
 					y : this._y + this.bodyTacklePos.y,
 		});
+		this.head.setKiss();
 	},
 
 	faceLeft: function() {
@@ -296,7 +424,7 @@ Crafty.c('Avatar', {
 	}
 });
 
-// This is the player-controlled character
+// This is the player-controlled character for dribble game
 Crafty.c('DribbleController', {
 	init: function() {
 		this.requires('Actor, Draggable, DebugArea')
@@ -313,7 +441,8 @@ Crafty.c('DribbleController', {
 				.onHit('Obstacle', this.hitComponent)
 				.onHit('Coin', this.hitComponent)
 				.onHit('Amateur', this.hitComponent)
-				.onHit('WorldClass', this.hitComponent);
+				.onHit('WorldClass', this.hitComponent)
+				.onHit('Rabbit', this.hitComponent);
 
 		this.attach(this.avatar);
 
@@ -363,8 +492,8 @@ Crafty.c('DribbleController', {
 		var component = data[0].obj;
 		if (component.onPlayerHit(this))
 		{
-			this.owner.ball.visible = false;
-			this.owner.head.setCry();
+			this.player.ball.visible = false;
+			this.player.head.setCry();
 			Game.pause();
 			Game.events.onGameOver();
 		}
@@ -468,6 +597,7 @@ Crafty.c('Amateur', {
             this.onPassed(player);
 		}
 	},
+
     onPassed: function(player) {
         this.isPassed = true;
         this.changeDepth( Game.depth.passed);
@@ -552,10 +682,140 @@ Crafty.c('WorldClass', {
 	}
 });
 
+Crafty.c('Rabbit', {
+	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.rabbit_vertical_speed_per_frame,
+	horizontalSpeed: Game.configs.rabbit_horizontal_speed_per_frame,
+	traceSpeed: Game.configs.rabbit_trace_speed_per_frame,
+
+	wanderDistance : 30,
+	distanceToTrace : 200,
+    distanceToTackle : 50,
+
+    isTracing : false,
+    faceLeftFrame : 0,
+    faceRightFrame : 0,
+
+	init: function() {
+		this.requires('Avatar, Collision, DebugCollision, DebugArea')
+				.attr({w: 80, h: 120});
+	},
+
+	Rabbit : function(headConfig, bodyConfig) {
+		this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
+		this.collision(this.halfBoundBox);
+
+		var seed = Math.floor(Crafty.math.randomNumber(0, 100));
+		if (seed % 2 === 0)
+		{
+			this.faceRight();
+		}
+
+        this.isTracing = false;
+
+		return this;
+	},
+
+	update: function(player, deltaTime) {
+		if (!this.isTracing)
+		{
+            this.y += this.verticalSpeed * deltaTime;
+			this.wander(this.horizontalSpeed, deltaTime);
+
+			if (player._y - this._y < this.distanceToTrace)
+			{
+                this.isTracing = true;
+				if (player._x < this._x)
+				{
+					this.faceLeft();
+				}
+				else
+				{
+					this.faceRight();
+				}
+			}
+		}
+		else
+		{
+            
+
+            if (!this.isPassed)
+            {
+                this.y += (this.traceSpeed + this.verticalSpeed) * deltaTime;
+                this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
+                this.trace(player, deltaTime);
+
+                if (this.isRunning && player._y - this._y < this.distanceToTackle)
+                {
+                    this.tackle();
+                }
+            }
+            else
+            {   
+                this.y += this.verticalSpeed * deltaTime;
+                this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
+                 
+                if (!this.isRunning)
+                {
+                    this.run();
+                }
+            }
+		}
+
+		if ( !this.isPassed && player._y - this._y < -this.distanceToTackle / 2 ) 
+        {
+            this.onPassed(player);
+		}
+	},
+
+    trace: function(player, deltaTime) {
+        if (player._x < this._x)
+        {
+            this.faceRightFrame = 0;
+            ++this.faceLeftFrame;
+            if (this.faceLeftFrame > 3)
+            {
+                this.faceLeft();
+            }
+        }
+        else
+        {
+            this.faceLeftFrame = 0;
+            ++this.faceRightFrame;
+            if (this.faceRightFrame > 3)
+            {
+                this.faceRight();
+            }
+        }
+    },
+
+    onPassed: function(player) {
+        this.isPassed = true;
+        this.changeDepth( Game.depth.passed);
+        ++Game.data.num_of_passed_amateurs;
+        Game.events.onPassWorldClass(Game.data.num_of_passed_amateurs);
+    },
+              
+	onDisappear : function(player) {
+
+	},
+
+	onPlayerHit: function(player) {
+		return true;
+	}
+});
+
 Crafty.c('Field', {
 	tileWidth  : 320,
 
 	tileHeight : 145,
+
+    isAnimating : false,
+
+    numOfTilesPerRow : 2,
+
+    numOfTilesPerColumn : 10,
+
+    numOfTilesHalfColumn : 5,
 
 	init: function() {
 		var self = this;
@@ -565,45 +825,76 @@ Crafty.c('Field', {
 		self.group1 = Crafty.e('Actor');
 		self.group2 = Crafty.e('Actor');
 
-		var numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
-		var numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
-		var numOfTilesHalfColumn = numOfTilesPerColumn / 2;
-		console.log('football field [' + numOfTilesPerRow + 'x' + numOfTilesPerColumn + ']');
+		self.numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
+		self.numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
+		self.numOfTilesHalfColumn = self.numOfTilesPerColumn / 2;
+		console.log('football field [' + self.numOfTilesPerRow + 'x' + self.numOfTilesPerColumn + ']');
 
-		for (var i = 0; i < numOfTilesPerColumn; i++)
+		for (var i = 0; i < self.numOfTilesPerColumn; i++)
 		{
-			var group = i < numOfTilesHalfColumn ? self.group1 : self.group2;
+			var group = i < self.numOfTilesHalfColumn ? self.group1 : self.group2;
 
-			for (var j = 0; j < numOfTilesPerRow; j++)
+			for (var j = 0; j < self.numOfTilesPerRow; j++)
 			{
 				var tile = Crafty.e('Actor, SpriteGrass').attr(
 				{
                     w : self.tileWidth,
                     h : self.tileHeight,
                     x : j * self.tileWidth,
-                    y : (i % numOfTilesHalfColumn) * self.tileHeight,
+                    y : (i % self.numOfTilesHalfColumn) * self.tileHeight,
                     z : Game.depth.field });
                     group.attach(tile);
                 }
 		}
 
-		self.group2.y = this.group1.y - self.tileHeight * numOfTilesHalfColumn;
-
-		self.bind('EnterFrame', function(data) {
-			var delta = Game.configs.player_vertical_speed_per_frame * data.dt / 1000;
-			this.group1.y += delta;
-			this.group2.y += delta;
-			if (this.group1.y > Game.height)
-			{
-				self.group1.y = this.group2.y - self.tileHeight * numOfTilesHalfColumn;
-			}
-			else if (this.group2.y > Game.height)
-			{
-				self.group2.y = this.group1.y - self.tileHeight * numOfTilesHalfColumn;
-			}
-		});
+		self.group2.y = this.group1.y - self.tileHeight * self.numOfTilesHalfColumn;
 	},
+
+    keepInViewport : function() {
+        var self = this;
+        if (self.group1._y + Crafty.viewport._y > Game.height)
+        {
+            self.group1.y = self.group2.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+        else if (self.group2._y + Crafty.viewport._y > Game.height)
+        {
+            self.group2.y = self.group1.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+    },
+
+    startAnimating : function() {
+        if (!this.isAnimating)
+        {
+            this.isAnimating = true;
+            this.bind('EnterFrame', this.keepAnimating);
+        }
+    },
+
+    stopAnimating: function() {
+        if (this.isAnimating)
+        {
+            this.isAnimating = false;
+            this.unbind('EnterFrame', this.keepAnimating);
+        }
+    },
+
+    keepAnimating: function(data) {
+        this.moveY(Game.configs.player_vertical_speed_per_frame * data.dt / 1000);
+    },
+
+    moveY : function(delta) {
+        var self = this;
+        self.group1.y += delta;
+        self.group2.y += delta;
+        if (self.group1.y > Game.height)
+        {
+            self.group1.y = self.group2.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+        else if (self.group2.y > Game.height)
+        {
+            self.group2.y = self.group1.y - self.tileHeight * self.numOfTilesHalfColumn;
+        }
+    }
 });
-};
-return InitComponents;
+
 });

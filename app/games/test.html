@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script src="../../vendor/bower/jquery/dist/jquery.min.js"></script>
+<script src="../../vendor/bower/crafty/dist/crafty.js"></script>
+
+<script>
+
+var g_imagePath = "../img/";
+var g_modules = {};
+g_modules["jquery"] = $;
+g_modules["crafty"] = Crafty;
+
+var g_nextDefine = null;
+
+function define(modules, defFunction)
+{
+    var args = [];
+    for (var i = 0; i < modules.length; i++)
+    {
+        if (!(modules[i] in g_modules))
+        {
+            //g_modules[modules[i]] = defFunction;
+            //console.log("add module [" + modules[i] + "]");
+        }
+
+        args.push(g_modules[modules[i]]);
+    }
+
+    if (g_nextDefine)
+    {
+        g_modules[g_nextDefine] = defFunction.apply(defFunction, args);
+        console.log("define[" + g_nextDefine + "]");
+        console.log(g_modules[g_nextDefine]);
+    }
+    else
+    {
+        defFunction.apply(defFunction, args);
+    }
+}
+</script>
+<script src="object-randomizer.js"></script>
+
+<script>
+g_nextDefine = "games/player-config";
+</script>
+<script src="player-config.js"></script>
+
+<script>
+g_nextDefine = "games/game";
+</script>
+
+<script src="game.js"></script>
+
+<script>
+g_nextDefine = null;
+</script>
+
+<script src="components.js"></script>
+<script src="components-pass.js"></script>
+<script src="scene-loading.js"></script>
+<script src="scene-dribble.js"></script>
+<script src="scene-pass.js"></script>
+<script src="scene-over.js"></script>
+
+<script>
+
+var Game = g_modules["games/game"];
+window.addEventListener('load', function() {
+    Game.start("PassGame");
+})
+</script>
+
+<style type="text/css" media="screen">
+* {
+margin:0;
+padding:0;
+}
+body {
+background: black;
+text-align: center;
+color: #DDD;
+font-family: Arial;
+}
+ 
+.controls {
+color: #BBB;
+}
+ 
+#cr-stage { margin: 0 auto 0; }
+ 
+.bottom {
+font-size: 12px;
+color: #888;
+margin-top: 50px;
+}
+ 
+.bottom a {
+color: #AAA;
+}
+</style>
+</head>
+<body>
+<div id="cr-stage"></div>
+</body>
+</html>
+

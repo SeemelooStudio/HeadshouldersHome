@@ -150,16 +150,23 @@ img {
 }
 #leaderboard-adRight {
     float: right;
-    width: 65px;
+    width: 80px;
     margin-right: 10px;
 }
-#leaderboard-adRight {
-    line-height: 28px;
-    position: relative;
-    top: 8px;
+
+.leaderboardPrize {
+    position:absolute;
+    top: -10px;
+    right: 0;
     color: #ffd800;
     font-size: 12px;
     font-style: italic;
+    width: 80px;
+    display: none;
+}
+#leaderboardPrize-shirt {
+    top: -40px;
+    
 }
 #copyright {
     height: 15px;
@@ -167,8 +174,9 @@ img {
     text-align: center;
     text-decoration: none;
     display: block;
-    position: relative;
-    top:-45px;
+    position:absolute;
+    bottom: 15px;
+    right: 15px;
 }
 #copyright img {
     max-height: 100%;
@@ -199,19 +207,7 @@ img {
     background-size: 120px 50px;    
 }
 #exitLink {
-    position: absolute;
-    color: #fff;
-    width: 50px;
-    text-align: right;
-    padding:2px 5px;
-    border-radius: 10px;
-    border:1px solid #221417;
-    background: #c01f2e;
-    top:15px;
-    left: 20px;
-    font-size: 10px;
-    line-height: 15px;
-    height: 15px;
+    display: none;
 }
 #instruction {
     padding: 3px 0px;
@@ -392,7 +388,7 @@ img {
 }
 #ruleConner {
     background: url(../../app/img/ruleconner.png) no-repeat right top;
-    background-size: 60px 60px;
+    background-size: 50px 50px;
     right: auto;
     left: 0;
     top: auto;
@@ -422,11 +418,11 @@ img {
     border:2px solid #221714;
     box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
     width: 96%;
-    padding: 10px 0 0;
+    padding: 30px 0 0;
     max-width: 730px;
     margin: 0 auto;
     color: #FFF;
-    overflow: hidden;
+    position: relative;
 }
 
 #leaderboard-buttons {
@@ -442,14 +438,14 @@ img {
     margin: 0;
     padding: 0;
     
-    width: 20%;
+    width: 21%;
     height: 35px;
     line-height: 35px;
     float: left;
     display: inline-block;
     cursor: pointer;
     text-align: center;
-    
+    position: relative;
 }
 .leaderboard-button:first-child {
     width: 15%;
@@ -676,7 +672,7 @@ img {
 
 
 #gameNavigation {
-    height: 300px;
+    height: 250px;
     padding-top: 20px;
     
 }
@@ -690,7 +686,7 @@ img {
 #leaderboard.expand {
     height: auto;
     overflow: visible;
-    padding-bottom: 40px;
+    padding-bottom: 15px;
     position: static;
 }
 #backHome {
@@ -799,15 +795,13 @@ img {
     height: 40px;
     background: url(../../app/img/lottoback.png) right center no-repeat;
     background-size:90px 40px;
-    padding-left: 10px;
     color: #744404;
-    line-height: 50px;
+    line-height: 40px;
+    font-size: 12px;
+    padding-left:10px;
     text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
 }
-.backhome .fa-lg {
-    line-height: 40px;
-    vertical-align: top;
-}
+
 #card {
     position: absolute;
     width: 254px;
@@ -1060,6 +1054,11 @@ img {
   animation:         rotate 6s infinite linear; /* IE 10+ */
 
 }
+.fastRotate {
+  -webkit-animation: rotate 1500ms infinite linear; /* Safari 4+ */
+  animation:         rotate 1500ms infinite linear; /* IE 10+ */
+
+}
 @-webkit-keyframes opencard {
   0% {
     -webkit-transform: rotateX(0deg);
@@ -1257,8 +1256,8 @@ img {
 }
 #user {
     position: absolute;
-    left: 30px;
-    top:-40px;
+    left: 40px;
+    top:-45px;
 }
 #ruleLeft,#ruleRight {
     position: absolute;
@@ -1471,7 +1470,6 @@ textarea.form-control {
     text-align: center;
     left: 0;
     top: 0;
-    overflow: scroll;
 }
 #gameHelp img {
     width: 150px;
@@ -1836,6 +1834,77 @@ margin-bottom: 60px;
 .sideLine {
         display: none;
 }
+#gameOverDialog {
+position: absolute;
+background: #FFd800;
+z-index: 1;
+padding: 5px 10px;
+border-radius: 10px;
+left: 0;
+top: 130px;
+font-size: 12px;
+border:2px solid #221417;
+box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+border-radius: 10px;
+display: none;
+}
+
+.icon-loading {
+    width: 50px;
+    height: 50px;
+    background:url(../../app/img/loading.png) no-repeat center center;
+    background-size: 50px 50px;
+    margin: 0 auto;
+}
+.icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 18px;
+    position: relative;
+    top: -1px;
+    
+}
+.icon-share {
+    background:url(../../app/img/icon-share.png) no-repeat center center;
+    background-size: 100% 100%;
+}
+.icon-refresh {
+    background:url(../../app/img/icon-refresh.png) no-repeat center center;
+    background-size: 100% 100%;
+}
+.topCaret {
+    width: 0px;
+    height: 0;
+    line-height: 0;
+    font-size: 1;
+    border-top:10px solid #1a2b4d;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    margin-left: -10px;
+    display: none;
+}
+.bottomCaret {
+    width: 0px;
+    height: 0;
+    line-height: 0;
+    font-size: 1;
+    border-bottom:10px solid #000;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    margin-left: -10px;
+    display: none;
+}
+.current .bottomCaret {
+    display: block;
+}
 @media only screen and (min-width: 324px) {
     .sideLine {
         position: fixed;
@@ -1858,8 +1927,10 @@ margin-bottom: 60px;
 @media only screen and (min-width: 750px){
     /* Style adjustments for viewports that meet the condition */
     body {
-        height: 100%;
-        overflow: scroll;
+        min-height: 100%;
+        height: auto;
+        width: 100%;
+        overflow-x: hidden;
     }
     #header {
         background-size: 100% 100%;
@@ -1885,9 +1956,10 @@ margin-bottom: 60px;
         margin-left: -160px;
         top:-40px;
     }
-    #messi {
-        width: 130px;
-        left: 10%;
+    .icon {
+        width: 36px;
+        height: 36px;
+        top: -2px;
     }
     #gameNavigation {
         padding-top:40px;
@@ -2039,6 +2111,7 @@ margin-bottom: 60px;
     line-height: 50px;
     background-size: 180px 50px;
     padding-left: 20px;
+    font-size: 14px;
     
 }
 .backhome .fa-lg {
@@ -2313,12 +2386,23 @@ margin-bottom: 60px;
 }
 #copyright {
     height: 29px;
+    bottom: 20px;
+    right: 25px;
 }
 #exitLink {
-    width: 80px;
+    position: absolute;
+    color: #fff;
+    text-align: right;
+    border-radius: 10px;
+    border:1px solid #221417;
+    background: #c01f2e;
+    left: 20px;
+    line-height: 15px;
+    height: 15px;
     padding: 5px 8px;
     font-size: 14px;
     top: 22px;
+    display: block;
 }
 #exitLink:hover {
     color: #ffd800;
@@ -2483,5 +2567,10 @@ margin-left: 50px;
 #slogen {
     top:160px;
     font-size: 14px;
+}
+#gameOverDialog {
+    top: 200px;
+    font-size: 16px;
+    padding: 8px 15px;
 }
 }

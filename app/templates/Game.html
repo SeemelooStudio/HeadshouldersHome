@@ -22,10 +22,24 @@
 
 </div><!-- gameStage -->
 <div id="gameHelp">
+    {{#isDribbleGame}}
     <img src="app/img/help-1.png" />
     <div class="game-help-text">
-        左右移动梅西，过掉路障和防守球员。<br />接到海飞丝可以拿到抽奖奖券哦！
+        左右移动梅西，过掉路障和防守球员。<br />接到海飞丝可以拿到奖券哦！
     </div>
+    {{/isDribbleGame}}
+    {{#isPassGame}}
+    <img src="app/img/help-1.png" />
+    <div class="game-help-text">
+        点击屏幕，把球传给队友。<br />碰到海飞丝可以拿到奖券哦！
+    </div>
+    {{/isPassGame}}
+    {{#isShootGame}}
+    <img src="app/img/help-1.png" />
+    <div class="game-help-text">
+        点击屏幕，把球传给队友。<br />碰到海飞丝可以拿到奖券哦！
+    </div>
+    {{/isShootGame}}
     <div id="gameStart" class="btn btn-blue btn-block">
         <div class="btn-inner">开始游戏</div>
     </div>
@@ -39,6 +53,6 @@
 
 
 <div id="gameBackHome"  class="backhome">
-        <i class="fa fa-home fa-lg"></i>
+    首页
 </div>
 </div><!-- game -->

@@ -9,10 +9,29 @@ function ($, Crafty ) {
 		player_bound_left: function() { return Game.width / 2 - Game.ingame_width / 2; },
 		player_bound_right: function() { return Game.width / 2 + Game.ingame_width / 2; },
 
-        start: function() {
+        dribbleGameScene : "DribbleGame",
+        passGameScene : "PassGame",
+        shootGameScene : "ShootGame",
+
+        currentGameScene : "DribbleGame",
+
+        isValidGameScene: function(gameSceneName) {
+            return gameSceneName === Game.dribbleGameScene ||
+                   gameSceneName === Game.passGameScene ||
+                   gameSceneName === Game.shootGameScene;
+        },
+
+        start: function(gameSceneName) {
 			Game.reset();
 			Crafty.init(Game.width, Game.height);
+            Crafty.viewport.init(Game.width, Game.height);
+            Crafty.viewport.clampToEntities = false;
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
+
+            if (Game.isValidGameScene(gameSceneName))
+            {
+                Game.currentGameScene = gameSceneName;
+            }
 			Crafty.scene('Loading');
         },
 
@@ -28,10 +47,14 @@ function ($, Crafty ) {
 			Crafty.stop();
 		},
 
-		restart: function() {
+		restart: function(gameSceneName) {
             this.reset();
             this.unpause();
-            Crafty.scene('Game');
+            if (Game.isValidGameScene(gameSceneName))
+            {
+                Game.currentGameScene = gameSceneName;
+            }
+            Crafty.scene(Game.currentGameScene);
 		},
 		
 		reset: function() {
@@ -69,27 +92,33 @@ function ($, Crafty ) {
 			worldclass_horizontal_speed_per_frame : 100,
 			worldclass_vertical_speed_per_frame: 50,
 			worldclass_tackle_horizontal_speed_per_frame: 200,
+            rabbit_vertical_speed_per_frame : -20,
+			rabbit_horizontal_speed_per_frame : 10,
+			rabbit_trace_speed_per_frame: 100,
             component_generate_interval : 1000
         },
 
 		events: {
 			onPassObstacle : function(totalCount) {
-				console.log('pass obstacle: ' + totalCount);
+				//console.log('pass obstacle: ' + totalCount);
 			},
 			onPassAmateur : function(totalCount) {
-				console.log('pass amateur: ' + totalCount);
+				//console.log('pass amateur: ' + totalCount);
 			},
 			onPassWorldClass : function(totalCount) {
-				console.log('pass worldclass: ' + totalCount);
+				//console.log('pass worldclass: ' + totalCount);
 			},
+            onPlayerTrapBall: function(playerID) {
+				//console.log('player trap ball: ' + playerID);
+            },
 			onCollectCoin : function(totalCount) {
-                console.log('collect coin: ' + totalCount);
+                //console.log('collect coin: ' + totalCount);
 			},
 			onGameOver : function() {
-                console.log('game over');
+                //console.log('game over');
 			},
 			onLoadComplete : function() {
-                console.log('load complete');
+                //console.log('load complete');
 			}
 		},
 
@@ -117,6 +146,10 @@ function ($, Crafty ) {
 			if (events.onLoadComplete ) {
                 Game.events.onLoadComplete = events.onLoadComplete;
 			} 
+
+            if (events.onPlayerTrapBall) {
+                Game.events.onPlayerTrapBall = events.onPlayerTrapBall;
+            }
 		}
     };
     

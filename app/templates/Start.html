@@ -8,9 +8,6 @@
       
 
       <div id="user">
-        <div id="exitLink">
-            <i class="fa fa-sign-out"></i> 登出
-        </div>
         <div id="user-avatar">
         <img src="{{headImageUrl}}" />
         </div>
@@ -20,7 +17,7 @@
       <div id="rule" data-entranceAnimation="slideInLeft" >
       <img src="app/img/rule.png" />
       <div id="userRank">
-      实力总排名 <span class="rank">{{accumulatePointsRanking}}</span>
+      总榜排名 <span class="rank">{{accumulatePointsRanking}}</span>
       </div>
       </div>
 </div><!--/container-->
@@ -125,24 +122,35 @@
 <div id="leaderboard">
     <div id="showTops" ><img src="app/img/showtops.png" /></div>
             <div id="leaderboard-main" >
-                    <div id="leaderboard-ad" class="clearfix">
-                        <div id="leaderboard-adLeft"><img src="app/img/leaderboardtitle.png" /> </div>
-                        <div id="leaderboard-adRight"><span>奖励规则</span></div>
+                    
+                    <div id="leaderboardPrize-score" class="leaderboardPrize">
+                        <img src="app/img/leaderboardplane.png" />
+                    </div>
+                    <div id="leaderboardPrize-shirt" class="leaderboardPrize">
+                        <img src="app/img/leaderboardshirt.png" />
                     </div>
                     <ul id="leaderboard-buttons" class="clearfix">
                         <li class="leaderboard-button" id="icon-trophy"><img src="app/img/trophy.png"/></li>
-                        <li class="leaderboard-button current" id="leaderboard-buttonScore" data-type="score">                总积分
+                        <li class="leaderboard-button current" id="leaderboard-buttonScore" data-type="score">                总榜
+                            <div class="topCaret"></div>
+                            <div class="bottomCaret"></div>
                         </li>
                         <li class="leaderboard-button" id="leaderboard-buttonDribble"  data-type="dribble">
-                            过人
-                        </li>
-                        <!--
-                        <li class="leaderboard-button" id="leaderboard-buttonPass"  data-type="pass">
-                            传球
+                            过人榜
+                            <div class="topCaret"></div>
+                            <div class="bottomCaret"></div>
                         </li>
                         
+                        <li class="leaderboard-button" id="leaderboard-buttonPass"  data-type="pass">
+                            传球榜
+                            <div class="topCaret"></div>
+                            <div class="bottomCaret"></div>
+                        </li>
+                        <!--
                         <li class="leaderboard-button" id="leaderboard-buttonShoot"  data-type="shoot">
-                            射门
+                            射门榜
+                            <div class="topCaret"></div>
+                            <div class="bottomCaret"></div>
                         </li>
                         -->
                     </ul>
@@ -151,13 +159,17 @@
                     </div>
             </div>
     <div id="backHome"><img src="app/img/backhome.png" /></div>
-
+    <a id="copyright" href="http://www.head-shoulders.com.cn/" target="_blank">
+            <img src="app/img/pg.png" />
+    </a>
 
 </div><!--/leaderboard-->
-
+<div id="exitLink">
+            <i class="fa fa-sign-out"></i> 登出
+</div>
   <div id="share" class="share">
-    <i class="share-icon fa fa-share-square-o fa-lg"></i>
+
   </div><!-- share -->
   <div id="ruleConner">
-    <i class="share-icon fa fa-gift fa-lg"></i>
+
   </div><!-- ruleConner -->

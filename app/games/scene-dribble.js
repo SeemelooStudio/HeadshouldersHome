@@ -4,7 +4,7 @@ function (Crafty, Game, PlayerConfig) {
 // Game scene
 // -------------
 // Runs the core gameplay loop
-Crafty.scene('Game', function() {
+Crafty.scene('DribbleGame', function() {
 	//console.log("enter scene game");
 	var self = this;
 
@@ -33,7 +33,8 @@ Crafty.scene('Game', function() {
 		return Crafty.e('WorldClass').WorldClass(head, PlayerConfig.body_configs.worldclass);
 	};
 	self.rabbitCreator = function() {
-		var rabbit =  Crafty.e('WorldClass').WorldClass(PlayerConfig.head_configs.rabbit, PlayerConfig.body_configs.rabbit);
+		var rabbit =  Crafty.e('Rabbit').Rabbit(PlayerConfig.head_configs.rabbit, 
+                                                        PlayerConfig.body_configs.rabbit);
 		rabbit.bodyTacklePos = {
 				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_jump.x) / 2,
 				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_jump.y) / 2
@@ -55,6 +56,7 @@ Crafty.scene('Game', function() {
 			[0.2, 0.35, 0.4]);
 
 	var generateSingleComponent = function() {
+        var component = null;
 		if (self.numOfComponentsGenerated < 3)
 		{
 			component = self.obstacleCreator();
@@ -176,6 +178,7 @@ Crafty.scene('Game', function() {
         y : Game.height - self.player.avatar.height() * 1.5 });
 
 	self.field = Crafty.e('Field');
+    self.field.startAnimating();
 	self.bind('EnterFrame', self.onEnterFrame);
 }, 
 function() { 

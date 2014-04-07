@@ -9,10 +9,29 @@ function ($, Crafty ) {
 		player_bound_left: function() { return Game.width / 2 - Game.ingame_width / 2; },
 		player_bound_right: function() { return Game.width / 2 + Game.ingame_width / 2; },
 
-        start: function() {
+        dribbleGameScene : "DribbleGame",
+        passGameScene : "PassGame",
+        shootGameScene : "ShootGame",
+
+        currentGameScene : "DribbleGame",
+
+        isValidGameScene: function(gameSceneName) {
+            return gameSceneName === Game.dribbleGameScene ||
+                   gameSceneName === Game.passGameScene ||
+                   gameSceneName === Game.shootGameScene;
+        },
+
+        start: function(gameSceneName) {
 			Game.reset();
 			Crafty.init(Game.width, Game.height);
+            Crafty.viewport.init(Game.width, Game.height);
+            Crafty.viewport.clampToEntities = false;
 			Crafty.settings.autoPause = true; //pauses the game when the page is not visible to the user.
+
+            if (Game.isValidGameScene(gameSceneName))
+            {
+                Game.currentGameScene = gameSceneName;
+            }
 			Crafty.scene('Loading');
         },
 
@@ -28,10 +47,14 @@ function ($, Crafty ) {
 			Crafty.stop();
 		},
 
-		restart: function() {
+		restart: function(gameSceneName) {
             this.reset();
             this.unpause();
-            Crafty.scene('Game');
+            if (Game.isValidGameScene(gameSceneName))
+            {
+                Game.currentGameScene = gameSceneName;
+            }
+            Crafty.scene(Game.currentGameScene);
 		},
 		
 		reset: function() {

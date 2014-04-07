@@ -58,14 +58,18 @@ g_nextDefine = null;
 </script>
 
 <script src="components.js"></script>
+<script src="components-pass.js"></script>
 <script src="scene-loading.js"></script>
-<script src="scene-game.js"></script>
+<script src="scene-dribble.js"></script>
+<script src="scene-pass.js"></script>
 <script src="scene-over.js"></script>
 
 <script>
 
 var Game = g_modules["games/game"];
-window.addEventListener('load', Game.start);
+window.addEventListener('load', function() {
+    Game.start("PassGame");
+})
 </script>
 
 <style type="text/css" media="screen">

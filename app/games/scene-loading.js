@@ -31,7 +31,8 @@ Crafty.scene('Loading', function(){
 		imgPath + 'bodies.png',
 		imgPath + 'ball.png',
 		imgPath + 'grass.png',
-		imgPath + 'hs.png'
+		imgPath + 'hs.png',
+        imgPath + 'ring.png'
 		], function(){
 		// Once the images are loaded...
 
@@ -62,11 +63,15 @@ Crafty.scene('Loading', function(){
 			SpriteHS:     [0, 0],
 		});
 
+        Crafty.sprite(180, 180, imgPath + 'ring.png', {
+            SpriteRing:   [0, 0]
+        });
+
 		//loadAtlas('app/img/heads.png', headsAtlas);
         
         Game.events.onLoadComplete();
 		// Now that our sprites are ready to draw, start the game
-		Crafty.scene('Game');
+		Crafty.scene(Game.currentGameScene);
 	});
 });
 

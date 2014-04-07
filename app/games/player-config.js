@@ -34,6 +34,18 @@ function (Crafty) {
 		}
     };
 
+    PlayerConfig.allHeads = [
+        PlayerConfig.head_configs.messi,
+        PlayerConfig.head_configs.neymar,
+        PlayerConfig.head_configs.ozil,
+        PlayerConfig.head_configs.ribery,
+        PlayerConfig.head_configs.robben,
+        PlayerConfig.head_configs.rooney,
+        PlayerConfig.head_configs.sushi,
+        PlayerConfig.head_configs.suarez,
+        PlayerConfig.head_configs.rabbit
+    ];
+
 	PlayerConfig.worldclass_players = [
         PlayerConfig.head_configs.neymar,
         PlayerConfig.head_configs.ozil,

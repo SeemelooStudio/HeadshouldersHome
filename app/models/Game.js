@@ -4,7 +4,22 @@ define(["jquery", "backbone"],
 
     function ($, Backbone) {
         var GameConfig = {
-            badScoreLine : 6
+            badScoreLine : 6,
+            dribble_share_default_text: "",
+            dribble_share_result_text_begin:"我竟然晃过了",
+            dribble_share_result_text_end:"个足坛巨星！你也过得去算你NB！",
+            dribble_bad_text:"难过史了!!",
+            dribble_good_text:"NB不是一两天!",
+            pass_share_default_text: "",
+            pass_share_result_text_begin:"我在竟然过了",
+            pass_share_result_text_end:"个足坛巨星！你敢试试么？",
+            pass_bad_text:"传你妹阿!!",
+            pass_good_text:"NB不是一两天",
+            shoot_share_default_text: "",
+            shoot_share_result_text_begin:"#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了",
+            shoot_share_result_text_end:"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？",
+            shoot_bad_text:"难过史了!!",
+            shoot_good_text:"好NB呀!!",
         };
         var Game = Backbone.Model.extend({
             defaults: {
@@ -19,7 +34,12 @@ define(["jquery", "backbone"],
                         this.set({
                             "highestScore": options.user.get("dribbleGameScore"),
                             "originGameRanking": options.user.get("dribbleGameRanking"),
-                            "isDribbleGame": true
+                            "isDribbleGame": true,
+                            "shareDefaultText": GameConfig.dribble_share_default_text,
+                            "shareResultBegin": GameConfig.dribble_share_result_text_begin,
+                            "shareResultEnd": GameConfig.dribble_share_result_text_end,
+                            "badText":GameConfig.dribble_bad_text,
+                            "goodText":GameConfig.dribble_good_text
                             });
                         break;
 
@@ -27,7 +47,12 @@ define(["jquery", "backbone"],
                         this.set({
                             "highestScore": options.user.get("passGameScore"),
                             "originGameRanking": options.user.get("passGameRanking"),
-                            "isPassGame": true
+                            "isPassGame": true,
+                            "shareDefaultText": GameConfig.pass_share_default_text,
+                            "shareResultBegin": GameConfig.pass_share_result_text_begin,
+                            "shareResultEnd": GameConfig.pass_share_result_text_end,
+                            "badText":GameConfig.pass_bad_text,
+                            "goodText":GameConfig.pass_good_text
 
                         });
                         break;
@@ -36,7 +61,12 @@ define(["jquery", "backbone"],
                         this.set({
                             "highestScore": options.user.get("shootGameScore"),
                             "originGameRanking": options.user.get("shootGameRanking"),
-                            "isShootGame": true
+                            "isShootGame": true,
+                            "shareDefaultText": GameConfig.shoot_share_default_text,
+                            "shareResultBegin": GameConfig.shoot_share_result_text_begin,
+                            "shareResultEnd": GameConfig.shoot_share_result_text_end,
+                            "badText":GameConfig.shoot_bad_text,
+                            "goodText":GameConfig.shoot_good_text
                             });
                         break;
                 }

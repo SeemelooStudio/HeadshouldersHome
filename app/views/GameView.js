@@ -126,7 +126,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                var isTimeUp = false;
                var isSubmited = false;
                self.Game.pause();
-               Utils.setPageTitle("#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了"+ self.model.get("score") +"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？");
+               
                this.model.submitResult({
                    success: function(){
                        isSubmited = true;
@@ -134,6 +134,14 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                            self.showGameOverView();
 
                        }
+                       if( self.model.get("isBad")) {
+                           Utils.setPageTitle(self.model.get("badText") + self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                       } else if( self.model.get("isBreakRecord")) {
+                           Utils.setPageTitle( self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                       } else {
+                           Utils.setPageTitle(self.model.get("goodText") + self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                       }
+                       
                        $("#loading").hide();
                    },
                    error: function(msg) {

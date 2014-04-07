@@ -44,7 +44,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "tap .leaderboard-button":"onClickLeaderboardTab",
                 "tap #plane":"onClickLotto",
                 "tap .gameButton-tag":"onClickLeaderboard",
-                "tap #ruleConner,#leaderboard-adRight": "onClickRule",
+                "tap #ruleConner": "onClickRule",
+                "tap .leaderboardPrize": "onClickRule",
                 "tap .gameButton": "onClickGameButton"
             },
             render: function () {
@@ -83,7 +84,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             },
             onClickRule: function() {
                 this.onExit();
-                Backbone.history.navigate("rule", { trigger: true, replace: true });
+                Backbone.history.navigate("/rule", { trigger: true, replace: true });
             },
             showLeaderboard: function( leaderboardName ){
                 $("#loading").show();
@@ -129,6 +130,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 },500,
                 function(){
                     self.$el.find("#leaderboard").removeClass("expand");
+                    $(".leaderboardPrize").hide();
                     Backbone.history.navigate("", { trigger: false, replace: true });
                 }
                 );
@@ -146,6 +148,13 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 var tab = $(e.target);
                 var type =tab.attr("data-type");
                 var id = "#leaderboard-" + type;
+                $(".leaderboardPrize").hide();
+                if ( type == "score" ) {
+                    
+                    $("#leaderboardPrize-score").show();
+                } else {
+                    $("#leaderboardPrize-shirt").show();
+                }
                 
                 tab.siblings(".current").removeClass("current");
                 tab.addClass("current");
@@ -181,6 +190,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 
             },
             onExit: function(e) {
+                $(window).unbind("scroll");
                 $("body").scrollTop(0);
                 this.isReady = false;
             }

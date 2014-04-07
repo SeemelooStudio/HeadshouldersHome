@@ -112,6 +112,7 @@ var Utils = {
             if (options.cancel) {
                 options.cancel();
             }
+            $("#confirmOk").unbind("tap");
         });
     },
     highlight: function($el, color) {

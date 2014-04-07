@@ -12,14 +12,11 @@
             
             <div id="gameOverDialog">
                 {{#isBad}}
-                    桑心史了!!
+                    {{badText}}
                 {{/isBad}}
                 {{^isBad}}
                     {{#isBreakRecord}}
-                    太NB啦！
-                    {{/isBreakRecord}}
-                    {{^isBreakRecord}}
-                    继续努力哦！
+                        {{goodText}}
                     {{/isBreakRecord}}
                 {{/isBad}}
             </div>
@@ -31,7 +28,7 @@
                 {{score}}<small>分</small>
             </div>
             <div id="gameOverRanking">
-                总积分排名：{{totalRanking}} 
+                总榜排名：{{totalRanking}} 
                 {{#isRankUp}}
                 (<span class="yellow"> {{rankGap}} <i class="fa fa-arrow-up"></i></span> )
                 {{/isRankUp}}
@@ -48,12 +45,12 @@
         
         <div id="gameOver-share" class="btn btn-blue btn-block share">
             <div class="btn-inner">
-                    <i class="fa fa-share-square-o"></i> 晒成绩 挣奖券
+                    <i class="icon icon-share"></i> 晒成绩 挣奖券
             </div>
         </div>
         <div id="gameOver-replay" class="btn btn-yellow btn-block">
             <div class="btn-inner">
-                    <i class="fa fa-refresh"></i> 重玩
+                    <i class="icon icon-refresh"></i> 重玩
             </div>
         </div>
         </div><!-- gameOverContent -->

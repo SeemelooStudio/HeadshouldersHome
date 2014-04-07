@@ -565,11 +565,11 @@ Crafty.c('WorldClass', {
 Crafty.c('Rabbit', {
 	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.rabbit_vertical_speed_per_frame,
 	horizontalSpeed: Game.configs.rabbit_horizontal_speed_per_frame,
-	traceSpeed: Game.configs.rabbit_trace_speed_per_frame ,
+	traceSpeed: Game.configs.rabbit_trace_speed_per_frame,
 
 	wanderDistance : 30,
 	distanceToTrace : 200,
-    distanceToTackle : 100,
+    distanceToTackle : 50,
 
     isTracing : false,
     faceLeftFrame : 0,
@@ -616,11 +616,12 @@ Crafty.c('Rabbit', {
 		}
 		else
 		{
-            this.y += (Game.configs.player_vertical_speed_per_frame + this.traceSpeed) * deltaTime;
-            this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
+            
 
             if (!this.isPassed)
             {
+                this.y += (this.traceSpeed + this.verticalSpeed) * deltaTime;
+                this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
                 this.trace(player, deltaTime);
 
                 if (this.isRunning && player._y - this._y < this.distanceToTackle)
@@ -629,7 +630,10 @@ Crafty.c('Rabbit', {
                 }
             }
             else
-            {
+            {   
+                this.y += this.verticalSpeed * deltaTime;
+                this.x += this.traceSpeed * deltaTime * (this.facingLeft ? -1 : 1);
+                 
                 if (!this.isRunning)
                 {
                     this.run();

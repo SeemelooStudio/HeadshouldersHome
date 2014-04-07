@@ -60,17 +60,36 @@ Crafty.c('Body', {
 	Body: function(bodyConfig) {
 		this.requires('Actor, SpriteAnimation, ' + bodyConfig.sprite)
 			.reel('Run', 550, bodyConfig.runFrames)
-            .reel('Standby', 550, [bodyConfig.runFrames[1]]);
+            .reel('Standby', 550, [bodyConfig.runFrames[1]])
+            .reel('Kick', 100, [bodyConfig.runFrames[2]]);
 		if (bodyConfig.tackleFrames )
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
 		}
 		this.animate('Run', -1);
+
+        this.bind('AnimationEnd', this.onAnimationEnd);
 		return this;
 	},
 
+    onAnimationEnd: function(data) {
+        if (data.id === 'Kick')
+        {
+            if (this.onKickEnd)
+            {
+                this.onKickEnd();
+            }
+            this.standby();
+        }
+    },
+
     standby: function() {
         this.animate('Standby', -1);
+    },
+
+    kick: function(onKickEnd) {
+        this.onKickEnd = onKickEnd;
+        this.animate('Kick', 1);
     },
 
 	run: function() {
@@ -296,6 +315,16 @@ Crafty.c('Avatar', {
         {
             this.ball.trap();
         }
+    },
+
+    kickBall: function(kickForce, direction) {
+        var self = this;
+        self.body.kick(function() {
+            if (self.ball)
+            {
+                self.ball.kick(kickForce, direction);
+            }
+        });
     },
 
 	run : function() {

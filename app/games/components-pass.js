@@ -16,7 +16,6 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             this.attach(this.ring);
 
             this.cameraAnchor = Crafty.e('2D').attr({x : Game.width / 2});
-            //this.attach(this.cameraAnchor);
 
             this.bind('EnterFrame', this.onEnterFrame);
         },
@@ -41,7 +40,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                            y : this.player._y + this.player.height() / 2});
                 this.player.attach(this);
             }
-            this.cameraAnchor.y = this._y - 200; 
+            this.cameraAnchor.y = this._y - 150; 
 
             Crafty.viewport.centerOn(this.cameraAnchor, 1000);
         },
@@ -78,14 +77,26 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
     });
 
     Crafty.c('Passer', {
+        wanderDistance : 20,
+        horizontalSpeed : 0,
+
+        isWandering : false,
+
         init: function() {
             this.requires('Avatar, Collision, DebugCollision, DebugArea')
                     .attr({w: 80, h: 120});
         },
 
-        Passer : function(headConfig, bodyConfig) {
+        Passer : function(headConfig, bodyConfig, horizontalSpeed) {
             this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
             this.collision([0,0],[this.width(), 0],[this.width(), this.height()],[0, this.height()]);
+            
+            $text_css = { 'size': '12px', 'family': 'Arial', 'color': 'red', 'text-align': 'center' };
+            this.nameHud = Crafty.e('2D, DOM, Text')
+			                     .attr({ x: 0, y: -10, w: 80 })
+                                 .text(headConfig.id)
+                                 .textFont($text_css);
+            this.attach(this.nameHud);
 
             var seed = Math.floor(Crafty.math.randomNumber(0, 100));
             if (seed % 2 === 0)
@@ -93,12 +104,43 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 this.faceRight();
             }
 
+            this.horizontalSpeed = horizontalSpeed || 0;
+            if (this.horizontalSpeed > 0)
+            {
+                this.startWandering();
+            }
+            else
+            {
+                this.standby();
+            }
+
             return this;
         },
 
-        onBallHit: function(player) {
-            return true;
-        }
+        startWandering: function() {
+            if (!this.isWandering)
+            {
+                this.isWandering = true;
+                this.run();
+                this.bind('EnterFrame', this.update);
+            }
+        },
+
+        stopWandering: function() {
+            if (!this.isWandering)
+            {
+                this.isWandering = false;
+                this.standby();
+                this.unbind('EnterFrame', this.update);
+            }
+        },
+
+        update: function(data) {
+            if (this.isWandering)
+            {
+                this.wander(this.horizontalSpeed, data.dt / 1000);
+            }
+        },
 	
     });
 

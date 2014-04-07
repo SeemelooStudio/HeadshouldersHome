@@ -108,6 +108,9 @@ function ($, Crafty ) {
 			onPassWorldClass : function(totalCount) {
 				//console.log('pass worldclass: ' + totalCount);
 			},
+            onPlayerTrapBall: function(playerID) {
+				//console.log('player trap ball: ' + playerID);
+            },
 			onCollectCoin : function(totalCount) {
                 //console.log('collect coin: ' + totalCount);
 			},
@@ -143,6 +146,10 @@ function ($, Crafty ) {
 			if (events.onLoadComplete ) {
                 Game.events.onLoadComplete = events.onLoadComplete;
 			} 
+
+            if (events.onPlayerTrapBall) {
+                Game.events.onPlayerTrapBall = events.onPlayerTrapBall;
+            }
 		}
     };
     

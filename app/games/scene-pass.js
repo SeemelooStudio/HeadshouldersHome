@@ -31,7 +31,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.generatePlayer = function() {
             var player;
-            if (self.numOfPlayersGenerated == 0)
+            if (self.numOfPlayersGenerated === 0)
             {
                 player = Crafty.e('Passer').Passer(PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi);
                 player.attr({x : (Game.player_bound_left() + Game.player_bound_right() - player.width()) / 2, y : self.nextGenerateY});

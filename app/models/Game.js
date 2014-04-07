@@ -26,7 +26,8 @@ define(["jquery", "backbone"],
                 "score": 0,
                 "coupon": 0,
                 "isBreakRecord": false,
-                "isBad": false
+                "isBad": false,
+                "sceneName":"DribbleGame"
             },
             initialize: function (options) {
                 switch (options.gameTypeId) {
@@ -39,7 +40,8 @@ define(["jquery", "backbone"],
                             "shareResultBegin": GameConfig.dribble_share_result_text_begin,
                             "shareResultEnd": GameConfig.dribble_share_result_text_end,
                             "badText":GameConfig.dribble_bad_text,
-                            "goodText":GameConfig.dribble_good_text
+                            "goodText":GameConfig.dribble_good_text,
+                            "sceneName":"DribbleGame"
                             });
                         break;
 
@@ -52,7 +54,8 @@ define(["jquery", "backbone"],
                             "shareResultBegin": GameConfig.pass_share_result_text_begin,
                             "shareResultEnd": GameConfig.pass_share_result_text_end,
                             "badText":GameConfig.pass_bad_text,
-                            "goodText":GameConfig.pass_good_text
+                            "goodText":GameConfig.pass_good_text,
+                            "sceneName":"PassGame"
 
                         });
                         break;
@@ -66,7 +69,8 @@ define(["jquery", "backbone"],
                             "shareResultBegin": GameConfig.shoot_share_result_text_begin,
                             "shareResultEnd": GameConfig.shoot_share_result_text_end,
                             "badText":GameConfig.shoot_bad_text,
-                            "goodText":GameConfig.shoot_good_text
+                            "goodText":GameConfig.shoot_good_text,
+                            "sceneName":"PassGame"
                             });
                         break;
                 }

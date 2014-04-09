@@ -53,11 +53,13 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     self.Game = Game;
                     Game.registerEvents({
                         onGameOver: function() {
-                            console.log("gameOver");
                             self.onGameOver();
                         },
                         onCollectCoin: function() {
-                            self.addCoupon();
+                            self.addCoupon(1);
+                        },
+                        onCollectCoinPack: function() {
+                            self.addCoupon(3);
                         },
                         onPassAmateur: function() {
                             self.addScore(1);
@@ -70,9 +72,21 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         onLoadComplete: function() {
                             $("#loading").hide();
                         },
-                        onPlayerTrapBall: function(playerId) {
-                            self.addScore(1);
-                            self.onPlayerTrapBall();
+                        onPlayerTrapBall: function(typeId) {
+                            if ( typeId == 1 ) {
+                                //messi
+                                self.addScore(5);
+                            } else if ( typeId == 3 ) {
+                                //word class
+                                self.addScore(3);
+                            } else if ( typeId == 4 ) {
+                                //rabbit
+                                self.addScore(4);
+                            } else  {
+                                //normal
+                                self.addScore(2);
+                            }
+                            
                         }
                     });
 
@@ -116,10 +130,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.start(self.model.get("sceneName"));
-                       if ( self.gameTypeId == 2 ) {
-                           self.onPlayerTrapBall(1);
-                       }
-                       
                        //self.Game.pause();
                    },
                    error: function(msg) {
@@ -222,9 +232,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.restart();
-                       if ( self.gameTypeId == 2 ) {
-                           self.onPlayerTrapBall(1);
-                       }
                        $("#loading").hide();
                    },
                    error: function(msg) {
@@ -242,8 +249,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.$score.text( newScore );
                 Utils.highlight( this.$score, "yellow");
             },
-            addCoupon: function() {
-                this.model.addCoupon();
+            addCoupon: function( couponCount ) {
+                this.model.addCoupon( couponCount );
                 this.$coupon.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
             },

@@ -587,7 +587,37 @@ Crafty.c('Coin', {
 		return false;
 	}
 });
+Crafty.c('CoinPack', {
+	speed: Game.configs.player_vertical_speed_per_frame,
 
+	width: function() {
+    return this._w;
+	},
+
+	height : function() {
+		return this._h;
+	},
+
+	init : function() {
+
+        this.requires('Actor, SpritePack, Collision, DebugCollision, SpriteAnimation')
+        .attr({ w: this._w , h: this._h})
+        .reel('Floating', 800, [[0,0],[1,0],[2,0],[1,0]]);
+        
+        this.animate('Floating', -1);
+	},
+    floating: function() {
+        this.animate('Floating', -1);
+	},
+	
+
+	onPlayerHit : function(player) {
+		++Game.data.num_of_collected_coins;
+		Game.events.onCollectCoin(Game.data.num_of_collected_coins);
+        this.destroy();
+		return false;
+	}
+});
 Crafty.c('Amateur', {
 	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.amateur_vertical_speed_per_frame,
 	horizontalSpeed: Game.configs.amateur_horizontal_speed_per_frame,
@@ -857,7 +887,6 @@ Crafty.c('Field', {
 		self.numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
 		self.numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
 		self.numOfTilesHalfColumn = self.numOfTilesPerColumn / 2;
-		console.log('football field [' + self.numOfTilesPerRow + 'x' + self.numOfTilesPerColumn + ']');
 
 		for (var i = 0; i < self.numOfTilesPerColumn; i++)
 		{

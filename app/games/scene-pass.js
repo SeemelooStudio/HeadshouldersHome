@@ -4,12 +4,12 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         var self = this;
 
         self.configs = {
-            player_distance_step_1 : 150,
-            player_distance_step_2 : 180,
-            player_distance_step_3 : 280,
+            player_distance_step_1 : 160,
+            player_distance_step_2 : 200,
+            player_distance_step_3 : 220,
             num_of_players_to_enter_step_2 : 5,
             num_of_players_to_enter_step_3 : 15,
-            player_distance_noise : 5,
+            player_distance_noise : 10,
             ball_kick_force : 15,
             ball_friction : -0.2
         };
@@ -68,6 +68,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 if (self.lastPlayerHead == PlayerConfig.head_configs.messi)
                 {
                     body = PlayerConfig.body_configs.messi;
+                    wanderDistance = 100;
                 }
                 else if (self.lastPlayerHead == PlayerConfig.head_configs.rabbit)
                 {
@@ -80,7 +81,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                         self.numOfPlayersGenerated > self.configs.num_of_players_to_enter_step_2)
                     {
                         body = PlayerConfig.body_configs.worldclass;
-                        wanderDistance = 40;
+                        wanderDistance = 60;
                     }
                 }
                 player = Crafty.e('Passer').Passer(self.lastPlayerHead, body, wanderDistance);
@@ -98,9 +99,9 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 var lastButOnePlayer = self.players[self.players.length - 2];
                 if (lastPlayer._y - player._y > 160)
                 {
-                    var coin = Crafty.e('Coin');
+                    var coin = Crafty.e('CoinPack');
                     coin.attr({x: (player._x + lastButOnePlayer._x) / 2,
-                               y: (player._y + lastPlayer._y) / 2});
+                               y: (player._y + lastPlayer._y) / 2 + 20});
                     self.coins.push(coin);
                 }
             }
@@ -180,11 +181,14 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         };
 
         self.onMouseDown = function(e) {
+
             self.highlightRing.stopRolling();
             if (self.currentController !== null)
             {
                 self.currentController.kickBall(self.configs.ball_kick_force, self.highlightRing.getDirection());
             }
+
+            
         };
 
         self.onHitPasser = function(data) {
@@ -193,13 +197,13 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 self.ball.trap();
                 self.setCurrentController(player);
-                Game.events.onPlayerTrapBall(player.head.id);
+                Game.events.onPlayerTrapBall(player.typeId);
             }
         };
 
         self.onHitCoin = function(data) {
-            ++Game.data.num_of_collected_coins;
-            Game.events.onCollectCoin(Game.data.num_of_collected_coins);
+            Game.data.num_of_collected_coins += 5 ;
+            Game.events.onCollectCoinPack(Game.data.num_of_collected_coins);
             var coin = data[0].obj;
             var index = self.coins.indexOf(coin);
             if (index != -1)
@@ -210,7 +214,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         };
 
         self.gameover = function() {
-            console.log('game over');
+            Crafty.removeEvent(self, Crafty.stage.elem, "mousedown", self.onMouseDown);
             Game.pause();
             Game.events.onGameOver();
         };
@@ -247,7 +251,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             .collision([5, self.ball._h - 5], [self.ball._w - 5, self.ball._h - 5], [self.ball._w - 5, 5], [5, 5])
             .attr({z : Game.depth.controller})
             .onHit('Passer', self.onHitPasser)
-            .onHit('Coin', self.onHitCoin);
+            .onHit('CoinPack', self.onHitCoin);
         self.ball.friction = self.configs.ball_friction;
         self.ball.onBecomeStillWithoutTrap = function() {
             self.gameover();

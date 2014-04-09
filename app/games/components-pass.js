@@ -94,13 +94,15 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
             this.collision([0,0],[this.width(), 0],[this.width(), this.height()],[0, this.height()]);
             
-            $text_css = { 'size': '12px', 'family': 'Arial', 'color': 'red', 'text-align': 'center' };
+            $text_css = { 'size': '12px'};
             this.nameHud = Crafty.e('2D, DOM, Text')
                                  .attr({ x: 0, y: -10, w: 80 })
                                  .text(headConfig.id)
                                  .textColor('#FFFFFF')
                                  .textFont($text_css);
             this.attach(this.nameHud);
+            
+            this.typeId = bodyConfig.typeId;
 
             var seed = Math.floor(Crafty.math.randomNumber(0, 100));
             if (seed % 2 === 0)

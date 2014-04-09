@@ -156,7 +156,7 @@ img {
 
 .leaderboardPrize {
     position:absolute;
-    top: -10px;
+    top: -20px;
     right: 0;
     color: #ffd800;
     font-size: 12px;
@@ -1220,6 +1220,10 @@ img {
     float: left;
     margin-right: 15px;
     margin-top:25px;
+    background-color: #FFF;
+}
+#award-img img {
+    max-height: 100%;
 }
 .award-small {
     font-size: 12px;
@@ -1318,7 +1322,7 @@ textarea.form-control {
 }
 #award-action {
     position: absolute;
-    bottom: -15px;
+    bottom: -25px;
     width: 100%;
     display: none;
 }
@@ -2605,5 +2609,8 @@ margin-left: 50px;
 }
 #leaderboardPrize-shirt {
     top: -70px;
+}
+.dancePrize img{
+    padding-top: 10px;
 }
 }

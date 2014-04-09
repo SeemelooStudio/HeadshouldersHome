@@ -108,8 +108,8 @@ function ($, Crafty ) {
 			onPassWorldClass : function(totalCount) {
 				//console.log('pass worldclass: ' + totalCount);
 			},
-            onPlayerTrapBall: function(playerID) {
-				//console.log('player trap ball: ' + playerID);
+            onPlayerTrapBall: function(typeID) {
+				//console.log('player trap ball: ' + playerTypeID);
             },
 			onCollectCoin : function(totalCount) {
                 //console.log('collect coin: ' + totalCount);
@@ -119,6 +119,8 @@ function ($, Crafty ) {
 			},
 			onLoadComplete : function() {
                 //console.log('load complete');
+			},
+			onCollectCoinPack: function() {
 			}
 		},
 
@@ -149,6 +151,10 @@ function ($, Crafty ) {
 
             if (events.onPlayerTrapBall) {
                 Game.events.onPlayerTrapBall = events.onPlayerTrapBall;
+            }
+            
+            if ( events.onCollectCoinPack ) {
+                Game.events.onCollectCoinPack = events.onCollectCoinPack;
             }
 		}
     };

@@ -32,7 +32,8 @@ Crafty.scene('Loading', function(){
 		imgPath + 'ball.png',
 		imgPath + 'grass.png',
 		imgPath + 'hs.png',
-        imgPath + 'ring.png'
+        imgPath + 'ring.png',
+        imgPath + 'pack.png'
 		], function(){
 		// Once the images are loaded...
 
@@ -65,6 +66,10 @@ Crafty.scene('Loading', function(){
 
         Crafty.sprite(180, 180, imgPath + 'ring.png', {
             SpriteRing:   [0, 0]
+        });
+        
+        Crafty.sprite(50, 80, imgPath + 'pack.png', {
+            SpritePack:     [0, 0]
         });
 
 		//loadAtlas('app/img/heads.png', headsAtlas);

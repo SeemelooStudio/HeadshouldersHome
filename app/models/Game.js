@@ -93,19 +93,20 @@ define(["jquery", "backbone"],
                     this.set("isBreakRecord", true);
                 }
             },
-            addCoupon: function () {
-                this.set("coupon", this.get("coupon") + 1);
+            addCoupon: function ( couponCount ) {
+                this.set("coupon", this.get("coupon") + couponCount );
             },
             startGame: function (options) {
                 var self = this;
                 this.set({
                 "score":0,
                 "coupon":this.get("originCoupon"),
-                "isBad": false
+                "isBad": false,
+                "isBreakRecord": false
                 });
 
                 $.ajax({
-                    url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    url: "http://192.168.1.104:8008/footballgameservice/Games",
                     //url: "app/data/startgame.json",
                     dataType: "json",
                     data: JSON.stringify({
@@ -116,7 +117,6 @@ define(["jquery", "backbone"],
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         self.set("gameId", data.gameId);
-                        
                         options.success();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -133,7 +133,7 @@ define(["jquery", "backbone"],
                 } else {
                     self.originGameId = self.get("gameId");
                     $.ajax({
-                        url: "http://192.168.1.100:8008/footballgameservice/Games",
+                        url: "http://192.168.1.104:8008/footballgameservice/Games",
                         //url: "app/data/gameresult.json",
                         dataType: "json",
                         data: JSON.stringify({

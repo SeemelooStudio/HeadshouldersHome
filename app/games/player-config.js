@@ -13,11 +13,11 @@ function (Crafty) {
             sprite : [1, 2]
         },
         ozil : {
-            id: '鱼乞儿',
+            id: '二齐尔',
             sprite : [0, 2] 
         },
         ribery : {
-            id: '里贝外',
+            id: '外贝里',
             sprite : [1, 1] 
         },
         robben : {
@@ -72,7 +72,8 @@ function (Crafty) {
         amateur : {
             sprite : 'BodyAmateur',
             runFrames : [[0,4], [1,4], [2,4], [1,4]],
-			tackleFrames : [[2, 3]]
+			tackleFrames : [[2, 3]],
+			idleFrames:[[1,5], [0,5]]
         },
         worldclass : {
             sprite : 'BodyPro',

@@ -115,7 +115,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             }
             else
             {
-                this.standby();
+                this.idle();
             }
 
             return this;

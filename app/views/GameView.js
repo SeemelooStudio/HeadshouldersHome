@@ -130,13 +130,14 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
 
             },
             onPlayerTrapBall: function() {
-                
-                $("#game-dialog").show().addClass("animated bounceInDown");
+                /*
+                $("#game-dialog").show().addClass("animated slideInLeft");
 
                 var timeout = setTimeout(function(){
-                    $("#game-dialog").removeClass("animated bounceInDown").hide();
+                    $("#game-dialog").removeClass("animated slideInLeft").hide();
                     clearTimeout(timeout);
-                }, 2000);                
+                }, 2000);
+                */             
             },
             gameOver: function() {
                var self = this;

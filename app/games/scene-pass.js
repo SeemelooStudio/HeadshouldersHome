@@ -5,13 +5,13 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.configs = {
             player_distance_step_1 : 150,
-            player_distance_step_2 : 220,
-            player_distance_step_3 : 350,
-            num_of_players_to_enter_step_2 : 8,
+            player_distance_step_2 : 180,
+            player_distance_step_3 : 280,
+            num_of_players_to_enter_step_2 : 5,
             num_of_players_to_enter_step_3 : 15,
             player_distance_noise : 5,
-            ball_kick_force : 20,
-            ball_friction : -0.36
+            ball_kick_force : 15,
+            ball_friction : -0.2
         };
 
         self.players = [];
@@ -235,10 +235,10 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 			}
             self.field.keepInViewport();
 
-            var targetY = Game.height - 150 - self.ball._y;
+            var targetY = Game.height - 100 - self.ball._y;
             if (targetY > Crafty.viewport._y) // only allow camera to move upward
             {
-                Crafty.viewport.y = self.lerp(Crafty.viewport._y, targetY, data.dt / 100);
+                Crafty.viewport.y = Math.floor(self.lerp(Crafty.viewport._y, targetY, data.dt / 100));
             }
         };
 

@@ -1688,10 +1688,7 @@ textarea.form-control {
     text-align: center;
     z-index: 11;
 }
-#gameStatus {
-    z-index: 11;
-    position: relative;
-}
+
 #gameOverWhistle img {
     width: 110px;
     height: 102px;
@@ -1911,7 +1908,8 @@ display: none;
     display: block;
 }
 #cr-stage {
-    color: #fff;
+    color: #205a08;
+    text-align: center;
 }
 #game-dialog {
     border:1px solid #221417;
@@ -1919,7 +1917,7 @@ display: none;
     box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
     width: 120px;
     position: absolute;
-    bottom: 50%;
+    bottom: 10px;
     left: 50%;
     margin-left: -70px;
     font-size: 10px;

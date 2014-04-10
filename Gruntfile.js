@@ -8,7 +8,7 @@ module.exports = function (grunt) {
                 overwrite: true,  
                 replacements: [{
                     from: "192.168.1.100:8008",
-                    to: "115.28.143.229/footballgameservice"
+                    to: "115.28.12.253/footballGameWebService"
                 }]
             }
         },

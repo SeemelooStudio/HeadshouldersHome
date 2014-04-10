@@ -49,7 +49,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             weiboLogin: function(){
                 //window.location.href= window.location.origin + window.location.pathname + "#login/3";
-                window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                //  window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                window.location.href = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
 
@@ -106,7 +107,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     }
                   },
                   error: function(jqXHR, textStatus, errorThrown){
-                    this.set("hasData", false);
+                    self.set("hasData", false);
                     if ( options && options.error ) {
                         options.error( textStatus + ": " + errorThrown);
                     } else {

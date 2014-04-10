@@ -4,17 +4,14 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         var self = this;
 
         self.configs = {
-            player_distance_step_1 : 160,
-            player_distance_step_2 : 200,
-            player_distance_step_3 : 220,
+            player_distance_step_1 : 130,
+            player_distance_step_2 : 170,
+            player_distance_step_3 : 210,
             num_of_players_to_enter_step_2 : 5,
             num_of_players_to_enter_step_3 : 15,
-            player_distance_noise : 10,
+            player_distance_noise : 20,
             ball_kick_force : 15,
             ball_friction : -0.2,
-            spin_speed_in_step_1:0.1,
-            spin_speed_in_step_2:0.1,
-            spin_speed_in_step_3:0.2,
             running_speed_in_step_1:10,
             running_speed_in_step_2:50,
             running_speed_in_step_3:100
@@ -147,20 +144,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 return self.configs.player_distance_step_3 + noise * 3;
             }
         };
-        self.getSpinSpeed = function() {
-            if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)
-            {
-                return self.configs.spin_speed_in_step_1;
-            }
-            else if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_3)
-            {
-                return self.configs.spin_speed_in_step_2;
-            }
-            else
-            {
-                return self.configs.spin_speed_in_step_3;
-            }
-        };
+
         self.destroyElementsOffScreen = function() {
             self.toBeRemoved = [];
             var index = 0;
@@ -233,7 +217,6 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 self.setCurrentController(player);
                 Game.events.onPlayerTrapBall(player.typeId);
             }
-            self.highlightRing.spinSpeed = self.getSpinSpeed();
         };
 
         self.onHitCoin = function(data) {

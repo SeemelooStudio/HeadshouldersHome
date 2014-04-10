@@ -9,7 +9,15 @@
   <!-- build:[href] styles.min.css -->
   <link rel="stylesheet" href="/app/styles/index.css">
   <!-- /build -->
-
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?a849a43894e04e25d35b547e84227a87";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 </head>
 
 <body ontouchstart="" tabindex="1">
@@ -65,6 +73,27 @@
         </div>
     </div>
   </div><!--error-->
+  <!--[if lt IE 9]>
+  <div id="supportOverlay">
+    <div id="supportContainer">
+        <div id="supportTitle">
+        ~~~~(>_<)~~~~ <br />
+        你的浏览器太旧了，不能玩小海的游戏
+        </div>
+        <div id="supportContent">
+        <p>你可以选择：</p>
+        <p class="em">用手机玩</p>
+        <p>打开微信，点击“发现”-》“扫一扫”</p>
+        <p>
+            <img src="http://quiz.seemeloo.com/img/qrcode.png" />
+        </p>
+        <p class="em">升级到最新的浏览器<p>
+        <p>下面的链接都来自官网，请放心下载</p>
+        <p><a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie"  target="_blank">Internet Explorer</a> <a href="http://www.apple.com.cn/safari/" target="_blank">Safari</a> <a href="http://www.google.com/chrome/?hl=zh-CN" target="_blank">Chrome</a>  <a href="http://www.operachina.com/"  target="_blank">Opera</a> <a href="http://www.firefox.com.cn/"  target="_blank">Firefox</a></p>
+        </div>
+    </div>
+  </div>
+  <![endif]-->
   <!-- Application source. -->
   <!-- build:[src] source.min.js -->
   <script data-main="/app/main" src="/vendor/bower/requirejs/require.js"></script>

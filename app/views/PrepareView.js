@@ -12,6 +12,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Prepare.html"],
                 
                 this.listenTo(this, "render", this.postRender);
                 this.render();
+                _hmt.push(['_trackPageview', '/Loading']); 
             },
 
             events: {

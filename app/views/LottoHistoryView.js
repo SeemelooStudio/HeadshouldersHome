@@ -28,7 +28,8 @@ define(["jquery", "backbone","mustache", "text!templates/LottoHistory.html", "an
                             }
                     });
                     });
-                }                
+                }
+                _hmt.push(['_trackPageview', '/LotteryHistory']);           
                 
             },
             // View Event Handlers

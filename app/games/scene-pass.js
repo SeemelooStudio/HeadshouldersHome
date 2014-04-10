@@ -239,7 +239,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 			}
             self.field.keepInViewport();
 
-            var targetY = Game.height - 100 - self.ball._y;
+            var targetY = Game.height - 50 - self.ball._y;
             if (targetY > Crafty.viewport._y) // only allow camera to move upward
             {
                 Crafty.viewport.y = Math.floor(self.lerp(Crafty.viewport._y, targetY, data.dt / 100));

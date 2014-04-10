@@ -64,16 +64,10 @@ define(function(require, exports, module) {
     login: function(userId) {
         prepareView.render();
         user.setUserId(userId);
-        
         user.fetchDataByUserId({
             userId: userId,
             success:function(){
-                /*
-                mainView.showHeader(function(){
-                    startView = new StartView({ user: user });
-                });
-                */
-                //Backbone.history.navigate("", { trigger: false, replace: true });
+                Backbone.history.navigate("", { trigger: true, replace: true });
             },
             error: function(){
                 alert("服务器出错了");

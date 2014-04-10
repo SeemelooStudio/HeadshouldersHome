@@ -132,7 +132,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.start(self.model.get("sceneName"));
-                       _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/start']);
+                       _hmt.push(['_trackPageview', '/Games/' + self.model.get("sceneName") + '/start']);
                        //self.Game.pause();
                    },
                    error: function(msg) {
@@ -175,7 +175,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                        
                        $("#loading").hide();
                        
-                       _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/over']);
+                       _hmt.push(['_trackPageview', '/Games/' + self.model.get("sceneName") + '/over']);
                    },
                    error: function(msg) {
                        Utils.showError(msg);
@@ -238,7 +238,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                    success: function(){
                        self.Game.restart();
                        $("#loading").hide();
-                       _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/restart']);
+                       _hmt.push(['_trackPageview', '/Games/' + self.model.get("sceneName") + '/restart']);
                    },
                    error: function(msg) {
                        Utils.showError(msg);
@@ -279,7 +279,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             cancelText:"算了",
                             ok: function() {
                                 self.continueGame();
-                                _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/revive']);
+                                _hmt.push(['_trackPageview', '/Games/' + self.model.get("sceneName") + '/revive']);
                             },
                             cancel: function() {
                                 self.gameOver();

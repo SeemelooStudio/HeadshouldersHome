@@ -33,13 +33,12 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     this.ready();
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
-                }
-                
+                }                
             },
 
             events: {
 
-                "tap #showTops":"onClickLeaderboard",
+                "tap #showTops,#rule":"onClickLeaderboard",
                 "tap #backHome":"onClickBackHome",
                 "tap .leaderboard-button":"onClickLeaderboardTab",
                 "tap #plane":"onClickLotto",
@@ -65,6 +64,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     
                 });
                 this.btnAnimationScheduler.animateIn();
+                _hmt.push(['_trackPageview', '/Home']); 
             },
             ready: function(){
                 this.model.set(this.user.toJSON());
@@ -116,7 +116,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                             self.onClickLeaderboardTab(e);
                         }
                     }
-                });                
+                });
+                _hmt.push(['_trackPageview', '/Leaderboard']);            
             },
             onClickBackHome: function(e){
                 e.preventDefault();

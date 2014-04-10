@@ -17,7 +17,7 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
                 "tap #shareOverlay,#shareCancel":"onClickShareOverlay",
                 "tap #shareOk":"onClickShareOk",
                 "tap .share":"onClickShare",
-                "tap #rule":"onClickExit"
+                "tap #exitLink":"onClickExit"
             },
             hideHeader: function(callback) {
                 if ($("#header").is(":hidden")) {
@@ -66,6 +66,8 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
                 }
                 var pic = $(e.currentTarget).attr("data-pic");
                 Utils.share(pic);
+                
+                _hmt.push(['_trackPageview', '/Share']); 
             },
             onClickExit: function(e) {
                 $.removeCookie("userId");

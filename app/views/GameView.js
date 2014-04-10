@@ -17,6 +17,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.defaultReviveCouponNum = 20;
                 this.reviveCouponNum = this.defaultReviveCouponNum;
                 this.isGameover = false;
+                
+                _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName")]);
             },
             // View Event Handlers
             events: {
@@ -47,17 +49,19 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
                 this.mainAnimationScheduler.animateIn();
                 
-
+                
                 require(["games/game", "games/components", "games/components-pass", "games/object-randomizer", "games/scene-loading", "games/scene-dribble", "games/scene-pass"],function(Game){
                     
                     self.Game = Game;
                     Game.registerEvents({
                         onGameOver: function() {
-                            console.log("gameOver");
                             self.onGameOver();
                         },
                         onCollectCoin: function() {
-                            self.addCoupon();
+                            self.addCoupon(1);
+                        },
+                        onCollectCoinPack: function() {
+                            self.addCoupon(3);
                         },
                         onPassAmateur: function() {
                             self.addScore(1);
@@ -69,6 +73,22 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         },
                         onLoadComplete: function() {
                             $("#loading").hide();
+                        },
+                        onPlayerTrapBall: function(typeId) {
+                            if ( typeId == 1 ) {
+                                //messi
+                                self.addScore(5);
+                            } else if ( typeId == 3 ) {
+                                //word class
+                                self.addScore(3);
+                            } else if ( typeId == 4 ) {
+                                //rabbit
+                                self.addScore(4);
+                            } else  {
+                                //normal
+                                self.addScore(2);
+                            }
+                            
                         }
                     });
 
@@ -112,6 +132,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.model.startGame({
                    success: function(){
                        self.Game.start(self.model.get("sceneName"));
+                       _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/start']);
                        //self.Game.pause();
                    },
                    error: function(msg) {
@@ -120,6 +141,16 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                });
                 this.gameAnimationScheduler.animateIn();
 
+            },
+            onPlayerTrapBall: function() {
+                /*
+                $("#game-dialog").show().addClass("animated slideInLeft");
+
+                var timeout = setTimeout(function(){
+                    $("#game-dialog").removeClass("animated slideInLeft").hide();
+                    clearTimeout(timeout);
+                }, 2000);
+                */             
             },
             gameOver: function() {
                var self = this;
@@ -143,6 +174,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                        }
                        
                        $("#loading").hide();
+                       
+                       _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/over']);
                    },
                    error: function(msg) {
                        Utils.showError(msg);
@@ -205,6 +238,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                    success: function(){
                        self.Game.restart();
                        $("#loading").hide();
+                       _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/restart']);
                    },
                    error: function(msg) {
                        Utils.showError(msg);
@@ -221,8 +255,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.$score.text( newScore );
                 Utils.highlight( this.$score, "yellow");
             },
-            addCoupon: function() {
-                this.model.addCoupon();
+            addCoupon: function( couponCount ) {
+                this.model.addCoupon( couponCount );
                 this.$coupon.text(this.model.get("coupon"));
                 Utils.highlight( this.$coupon, "blue");
             },
@@ -245,6 +279,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             cancelText:"算了",
                             ok: function() {
                                 self.continueGame();
+                                _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName") + '/revive']);
                             },
                             cancel: function() {
                                 self.gameOver();

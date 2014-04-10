@@ -8,6 +8,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Rule.html", "animation
             
             initialize: function (options) {
                 this.render();
+                _hmt.push(['_trackPageview', '/Rule']);  
             },
 
             events: {

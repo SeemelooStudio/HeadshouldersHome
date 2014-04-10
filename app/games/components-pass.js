@@ -41,8 +41,6 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 this.player.attach(this);
             }
             this.cameraAnchor.y = this._y - 150; 
-
-            Crafty.viewport.centerOn(this.cameraAnchor, 1000);
         },
 
         getDirection: function() {
@@ -50,6 +48,11 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                                      this.arrow._y - this._y);
             //console.log(this.direction.toString());
             return this.direction;
+        },
+
+        isPointingUpward: function() {
+            var rot = this.ring._rotation % 360;
+            return rot < 90 || rot > 270; 
         },
 
         onEnterFrame : function(data) {
@@ -77,8 +80,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
     });
 
     Crafty.c('Passer', {
-        wanderDistance : 20,
-        horizontalSpeed : 0,
+        wanderDistance : 0,
+        horizontalSpeed: Game.configs.amateur_horizontal_speed_per_frame,
 
         isWandering : false,
 
@@ -87,16 +90,19 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                     .attr({w: 80, h: 120});
         },
 
-        Passer : function(headConfig, bodyConfig, horizontalSpeed) {
+        Passer : function(headConfig, bodyConfig, wanderDistance) {
             this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
             this.collision([0,0],[this.width(), 0],[this.width(), this.height()],[0, this.height()]);
             
-            $text_css = { 'size': '12px', 'family': 'Arial', 'color': 'red', 'text-align': 'center' };
+            $text_css = { 'size': '12px'};
             this.nameHud = Crafty.e('2D, DOM, Text')
-			                     .attr({ x: 0, y: -10, w: 80 })
+                                 .attr({ x: 0, y: -10, w: 80 })
                                  .text(headConfig.id)
+                                 .textColor('#FFFFFF')
                                  .textFont($text_css);
             this.attach(this.nameHud);
+            
+            this.typeId = bodyConfig.typeId;
 
             var seed = Math.floor(Crafty.math.randomNumber(0, 100));
             if (seed % 2 === 0)
@@ -104,14 +110,14 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 this.faceRight();
             }
 
-            this.horizontalSpeed = horizontalSpeed || 0;
-            if (this.horizontalSpeed > 0)
+            this.wanderDistance = wanderDistance || 0;
+            if (this.wanderDistance > 0)
             {
                 this.startWandering();
             }
             else
             {
-                this.standby();
+                this.idle();
             }
 
             return this;

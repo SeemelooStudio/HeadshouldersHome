@@ -11,15 +11,15 @@ define(["jquery", "backbone"],
             dribble_bad_text:"难过史了!!",
             dribble_good_text:"NB不是一两天!",
             pass_share_default_text: "",
-            pass_share_result_text_begin:"我在竟然过了",
-            pass_share_result_text_end:"个足坛巨星！你敢试试么？",
+            pass_share_result_text_begin:"我竟然传出",
+            pass_share_result_text_end:"脚绝妙传球！你行么？",
             pass_bad_text:"传你妹阿!!",
             pass_good_text:"NB不是一两天",
             shoot_share_default_text: "",
             shoot_share_result_text_begin:"#海飞丝巴西实力挑战赛# 面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了",
             shoot_share_result_text_end:"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？",
             shoot_bad_text:"难过史了!!",
-            shoot_good_text:"好NB呀!!",
+            shoot_good_text:"好NB呀!!"
         };
         var Game = Backbone.Model.extend({
             defaults: {
@@ -93,19 +93,20 @@ define(["jquery", "backbone"],
                     this.set("isBreakRecord", true);
                 }
             },
-            addCoupon: function () {
-                this.set("coupon", this.get("coupon") + 1);
+            addCoupon: function ( couponCount ) {
+                this.set("coupon", this.get("coupon") + couponCount );
             },
             startGame: function (options) {
                 var self = this;
                 this.set({
                 "score":0,
                 "coupon":this.get("originCoupon"),
-                "isBad": false
+                "isBad": false,
+                "isBreakRecord": false
                 });
 
                 $.ajax({
-                    url: "http://192.168.1.100:8008/footballgameservice/Games",
+                    url: "http://192.168.1.104:8008/footballgameservice/Games",
                     //url: "app/data/startgame.json",
                     dataType: "json",
                     data: JSON.stringify({
@@ -116,7 +117,6 @@ define(["jquery", "backbone"],
                     contentType: "application/json; charset=utf-8",
                     success: function (data, textStatus, jqXHR) {
                         self.set("gameId", data.gameId);
-                        
                         options.success();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -133,7 +133,7 @@ define(["jquery", "backbone"],
                 } else {
                     self.originGameId = self.get("gameId");
                     $.ajax({
-                        url: "http://192.168.1.100:8008/footballgameservice/Games",
+                        url: "http://192.168.1.104:8008/footballgameservice/Games",
                         //url: "app/data/gameresult.json",
                         dataType: "json",
                         data: JSON.stringify({

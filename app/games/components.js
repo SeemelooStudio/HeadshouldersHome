@@ -66,6 +66,11 @@ Crafty.c('Body', {
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
 		}
+		if (bodyConfig.idleFrames ) {
+            this.reel('Idle', 550, bodyConfig.idleFrames);
+		} else {
+            this.reel('Idle', 550, [bodyConfig.runFrames[1]]);
+		}
 		this.animate('Run', -1);
 
         this.bind('AnimationEnd', this.onAnimationEnd);
@@ -98,6 +103,10 @@ Crafty.c('Body', {
 
 	tackle: function() {
         this.animate('Tackle', -1);
+	},
+	
+	idle: function() {
+        this.animate('Idle', -1);
 	}
 });
 
@@ -263,7 +272,7 @@ Crafty.c('Avatar', {
 		}
 
 		self.body.bind('FrameChange', function(data) {
-			if (self.isRunning)
+			if (data.id === 'Run' || data.id === 'Idle')
 			{
 				if (data.currentFrame == 1 || data.currentFrame == 3)
 				{
@@ -272,6 +281,11 @@ Crafty.c('Avatar', {
 				else
 				{
 					self.head.attr({x : self._x, y: self._y});
+				}
+				
+				if (data.id === 'Idle' && data.currentFrame == 1)
+				{
+                    self.changeDirection();
 				}
 			}
 		});
@@ -315,6 +329,10 @@ Crafty.c('Avatar', {
         {
             this.ball.trap();
         }
+    },
+    
+    idle: function() {
+        this.body.idle();
     },
 
     kickBall: function(kickForce, direction) {
@@ -377,6 +395,17 @@ Crafty.c('Avatar', {
 			this.ball.setRollingDirection(1);
 		}
 		this.facingLeft = false;
+	},
+	
+	changeDirection : function() {
+        if (this.facingLeft)
+        {
+            this.faceRight();
+        }	
+        else
+        {
+            this.faceLeft();
+        }
 	},
 
 	wander : function(wanderSpeed, deltaTime) {
@@ -558,7 +587,37 @@ Crafty.c('Coin', {
 		return false;
 	}
 });
+Crafty.c('CoinPack', {
+	speed: Game.configs.player_vertical_speed_per_frame,
 
+	width: function() {
+    return this._w;
+	},
+
+	height : function() {
+		return this._h;
+	},
+
+	init : function() {
+
+        this.requires('Actor, SpritePack, Collision, DebugCollision, SpriteAnimation')
+        .attr({ w: this._w , h: this._h})
+        .reel('Floating', 800, [[0,0],[1,0],[2,0],[1,0]]);
+        
+        this.animate('Floating', -1);
+	},
+    floating: function() {
+        this.animate('Floating', -1);
+	},
+	
+
+	onPlayerHit : function(player) {
+		++Game.data.num_of_collected_coins;
+		Game.events.onCollectCoin(Game.data.num_of_collected_coins);
+        this.destroy();
+		return false;
+	}
+});
 Crafty.c('Amateur', {
 	verticalSpeed: Game.configs.player_vertical_speed_per_frame + Game.configs.amateur_vertical_speed_per_frame,
 	horizontalSpeed: Game.configs.amateur_horizontal_speed_per_frame,
@@ -828,7 +887,6 @@ Crafty.c('Field', {
 		self.numOfTilesPerRow = Math.ceil(Game.width / self.tileWidth);
 		self.numOfTilesPerColumn = Math.ceil(Game.height / self.tileHeight) * 2;
 		self.numOfTilesHalfColumn = self.numOfTilesPerColumn / 2;
-		console.log('football field [' + self.numOfTilesPerRow + 'x' + self.numOfTilesPerColumn + ']');
 
 		for (var i = 0; i < self.numOfTilesPerColumn; i++)
 		{

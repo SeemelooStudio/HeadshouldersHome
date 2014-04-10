@@ -6,18 +6,18 @@ function (Crafty) {
         messi : {
             id: '梅西',
             sprite : [0, 3],
-			cry : [2, 2],
+			cry : [2, 2]
         },
         neymar : {
             id: '外马尔',
             sprite : [1, 2]
         },
         ozil : {
-            id: '鱼乞儿',
+            id: '二齐尔',
             sprite : [0, 2] 
         },
         ribery : {
-            id: '里贝外',
+            id: '外贝里',
             sprite : [1, 1] 
         },
         robben : {
@@ -67,22 +67,27 @@ function (Crafty) {
     PlayerConfig.body_configs = {
         messi : {
             sprite : 'BodyMessi',
-            runFrames : [[2,2], [0,3], [1, 3], [0,3]]
+            runFrames : [[2,2], [0,3], [1, 3], [0,3]],
+            typeId: 1
         },
         amateur : {
             sprite : 'BodyAmateur',
             runFrames : [[0,4], [1,4], [2,4], [1,4]],
-			tackleFrames : [[2, 3]]
+			tackleFrames : [[2, 3]],
+			idleFrames:[[1,5], [0,5]],
+            typeId: 2
         },
         worldclass : {
             sprite : 'BodyPro',
             runFrames : [[2,1], [0,2], [1,2], [0,2]],
-			tackleFrames : [[1, 1]]
+			tackleFrames : [[1, 1]],
+            typeId: 3
 		},
 		rabbit : {
             sprite : 'BodyRabbit',
             runFrames : [[1,0], [2,0], [0,1], [2,0]],
-			tackleFrames : [[0, 0]]
+			tackleFrames : [[0, 0]],
+            typeId: 4
 		},
     };
 

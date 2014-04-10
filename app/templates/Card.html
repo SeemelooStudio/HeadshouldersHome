@@ -36,15 +36,35 @@
         
         {{^isWon}}
         <div class="clearfix" id="award-top">
-            <div id="award-img">
-                    <img src="app/img/award0.jpg" />
+            <div id="award-img" class="dancePrize">
+                {{#isRabbitDance}}
+                    <img src="app/img/rabbitdance.gif" />
+                 {{/isRabbitDance}}
+                 {{#isSushiDance}}
+                    <img src="app/img/sushidance.gif" />
+                 {{/isSushiDance}}
+                 {{#isMessiDance}}
+                    <img src="app/img/messidance.gif" />
+                 {{/isMessiDance}}
             </div>
             <div id="award-info">
                 <div id="award-title">
-                        手气有点差啊！
+                        你抽到的是...
                 </div>
                 <div id="award-name">
                     无限安慰奖
+                </div>
+                <div id="award-desc">
+                {{#isRabbitDance}}
+                   让兔兔为你跳支舞吧，下次加油哦！~\(≧▽≦)/~
+                 {{/isRabbitDance}}
+                 {{#isSushiDance}}
+                   让路人为你跳支舞吧，动次打次动次打次...
+                 {{/isSushiDance}}
+                 {{#isMessiDance}}
+                    让梅西为你跳支舞吧，不要放弃哦！(ง •̀_•́)ง
+                 {{/isMessiDance}}
+                    
                 </div>
             </div>
         </div>

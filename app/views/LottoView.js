@@ -13,6 +13,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 } else {
                     this.listenToOnce(this.model,"onFetchSuccess", this.render);
                 }
+                _hmt.push(['_trackPageview', '/Lottery']);
             },
             // View Event Handlers
             events: {
@@ -71,6 +72,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                         }
                     });  
                 }
+                _hmt.push(['_trackPageview', '/Lottery/Draw']);
                 
                 
                 

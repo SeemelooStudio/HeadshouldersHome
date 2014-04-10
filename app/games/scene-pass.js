@@ -15,9 +15,9 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             spin_speed_in_step_1:0.3,
             spin_speed_in_step_2:0.3,
             spin_speed_in_step_3:0.3,
-            running_speed_in_step_1:40,
-            running_speed_in_step_2:40,
-            running_speed_in_step_3:40
+            running_speed_in_step_1:60,
+            running_speed_in_step_2:80,
+            running_speed_in_step_3:100
         };
 
         self.players = [];
@@ -94,7 +94,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 player = Crafty.e('Passer').Passer(self.lastPlayerHead, body, wanderDistance);
                 player.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - player.width()), 
                              y : self.nextGenerateY});
-                player. = self.getPlayerSpeed();
+                player.horizontalSpeed = self.getPlayerSpeed();
             }
 
 
@@ -131,7 +131,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 return self.configs.running_speed_in_step_3;
             }
-        },
+        };
         self.getPlayerDistance = function() {
             var noise = Math.floor(Crafty.math.randomNumber(-self.configs.player_distance_noise, self.configs.player_distance_noise));
             if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)

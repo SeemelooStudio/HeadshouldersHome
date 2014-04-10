@@ -65,6 +65,7 @@ define(function(require, exports, module) {
         prepareView.render();
         user.setUserId(userId);
         user.fetchDataByUserId({
+            userId: userId,
             success:function(){
                 Backbone.history.navigate("", { trigger: true, replace: true });
             },

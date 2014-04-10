@@ -11,7 +11,13 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             num_of_players_to_enter_step_3 : 15,
             player_distance_noise : 10,
             ball_kick_force : 15,
-            ball_friction : -0.2
+            ball_friction : -0.2,
+            spin_speed_in_step_1:0.3,
+            spin_speed_in_step_2:0.3,
+            spin_speed_in_step_3:0.3,
+            running_speed_in_step_1:40,
+            running_speed_in_step_2:40,
+            running_speed_in_step_3:40
         };
 
         self.players = [];
@@ -44,6 +50,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.generatePlayer = function() {
             var player;
             var seed;
+            var horizontalSpeed;
             if (self.numOfPlayersGenerated === 0)
             {
                 // first player must be Leo Messi!!!
@@ -87,6 +94,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 player = Crafty.e('Passer').Passer(self.lastPlayerHead, body, wanderDistance);
                 player.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - player.width()), 
                              y : self.nextGenerateY});
+                player. = self.getPlayerSpeed();
             }
 
 
@@ -110,7 +118,20 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.players.push(player);
             ++self.numOfPlayersGenerated;
         };
-
+        sefl.getPlayerSpeed = function() {
+            if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)
+            {
+                return self.configs.running_speed_in_step_1;
+            }
+            else if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_3)
+            {
+                return self.configs.running_speed_in_step_2;
+            }
+            else
+            {
+                return self.configs.running_speed_in_step_3;
+            }
+        },
         self.getPlayerDistance = function() {
             var noise = Math.floor(Crafty.math.randomNumber(-self.configs.player_distance_noise, self.configs.player_distance_noise));
             if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)

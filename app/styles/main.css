@@ -1972,6 +1972,9 @@ display: none;
     padding-top: 10px;
     font-weight: bold;
 }
+#qrcode {
+    display: none;
+}
 @media only screen and (min-width: 340px) {
     .sideLine {
         position: fixed;
@@ -2460,15 +2463,15 @@ display: none;
     position: absolute;
     color: #fff;
     text-align: right;
-    border-radius: 10px;
-    border:1px solid #221417;
+    border-radius: 5px;
     background: #c01f2e;
-    left: 20px;
+    left: 50%;
+    margin-left: 160px;
     line-height: 15px;
     height: 15px;
     padding: 5px 8px;
     font-size: 14px;
-    top: 22px;
+    top: 75px;
     display: block;
 }
 #exitLink:hover {
@@ -2653,5 +2656,25 @@ margin-left: 50px;
 }
 .dancePrize img{
     padding-top: 10px;
+}
+#qrcode {
+    width: 120px;
+    position: fixed;
+    top: -150px;
+    background: #c01f2e;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    left: 5%;
+    display: block;
+}
+#qrcode:hover {
+    top:-5px;
+}
+.qrcodeTxt {
+    padding: 5px 0;
+    line-height: 20px;
 }
 }

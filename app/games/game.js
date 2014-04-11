@@ -156,6 +156,15 @@ function ($, Crafty ) {
             if ( events.onCollectCoinPack ) {
                 Game.events.onCollectCoinPack = events.onCollectCoinPack;
             }
+		},
+		
+		getTouchEvent: function(){
+            var isTouchScreen = ('ontouchstart' in window) || ((window.DocumentTouch !== undefined) && document instanceof DocumentTouch);
+            if (isTouchScreen ) {
+                return "touchstart";
+            } else {
+                return "mousedown";
+            }
 		}
     };
     

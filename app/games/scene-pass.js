@@ -23,6 +23,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.numOfPlayersGenerated = 0;
         self.nextGenerateY = 0;
         self.lastPlayerHead = null;
+        
+        self.touchEvent = Game.getTouchEvent();
 
         self.ifNotEnterLoadBuffer = function(element) {
             return element._y + Crafty.viewport._y < -Game.height / 2 -element.height();
@@ -232,7 +234,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         };
 
         self.gameover = function() {
-            Crafty.removeEvent(self, Crafty.stage.elem, "touchstart", self.onMouseDown);
+            Crafty.removeEvent(self, Crafty.stage.elem, self.touchEvent, self.onMouseDown);
             Game.pause();
             Game.events.onGameOver();
         };
@@ -285,12 +287,12 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.setCurrentController(self.players[0]);
 
         self.bind('EnterFrame', self.onEnterFrame);
-        Crafty.addEvent(self, Crafty.stage.elem, "touchstart", self.onMouseDown);
+        Crafty.addEvent(self, Crafty.stage.elem, self.touchEvent, self.onMouseDown);
     }, 
     function() { 
         var self = this;
         self.unbind('EnterFrame', self.onEnterFrame);
-        Crafty.removeEvent(self, Crafty.stage.elem, "touchstart", self.onMouseDown);
+        Crafty.removeEvent(self, Crafty.stage.elem, self.touchEvent, self.onMouseDown);
     });
 
 });

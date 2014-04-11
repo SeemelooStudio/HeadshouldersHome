@@ -2,7 +2,7 @@ define(["jquery"],function ($) {
 var Utils = {
     default: {
       shareImage:"app/img/logo.png",
-      shareUrl:"http://quiz.seemeloo.com/hs",
+      shareUrl:"http://quiz.seemeloo.com/aa",
       shareTag:"#海飞丝巴西实力挑战赛# "
     },
     animationEndTrigger:"webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend",
@@ -138,6 +138,16 @@ var Utils = {
         } else {
             return true;
         }
+    },
+    ieMsie: function(){
+              var ua = window.navigator.userAgent
+              var msie = ua.indexOf ( "MSIE " )
+        
+              if ( msie > 0 )      // If Internet Explorer, return version number
+              {   return true; }
+              else                 // If another browser, return 0
+              {   return false;}
+        
     }
 };
   

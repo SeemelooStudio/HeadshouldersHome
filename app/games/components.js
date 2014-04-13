@@ -142,6 +142,9 @@ Crafty.c('RollingActor', {
 			this.rotation += this.spinSpeed * data.dt * this.rollingDirection;
 		}
 	},
+	changeRollingDirection: function(){
+        this.rollingDirection = 0 - (this.rollingDirection||1);
+	}
 	
 });
 
@@ -417,7 +420,7 @@ Crafty.c('Avatar', {
 		{
 			if (this.facingLeft)
 			{
-				if ( this._x < this.centerX - this.wanderDistance)
+				if ( this._x < this.centerX - this.wanderDistance && this._x < Game.ingame_width )
 				{
 					this.x = this.centerX - this.wanderDistance;
 					this.faceRight();
@@ -429,7 +432,7 @@ Crafty.c('Avatar', {
 			}
 			else
 			{
-				if ( this._x > this.centerX + this.wanderDistance)
+				if ( this._x > this.centerX + this.wanderDistance && this._x > 0 )
 				{
 					this.x = this.centerX + this.wanderDistance;
 					this.faceLeft();

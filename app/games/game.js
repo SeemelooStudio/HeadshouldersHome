@@ -6,6 +6,7 @@ function ($, Crafty ) {
         height: $(window).height(),
 
 		ingame_width: 320,
+		ingame_width_half:160,
 		player_bound_left: function() { return Game.width / 2 - Game.ingame_width / 2; },
 		player_bound_right: function() { return Game.width / 2 + Game.ingame_width / 2; },
 

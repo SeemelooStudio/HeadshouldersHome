@@ -69,8 +69,8 @@ define(function(require, exports, module) {
             success:function(){
                 Backbone.history.navigate("", { trigger: true, replace: true });
             },
-            error: function(){
-                alert("服务器出错了");
+            error: function(msg){
+                alert(msg);
             }
         });
         

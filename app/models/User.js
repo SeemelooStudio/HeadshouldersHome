@@ -105,7 +105,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     }
                   },
                   error: function(jqXHR, textStatus, errorThrown){
-                    this.set("hasData", false);
+                    self.set("hasData", false);
                     if ( options && options.error ) {
                         options.error( textStatus + ": " + errorThrown);
                     } else {

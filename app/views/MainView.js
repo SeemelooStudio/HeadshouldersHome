@@ -11,6 +11,7 @@ define(["jquery", "backbone","animationscheduler", "Utils"],
                 this.$el.hammer();
                 this.user = options.user;
                 this.isSharing = false;
+                $.support.cors = true;
             },
             // View Event Handlers
             events: {

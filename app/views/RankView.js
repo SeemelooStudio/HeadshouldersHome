@@ -1,8 +1,8 @@
 // RankView.js
 // -------
-define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
+define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
 
-    function ($, Backbone, Mustache, template) {
+    function ($, Backbone, Mustache, template, Utils) {
 
         var RankView = Backbone.View.extend({
 
@@ -12,8 +12,16 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
 
                 this.user = options.user;
                 this.model.set(this.user.toJSON());
+                
+                if ( Utils.ieMsie() ) {
+                    this.scrollTag = "html";  
+                } else {
+                    this.scrollTag = "body";
+                }
+                
                 this.listenTo(this, "render", this.postRender);
                 this.render();
+                
             },
 
             events: {
@@ -37,14 +45,15 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html"],
 
             postRender: function () {
                 var top = $("#leaderboard-main").offset().top - 50;
-                $('body').animate({
+                var self = this;
+                $(self.scrollTag).animate({
                     scrollTop: top
                 }, 500, function(){
                     //scroll up
                     $(window).on("scroll", function() {
                        var $win = $(window);
                        if ($win.scrollTop()  < (top - 150 ) ) {
-                           $('body').animate({
+                           $(self.scrollTag).animate({
                                 scrollTop:0
                             },500,
                             function(){

@@ -33,7 +33,13 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     this.ready();
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
-                }                
+                }
+                if ( Utils.ieMsie() ) {
+                    this.scrollTag = "html";  
+                } else {
+                    this.scrollTag = "body";
+                }
+                            
             },
 
             events: {
@@ -126,7 +132,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 var self = this;
-                $('body').animate({
+                $(this.scrollTag).animate({
                     scrollTop:0
                 },500,
                 function(){
@@ -192,7 +198,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             },
             onExit: function(e) {
                 $(window).unbind("scroll");
-                $("body").scrollTop(0);
+                $(this.scrollTag).scrollTop(0);
                 this.isReady = false;
             }
         });

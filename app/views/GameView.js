@@ -18,7 +18,6 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.reviveCouponNum = this.defaultReviveCouponNum;
                 this.isGameover = false;
                 
-                _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName")]);
             },
             // View Event Handlers
             events: {
@@ -105,6 +104,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             ready: function(){
                 this.model = new Game({ gameId:this.gameId, user:this.user, gameTypeId : this.gameTypeId });
                 this.render();
+                _hmt.push(['_trackPageview', '/Games/' + this.model.get("sceneName")]);
             },
             onClickStartGame: function(e) {
                 var self = this;

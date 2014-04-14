@@ -38,7 +38,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             checkLogin: function(){
-                return this.get("isLogin");
+                return this.has("userId");
             },
             checkCoupon: function(){
                 if ( this.has("numOfCoupons") && this.get("numOfCoupons") > this.get("cardPrice") ) {
@@ -49,8 +49,9 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             weiboLogin: function(){
                 //window.location.href= window.location.origin + window.location.pathname + "#login/3";
-                //  window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
-                window.location.href = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
+
+                window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=142432575&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
+               // window.location.href = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
             },
             wechatLogin: function() {
 
@@ -96,7 +97,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
                 $.ajax({
                   //url:"app/data/user.json",
-                  url: "http://192.168.1.104:8008/footballgameService/users/"+this.get("userId"),
+                  url: "http://192.168.1.102:8008/footballgameService/users/"+this.get("userId"),
                   dataType : "json",
                   success: function(data, textStatus, jqXHR){
                     self.parseUserdata(data);
@@ -147,7 +148,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             share: function(options){
                 var self = this;
                 $.ajax({
-                    url: "http://192.168.1.104:8008/footballgameService/coupons",
+                    url: "http://192.168.1.102:8008/footballgameService/coupons",
                     data: JSON.stringify({ userId: self.get("userId") }),
                     contentType: "application/json; charset=utf-8",
                     type: 'POST',

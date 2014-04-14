@@ -10,6 +10,6 @@ define(function(require, exports, module) {
   var app = module.exports;
 
   // The root path to run the application through.
-  app.root = "/hs";
+  app.root = "";
   
 });

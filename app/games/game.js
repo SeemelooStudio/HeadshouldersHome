@@ -6,6 +6,7 @@ function ($, Crafty ) {
         height: $(window).height(),
 
 		ingame_width: 320,
+		ingame_width_half:160,
 		player_bound_left: function() { return Game.width / 2 - Game.ingame_width / 2; },
 		player_bound_right: function() { return Game.width / 2 + Game.ingame_width / 2; },
 
@@ -155,6 +156,15 @@ function ($, Crafty ) {
             
             if ( events.onCollectCoinPack ) {
                 Game.events.onCollectCoinPack = events.onCollectCoinPack;
+            }
+		},
+		
+		getTouchEvent: function(){
+            var isTouchScreen = ('ontouchstart' in window) || ((window.DocumentTouch !== undefined) && document instanceof DocumentTouch);
+            if (isTouchScreen ) {
+                return "touchstart";
+            } else {
+                return "mousedown";
             }
 		}
     };

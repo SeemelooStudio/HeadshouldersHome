@@ -4,14 +4,20 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         var self = this;
 
         self.configs = {
-            player_distance_step_1 : 160,
-            player_distance_step_2 : 200,
-            player_distance_step_3 : 220,
+            player_distance_step_1 : 110,
+            player_distance_step_2 : 160,
+            player_distance_step_3 : 210,
             num_of_players_to_enter_step_2 : 5,
             num_of_players_to_enter_step_3 : 15,
             player_distance_noise : 10,
             ball_kick_force : 15,
-            ball_friction : -0.2
+            ball_friction : -0.2,
+            running_speed_in_step_1:10,
+            running_speed_in_step_2:50,
+            running_speed_in_step_3:100,
+            rolling_speed_step_1:0.2,
+            rolling_speed_step_2:0.25,
+            rolling_speed_step_3:0.3
         };
 
         self.players = [];
@@ -20,6 +26,17 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.numOfPlayersGenerated = 0;
         self.nextGenerateY = 0;
         self.lastPlayerHead = null;
+        
+        self.randomizerStep1 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			[self.configs.player_distance_step_1, self.configs.player_distance_step_2, self.configs.player_distance_step_3],[0.5,0.4]);
+			
+        self.randomizerStep2 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			[self.configs.player_distance_step_1, self.configs.player_distance_step_2, self.configs.player_distance_step_3]);
+			
+        self.randomizerStep3 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			[self.configs.player_distance_step_1, self.configs.player_distance_step_2, self.configs.player_distance_step_3],[0.1,0.4]);
+        
+        self.touchEvent = Game.getTouchEvent();
 
         self.ifNotEnterLoadBuffer = function(element) {
             return element._y + Crafty.viewport._y < -Game.height / 2 -element.height();
@@ -44,6 +61,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.generatePlayer = function() {
             var player;
             var seed;
+            var horizontalSpeed;
             if (self.numOfPlayersGenerated === 0)
             {
                 // first player must be Leo Messi!!!
@@ -87,6 +105,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 player = Crafty.e('Passer').Passer(self.lastPlayerHead, body, wanderDistance);
                 player.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.player_bound_right() - player.width()), 
                              y : self.nextGenerateY});
+                player.horizontalSpeed = self.getPlayerSpeed();
             }
 
 
@@ -110,23 +129,50 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.players.push(player);
             ++self.numOfPlayersGenerated;
         };
-
-        self.getPlayerDistance = function() {
-            var noise = Math.floor(Crafty.math.randomNumber(-self.configs.player_distance_noise, self.configs.player_distance_noise));
+        self.getPlayerSpeed = function() {
             if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)
             {
-                return self.configs.player_distance_step_1 + noise;
+                return self.configs.running_speed_in_step_1;
             }
             else if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_3)
             {
-                return self.configs.player_distance_step_2 + noise * 2;
+                return self.configs.running_speed_in_step_2;
             }
             else
             {
-                return self.configs.player_distance_step_3 + noise * 3;
+                return self.configs.running_speed_in_step_3;
             }
         };
+        self.getPlayerDistance = function() {
 
+            if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_2)
+            {
+                return self.randomizerStep1.get();
+            }
+            else if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_3)
+            {
+                return self.randomizerStep2.get();
+            }
+            else
+            {
+                return self.randomizerStep3.get();
+            }
+        };
+        self.getRollingSpeed = function() {
+            var base = self.numOfPlayersGenerated - 5;
+            if (base < self.configs.num_of_players_to_enter_step_2)
+            {
+                return self.configs.rolling_speed_step_1;
+            }
+            else if (base < self.configs.num_of_players_to_enter_step_3)
+            {
+                return self.configs.rolling_speed_step_2;
+            }
+            else
+            {
+                return self.configs.rolling_speed_step_3;
+            }
+        };
         self.destroyElementsOffScreen = function() {
             self.toBeRemoved = [];
             var index = 0;
@@ -173,6 +219,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.currentController.attachBall(self.ball);
             self.currentController.standby();
             self.currentController.isWandering = false;
+            self.highlightRing.ring.changeRollingDirection();
+            self.highlightRing.ring.spinSpeed = self.getRollingSpeed();
             self.highlightRing.startRolling();
             self.highlightRing.setPlayer(self.currentController);
 
@@ -214,7 +262,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         };
 
         self.gameover = function() {
-            Crafty.removeEvent(self, Crafty.stage.elem, "mousedown", self.onMouseDown);
+            Crafty.removeEvent(self, Crafty.stage.elem, self.touchEvent, self.onMouseDown);
             Game.pause();
             Game.events.onGameOver();
         };
@@ -239,7 +287,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 			}
             self.field.keepInViewport();
 
-            var targetY = Game.height - 50 - self.ball._y;
+            var targetY = Game.height - 80 - self.ball._y;
             if (targetY > Crafty.viewport._y) // only allow camera to move upward
             {
                 Crafty.viewport.y = Math.floor(self.lerp(Crafty.viewport._y, targetY, data.dt / 100));
@@ -267,12 +315,12 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.setCurrentController(self.players[0]);
 
         self.bind('EnterFrame', self.onEnterFrame);
-        Crafty.addEvent(self, Crafty.stage.elem, "mousedown", self.onMouseDown);
+        Crafty.addEvent(self, Crafty.stage.elem, self.touchEvent, self.onMouseDown);
     }, 
     function() { 
         var self = this;
         self.unbind('EnterFrame', self.onEnterFrame);
-        Crafty.removeEvent(self, Crafty.stage.elem, "mousedown", self.onMouseDown);
+        Crafty.removeEvent(self, Crafty.stage.elem, self.touchEvent, self.onMouseDown);
     });
 
 });

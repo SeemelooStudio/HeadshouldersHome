@@ -13,6 +13,8 @@ define(["jquery", "backbone"],
         	isSequential:false,
         	sequentialDelay:500,
         	
+        	isSupportAnimationEnd:true,
+        	
             initialize: function (objects, options) {
                 var self = this;
                 if ( options ) {
@@ -22,6 +24,9 @@ define(["jquery", "backbone"],
                 if ( objects && objects.size() > 0 ) {
                     self.objects = objects;
                     self.initObjects();
+                }
+                if ( this.getMsieVersion() > 0 && this.getMsieVersion() < 10 ) {
+                    self.isSupportAnimationEnd = false;
                 }
                 
             },
@@ -71,28 +76,37 @@ define(["jquery", "backbone"],
                 }
                 var objectsCount = self.objects.size();
                 
-                self.objects.each(function() {
-                
-                    //get animation type
-                    var animationType = jQuery(this).attr("data-entranceAnimation");
-                    if ( !animationType ) {
-                        animationType = self.defaultEntrance;
-                    }
-                    
-                    //invoke postAnimateOut when all animations are finished
-                    jQuery(this).one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
-                        objectsCount--;
-                        jQuery(this).removeClass(self.triggerClass).removeClass(animationType);
+                if ( this.isSupportAnimationEnd ) {
+                    self.objects.each(function() {
+                        //get animation type
+                        var animationType = jQuery(this).attr("data-entranceAnimation");
+                        if ( !animationType ) {
+                            animationType = self.defaultEntrance;
+                        }
                         
-                        if ( 0 == objectsCount ) {
+                        //invoke postAnimateOut when all animations are finished
+                        jQuery(this).one('webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend', function(e){
+                            objectsCount--;
+                            jQuery(this).removeClass(self.triggerClass).removeClass(animationType);
+                            
+                            if ( 0 == objectsCount ) {
+                                if ( postAnimateIn ) {
+                                    postAnimateIn();
+                                }
+                            }
+                        });
+                        
+                        jQuery(this).addClass(self.triggerClass +  " " + animationType).removeClass(self.hideClass);
+                    });
+                } else {
+                    self.objects.removeClass(self.hideClass).fadeIn( function(){
+                        
                             if ( postAnimateIn ) {
                                 postAnimateIn();
+                                
                             }
-                        }
                     });
-                    
-                    jQuery(this).addClass(self.triggerClass +  " " + animationType).removeClass(self.hideClass);
-                });
+                }
                 
         
             },
@@ -103,6 +117,8 @@ define(["jquery", "backbone"],
                     return;
                 }
                 var objectsCount = self.objects.size();
+                
+                if ( this.isSupportAnimationEnd ) {
                 
                 self.objects.each(function() {
                 
@@ -126,9 +142,26 @@ define(["jquery", "backbone"],
                     
                     jQuery(this).addClass(self.triggerClass +  " " + animationType);
                 });
+                } else {
+                    self.objects.fadeOut( function(){
+                            if ( postAnimateOut ) {
+                                postAnimateOut();
+                            }
+                    });
+                }
 
         
-            }
+            },
+            getMsieVersion: function(){
+              var ua = window.navigator.userAgent
+              var msie = ua.indexOf ( "MSIE " )
+        
+              if ( msie > 0 )      // If Internet Explorer, return version number
+                 return parseInt (ua.substring (msie+5, ua.indexOf (".", msie )))
+              else                 // If another browser, return 0
+                 return 0
+        
+           }
         });
         return AnimationScheduler;
     }

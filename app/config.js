@@ -9,13 +9,12 @@ require.config({
     "backbone": "../../vendor/bower/backbone/backbone",
     "mustache": '../../vendor/bower/mustache/mustache',
     "text": "../../vendor/bower/text/text",
-    "backbonetouch":"../vendor/backbone.touch",
     "hammerjs":"../vendor/bower/hammerjs/hammer.min",
     "jqueryhammer":"../vendor/jquery.hammer.min",
     "animationscheduler":"../vendor/animationScheduler",
-    "image": "../vendor/image",
     "crafty":"../vendor/bower/crafty/dist/crafty",
-    "jquerycookie":"../vendor/bower/jquery-cookie/jquery.cookie"
+    "jquerycookie":"../vendor/bower/jquery-cookie/jquery.cookie",
+    "jquery.xdomainrequest":"../vendor/jquery.xdomainrequest.min"
   },
 
   shim: {

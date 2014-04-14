@@ -152,6 +152,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     type: 'POST',
                     dataType : "json",
                     success: function(data, textStatus, jqXHR){
+                        console.log(data);
                         if ( data.numOfCoupons && data.numOfCoupons > 0) {
                             self.set("numOfCoupons", self.get("numOfCoupons") + data.numOfCoupons);
                         }

@@ -1150,6 +1150,46 @@ img {
     left: 0;
   }
 }
+@keyframes cardslideinnotwon {
+  0% {
+    top:0;
+    left: 0;
+  }
+  100% {
+    top:-100px;
+    left: 0;
+  }
+}
+@-webkit-keyframes cardslideinnotwon {
+  0% {
+    top:0;
+    left: 0;
+  }
+  100% {
+    top:-100px;
+    left: 0;
+  }
+}
+@keyframes cardslideinnotwon2 {
+  0% {
+    top:0;
+    left: 0;
+  }
+  100% {
+    top:-200px;
+    left: 0;
+  }
+}
+@-webkit-keyframes cardslideinnotwon2 {
+  0% {
+    top:0;
+    left: 0;
+  }
+  100% {
+    top:-200px;
+    left: 0;
+  }
+}
 @keyframes cardslidein2 {
   0% {
     top:0;
@@ -1183,6 +1223,14 @@ img {
   -webkit-animation-fill-mode:both; /* Safari and Chrome */
   animation-delay: 1s;
   -webkit-animation-delay: 1s; 
+}
+.opencard.notWon #envelope-content {
+  -webkit-animation: cardslideinnotwon 1s ; /* Safari 4+ */
+  animation:cardslideinNotWon 1s ; /* IE 10+ */
+  animation-fill-mode:both;
+  -webkit-animation-fill-mode:both; /* Safari and Chrome */
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;   
 }
 #envelope-content {
     width: 252px;
@@ -1824,6 +1872,7 @@ margin-bottom: 60px;
 }
 #ruleMain dt {
     color: #1a2b4d;
+    font-size: 16px;
 }
 #ruleMain dd {
     margin-left: 0px;
@@ -1975,6 +2024,22 @@ display: none;
 #qrcode {
     display: none;
 }
+#ruleMain p {
+    margin: 0.5em 0;
+    line-height: 18px;
+}
+#ruleMain .ruleTitle {
+    font-size: 18px;
+    color: #0454b7;
+    line-height: 22px;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+#ruleMain .ruleLink {
+    font-size: 14px;
+    letter-spacing: -1px;
+    margin: 1em 0 2em;
+}
 @media only screen and (min-width: 340px) {
     .sideLine {
         position: fixed;
@@ -2001,6 +2066,7 @@ display: none;
         height: auto;
         width: 100%;
         overflow-x: hidden;
+        font-family: "\5FAE\8F6F\96C5\9ED1","Microsoft YaHei";
     }
     #header {
         background-size: 100% 100%;
@@ -2334,6 +2400,14 @@ display: none;
   animation-delay: 1s;
   -webkit-animation-delay: 1s; 
 }
+.notWon.opencard #envelope-content {
+    -webkit-animation: cardslideinnotwon2 1s ; /* Safari 4+ */
+    animation:cardslideinnotwon2 1s ; /* IE 10+ */
+  animation-fill-mode:both;
+  -webkit-animation-fill-mode:both; /* Safari and Chrome */
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s; 
+}
 #lottoHistory {
     padding-top: 50px;
 }
@@ -2398,11 +2472,11 @@ display: none;
 }
 #userRank {
     left: 60px;
-    top:46px;
+    top:44px;
     font-size: 16px;
 }
 #userCoupon {
-    top: 115px;
+    top: 113px;
     font-size: 16px;
     width: 160px;
 }
@@ -2473,6 +2547,10 @@ display: none;
     font-size: 14px;
     top: 75px;
     display: block;
+    cursor: pointer;
+}
+.wbIframe #exitLink {
+    display: none;
 }
 #exitLink:hover {
     color: #ffd800;
@@ -2518,7 +2596,7 @@ display: none;
 }
 
 #award-action {
-    bottom: -25px;
+    bottom: -35px;
 }
 #gameOverTop {
     width: 300px;
@@ -2657,6 +2735,9 @@ margin-left: 50px;
 .dancePrize img{
     padding-top: 10px;
 }
+.wbIframe #qrcode {
+    display: none!important;
+}
 #qrcode {
     width: 120px;
     position: fixed;
@@ -2667,8 +2748,8 @@ margin-left: 50px;
     font-size: 14px;
     text-align: center;
     cursor: pointer;
-    left: 5%;
-    display: none;
+    left: 15%;
+    display: block;
 }
 #qrcode:hover {
     top:-5px;
@@ -2676,5 +2757,18 @@ margin-left: 50px;
 .qrcodeTxt {
     padding: 5px 0;
     line-height: 20px;
+}
+#ruleMain .ruleTitle {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+#ruleMain p {
+    line-height: 24px;
+}
+#ruleMain .ruleLink {
+    font-size: 16px;
+    letter-spacing: 0;
 }
 }

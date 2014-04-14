@@ -130,12 +130,12 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                         type: 'POST',
                         dataType : "json",
                         success:function(){
+                            if ( card.has("points") ) {
+                                self.set("accumulatePoints", self.get("accumulatePoints") + card.has("points") );                            }
+                            card.set("accumulatePoints", self.get("accumulatePoints"));
                             options.success(card);
-                            if ( self.get("numOfCoupons") < 1 ) {
-                                self.set("numOfCoupons", 0 );
-                            } else {
-                                self.set("numOfCoupons", self.get("numOfCoupons") - 10);
-                            }
+                            
+                            self.set("numOfCoupons", self.get("numOfCoupons") - 10);
                             self.set("hasCoupon", self.checkCoupon());
                         },
                         error: function(){

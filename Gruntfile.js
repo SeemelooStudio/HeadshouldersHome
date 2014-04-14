@@ -7,8 +7,8 @@ module.exports = function (grunt) {
                 src: ["dist/app/models/*.js", "dist/app/collections/*.js"],
                 overwrite: true,  
                 replacements: [{
-                    from: "192.168.1.104:8008",
-                    to: "hfsshili.app.social-touch.com/footballgamewebservice"
+                    from: "192.168.1.102:8008",
+                    to: "quiz.seemeloo.com/footballgameservice"
                 }]
             }
         },

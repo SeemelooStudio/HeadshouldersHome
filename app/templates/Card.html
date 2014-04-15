@@ -1,14 +1,20 @@
         {{#isWon}}
         <div class="clearfix" id="award-top">
             <div id="award-img">
-                    <img src="app/img/{{prizeImage}}" />
+                    <img src="app/img/{{prizeImageUrl}}" />
             </div>
             <div id="award-info">
                 <div id="award-title">
-                        恭喜你，中奖啦！
+                        恭喜你! 你抽到的是...
                 </div>
                 <div id="award-name">
                     {{prizeName}}
+                </div>
+                <div id="award-desc">
+                    {{#isVirtualPrize}}
+                    你现在的总积分是 {{accumulatePoints}}，<br />
+                    {{/isVirtualPrize}}
+                    {{prizeDescription}}
                 </div>
             </div>
         </div> 
@@ -26,7 +32,7 @@
                     欢乐的确定
                 </div>
             </div>
-            <div class="btn btn-red  btn-inline share"  data-pic="app/img/{{prizeImage}}">
+            <div class="btn btn-red  btn-inline share"  data-pic="app/img/{{prizeImageUrl}}">
                 <div class="btn-inner">
                      <i class="fa fa-share-square-o"></i> 分享
                 </div>

@@ -65,6 +65,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                             $("#loading").hide();
                             self.card = card;
                             self.cardView = new CardView({ model: card });
+                            console.log(self.card);
                             self.openCard();                    
                         },
                         error: function(erroMessage) {
@@ -91,14 +92,20 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             },
             openCard: function(e) {
                 var self =this;
-                this.$el.find("#card").addClass("opencard");                
+                var isWon = this.card.get("isWon");
+                  
+                if ( isWon ) {
+                    this.$el.find("#card").addClass("opencard"); 
+                } else {
+                    this.$el.find("#card").addClass("opencard notWon"); 
+                }           
                 $('#envelope-cover,#envelope-back,#envelope-front').one(Utils.animationEndTrigger, function(e){
                     $(e.currentTarget).remove();
                 });
                 $("#envelope-content").one(Utils.animationEndTrigger, function(e) {
                     $(this).find("#award-address,#award-action").fadeIn();
                 });
-                if ( this.card.get("isWon") ) { 
+                if ( isWon ) { 
                    Utils.setPageTitle("#海飞丝巴西实力挑战赛# 小手一抖，奖品拿走，我在海飞丝足球游戏中赢得了奖品"+ this.card.get("prizeName") +"。羡慕嫉妒恨？不如和我一起玩游戏赢奖品~");
                 } else {
                    Utils.setPageTitle("#海飞丝巴西实力挑战赛# 苍天哪~大地哪~干爹赐我一点手气吧~");

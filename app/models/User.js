@@ -131,7 +131,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                         dataType : "json",
                         success:function(){
                             if ( card.has("points") ) {
-                                self.set("accumulatePoints", self.get("accumulatePoints") + card.has("points") );                            }
+                                self.set("accumulatePoints", self.get("accumulatePoints") + card.get("points") );                            }
                             card.set("accumulatePoints", self.get("accumulatePoints"));
                             options.success(card);
                             

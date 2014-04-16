@@ -97,7 +97,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
                 $.ajax({
                     //url:"app/data/user.json",
-                    url: "http://192.168.1.102:8008/footballgameService/users/" + this.get("userId"),
+                    url: "http://192.168.1.105:8008/footballgameService/users/" + this.get("userId"),
                     dataType: "json",
                     success: function (data, textStatus, jqXHR) {
                         self.parseUserdata(data);
@@ -149,7 +149,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             share: function (options) {
                 var self = this;
                 $.ajax({
-                    url: "http://192.168.1.102:8008/footballgameService/coupons",
+                    url: "http://192.168.1.105:8008/footballgameService/coupons",
                     data: JSON.stringify({ userId: self.get("userId") }),
                     contentType: "application/json; charset=utf-8",
                     type: 'POST',

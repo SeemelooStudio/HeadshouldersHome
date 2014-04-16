@@ -38,6 +38,10 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     this.weiboLogin();
                 }
             },
+            logout: function(){
+                $.removeCookie("userId");
+                Backbone.history.navigate("", { trigger: false, replace: false });
+            },
             checkLogin: function () {
                 return this.has("userId");
             },

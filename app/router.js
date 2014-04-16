@@ -47,7 +47,8 @@ define(function(require, exports, module) {
       "gameDribble":"gameDribble",
       "gamePass":"gamePass",
       "gameShoot":"gameShoot",
-      "rule":"rule"
+      "rule":"rule",
+      "logout":"logout"
     },
 
     index: function() {
@@ -76,6 +77,9 @@ define(function(require, exports, module) {
         
         
         
+    },
+    logout: function(){
+      user.logout();  
     },
     leaderboard: function(type) {
         if ( gameView ) {

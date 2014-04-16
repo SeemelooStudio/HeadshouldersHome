@@ -207,21 +207,7 @@ img {
     background-size: 120px 50px;    
 }
 #exitLink {
-    display: block;
-    position: absolute;
-    color: #fff;
-    text-align: right;
-    border-radius: 5px;
-    background: #c01f2e;
-    left: 50%;
-    margin-left: 40px;
-    line-height: 15px;
-    height: 15px;
-    padding: 5px 8px;
-    font-size: 14px;
-    top: 25px;
-    display: block;
-    cursor: pointer;
+    display: none;
 }
 #instruction {
     padding: 3px 0px;
@@ -1317,7 +1303,7 @@ img {
     box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
     overflow: hidden;
     float: left;
-    margin-right: 15px;
+    margin-right: 10px;
     margin-top:25px;
     background-color: #FFF;
 }
@@ -1335,7 +1321,7 @@ img {
 }
 #award-info {
     float: left;
-    width: 120px;
+    width: 135px;
     margin-top: 25px;
     text-align: left;
 }

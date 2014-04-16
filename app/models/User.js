@@ -40,7 +40,10 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             logout: function(){
                 $.removeCookie("userId");
+                $.removeCookie("userId",{path:"/"});
+                $.removeCookie("userId",{path:"/aa"});
                 Backbone.history.navigate("", { trigger: false, replace: false });
+                window.location.reload();
             },
             checkLogin: function () {
                 return this.has("userId");
@@ -108,11 +111,17 @@ define(["jquery", "backbone", "models/Card", "Utils"],
 
                     dataType: "json",
                     success: function (data, textStatus, jqXHR) {
-                        self.parseUserdata(data);
-                        self.set("hasData", true);
-                        if (options && options.success) {
-                            options.success();
+
+                        if( !data.userId || data.userId < 0 ) {
+                            Backbone.history.navigate("logout", { trigger: true, replace: false });
+                        } else {
+                            self.parseUserdata(data);
+                            self.set("hasData", true);
+                            if (options && options.success) {
+                                options.success();
+                            }
                         }
+                        
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         self.set("hasData", false);

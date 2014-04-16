@@ -72,6 +72,7 @@ define(["jquery", "backbone", "animationscheduler", "Utils"],
             },
             onClickExit: function (e) {
                 $.removeCookie("userId");
+                Backbone.history.navigate("", { trigger: false, replace: false });
                 window.location.reload();
             },
             share: function () {

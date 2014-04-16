@@ -478,24 +478,38 @@ img {
     font-size: 1.5em;
     padding: 0.5em 0;
 }
-.leaderboard-rank {
+.leaderboard-rank,.leaderboard-avatar {
     display: inline-block;
     width: 25px;
     height: 25px;
     line-height: 25px;
     text-align: center;
     font-size: 16px;
-    border-radius: 50%;
-    color: #1a2b4d;
-    background: #FFF;
+    
     position: absolute;
     right: 8px;
     top: 10px;
     overflow: hidden;
 }
-
+.leaderboard-rank {
+    right:4px;
+    color: #FFF;
+}
+.leaderboard-avatar {
+    border-radius: 50%;
+    color: #1a2b4d;
+    background: #FFF;
+}
+.leaderboard-col0 {
+    width: 14%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+    position: relative;
+    top: 5px;
+}
 .leaderboard-col1 {
-    width: 15%;
+    width: 10%;
     height: 100%;
     display: inline-block;
     position: relative;
@@ -503,14 +517,14 @@ img {
     top: 5px;
 }
 .leaderboard-col2 {
-    width: 45%;
+    width: 40%;
     height: 100%;
     display: inline-block;
     float: left;
     overflow: hidden;
 }
 .leaderboard-col3 {
-    width: 35%;
+    width: 31%;
     height: 100%;
     display: inline-block;
     float: left;
@@ -541,7 +555,7 @@ img {
     
 }
 .leaderboard-me .leaderboard-rank {
-    background: #f7cf2b;
+    color: #f7cf2b;
 }
 .leaderboard-me .leaderboard-gamePlayed {
     color: #f7cf2b; 

@@ -2,13 +2,15 @@
     <ul class="leaderboard-list">
     
         <li class="leaderboard-item leaderboard-header">
+            <div class="leaderboard-col0"></div>
             <div class="leaderboard-col1"></div>
             <div class="leaderboard-col2">用户</div>
             <div class="leaderboard-col3">总积分</div>
         </li>
         {{#accumulatePointsRankList}}
         <li class="leaderboard-item">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span><span class="icon-crown"></span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{rankId}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span><span class="icon-crown"></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
             <div class="leaderboard-inspire">恭喜你，去巴西指日可待！</div>
@@ -19,7 +21,8 @@
         {{^accumulateLeader}}
         <li class="leaderboard-item leaderboard-more">...</li>
         <li class="leaderboard-item leaderboard-me leaderboard-smallRank">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{accumulatePointsRanking}}</span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{accumulatePointsRanking}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{userName}}</span><span class="leaderboard-gamePlayed">挑战次数:{{accumulateGamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{accumulatePoints}}</div></div>
             <div class="leaderboard-inspire">距离去巴西还差{{accumulatePointsGap}}分，加油啊</div>
@@ -41,7 +44,8 @@
         </li>
         {{#dribbleGameRankList}}
         <li class="leaderboard-item">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span><span class="icon-crown"></span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{rankId}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span><span class="icon-crown"></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
             <div class="icon-me"></div>
@@ -51,7 +55,8 @@
         {{^dribbleGameLeader}}
         <li class="leaderboard-item leaderboard-more">...</li>
         <li class="leaderboard-item leaderboard-me leaderboard-smallRank">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{dribbleGameRanking}}</span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{dribbleGameRanking}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{userName}}</span><span class="leaderboard-gamePlayed">挑战次数:{{dribbleGamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{dribbleGameScore}}</div></div>
             <div class="icon-me"></div>
@@ -72,7 +77,8 @@
         </li>
         {{#passGameRankList}}
         <li class="leaderboard-item">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span><span class="icon-crown"></span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{rankId}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span><span class="icon-crown"></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
             <div class="icon-me"></div>
@@ -82,7 +88,8 @@
         {{^passGameLeader}}
         <li class="leaderboard-item leaderboard-more">...</li>
         <li class="leaderboard-item leaderboard-me leaderboard-smallRank">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{passGameRanking}}</span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{passGameRanking}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{userName}}</span><span class="leaderboard-gamePlayed">挑战次数:{{passGamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{passGameScore}}</div></div>
             <div class="icon-me"></div>
@@ -103,7 +110,8 @@
         </li>
         {{#shootGameRankList}}
         <li class="leaderboard-item">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{rankId}}</span><span class="icon-crown"></span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{rankId}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span><span class="icon-crown"></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{name}}</span><span class="leaderboard-gamePlayed">挑战次数:{{gamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{score}}</div></div>
             <div class="icon-me"></div>
@@ -113,7 +121,8 @@
         {{^shootGameLeader}}
         <li class="leaderboard-item leaderboard-more">...</li>
         <li class="leaderboard-item leaderboard-me leaderboard-smallRank">
-            <div class="leaderboard-col1"><span class="leaderboard-rank">{{shootGameRanking}}</span></div>
+            <div class="leaderboard-col0"><span class="leaderboard-rank">{{shootGameRanking}}</span></div>
+            <div class="leaderboard-col1"><span class="leaderboard-avatar"><img src="{{headImageUrl}}" /></span></div>
             <div class="leaderboard-col2"><span class="leaderboard-name">{{userName}}</span><span class="leaderboard-gamePlayed">挑战次数:{{shootGamePlayed}}</span></div>
             <div class="leaderboard-col3"><div class="leaderboard-score">{{shootGameScore}}</div></div>
             <div class="icon-me"></div>

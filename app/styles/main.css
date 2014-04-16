@@ -482,10 +482,9 @@ img {
     display: inline-block;
     width: 25px;
     height: 25px;
-    line-height: 25px;
+
     text-align: center;
-    font-size: 16px;
-    
+  
     position: absolute;
     right: 8px;
     top: 10px;
@@ -494,11 +493,16 @@ img {
 .leaderboard-rank {
     right:4px;
     color: #FFF;
+    font-size: 16px;
+    line-height: 25px;  
 }
 .leaderboard-avatar {
     border-radius: 50%;
     color: #1a2b4d;
     background: #FFF;
+}
+.leaderboard-avatar img {
+    vertical-align: top;
 }
 .leaderboard-col0 {
     width: 14%;
@@ -2778,9 +2782,9 @@ margin-left: 50px;
     display: none!important;
 }
 #qrcode {
-    width: 120px;
+    width: 129px;
     position: fixed;
-    top: -150px;
+    top: -159px;
     background: #c01f2e;
     border-radius: 5px;
     color: #fff;

@@ -132,6 +132,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 e.gesture.stopPropagation(); 
                 e.gesture.stopDetect();
                 var self = this;
+                $(window).unbind("scroll");
                 $(this.scrollTag).animate({
                     scrollTop:0
                 },500,

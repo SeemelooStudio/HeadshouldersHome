@@ -46,12 +46,13 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
             postRender: function () {
                 var top = $("#leaderboard-main").offset().top - 50;
                 var self = this;
+                var $win = $(window);
+                $win.unbind("scroll");
                 $(self.scrollTag).animate({
                     scrollTop: top
                 }, 500, function () {
                     //scroll up
-                    $(window).on("scroll", function () {
-                        var $win = $(window);
+                    $win.on("scroll", function () {
                         if ($win.scrollTop() < (top - 150)) {
                             $(self.scrollTag).animate({
                                 scrollTop: 0

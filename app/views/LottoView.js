@@ -17,10 +17,10 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
             },
             // View Event Handlers
             events: {
-                "touch #lottoBackHome":"onClickBack",
-                "touch #envelope-sealing" :"onClickCard",
-                "touch #btnAwardOK":"onClickAwardOK",
-                "touch #btnLottoHistory" : "onClickLottoHistory"
+                "tap #lottoBackHome":"onClickBack",
+                "tap #envelope-sealing" :"onClickCard",
+                "tap #btnAwardOK":"onClickAwardOK",
+                "tap #btnLottoHistory" : "onClickLottoHistory"
             },
             render: function(){
                 this.template = _.template(template, {});
@@ -171,7 +171,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 if ( !Utils.validatePhone(this.phone) ) {
                     Utils.showError("请填写正确的电话号码<br />例如：<br />手机号：13100000000<br />座机号：010-86000000<br />0591-2600000-3213等", null, function(){
                         self.$el.find("#phone").focus();
-                    });
+                    }); 
                     return false;
                 } 
                 if ( !Utils.validateAddress(this.shippingAddress) ) {

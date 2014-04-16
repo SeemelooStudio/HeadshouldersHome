@@ -207,7 +207,21 @@ img {
     background-size: 120px 50px;    
 }
 #exitLink {
-    display: none;
+    display: block;
+    position: absolute;
+    color: #fff;
+    text-align: right;
+    border-radius: 5px;
+    background: #c01f2e;
+    left: 50%;
+    margin-left: 40px;
+    line-height: 15px;
+    height: 15px;
+    padding: 5px 8px;
+    font-size: 14px;
+    top: 25px;
+    display: block;
+    cursor: pointer;
 }
 #instruction {
     padding: 3px 0px;

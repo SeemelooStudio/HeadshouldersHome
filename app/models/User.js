@@ -30,6 +30,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     this.fetchDataByUserId({
                         userId: cookieId
                     });
+                    Backbone.history.navigate("", { trigger: false, replace: false });
                 }
                 if (Utils.isWechat()) {
                     this.wechatLogin();
@@ -41,7 +42,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 return this.has("userId");
             },
             checkCoupon: function () {
-                if (this.has("numOfCoupons") && this.get("numOfCoupons") > this.get("cardPrice")) {
+                if (this.has("numOfCoupons") && this.get("numOfCoupons") > (this.get("cardPrice") - 1)) {
                     return true;
                 } else {
                     return false;

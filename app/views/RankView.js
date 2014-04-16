@@ -12,16 +12,16 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
 
                 this.user = options.user;
                 this.model.set(this.user.toJSON());
-                
-                if ( Utils.ieMsie() ) {
-                    this.scrollTag = "html";  
+
+                if (Utils.ieMsie()) {
+                    this.scrollTag = "html";
                 } else {
                     this.scrollTag = "body";
                 }
-                
+
                 this.listenTo(this, "render", this.postRender);
                 this.render();
-                
+
             },
 
             events: {
@@ -34,7 +34,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
                 var accumulateList = this.model.get("accumulatePointsRankList");
                 var scoreGap = accumulateList[accumulateList.length - 1].score - this.user.get("accumulatePoints");
                 this.model.set("accumulatePointsGap", scoreGap);
-
+                console.log(this.model.toJSON());
                 this.$el.html(Mustache.render(this.template, this.model.toJSON()));
 
                 this.trigger("render");
@@ -48,21 +48,21 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
                 var self = this;
                 $(self.scrollTag).animate({
                     scrollTop: top
-                }, 500, function(){
+                }, 500, function () {
                     //scroll up
-                    $(window).on("scroll", function() {
-                       var $win = $(window);
-                       if ($win.scrollTop()  < (top - 150 ) ) {
-                           $(self.scrollTag).animate({
-                                scrollTop:0
-                            },500,
-                            function(){
+                    $(window).on("scroll", function () {
+                        var $win = $(window);
+                        if ($win.scrollTop() < (top - 150)) {
+                            $(self.scrollTag).animate({
+                                scrollTop: 0
+                            }, 500,
+                            function () {
                                 $("#leaderboard").removeClass("expand");
                                 $(".leaderboardPrize").hide();
                                 Backbone.history.navigate("", { trigger: false, replace: true });
                             });
                             $win.unbind("scroll");
-                       } 
+                        }
                     });
                 }
                 );

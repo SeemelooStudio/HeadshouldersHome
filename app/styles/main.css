@@ -478,23 +478,38 @@ img {
     font-size: 1.5em;
     padding: 0.5em 0;
 }
-.leaderboard-rank {
+.leaderboard-rank,.leaderboard-avatar {
     display: inline-block;
     width: 25px;
     height: 25px;
     line-height: 25px;
     text-align: center;
     font-size: 16px;
-    border-radius: 50%;
-    color: #1a2b4d;
-    background: #FFF;
+    
     position: absolute;
     right: 8px;
     top: 10px;
     overflow: hidden;
 }
+.leaderboard-rank {
+    right:4px;
+    color: #FFF;
+}
+.leaderboard-avatar {
+    border-radius: 50%;
+    color: #1a2b4d;
+    background: #FFF;
+}
+.leaderboard-col0 {
+    width: 14%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+    position: relative;
+    top: 5px;
+}
 .leaderboard-col1 {
-    width: 15%;
+    width: 10%;
     height: 100%;
     display: inline-block;
     position: relative;
@@ -502,14 +517,14 @@ img {
     top: 5px;
 }
 .leaderboard-col2 {
-    width: 45%;
+    width: 40%;
     height: 100%;
     display: inline-block;
     float: left;
     overflow: hidden;
 }
 .leaderboard-col3 {
-    width: 35%;
+    width: 31%;
     height: 100%;
     display: inline-block;
     float: left;
@@ -540,7 +555,7 @@ img {
     
 }
 .leaderboard-me .leaderboard-rank {
-    background: #f7cf2b;
+    color: #f7cf2b;
 }
 .leaderboard-me .leaderboard-gamePlayed {
     color: #f7cf2b; 
@@ -970,7 +985,8 @@ img {
     display: inline-block;
     width: 50%;
     font-size: 10px;
-    text-align: center;    
+    text-align: center;  
+    position: relative;  
 }
 
 .lottoAward-img {
@@ -990,6 +1006,17 @@ img {
     padding: 3px 0;
     width: 95%;
 }
+.lottoAward-more {
+    position: absolute;
+    right: 2px;
+    top: -5px;
+    background: #00419c;
+    color: #FFF;
+    font-size: 10px;
+    padding: 2px 5px;
+    border: 1px solid #221417;
+    border-radius: 10px;
+}
 
 @-webkit-keyframes float {
   0% {
@@ -1007,7 +1034,10 @@ img {
     transform: translateY(0);
   }
 }
-
+#award-desc em {
+    color: #ffd800;
+    font-size: 1.2em;
+}
 @keyframes float {
   0% {
     -webkit-transform: translateY(0);
@@ -1031,6 +1061,11 @@ img {
 .float {
   -webkit-animation: float 1s infinite; /* Safari 4+ */
   animation:         float 1s infinite; /* IE 10+ */
+
+}
+.tinyFloat {
+  -webkit-animation: float 1s 2; /* Safari 4+ */
+  animation:         float 1s 2; /* IE 10+ */
 
 }
 @-webkit-keyframes rotate {
@@ -1198,6 +1233,7 @@ img {
     left: 0;
   }
 }
+
 .opencard #envelope-cover{
   -webkit-animation: opencard 2s ; /* Safari 4+ */
   animation:opencard 2s ; /* IE 10+ */
@@ -1491,7 +1527,7 @@ textarea.form-control {
 #userRank {
     position: absolute;
     left: 33px;
-    top:22px;
+    top:23px;
     font-size: 8px;
     color: #fff;
 }
@@ -1502,7 +1538,7 @@ textarea.form-control {
 #userAward {
     position: absolute;
     right: 5px;
-    top:35px;
+    top:30px;
     padding: 0 5px;
     height: 18px;
     overflow: hidden;
@@ -2038,6 +2074,10 @@ display: none;
     letter-spacing: -1px;
     margin: 1em 0 2em;
 }
+#ruleMain big {
+    font-size: 1.4em;
+    line-height: 2em;
+}
 @media only screen and (min-width: 340px) {
     .sideLine {
         position: fixed;
@@ -2439,8 +2479,8 @@ display: none;
     font-size: 18px;
     line-height: 28px;
     height: 28px;
-    top:75px;
-    right: 25px;
+    top:70px;
+    right: 15px;
     padding: 0 8px;
 }
 #gameHelp img {
@@ -2499,6 +2539,7 @@ display: none;
 }
 #userCoupon {
     line-height: 24px;
+    vertical-align: top;
 }
 #plane:hover #userCoupon {
     color: #0454b7;

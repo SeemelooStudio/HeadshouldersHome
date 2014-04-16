@@ -3,7 +3,9 @@ var Utils = {
     default: {
       shareImage:"app/img/logo.png",
       shareUrl:"http://quiz.seemeloo.com/aa",
-      shareTag:"#海飞丝巴西实力挑战赛# "
+      shareTag:"#海飞丝巴西实力挑战赛# ",
+      weiboAppKey:2081808740,
+      weiboRelateUid:"海飞丝实力派"
     },
     animationEndTrigger:"webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend",
     isWechat: function() {
@@ -26,7 +28,7 @@ var Utils = {
         if ( this.isWechat() ) {
             $("#shareOverlay").show();
         } else {
-            shareString = "title=" + title + "&url=" + window.location.href + pic;
+            shareString = "title=" + title + "&url=" + window.location.href + pic + "&appkey=" + this.default.weiboAppKey + "&ralateUid=" + this.default.weiboRelateUid;
             window.open("http://v.t.sina.com.cn/share/share.php?" + shareString);
         }      
     },

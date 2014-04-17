@@ -14,7 +14,7 @@ require.config({
     "animationscheduler":"../vendor/animationScheduler",
     "crafty":"../vendor/bower/crafty/dist/crafty",
     "jquerycookie":"../vendor/bower/jquery-cookie/jquery.cookie",
-    "jquery.xdomainrequest":"../vendor/jquery.xdomainrequest.min"
+    "cypher":"../vendor/cipher"
   },
 
   shim: {

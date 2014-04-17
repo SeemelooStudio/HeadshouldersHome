@@ -1,6 +1,6 @@
 // Rank.js
 
-define(["jquery", "backbone"],
+define(["jquery", "backbone","cypher"],
 
     function ($, Backbone) {
         var GameConfig = {
@@ -73,7 +73,10 @@ define(["jquery", "backbone"],
                             "sceneName":"PassGame"
                             });
                         break;
+                        
+                    
                 }
+                
                 this.set({
                     "gameTypeId": options.gameTypeId,
                     "originTotalRanking": options.user.get("accumulatePointsRanking"),
@@ -126,23 +129,29 @@ define(["jquery", "backbone"],
             },
             submitResult: function (options) {
                 var self = this;
+                var resultString;
                 if ( this.originGameId == this.get("gameId") ) {
                     //is Submitted
                     $("#loading").hide();
                     return;
                 } else {
-                    self.originGameId = self.get("gameId");
-                    $.ajax({
-                        url: "http://192.168.1.105:8008/footballgameservice/Games",
-                        //url: "app/data/gameresult.json",
-                        dataType: "json",
-                        data: JSON.stringify({
+                    self.originGameId = self.get("gameId");                    
+                    resultString = JSON.stringify({
                             gameId: self.get("gameId"),
                             gameTypeId: self.get("gameTypeId"),
                             userId: self.get("userId"),
                             score: self.get("score"),
                             numOfCoupons: self.get("coupon") - self.get("originCoupon")
-                        }),
+                    });
+                    
+                    var ciphered = { stream: { value: resultString }, key: { value: this.originGameId + "" } };
+                    encipher(ciphered);
+
+                    $.ajax({
+                        url: "http://192.168.1.105:8008/footballgameservice/Games",
+                        //url: "app/data/gameresult.json",
+                        dataType: "json",
+                        data: ciphered.stream.value,
                         type: 'PUT',
                         contentType: "application/json; charset=utf-8",
                         success: function (data, textStatus, jqXHR) {

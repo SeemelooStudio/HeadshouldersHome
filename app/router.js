@@ -22,6 +22,7 @@ define(function(require, exports, module) {
   var gameView = null;
   
   var RuleView = require("views/RuleView");
+  var ruleView;
   
   //models
   var User = require("models/User");
@@ -58,7 +59,11 @@ define(function(require, exports, module) {
         prepareView.render();
         user.syncData();
         mainView.showHeader(function(){
-            startView = new StartView({ user: user });
+            if ( startView ) {
+                startView.initialize({ user: user });
+            } else {
+                startView = new StartView( { user: user });
+            }
         });
         
     },
@@ -106,7 +111,12 @@ define(function(require, exports, module) {
         prepareView.render();
         user.syncData();
         mainView.hideHeader(function(){
-            lottoView = new LottoView( { model: user });
+            if ( lottoView ) {
+                lottoView.initialize();
+            } else {
+                lottoView = new LottoView( { model: user });
+            }
+            
         });
         
     },
@@ -117,7 +127,11 @@ define(function(require, exports, module) {
         prepareView.render();
         user.syncData();
         mainView.hideHeader(function(){
-            lottoHistoryView = new LottoHistoryView( { collection:lottoHistory, user: user });
+            if ( lottoHistoryView ) {
+                lottoHistoryView.initialize({ collection:lottoHistory, user: user });
+            } else {
+                lottoHistoryView = new LottoHistoryView( { collection:lottoHistory, user: user });
+            }
 
         });
     },
@@ -143,7 +157,11 @@ define(function(require, exports, module) {
         });
     },
     rule: function() {
-        var ruleView = new RuleView();
+        if ( ruleView ) {
+            ruleView.initialize();
+        } else {
+            ruleView = new RuleView();
+        }
     }
   });
 });

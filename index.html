@@ -81,7 +81,7 @@
         <img src="app/img/qrcode.jpg" />
     </div>
     <div class="qrcodeTxt">
-     千万别点这里
+     千万别摸这儿
     </div>
   </div>
   <!--[if lt IE 10]>
@@ -103,6 +103,13 @@
     </div>
   </div>
   <![endif]-->
+  <script>
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.call('showOptionMenu');
+        document.getElementsByTagName('body')[0].setAttribute("class", "wechat");
+    });
+    
+  </script>
   <!-- Application source. -->
   <!-- build:[src] source.min.js -->
   <script data-main="/app/main" src="/vendor/bower/requirejs/require.js"></script>

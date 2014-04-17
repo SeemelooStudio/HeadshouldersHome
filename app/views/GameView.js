@@ -271,7 +271,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 } else {
                     this.Game.pause();
                     this.isGameover = true;
-                    if ( this.model.get("coupon") > this.reviveCouponNum ) {
+
+                    if ( this.model.get("coupon") > this.reviveCouponNum && !Utils.isWindowsPhone() ) {
                         Utils.showConfirm({
                             title: "好可惜啊！",
                             content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",

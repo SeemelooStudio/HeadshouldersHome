@@ -65,7 +65,6 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                             $("#loading").hide();
                             self.card = card;
                             self.cardView = new CardView({ model: card });
-                            console.log(self.card);
                             self.openCard();                    
                         },
                         error: function(erroMessage) {

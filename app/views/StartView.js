@@ -34,7 +34,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
-                if ( Utils.ieMsie() ) {
+                if ( Utils.isMsie() ) {
                     this.scrollTag = "html";  
                 } else {
                     this.scrollTag = "body";

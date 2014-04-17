@@ -16,6 +16,7 @@
 }
 html {
     height: 100%;
+    -ms-overflow-y: scroll;
 }
 body {
     background: #348314 url(../../app/img/grass.png);
@@ -207,6 +208,21 @@ img {
     background-size: 120px 50px;    
 }
 #exitLink {
+    position: absolute;
+    color: #fff;
+    text-align: right;
+    border-radius: 5px;
+    background: #c01f2e;
+    left: 5%;
+    line-height: 15px;
+    height: 15px;
+    padding: 2px 5px;
+    font-size: 10px;
+    top: 25px;
+    display: block;
+    cursor: pointer;
+}
+.wechat #exitLink {
     display: none;
 }
 #instruction {

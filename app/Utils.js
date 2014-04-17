@@ -10,7 +10,9 @@ var Utils = {
     animationEndTrigger:"webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend",
     isWechat: function() {
         var ua = navigator.userAgent.toLowerCase();
-        if(ua.match(/MicroMessenger/i)=="micromessenger") {
+        if ( $("body").hasClass("wechat") ) {
+            return true;
+        } else if(ua.match(/MicroMessenger/i)=="micromessenger") {
             return true;
         } else {
             return false;
@@ -98,12 +100,12 @@ var Utils = {
             e.gesture.preventDefault();
             e.gesture.stopPropagation(); 
             e.gesture.stopDetect();
-            console.log("here");
             
             $("#confirm").hide();
             if (options.ok) {
                 options.ok();
             }
+            $("#confirmCancel").unbind("tap");
         });
         $("#confirmCancel").one("tap", function(e){
             e.gesture.preventDefault();
@@ -141,7 +143,7 @@ var Utils = {
             return true;
         }
     },
-    ieMsie: function(){
+    isMsie: function(){
               var ua = window.navigator.userAgent;
               var msie = ua.indexOf ( "MSIE " );
         
@@ -150,9 +152,16 @@ var Utils = {
               else                 // If another browser, return 0
               {   return false;}
         
+    },
+    isWindowsPhone: function() {
+        if ( navigator.userAgent.match(/Windows Phone/i)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
-  
+
 return Utils;
 
 });

@@ -42,6 +42,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 $.removeCookie("userId");
                 $.removeCookie("userId",{path:"/"});
                 $.removeCookie("userId",{path:"/aa"});
+                $.removeCookie("userId",{path:"http://hfsshili.app.social-touch.com/"});
+                $.removeCookie("userId",{path:"http://quiz.seemeloo.com/aa/"});
                 Backbone.history.navigate("", { trigger: false, replace: false });
                 window.location.reload();
             },
@@ -63,7 +65,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             wechatLogin: function () {
 
-              //  window.location.href = window.location.origin + window.location.pathname + "#login/3";
+                //window.location.href = window.location.origin + window.location.pathname + "#login/3";
 
                 window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx98d5949213c73fa2&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             },

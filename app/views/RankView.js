@@ -13,7 +13,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
                 this.user = options.user;
                 this.model.set(this.user.toJSON());
 
-                if (Utils.ieMsie()) {
+                if (Utils.isMsie()) {
                     this.scrollTag = "html";
                 } else {
                     this.scrollTag = "body";

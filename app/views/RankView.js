@@ -34,7 +34,6 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
                 var accumulateList = this.model.get("accumulatePointsRankList");
                 var scoreGap = accumulateList[accumulateList.length - 1].score - this.user.get("accumulatePoints");
                 this.model.set("accumulatePointsGap", scoreGap);
-                console.log(this.model.toJSON());
                 this.$el.html(Mustache.render(this.template, this.model.toJSON()));
 
                 this.trigger("render");

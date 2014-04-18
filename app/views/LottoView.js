@@ -30,7 +30,7 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                 return this;                
             },
             postRender: function() {
-                Utils.setPageTitle("#海飞丝巴西实力挑战赛#好基友！好姐妹！看到这些请擦干口水！梅西签名球衣、海飞丝洗发水、神秘奖品，玩玩游戏动动手指就是你的，今天会中什么呢？来玩了就知道咯！");
+                Utils.setPageTitle("玩玩游戏就有机会抱走梅西签名球衣，求分人品！");
                 this.isEnvelopeSealed = true;            
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#lotto"));
                 this.mainAnimationScheduler.animateIn();
@@ -105,9 +105,9 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                     $(this).find("#award-address,#award-action").fadeIn();
                 });
                 if ( isWon ) { 
-                   Utils.setPageTitle("#海飞丝巴西实力挑战赛# 小手一抖，奖品拿走，我在海飞丝足球游戏中赢得了奖品"+ this.card.get("prizeName") +"。羡慕嫉妒恨？不如和我一起玩游戏赢奖品~");
+                   Utils.setPageTitle("我在海飞丝足球实力赛中赢得了奖品"+ this.card.get("prizeName") +"。良心手游诚不我欺！");
                 } else {
-                   Utils.setPageTitle("#海飞丝巴西实力挑战赛# 苍天哪~大地哪~干爹赐我一点手气吧~");
+                   Utils.setPageTitle("人品哪去了？竟然没中奖！为了梅西签名球衣，再战！");
                 }
                 
             },

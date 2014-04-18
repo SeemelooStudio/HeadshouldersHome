@@ -5,21 +5,21 @@ define(["jquery", "backbone","cypher"],
     function ($, Backbone) {
         var GameConfig = {
             badScoreLine : 6,
-            dribble_share_default_text: "",
-            dribble_share_result_text_begin:"我竟然晃过了",
-            dribble_share_result_text_end:"个足坛巨星！你也过得去算你NB！",
-            dribble_bad_text:"难过史了!!",
-            dribble_good_text:"NB不是一两天!",
-            pass_share_default_text: "",
-            pass_share_result_text_begin:"我竟然传出",
-            pass_share_result_text_end:"脚绝妙传球！你行么？",
+            dribble_share_default_text: "面对球场巨星，过得去算你NB，最NB的免费游巴西！",
+            dribble_share_result_text_begin:"球星都得跪！我晃过了",
+            dribble_share_result_text_end:"个足坛巨星！NB不？求挑战！",
+            dribble_bad_text:"难过shi了！！",
+            dribble_good_text:"NB不是一两天！",
+            pass_share_default_text: "为了赢巴西游，我在玩传球游戏，传得根本停不下来！",
+            pass_share_result_text_begin:"我传出",
+            pass_share_result_text_end:"脚绝妙传球！预感要被巴萨签约了！",
             pass_bad_text:"传你妹阿!!",
             pass_good_text:"NB不是一两天!",
-            shoot_share_default_text: "",
-            shoot_share_result_text_begin:"面对足坛巨星的围追堵截，过得去算你NB。我刚刚在带球游戏中获得了",
-            shoot_share_result_text_end:"积分 [奥特曼] 有信心比我更NB，超过我的成绩吗？",
-            shoot_bad_text:"难过史了!!",
-            shoot_good_text:"好NB呀!!"
+            shoot_share_default_text: "别忍着，尽情射！足球射门游戏，射中最多就赢免费巴西游！",
+            shoot_share_result_text_begin:"我在游戏中射中了",
+            shoot_share_result_text_end:"次球门！把球网都射疼了，你行么？",
+            shoot_bad_text:"往哪儿射呢？！",
+            shoot_good_text:"NB不是一两天！"
         };
         var Game = Backbone.Model.extend({
             defaults: {

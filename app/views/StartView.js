@@ -62,7 +62,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
             },
             postRender: function() {
                 var self = this;
-                Utils.setPageTitle("#海飞丝巴西实力挑战赛#大家快来看这里！我发现了一个炒鸡逗比的游戏！听这名字“过得去算你NB”就感觉充满了恶意，最牛的还能赢巴西游，不服输的你们怎么能不来玩玩呢？");              
+                Utils.setPageTitle("来跟梅西一起挑战绿茵场，玩得够牛还能赢巴西游！");              
                 this.lottoAnimationScheduler = new AnimationScheduler(this.$el.find("#user,#rule,#plane"));
                 this.btnAnimationScheduler = new AnimationScheduler(this.$el.find(".gameButton"), {"isSequential":true,"sequentialDelay":350});
                 $("#share").show();

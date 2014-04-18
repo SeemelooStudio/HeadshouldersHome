@@ -18,6 +18,8 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.reviveCouponNum = this.defaultReviveCouponNum;
                 this.isGameover = false;
                 
+                Utils.setPageTitle(this.model.get("shareDefaultText"));
+                
             },
             // View Event Handlers
             events: {
@@ -166,11 +168,11 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
 
                        }
                        if( self.model.get("isBad")) {
-                           Utils.setPageTitle(self.model.get("badText") + self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                           Utils.setPageTitle( self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
                        } else if( self.model.get("isBreakRecord")) {
                            Utils.setPageTitle( self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
                        } else {
-                           Utils.setPageTitle(self.model.get("goodText") + self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                           Utils.setPageTitle(self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
                        }
                        
                        $("#loading").hide();

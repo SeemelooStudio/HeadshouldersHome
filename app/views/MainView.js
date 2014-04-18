@@ -81,6 +81,10 @@ define(["jquery", "backbone", "animationscheduler", "Utils"],
                     success: function (newCouponsCount) {
                         if (newCouponsCount) {
                             Utils.showError("因为分享，小海送给你<span class='lotto-pointsCount'>" + newCouponsCount + "张奖券</span>！<br />现在奖券数<span class='lotto-pointsCount'>" + self.user.get("numOfCoupons") + "张</span>", "ლ（´∀`ლ） 恭喜你");
+                            
+                            if ( $("#userCoupon .lotto-pointsCount").size() > 0 ) {
+                                $("#userCoupon .lotto-pointsCount").text(self.user.get("numOfCoupons"));
+                            }
                         } else {
                             Utils.showError("这次木有奖券送，明天再试试手气会更好！", "( >﹏<。)～ 好遗憾");
                         }

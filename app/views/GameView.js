@@ -168,11 +168,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
 
                        }
                        if( self.model.get("isBad")) {
-                           Utils.setPageTitle( self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
-                       } else if( self.model.get("isBreakRecord")) {
-                           Utils.setPageTitle( self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                           Utils.setPageTitle( self.model.get("shareBadBegin") + self.model.get("score") + self.model.get("shareBadEnd"));
                        } else {
-                           Utils.setPageTitle(self.model.get("shareResultBegin") + self.model.get("score") + self.model.get("shareResultEnd"));
+                           Utils.setPageTitle(self.model.get("shareGoodBegin") + self.model.get("score") + self.model.get("shareGoodEnd"));
                        }
                        
                        $("#loading").hide();

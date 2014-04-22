@@ -13,12 +13,11 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
                 this.user = options.user;
                 this.model.set(this.user.toJSON());
 
-                if (Utils.isMsie()) {
+                if (Utils.isMsie() || Utils.isFirefox() ) {
                     this.scrollTag = "html";
                 } else {
                     this.scrollTag = "body";
                 }
-
                 this.listenTo(this, "render", this.postRender);
                 this.render();
 
@@ -53,15 +52,20 @@ define(["jquery", "backbone", "mustache", "text!templates/Rank.html", "utils"],
                     //scroll up
                     $win.on("scroll", function () {
                         if ($win.scrollTop() < (top - 150)) {
-                            $(self.scrollTag).animate({
+                            if ( $("body").hasClass("disabledScrollDetecting") ) {
+                                return;
+                            } else {
+                                $(self.scrollTag).animate({
                                 scrollTop: 0
-                            }, 500,
-                            function () {
-                                $("#leaderboard").removeClass("expand");
-                                $(".leaderboardPrize").hide();
-                                Backbone.history.navigate("", { trigger: false, replace: true });
-                            });
-                            $win.unbind("scroll");
+                                }, 500,
+                                function () {
+                                    $("#leaderboard").removeClass("expand");
+                                    $(".leaderboardPrize").hide();
+                                    Backbone.history.navigate("", { trigger: false, replace: true });
+                                });
+                                $win.unbind("scroll");
+                            }
+                            
                         }
                     });
                 }

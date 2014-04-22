@@ -1,8 +1,8 @@
 define(["jquery"],function ($) {
 var Utils = {
     default: {
-      shareImage:"app/img/logo.png",
-      shareUrl:"http://quiz.seemeloo.com/aa",
+      shareImage:"app/img/weiboshare.jpg",
+      shareUrl:"http://hfsshili.app.social-touch.com",
       shareTag:"#海飞丝巴西实力挑战赛# ",
       weiboAppKey:2081808740,
       weiboRelateUid:"海飞丝实力派"
@@ -30,7 +30,7 @@ var Utils = {
         if ( this.isWechat() ) {
             $("#shareOverlay").show();
         } else {
-            shareString = "title=" + title + "&url=" + window.location.href + pic + "&appkey=" + this.default.weiboAppKey + "&ralateUid=" + this.default.weiboRelateUid;
+            shareString = "title=" + title + "&url=" + encodeURIComponent(window.location.href) + pic + "&appkey=" + this.default.weiboAppKey + "&ralateUid=" + encodeURIComponent(this.default.weiboRelateUid);
             window.open("http://v.t.sina.com.cn/share/share.php?" + shareString);
         }      
     },
@@ -159,6 +159,9 @@ var Utils = {
         } else {
             return false;
         }
+    },
+    isFirefox: function() {
+        return typeof InstallTrigger !== 'undefined';
     }
 };
 

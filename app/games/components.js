@@ -494,6 +494,9 @@ Crafty.c('DribbleController', {
 			{
 				this.x = Game.player_bound_right() - this.avatar.width();
 			}
+			if ( this._y < 20 ) {
+                this.y = 20;
+			}
 
 			// detect player direction based on dragging
 			if (this._x > this.lastDragX)

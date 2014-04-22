@@ -23,26 +23,6 @@
 </div><!--/container-->
 
       <div  id="gameNavigation">
-      <!--
-      <div id="ruleButton" data-entranceAnimation="slideInLeft" >
-            <div class="ruleButton-inner">
-              <div id="user">
-                <div id="user-avatar">
-                <img src="{{headImageUrl}}" />
-                </div>
-              </div>
-                <img id="ruleImgLeft" src="app/img/rule-left.png" />
-                <img id="ruleImgRight" src="app/img/rule-right.png" />
-                <img class="gameButton-img" src="app/img/luckytxt.png" />
-                <div id="ruleLinkLeft"><i class="fa fa-chevron-down fa-lg"></i></div>
-                <div id="ruleLinkRight"><i class="fa fa-chevron-right fa-lg"></i></div>
-                <div id="ruleLeft">游戏赢巴西游</div>
-                <div id="ruleRight">抽奖抢梅西球衣</div>
-                
-                
-            </div>
-        </div>
-        -->
       {{#dribbleGame.enabled}}
       <div class="gameButton" id="gameButton-dribble" data-entranceAnimation="slideInLeft"  data-target="gameDribble">
             <div class="gameButton-innner">
@@ -116,6 +96,7 @@
             </div>
         </div>
         {{/shootGame.enabled}}
+        
       </div><!-- #gameNavigation -->
 
 
@@ -140,13 +121,13 @@
                             <div class="topCaret"></div>
                             <div class="bottomCaret"></div>
                         </li>
-                        
+                        <!--
                         <li class="leaderboard-button" id="leaderboard-buttonPass"  data-type="pass">
                             传球榜
                             <div class="topCaret"></div>
                             <div class="bottomCaret"></div>
                         </li>
-                        <!--
+                        
                         <li class="leaderboard-button" id="leaderboard-buttonShoot"  data-type="shoot">
                             射门榜
                             <div class="topCaret"></div>
@@ -159,6 +140,9 @@
                     </div>
             </div>
     <div id="backHome"><img src="app/img/backhome.png" /></div>
+    <div id="contactButton">
+        微信公众号<br />海飞丝 
+    </div>
     <a id="copyright" href="http://www.head-shoulders.com.cn/" target="_blank">
             <img src="app/img/pg.png" />
     </a>

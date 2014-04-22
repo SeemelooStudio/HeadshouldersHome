@@ -7,6 +7,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Rule.html", "animation
             el: "#main",
             
             initialize: function (options) {
+                this.listenTo(this, "render", this.postRender);
                 this.render();
                 _hmt.push(['_trackPageview', '/Rule']);  
             },
@@ -22,7 +23,14 @@ define(["jquery", "backbone", "mustache", "text!templates/Rule.html", "animation
                 return this;
             },
             postRender: function() {
-
+                if ( window.self !== window.top ) {
+                    var top = this.$el.position().top;
+                    this.$el.find("#ruleMain").css({
+                      "height":$(window).height() - top - 120,
+                      "overflow-y":"scroll"  
+                    });
+                }
+                
             },
             onBackHome: function(e) {
                 e.preventDefault();

@@ -176,9 +176,10 @@ img {
     text-decoration: none;
     display: block;
     position:absolute;
-    bottom: 15px;
+    bottom: 45px;
     right: 15px;
 }
+
 #copyright img {
     max-height: 100%;
 }
@@ -224,6 +225,9 @@ img {
 }
 .wechat #exitLink {
     display: none;
+}
+.wechat #contactButton {
+    display: block;
 }
 #instruction {
     padding: 3px 0px;
@@ -2098,6 +2102,24 @@ display: none;
     font-size: 1.4em;
     line-height: 2em;
 }
+#ruleMain em {
+    color:#0454b7;
+    font-weight: bold;
+    font-style: normal;
+}
+#contactButton {
+    width: 100px;
+    text-align: right;
+    color: #fff;
+    font-size: 12px;
+    position:absolute;
+    bottom: 10px;
+    right: 15px;
+    line-height: 14px;
+    height: 28px;
+    display: none;
+
+}
 @media only screen and (min-width: 340px) {
     .sideLine {
         position: fixed;
@@ -2530,13 +2552,14 @@ display: none;
 }
 #userRank {
     left: 60px;
-    top:44px;
+    top:46px;
     font-size: 16px;
 }
 #userCoupon {
     top: 113px;
     font-size: 16px;
     width: 160px;
+    color: #744404;
 }
 #instruction {
     top:170px;
@@ -2556,6 +2579,7 @@ display: none;
 }
 #userRank {
     line-height: 24px;
+    vertical-align: top;
 }
 #userCoupon {
     line-height: 24px;
@@ -2774,6 +2798,8 @@ margin-left: 50px;
 #slogen {
     top:160px;
     font-size: 14px;
+    width: 120px;
+    margin-left:-60px;
 }
 #gameOverDialog {
     top: 200px;

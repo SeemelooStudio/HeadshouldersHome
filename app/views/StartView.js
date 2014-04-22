@@ -12,7 +12,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "passGame": {
                     "id" : 2,
                     "name": "pass",
-                    "enabled": true        
+                    "enabled": false        
                 },
                 "shootGame": {
                     "id" : 3,
@@ -34,7 +34,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 } else {
                     this.listenToOnce(this.user,"onFetchSuccess", this.ready);
                 }
-                if ( Utils.isMsie() ) {
+                if ( Utils.isMsie() || Utils.isFirefox() ) {
+                
                     this.scrollTag = "html";  
                 } else {
                     this.scrollTag = "body";
@@ -93,6 +94,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 Backbone.history.navigate("/rule", { trigger: true, replace: true });
             },
             showLeaderboard: function( leaderboardName ){
+                $(window).unbind("scroll");
                 $("#loading").show();
                 var tabId = "#leaderboard-buttonScore";
                 if ( leaderboardName ) {
@@ -151,7 +153,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                    e.gesture.stopPropagation(); 
                    e.gesture.stopDetect(); 
                 }
-                
+                $("body").addClass("disabledScrollDetecting");
                 var self = this;
                 var tab = $(e.target);
                 var type =tab.attr("data-type");
@@ -167,10 +169,14 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 tab.siblings(".current").removeClass("current");
                 tab.addClass("current");
                 
-                $(".leaderboard-content.current").removeClass("current");
-                $(id).addClass("current animated fadeIn");
+                $(".leaderboard-content.current").removeClass("current").hide();
+                $(id).fadeIn(function(e){
+                    $(id).addClass("current");
+                    $("body").removeClass("disabledScrollDetecting");
+                });
                 
                 Backbone.history.navigate("leaderboard/" + type, { trigger: false, replace: true });
+                //
             },
             onSwipeLeaderboard: function(e) {
                 e.gesture.preventDefault();

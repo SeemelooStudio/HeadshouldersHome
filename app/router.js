@@ -84,7 +84,7 @@ define(function(require, exports, module) {
         
     },
     logout: function(){
-      user.logout();  
+      user.logout();
     },
     leaderboard: function(type) {
         if ( gameView ) {

@@ -477,6 +477,7 @@ Crafty.c('DribbleController', {
 				.onHit('Rabbit', this.hitComponent);
 
 		this.attach(this.avatar);
+		this.bottomLine = Game.height - 110;
 
 		this.bind('StartDrag', function(data) {
 			this.lastDragX = this._x;
@@ -497,7 +498,9 @@ Crafty.c('DribbleController', {
 			if ( this._y < 20 ) {
                 this.y = 20;
 			}
-
+            if ( this._y > this.bottomLine ) {
+                this.y = this.bottomLine;
+            }
 			// detect player direction based on dragging
 			if (this._x > this.lastDragX)
 			{

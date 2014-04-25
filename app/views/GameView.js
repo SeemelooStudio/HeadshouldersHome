@@ -247,18 +247,27 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 
             },
             addScore: function( score ) {
-                this.model.addScore(score);
-                var newScore = this.model.get("score");
-                if ( this.model.get("isBreakRecord") ) {
-                    this.$newRecord.show();
+                if ( this.isGameover ) {
+                    return;
+                } else {
+                    this.model.addScore(score);
+                    var newScore = this.model.get("score");
+                    if ( this.model.get("isBreakRecord") ) {
+                        this.$newRecord.show();
+                    }
+                    this.$score.text( newScore );
+                    Utils.highlight( this.$score, "yellow");
                 }
-                this.$score.text( newScore );
-                Utils.highlight( this.$score, "yellow");
+                
             },
             addCoupon: function( couponCount ) {
-                this.model.addCoupon( couponCount );
-                this.$coupon.text(this.model.get("coupon"));
-                Utils.highlight( this.$coupon, "blue");
+                if ( this.isGameover ) {
+                    return;
+                } else {
+                    this.model.addCoupon( couponCount );
+                    this.$coupon.text(this.model.get("coupon"));
+                    Utils.highlight( this.$coupon, "blue");
+                }
             },
             onClickShare: function() {
                 this.Game.pause();
@@ -267,6 +276,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 var self = this;
                 
                 if ( this.isGameover ) {
+                    this.Game.pause();
                     return;
                 } else {
                     this.Game.pause();

@@ -135,6 +135,14 @@ img {
     line-height: 16px;
     padding: 5px 0;
 }
+#preload {
+    width: 160px;
+    margin-left: -90px;
+}
+#loading-info em {
+    color: #ffd800;
+    font-style: normal;
+}
 #leaderboard-adLeft img{
     width: 82px;
     height: 28px;
@@ -2856,4 +2864,9 @@ margin-left: 50px;
     font-size: 16px;
     letter-spacing: 0;
 }
+
+#loading-info {
+    line-height: 18px;
+}
+
 }

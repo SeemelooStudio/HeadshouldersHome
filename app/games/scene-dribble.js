@@ -11,10 +11,12 @@ Crafty.scene('DribbleGame', function() {
 	self.components = [];
 	self.toBeRemoved = [];
 	self.numOfComponentsGenerated = 0;
+	self.component_generate_interval = Game.configs.component_generate_interval;
 
 	self.resetGame = function() {
 		self.numOfComponentsGenerated = 0;
 		self.elapsedTimeSinceLastGeneration = 0;
+		self.component_generate_interval = Game.configs.component_generate_interval;
 		self.destroyAllComponents();
 	};
 
@@ -54,6 +56,7 @@ Crafty.scene('DribbleGame', function() {
 	self.randomizerStep2 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
 			[self.obstacleCreator, self.amateurCreator, self.worldclassCreator, self.coinCreator],
 			[0.2, 0.35, 0.4]);
+
 
 	var generateSingleComponent = function() {
         var component = null;
@@ -108,15 +111,59 @@ Crafty.scene('DribbleGame', function() {
 		self.components.push(component2);
 		self.numOfComponentsGenerated += 2;
 	};
+	
+	var generateDoublePlayers = function() {
+		var component1;
+		var component2;
+
+        component1 = self.randomizerEven.get()();
+        component2 = self.randomizerEven.get()();
+			
+		component1.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.width / 2 - component1.width()), 
+                y : -50 + Crafty.math.randomNumber(-20, 20)});
+		component2.attr({x : Crafty.math.randomNumber(Game.width / 2, Game.player_bound_right() - component2.width()), 
+                y : -50 + Crafty.math.randomNumber(-20, 20)});
+
+		self.components.push(component1);
+		self.components.push(component2);
+		self.numOfComponentsGenerated += 2;
+    };
+    var generateObstacles = function() {
+		var component1;
+		var component2;
+
+        component1 = self.obstacleCreator();
+        component2 = self.obstacleCreator();
+			
+		component1.attr({x : Crafty.math.randomNumber(Game.player_bound_left(), Game.width / 2 - component1.width()), 
+                y : -50 + Crafty.math.randomNumber(-20, 20)});
+		component2.attr({x : Crafty.math.randomNumber(Game.width / 2, Game.player_bound_right() - component2.width()), 
+                y : -50 + Crafty.math.randomNumber(-20, 20)});
+
+		self.components.push(component1);
+		self.components.push(component2);
+		self.numOfComponentsGenerated += 2;
+    };
 
 	self.generateComponent = function() {
+        self.component_generate_interval = self.numOfComponentsGenerated > 250 ?
+            Game.configs.component_generate_interval_hard : Game.configs.component_generate_interval;
 		if (self.numOfComponentsGenerated < 15)
 		{
             generateSingleComponent();
+            
+		}
+		else if (self.numOfComponentsGenerated < 200)
+		{
+			generateDoubleComponents();
+		} 
+		else if (self.numOfComponentsGenerated < 500)
+		{
+            generateDoublePlayers();
 		}
 		else
 		{
-			generateDoubleComponents();
+            generateObstacles();
 		}
 	};
 
@@ -155,7 +202,7 @@ Crafty.scene('DribbleGame', function() {
 
 	self.onEnterFrame = function(data) {
 		self.elapsedTimeSinceLastGeneration += data.dt;
-        if (self.elapsedTimeSinceLastGeneration >= Game.configs.component_generate_interval)
+        if (self.elapsedTimeSinceLastGeneration >= self.component_generate_interval)
         {
 			self.generateComponent();
 			self.elapsedTimeSinceLastGeneration = 0;

@@ -96,7 +96,8 @@ function ($, Crafty ) {
             rabbit_vertical_speed_per_frame : -20,
 			rabbit_horizontal_speed_per_frame : 10,
 			rabbit_trace_speed_per_frame: 100,
-            component_generate_interval : 1000
+            component_generate_interval : 1000,
+            component_generate_interval_hard: 600
         },
 
 		events: {

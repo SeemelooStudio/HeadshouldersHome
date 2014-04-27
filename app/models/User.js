@@ -16,8 +16,11 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 if (cookieId) {
                     this.setUserId(cookieId);
                 }
+                this.weboLoginUrl = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                this.wechatLoginUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaca4b565bbea999a&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             },
             syncData: function () {
+                _hmt.push(['_trackPageview', '/SyncData']);
                 if (this.checkLogin()) {
                     this.fetchDataByUserId();
                 } else {
@@ -25,13 +28,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             login: function () {
-                var cookieId = $.cookie("userId");
-                if (cookieId) {
-                    this.fetchDataByUserId({
-                        userId: cookieId
-                    });
-                    Backbone.history.navigate("", { trigger: false, replace: false });
-                }
+                _hmt.push(['_trackPageview', '/Login']);
                 if (Utils.isWechat()) {
                     this.wechatLogin();
                 } else {
@@ -44,6 +41,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 $.removeCookie("userId",{path:"/aa"});
                 $.removeCookie("userId",{path:"http://hfsshili.app.social-touch.com/"});
                 $.removeCookie("userId",{path:"http://quiz.seemeloo.com/aa/"});
+                _hmt.push(['_trackPageview', '/Logout']); 
                 Backbone.history.navigate("", { trigger: false, replace: false });
                 window.location.reload();
             },
@@ -58,16 +56,24 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
             },
             weiboLogin: function () {
-                //window.location.href = window.location.origin + window.location.pathname + "#login/3";
 
-                //window.location.href= "https://api.weibo.com/oauth2/authorize?client_id=142432575&response_type=code&redirect_uri=http%3a%2f%2fquiz.seemeloo.com%2ffootballgameservice%2ffootballgameservice%2fusers%2fweibo%2f";
-                window.location.href = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
+                _hmt.push(['_trackPageview', '/Login/Weibo']); 
+                if ( (navigator.userAgent.indexOf('Android') != -1) ) {
+                    document.location.href = this.weboLoginUrl ;
+                } else {
+                    window.location.href = this.weboLoginUrl;
+                }
+                
             },
             wechatLogin: function () {
 
-                //window.location.href = window.location.origin + window.location.pathname + "#login/3";
-
-                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaca4b565bbea999a&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                _hmt.push(['_trackPageview', '/Login/Wechat']); 
+                if ( (navigator.userAgent.indexOf('Android') != -1) ) {
+                    document.location.href = this.wechatLoginUrl ;
+                } else {
+                    window.location.href = this.wechatLoginUrl ;
+                }
+                
             },
             initLeaderSetting: function () {
                 var leadershipRank = 6;
@@ -102,6 +108,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             fetchDataByUserId: function (options) {
                 var self = this;
+                _hmt.push(['_trackPageview', '/SyncData/Fetch']);
                 if (options && options.userId) {
                     this.setUserId(options.userId);
                 }
@@ -122,6 +129,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                             if (options && options.success) {
                                 options.success();
                             }
+                            _hmt.push(['_trackPageview', '/SyncData/Success']);
                         }
                         
                     },
@@ -130,8 +138,9 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                         if (options && options.error) {
                             options.error(textStatus + ": " + errorThrown);
                         } else {
-                            console.log(errorThrown);
+                            alert.log(errorThrown);
                         }
+                        _hmt.push(['_trackPageview', '/Login/Error']);
                     }
                 });
             },
@@ -145,7 +154,6 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 var self = this;
                 var card = new Card();
                 card.fetch({
-
                     data: JSON.stringify({ userId: self.get("userId") }),
                     contentType: "application/json; charset=utf-8",
                     type: 'POST',
@@ -185,7 +193,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                         if (options && options.error) {
                             options.error(textStatus + ": " + errorThrown);
                         } else {
-                            console.log(errorThrown);
+                            alert.log(errorThrown);
                         }
                     }
                 });

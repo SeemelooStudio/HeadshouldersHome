@@ -5,7 +5,7 @@ var Utils = {
       shareUrl:"http://hfsshili.app.social-touch.com",
       shareTag:"#海飞丝巴西实力挑战赛# ",
       weiboAppKey:2081808740,
-      weiboRelateUid:"海飞丝实力派"
+      weiboRelateUid:"1867772587"
     },
     animationEndTrigger:"webkitAnimationEnd mozAnimationEnd oAnimationEnd msAnimationEnd animationEnd animationend",
     isWechat: function() {
@@ -162,6 +162,27 @@ var Utils = {
     },
     isFirefox: function() {
         return typeof InstallTrigger !== 'undefined';
+    },
+    detectCSSFeature: function(featurename){
+        var feature = false,
+        domPrefixes = 'Webkit Moz ms O'.split(' '),
+        elm = document.createElement('div'),
+        featurenameCapital = null;
+    
+        featurename = featurename.toLowerCase();
+    
+        if( elm.style[featurename] !== undefined ) { feature = true; } 
+    
+        if( feature === false ) {
+            featurenameCapital = featurename.charAt(0).toUpperCase() + featurename.substr(1);
+            for( var i = 0; i < domPrefixes.length; i++ ) {
+                if( elm.style[domPrefixes[i] + featurenameCapital ] !== undefined ) {
+                  feature = true;
+                  break;
+                }
+            }
+        }
+        return feature; 
     }
 };
 

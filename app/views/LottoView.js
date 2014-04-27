@@ -97,13 +97,19 @@ define(["jquery", "backbone","mustache", "text!templates/Lotto.html", "animation
                     this.$el.find("#card").addClass("opencard"); 
                 } else {
                     this.$el.find("#card").addClass("opencard notWon"); 
-                }           
-                $('#envelope-cover,#envelope-back,#envelope-front').one(Utils.animationEndTrigger, function(e){
-                    $(e.currentTarget).remove();
-                });
-                $("#envelope-content").one(Utils.animationEndTrigger, function(e) {
-                    $(this).find("#award-address,#award-action").fadeIn();
-                });
+                }
+                if ( Utils.detectCSSFeature("transition") ) {
+                    $('#envelope-cover,#envelope-back,#envelope-front').one(Utils.animationEndTrigger, function(e){
+                        $(e.currentTarget).remove();
+                    });
+                    $("#envelope-content").one(Utils.animationEndTrigger, function(e) {
+                        $(this).find("#award-address,#award-action").fadeIn();
+                    });
+                } else {
+                    $('#envelope-cover,#envelope-back,#envelope-front,#envelope-sealing').remove();
+                    $("#award-address,#award-action").show();
+                }
+                
                 if ( isWon ) { 
                    Utils.setPageTitle("我在海飞丝足球实力赛中赢得了奖品"+ this.card.get("prizeName") +"。良心手游诚不我欺！");
                 } else {

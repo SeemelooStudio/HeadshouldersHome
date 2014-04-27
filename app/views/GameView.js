@@ -119,8 +119,9 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             onClickBackHome: function(e) {
                 var self = this;
                 this.Game.pause();
-                Backbone.history.navigate("", { trigger: false, replace: true });
+                
                 this.mainAnimationScheduler.animateOut(function(){
+                    Backbone.history.navigate("", { trigger: false, replace: true });
                     window.location.reload();
                 });
                 
@@ -282,7 +283,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                     this.Game.pause();
                     this.isGameover = true;
 
-                    if ( this.model.get("coupon") > this.reviveCouponNum && !Utils.isWindowsPhone() ) {
+                    if ( this.model.get("coupon") > this.reviveCouponNum && this.reviveCouponNum < 321 && !Utils.isWindowsPhone() ) {
                         Utils.showConfirm({
                             title: "好可惜啊！",
                             content: "土豪，你愿意花 <span class='lotto-pointsCount'>" + this.reviveCouponNum + "</span>张 奖券继续比赛么？",

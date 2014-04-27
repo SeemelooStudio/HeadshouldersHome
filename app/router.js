@@ -6,6 +6,7 @@ define(function(require, exports, module) {
   require("hammerjs");
   require("jqueryhammer");
   require("jquerycookie");
+  require("jqueryxdomainrequest");
   //views
   var MainView = require("views/MainView");
   var mainView;
@@ -69,7 +70,7 @@ define(function(require, exports, module) {
     },
     login: function(userId) {
         prepareView.render();
-        user.setUserId(userId);
+        _hmt.push(['_trackPageview', '/Login/Success']); 
         user.fetchDataByUserId({
             userId: userId,
             success:function(){

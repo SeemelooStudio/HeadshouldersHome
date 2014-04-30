@@ -237,6 +237,9 @@ img {
 .wechat #contactButton {
     display: block;
 }
+.qzone #contactButton {
+    display: block;
+}
 #instruction {
     padding: 3px 0px;
     border:1px solid #fff;
@@ -2623,6 +2626,9 @@ display: none;
     height: 29px;
     bottom: 20px;
     right: 25px;
+}
+.qzone #copyright {
+    bottom: 45px;
 }
 #exitLink {
     position: absolute;

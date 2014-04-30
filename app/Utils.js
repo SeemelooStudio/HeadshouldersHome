@@ -18,19 +18,42 @@ var Utils = {
             return false;
         }        
     },
+    isQzone: function() {
+        if ( $("body").hasClass("qzone") ){
+            return true;
+        } else {
+            return false;
+        }
+    },
     share: function(pic) {
         var shareString;
-        var title = encodeURIComponent(this.default.shareTag +  $("title").html());
+        var title;
         
         if ( pic ) {
-            pic = "&pic=" + this.default.shareUrl + "/" + pic;
+            pic = this.default.shareUrl + "/" + pic;
         } else {
-            pic = "&pic=" + this.default.shareUrl + "/" + this.default.shareImage;
+            pic = this.default.shareUrl + "/" + this.default.shareImage;
         }
         if ( this.isWechat() ) {
             $("#shareOverlay").show();
+        } else if ( this.isQzone() ){
+            title = $("title").html();
+            var p = {
+                url:location.href,
+                title:title,
+                pics:pic
+            };
+            var s = [];
+            for(var i in p){
+                s.push(i + '=' + encodeURIComponent(p[i]||''));
+            }
+            
+            shareString = s.join('&');
+            window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + shareString);
+            
         } else {
-            shareString = "title=" + title + "&url=" + encodeURIComponent(window.location.href) + pic + "&appkey=" + this.default.weiboAppKey + "&ralateUid=" + encodeURIComponent(this.default.weiboRelateUid);
+            title = encodeURIComponent(this.default.shareTag +  $("title").html());
+            shareString = "title=" + title + "&url=" + encodeURIComponent(window.location.href) + "&pic=" + pic + "&appkey=" + this.default.weiboAppKey + "&ralateUid=" + encodeURIComponent(this.default.weiboRelateUid);
             window.open("http://v.t.sina.com.cn/share/share.php?" + shareString);
         }      
     },

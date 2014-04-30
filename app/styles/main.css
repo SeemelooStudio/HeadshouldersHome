@@ -2842,7 +2842,7 @@ margin-left: 50px;
     text-align: center;
     cursor: pointer;
     left: 15%;
-    display: block;
+    display: none;
 }
 #qrcode:hover {
     top:-5px;

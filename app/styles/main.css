@@ -239,6 +239,7 @@ img {
 }
 .qzone #contactButton {
     display: block;
+    width: 220px;
 }
 #instruction {
     padding: 3px 0px;

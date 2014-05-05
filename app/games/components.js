@@ -420,7 +420,7 @@ Crafty.c('Avatar', {
 		{
 			if (this.facingLeft)
 			{
-				if ( this._x < this.centerX - this.wanderDistance && this._x < Game.ingame_width )
+				if ( this._x < this.centerX - this.wanderDistance  )
 				{
 					this.x = this.centerX - this.wanderDistance;
 					this.faceRight();

@@ -18,7 +18,8 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     "id" : 3,
                     "name": "shoot",
                     "enabled": false            
-                }
+                },
+                "isqzone":true
         });
         var StartView = Backbone.View.extend({
 
@@ -39,6 +40,9 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                     this.scrollTag = "html";  
                 } else {
                     this.scrollTag = "body";
+                }
+                if ( !Utils.isQzone() ) {
+                    this.model.set("isqzone",false);
                 }
                             
             },

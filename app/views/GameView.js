@@ -62,7 +62,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                             self.addCoupon(1);
                         },
                         onCollectCoinPack: function() {
-                            self.addCoupon(3);
+                            self.addCoupon(2);
                         },
                         onPassAmateur: function() {
                             self.addScore(1);

@@ -19,7 +19,7 @@ var Utils = {
         }        
     },
     isQzone: function() {
-        if ( $("body").hasClass("qzone") ){
+        if ( $(".qzone").size()>0 ){
             return true;
         } else {
             return false;

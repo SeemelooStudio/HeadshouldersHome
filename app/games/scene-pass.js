@@ -7,8 +7,10 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             player_distance_step_1 : 110,
             player_distance_step_2 : 160,
             player_distance_step_3 : 210,
+            player_distance_step_4 : 280,
             num_of_players_to_enter_step_2 : 5,
             num_of_players_to_enter_step_3 : 15,
+            num_of_players_to_enter_step_4 : 40,
             player_distance_noise : 10,
             ball_kick_force : 15,
             ball_friction : -0.2,
@@ -17,7 +19,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             running_speed_in_step_3:100,
             rolling_speed_step_1:0.2,
             rolling_speed_step_2:0.25,
-            rolling_speed_step_3:0.3
+            rolling_speed_step_3:0.3,
+            rolling_speed_step_4:0.35
         };
 
         self.players = [];
@@ -35,6 +38,9 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 			
         self.randomizerStep3 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
 			[self.configs.player_distance_step_1, self.configs.player_distance_step_2, self.configs.player_distance_step_3],[0.1,0.4]);
+			
+        self.randomizerStep4 = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			[self.configs.player_distance_step_3, self.configs.player_distance_step_4],[0.4]);
         
         self.touchEvent = Game.getTouchEvent();
 
@@ -142,6 +148,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 return self.configs.running_speed_in_step_3;
             }
+            
         };
         self.getPlayerDistance = function() {
 
@@ -153,9 +160,13 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 return self.randomizerStep2.get();
             }
-            else
+            else if (self.numOfPlayersGenerated < self.configs.num_of_players_to_enter_step_4)
             {
                 return self.randomizerStep3.get();
+            }
+            else
+            {
+                return self.randomizerStep4.get();
             }
         };
         self.getRollingSpeed = function() {
@@ -168,9 +179,9 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 return self.configs.rolling_speed_step_2;
             }
-            else
+            else if (base < self.configs.num_of_players_to_enter_step_4 * 2)
             {
-                return self.configs.rolling_speed_step_3;
+                return self.configs.rolling_speed_step_4;
             }
         };
         self.destroyElementsOffScreen = function() {

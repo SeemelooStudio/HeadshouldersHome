@@ -81,7 +81,7 @@ Crafty.scene('DribbleGame', function() {
 		var component1;
 		var component2;
 		var seed = self.numOfComponentsGenerated % 50;
-		if (seed < 10)
+		if (seed < 6)
 		{
 			if (seed < 2)
 			{

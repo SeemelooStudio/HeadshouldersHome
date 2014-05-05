@@ -150,8 +150,13 @@ define(["jquery", "backbone","cypher"],
                 } else {
                     self.originGameId = self.get("gameId");                    
                     resultString = self.get("score") + "";
-                    var ciphered = { stream: { value: resultString }, key: { value: this.originGameId + "" } };
-                    encipher(ciphered);
+                    couponString = (self.get("coupon") - self.get("originCoupon")) + "";
+                    
+                    var cipheredScore = { stream: { value: resultString }, key: { value: this.originGameId + "" } };
+                    encipher(cipheredScore);
+                    
+                    var cipheredCoupon = { stream: { value: couponString }, key: { value: this.originGameId + "" } };
+                    encipher(cipheredCoupon);
 
                     $.ajax({
                         url: "http://192.168.1.105:8008/footballgameservice/Games",
@@ -161,8 +166,8 @@ define(["jquery", "backbone","cypher"],
                             gameId: self.get("gameId"),
                             gameTypeId: self.get("gameTypeId"),
                             userId: self.get("userId"),
-                            score: ciphered.stream.value,
-                            numOfCoupons: self.get("coupon") - self.get("originCoupon")
+                            score: cipheredScore.stream.value,
+                            numOfCoupons: cipheredCoupon.stream.value
                         }),
                         type: 'PUT',
                         contentType: "application/json; charset=utf-8",

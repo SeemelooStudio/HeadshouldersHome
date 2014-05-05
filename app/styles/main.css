@@ -2631,6 +2631,12 @@ display: none;
 .qzone #copyright {
     bottom: 45px;
 }
+.qzone #exitLink {
+    display: none;
+}
+.qzone .share {
+
+}
 #exitLink {
     position: absolute;
     color: #fff;

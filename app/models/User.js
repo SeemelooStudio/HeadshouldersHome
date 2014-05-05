@@ -18,6 +18,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 }
                 this.weboLoginUrl = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
                 this.wechatLoginUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaca4b565bbea999a&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                this.qzoneLoginUrl = "http://hfsshili.app.social-touch.com/footballgamewebService/footballgameService/users/QQ/";
 
             },
             syncData: function () {
@@ -32,6 +33,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 _hmt.push(['_trackPageview', '/Login']);
                 if (Utils.isWechat()) {
                     this.wechatLogin();
+                } else if (Utils.isQzone()){
+                    this.qzoneLogin();
                 } else {
                     this.weiboLogin();
                 }
@@ -43,6 +46,8 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                 $.removeCookie("userId",{path:"http://hfsshili.app.social-touch.com/"});
                 $.removeCookie("userId",{path:"http://quiz.seemeloo.com/aa/"});
                 _hmt.push(['_trackPageview', '/Logout']); 
+                
+                
                 Backbone.history.navigate("", { trigger: false, replace: false });
                 window.location.reload();
             },
@@ -75,6 +80,17 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     window.location.href = this.wechatLoginUrl ;
                 }
                 
+            },
+            qzoneLogin: function() {
+                _hmt.push(['_trackPageview', '/Login/QZone']); 
+                /*
+                if ( (navigator.userAgent.indexOf('Android') != -1) ) {
+                    document.location.href = this.qzoneLoginUrl ;
+                } else {
+                    document.location.href = this.qzoneLoginUrl ;
+                }
+                */
+
             },
             initLeaderSetting: function () {
                 var leadershipRank = 6;

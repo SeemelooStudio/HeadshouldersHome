@@ -43,6 +43,7 @@ define(function(require, exports, module) {
     routes: {
       "": "index",
       "login/:userId":"login",
+      "login/:userId/:openId/:openKey":"qzoneLogin",
       "leaderboard/:type":"leaderboard",
       "lottery":"lottery",
       "winningRecords":"winningRecords",
@@ -74,15 +75,15 @@ define(function(require, exports, module) {
         user.fetchDataByUserId({
             userId: userId,
             success:function(){
+                console.log(window.location.href);
+                console.log(window.location.search);
                 Backbone.history.navigate("", { trigger: true, replace: true });
             },
             error: function(msg){
                 alert(msg);
             }
         });
-        
-        
-        
+
     },
     logout: function(){
       user.logout();
@@ -117,7 +118,6 @@ define(function(require, exports, module) {
             } else {
                 lottoView = new LottoView( { model: user });
             }
-            
         });
         
     },

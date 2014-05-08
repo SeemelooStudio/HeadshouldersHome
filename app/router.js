@@ -51,7 +51,8 @@ define(function(require, exports, module) {
       "gamePass":"gamePass",
       "gameShoot":"gameShoot",
       "rule":"rule",
-      "logout":"logout"
+      "logout":"logout",
+      "*action":"index"
     },
 
     index: function() {

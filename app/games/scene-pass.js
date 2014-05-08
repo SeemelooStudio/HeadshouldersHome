@@ -20,7 +20,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             rolling_speed_step_1:0.2,
             rolling_speed_step_2:0.25,
             rolling_speed_step_3:0.3,
-            rolling_speed_step_4:0.35
+            rolling_speed_step_4:0.32
         };
 
         self.players = [];

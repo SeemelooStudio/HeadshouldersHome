@@ -228,11 +228,10 @@ img {
     padding: 2px 5px;
     font-size: 10px;
     top: 25px;
-    display: block;
     cursor: pointer;
 }
 .wechat #exitLink {
-    display: none;
+    display: none!important;
 }
 .wechat #contactButton {
     display: block;
@@ -2650,7 +2649,6 @@ display: none;
     padding: 5px 8px;
     font-size: 14px;
     top: 75px;
-    display: block;
     cursor: pointer;
 }
 .wbIframe #exitLink {
@@ -2842,7 +2840,7 @@ margin-left: 50px;
     padding-top: 10px;
 }
 .wbIframe #qrcode {
-    display: none!important;
+    display: block!important;
 }
 #qrcode {
     width: 129px;

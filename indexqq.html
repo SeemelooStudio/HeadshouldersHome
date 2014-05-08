@@ -75,7 +75,6 @@
         </div>
     </div>
   </div><!--error-->
-
   <!--[if lt IE 9]>
   <div id="supportOverlay">
     <div id="supportContainer">
@@ -89,21 +88,15 @@
         <p>打开微信，点击“扫一扫</p>
         <p><img src="app/img/qrcode.jpg" /></p>
         <p class="em">(2) 升级到最新的浏览器<p>
-        <p>下面的链接都来自官网，请放心下载</p>
-        <p><a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie"  target="_blank">Internet Explorer</a> <a href="http://www.apple.com.cn/safari/" target="_blank">Safari</a> <a href="http://www.google.com/chrome/?hl=zh-CN" target="_blank">Chrome</a>  <a href="http://www.operachina.com/"  target="_blank">Opera</a> <a href="http://www.firefox.com.cn/"  target="_blank">Firefox</a></p>
         </div>
     </div>
   </div>
   <![endif]-->
-  <script>
-    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-        WeixinJSBridge.call('showOptionMenu');
-        document.getElementsByTagName('body')[0].setAttribute("class", "wechat");
-    });
-    
-  </script>
+  <script type="text/javascript" charset="utf-8" 
+       src="http://fusion.qq.com/fusion_loader?appid=1101352870&platform=qzone">
+</script>
   <!-- Application source. -->
-  <!-- build:[src] source.min.js?v=4 -->
+  <!-- build:[src] source.min.js?v=5 -->
   <script data-main="/app/main" src="/vendor/bower/requirejs/require.js"></script>
   <!-- /build -->
 </body>

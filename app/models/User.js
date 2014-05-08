@@ -83,6 +83,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
             },
             qzoneLogin: function() {
                 _hmt.push(['_trackPageview', '/Login/QZone']); 
+                fusion2.dialog.relogin();
                 /*
                 if ( (navigator.userAgent.indexOf('Android') != -1) ) {
                     document.location.href = this.qzoneLoginUrl ;

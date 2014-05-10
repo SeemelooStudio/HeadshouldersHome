@@ -33,7 +33,9 @@ Crafty.scene('Loading', function(){
 		imgPath + 'grass.png',
 		imgPath + 'hs.png',
         imgPath + 'ring.png',
-        imgPath + 'pack.png'
+        imgPath + 'pack.png',
+        imgPath + 'gate.png',
+        imgPath + 'sky.png'
 		], function(){
 		// Once the images are loaded...
 
@@ -70,6 +72,14 @@ Crafty.scene('Loading', function(){
         
         Crafty.sprite(50, 80, imgPath + 'pack.png', {
             SpritePack:     [0, 0]
+        });
+
+        Crafty.sprite(316, 173, imgPath + 'gate.png', {
+            SpriteGate:     [0, 0]
+        });
+
+        Crafty.sprite(120, 140, imgPath + 'sky.png', {
+            SpriteSky:     [0, 0]
         });
 
 		//loadAtlas('app/img/heads.png', headsAtlas);

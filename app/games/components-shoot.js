@@ -227,6 +227,7 @@ Crafty.c('LifeHud', {
             self.attach(icon);
         }
 
+/*
         var headSize = self.iconSize * 2;
         self.messiHead = Crafty.e('Head').Head(PlayerConfig.head_configs.messi)
                                .attr({w: headSize, 
@@ -235,6 +236,7 @@ Crafty.c('LifeHud', {
                                       y: -self.iconGap - headSize,
                                       z: Game.depth.hud})
         self.attach(self.messiHead);
+*/
 
         self.height =  self.iconSize * self.maxNumOfLife + self.iconGap * (self.maxNumOfLife - 1);
     },
@@ -245,6 +247,24 @@ Crafty.c('LifeHud', {
 
     getHeight: function() {
         return this.height;
+    }
+});
+
+Crafty.c('PopupDecal', {
+    init: function() {
+        var self = this;
+        self.requires('Actor, Sprite, SpritePongDecal');
+    },
+
+    popup: function(type) {
+        if (type === "pong")
+        {
+            this.sprite(0, 0);
+        }
+        else
+        {
+            this.sprite(0, 1);
+        }
     }
 });
 

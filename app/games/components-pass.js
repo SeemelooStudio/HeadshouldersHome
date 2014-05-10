@@ -50,17 +50,13 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             return this.direction;
         },
 
-        isPointingUpward: function() {
-            var rot = this.ring._rotation % 360;
-            return rot < 90 || rot > 270; 
-        },
-
         onEnterFrame : function(data) {
             this.ring.roll(data);
 
             if (this.player)
             {
-                if (this.ring._rotation % 360 > 180)
+                var rot = this.ring._rotation % 360;
+                if (rot > 180 || (rot > -180 && rot < 0))
                 {
                     if (!this.player.facingLeft)
                     {

@@ -29,6 +29,7 @@ Crafty.scene('Loading', function(){
 		imgPath + 'obstacle.png',
 		imgPath + 'heads.png',
 		imgPath + 'bodies.png',
+        imgPath + 'bodiesKeeper.png',
 		imgPath + 'ball.png',
 		imgPath + 'grass.png',
 		imgPath + 'hs.png',
@@ -53,6 +54,10 @@ Crafty.scene('Loading', function(){
 			BodyPro:       [1, 0],
 			BodyRabbit:    [0, 1]
 		});
+
+        Crafty.sprite(200, 125, imgPath + 'bodiesKeeper.png', {
+            SpriteKeeper:  [0, 0]
+        });
 
 		Crafty.sprite(320, 145, imgPath + 'grassx4.png', {
 			SpriteGrass:    [0, 0],

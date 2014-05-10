@@ -99,7 +99,9 @@ function ($, Crafty ) {
 			rabbit_horizontal_speed_per_frame : 10,
 			rabbit_trace_speed_per_frame: 100,
             component_generate_interval : 1000,
-            component_generate_interval_hard: 700
+            component_generate_interval_hard: 700,
+            goalkeeper_horizontal_speed_per_frame : 100,
+            ball_friction : -0.2,
         },
 
 		events: {

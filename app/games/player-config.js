@@ -40,7 +40,13 @@ function (Crafty) {
             id: '兔兔爱西西',
 			sprite : [2, 1],
 			kiss: [1, 3]
-		}
+		},
+        keeper: {
+            id: 'C骡',
+            sprite : [0, 4],
+            hurt: [1, 4],
+            cry: [2, 4]
+        }
     };
 
     PlayerConfig.allHeads = [
@@ -94,6 +100,7 @@ function (Crafty) {
 	PlayerConfig.joints = {
 		head: { x : 80, y : 140 },
 		body_run: { x : 70, y : 10 },
+        body_keeper: { x : 100, y : 36 },
 		body_tackle: { x : 85, y : 50 },
 		body_jump:{ x:70, y:15}
 	};

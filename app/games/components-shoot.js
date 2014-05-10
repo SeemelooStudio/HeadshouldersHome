@@ -32,18 +32,32 @@ Crafty.c('Goal', {
             self.backgrounds.push(background);
             self.attach(background);
         }
+
+        var postWidth = 10;
+        var postHeight = 50;
+        var postOffsetX = 25;
+        var postOffsetY = 20;
+        self.leftPost = Crafty.e('Actor, Post, Collision, DebugCollision, DebugArea')
+                              .attr({w: postWidth, h: postHeight, z: Game.depth.goal + 1})
+                              .collision([0, 0], [postWidth, 0], [postWidth, postHeight], [0, postHeight]);
+        self.attach(self.leftPost);
+        self.leftPost.attr({x: self.getCenterX() - goalHalfWidth - postOffsetX - postWidth / 2, 
+                            y: self.getGoalLineY() - postHeight - postOffsetY});
+        self.rightPost = Crafty.e('Actor, Post, Collision, DebugCollision, DebugArea')
+                              .attr({w: postWidth, h: postHeight, z: Game.depth.goal + 1})
+                              .collision([0, 0], [postWidth, 0], [postWidth, postHeight], [0, postHeight]);
+        self.attach(self.rightPost);
+        self.rightPost.attr({x: self.getCenterX() + goalHalfWidth + postOffsetX - postWidth / 2, 
+                            y: self.getGoalLineY() - postHeight - postOffsetY});
 	},
+
+    getCenterX: function() {
+        return this._x + this._w / 2;
+    },
 
     getGoalLineY: function() {
         return this._y + this._h - 30;
     },
-
-    getLeftPostX: function() {
-        
-    },
-
-    getRightPostX: function() {
-    }
 });
 
 Crafty.c('Keeper', {
@@ -53,7 +67,7 @@ Crafty.c('Keeper', {
 				},
 
     horizontalSpeed : Game.configs.goalkeeper_horizontal_speed_per_frame,
-    wanderDistance : 150,
+    wanderDistance : 130,
 
 	getWidth : function() {
 		return this.head._w;
@@ -62,7 +76,6 @@ Crafty.c('Keeper', {
 	getHeight : function() {
 		return this.body._h + this.bodyPosition.y;
 	},
-
 
     init: function() {
         var self = this;
@@ -139,6 +152,71 @@ Crafty.c('Keeper', {
 
 });
 
+Crafty.c('Defender', {
+    wanderDistance : 0,
+    horizontalSpeed: Game.configs.amateur_horizontal_speed_per_frame,
+
+    isWandering : false,
+
+    init: function() {
+        this.requires('Avatar, Collision, DebugCollision, DebugArea')
+                .attr({w: 80, h: 120});
+    },
+
+    Defender : function(headConfig, bodyConfig, wanderDistance) {
+        this.Avatar(Game.depth.npc, headConfig, bodyConfig, false);
+        this.collision([20,20],[this.width() - 20, 20],
+                       [this.width() - 20, this.height() - 20],[20, this.height() - 20]);
+        
+        $text_css = { 'size': '12px'};
+        this.nameHud = Crafty.e('2D, DOM, Text')
+                             .attr({ x: 0, y: -10, w: 80 })
+                             .text(headConfig.id)
+                             .textColor('#FFFFFF')
+                             .textFont($text_css);
+        this.attach(this.nameHud);
+        
+        this.typeId = bodyConfig.typeId;
+
+        this.wanderDistance = wanderDistance || 0;
+        if (this.wanderDistance > 0)
+        {
+            this.startWandering();
+        }
+        else
+        {
+            this.idle();
+        }
+
+        return this;
+    },
+
+    startWandering: function() {
+        if (!this.isWandering)
+        {
+            this.isWandering = true;
+            this.run();
+            this.bind('EnterFrame', this.update);
+        }
+    },
+
+    stopWandering: function() {
+        if (!this.isWandering)
+        {
+            this.isWandering = false;
+            this.standby();
+            this.unbind('EnterFrame', this.update);
+        }
+    },
+
+    update: function(data) {
+        if (this.isWandering)
+        {
+            this.wander(this.horizontalSpeed, data.dt / 1000);
+        }
+    },
+});
+
 Crafty.c('Shooter', {
     init: function() {
         this.requires('Avatar, Collision, DebugCollision, DebugArea')
@@ -168,7 +246,7 @@ Crafty.c('ShootController', {
     currentDragPosition: new Crafty.math.Vector2D(),
 
 	init: function() {
-		this.requires('Actor, Draggable, DebugArea')
+		this.requires('Actor, Draggable')
 				.attr({w: Game.width, h: Game.height, z: Game.depth.controller});
 
 		this.bind('StartDrag', function(data) {
@@ -240,6 +318,20 @@ Crafty.c('LifeHud', {
 
         self.height =  self.iconSize * self.maxNumOfLife + self.iconGap * (self.maxNumOfLife - 1);
     },
+
+    setLife: function(life) {
+        var self = this;
+        var life = Math.min(self.maxNumOfLife, life);
+        var life = Math.max(0, life);
+        for(var i = 0; i < life; i++)
+        {
+            self.icons[i].visible = true;
+        }
+        for(var i = life; i < self.maxNumOfLife; i++)
+        {
+            self.icons[i].visible = false;
+        }
+    },
     
     getWidth: function() {
         return this.iconSize; 
@@ -256,16 +348,25 @@ Crafty.c('PopupDecal', {
         self.requires('Actor, Sprite, SpritePongDecal');
     },
 
-    popup: function(type) {
-        if (type === "pong")
+    popup: function(type, x, y) {
+        var self = this;
+
+        if (type === "goal")
         {
-            this.sprite(0, 0);
+            self.sprite(0, 0);
+            self.z = Game.depth.goal + 1;
         }
         else
         {
-            this.sprite(0, 1);
+            self.sprite(0, 1);
+            self.z = Game.depth.hud;
         }
-    }
+        this.attr({x:x - this._w / 2, y:y});
+
+        Crafty.e("Delay").delay(function(){
+            self.destroy();
+        }, 500, 0);
+    },
 });
 
 });

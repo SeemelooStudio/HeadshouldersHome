@@ -74,11 +74,13 @@ function ($, Crafty ) {
         
         depth: {
             field : 0,
+            goal : 5,
 			controller : 40,
             obstacle : 20,
 			coin : 30,
 			npc : 10,
 			passed: 50,
+            hud: 100,
 
             body : 1,
             head : 2,

@@ -46,10 +46,10 @@ Crafty.c('Head', {
 		}
 	},
 	setKiss: function() {
-	if (this.kiss_cell)
-	{
-	this.sprite(this.kiss_cell[0], this.kiss_cell[1]);
-	}
+        if (this.kiss_cell)
+        {
+            this.sprite(this.kiss_cell[0], this.kiss_cell[1]);
+        }
 	}
 });
 

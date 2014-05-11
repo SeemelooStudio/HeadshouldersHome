@@ -102,6 +102,7 @@ function ($, Crafty ) {
             component_generate_interval_hard: 700,
             goalkeeper_horizontal_speed_per_frame : 100,
             ball_friction : -0.2,
+            max_num_of_lives_for_shoot_game : 5,
         },
 
 		events: {

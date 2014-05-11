@@ -4,9 +4,10 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         var self = this;
 
         self.kickConfigs = [];
-        self.currentNumOfLife = 5;
+        self.currentNumOfLife = Game.configs.max_num_of_lives_for_shoot_game;
         self.currentDefenders = [];
         self.currentDefenderHeads = [];
+        self.currentKickConfig = null;
 
         self.creatDefenderConfig = function(x, y, wanderDistance) {
             return {
@@ -36,6 +37,10 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.getRandomKickConfig = function() {
             var seed = Math.floor(Crafty.math.randomNumber(0, self.kickConfigs.length));
+            while( self.kickConfigs[seed] === self.currentKickConfig )
+            {
+                seed = Math.floor(Crafty.math.randomNumber(0, self.kickConfigs.length));
+            }
             return self.kickConfigs[seed];
         };
 
@@ -61,7 +66,10 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                  self.ball._y < -10 ||
                  self.ball._y > Game.height + 10)
             {
-                self.onBallStop();
+                if (self.ball.velocity.magnitudeSq() > 0)
+                {
+                    self.onBallStop();
+                }
             }
         };
 
@@ -94,7 +102,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                                  .attr({x: defenderConfig[0], y: defenderConfig[1]});
         };
 
-        self.resetKick = function(kickConfig, ifResetDefender) {
+        self.resetPlayerAndBall = function(kickConfig) {
             self.player.attachBall(self.ball);
             self.ball.trap();
             self.player.attr({x: kickConfig.x, y: kickConfig.y});
@@ -106,34 +114,40 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 self.player.faceLeft();
             }
+            self.shootController.enableDrag();
+        };
 
-            if (ifResetDefender)
+        self.resetKickConfig = function(kickConfig) {
+            self.currentKickConfig = kickConfig;
+
+            self.resetPlayerAndBall(kickConfig);
+
+            // reset keeper
+            self.keeper.reset();
+            self.keeper.attr({y : self.goal.getGoalLineY() - self.keeper.getHeight()});
+            if (!kickConfig.hasGoalKeeper)
             {
-                self.clearCurrentDefenders();
+                self.keeper.y -= 200; // make goal keeper not display in the viewport
+            }
 
-                self.keeper.attr({y : self.goal.getGoalLineY() - self.keeper.getHeight()});
-                if (!kickConfig.hasGoalKeeper)
+            // reset defenders
+            self.clearCurrentDefenders();
+            if (kickConfig.defenders)
+            {
+                for( var i = 0; i < kickConfig.defenders.length; i++)
                 {
-                    self.keeper.y -= 200;
-                }
-
-                if (kickConfig.defenders)
-                {
-                    for( var i = 0; i < kickConfig.defenders.length; i++)
+                    var defenderConfig = kickConfig.defenders[i];
+                    var defender = self.createDefender(defenderConfig);
+                    if (defender._x >= self.player._x)
                     {
-                        var defenderConfig = kickConfig.defenders[i];
-                        var defender = self.createDefender(defenderConfig);
-                        if (defender._x >= self.player._x)
-                        {
-                            defender.faceLeft();
-                        }
-                        else
-                        {
-                            defender.faceRight();
-                        }
-
-                        self.currentDefenders.push(defender);
+                        defender.faceLeft();
                     }
+                    else
+                    {
+                        defender.faceRight();
+                    }
+
+                    self.currentDefenders.push(defender);
                 }
             }
 
@@ -153,11 +167,16 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.onGoal = function() {
             Crafty.e('PopupDecal').popup('goal', self.ball._x + self.ball._w / 2, self.ball._y);
-            self.resetKick(self.getRandomKickConfig(), true);
+            self.ball.trap();
+            self.ball.y = -200;
+            Crafty.e("Delay").delay(function(){
+                self.resetKickConfig(self.getRandomKickConfig());
+            }, 800, 0);
         };
 
         self.onHitKeeper = function() {
             Crafty.e('PopupDecal').popup('pong', self.keeper._x + self.keeper._w / 2, self.keeper._y + self.keeper._h / 2);
+            self.keeper.onBallHit();
             self.onBallStop();
         };
 
@@ -178,7 +197,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             {
                 --self.currentNumOfLife;
                 self.lifeHud.setLife(self.currentNumOfLife);
-                self.resetKick(self.getRandomKickConfig(), false);
+                self.resetPlayerAndBall(self.currentKickConfig);
             }
             else
             {
@@ -210,7 +229,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.player = Crafty.e('Shooter').Shooter(PlayerConfig.head_configs.messi, PlayerConfig.body_configs.messi, self.ball);
 
         self.initKickConfigs();
-        self.resetKick(self.getRandomKickConfig(), true);
+        self.resetKickConfig(self.getRandomKickConfig());
 
         self.bind('EnterFrame', self.onEnterFrame);
     }, 

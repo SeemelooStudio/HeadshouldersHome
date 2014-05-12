@@ -9,7 +9,7 @@ define(["jquery", "backbone"],
               "isRabbitDance":false,
               "isSushiDance":false  
             },
-            url: "http://192.168.1.105:8008/footballGameService/Prizes",
+            url: "http://192.168.1.101:8008/footballGameService/Prizes",
             initialize: function(){
               var dancerId = 0;
               dancerId = Math.floor(Math.random() * 3);
@@ -25,7 +25,7 @@ define(["jquery", "backbone"],
             saveAddress: function(options) {
                 var self = this;
                 $.ajax({
-                  url: "http://192.168.1.105:8008/footballGameService/Prizes",
+                  url: "http://192.168.1.101:8008/footballGameService/Prizes",
                   //url: "app/data/card.json",
                   dataType: "json",
                   type: 'PUT',

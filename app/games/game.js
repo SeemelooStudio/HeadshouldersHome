@@ -100,7 +100,7 @@ function ($, Crafty ) {
 			rabbit_trace_speed_per_frame: 100,
             component_generate_interval : 1000,
             component_generate_interval_hard: 700,
-            goalkeeper_horizontal_speed_per_frame : 100,
+            goalkeeper_horizontal_speed_per_frame : 90,
             ball_friction : -0.2,
             max_num_of_lives_for_shoot_game : 5,
         },
@@ -128,6 +128,8 @@ function ($, Crafty ) {
                 //console.log('load complete');
 			},
 			onCollectCoinPack: function() {
+			},
+			onGoal: function() {
 			}
 		},
 
@@ -162,6 +164,10 @@ function ($, Crafty ) {
             
             if ( events.onCollectCoinPack ) {
                 Game.events.onCollectCoinPack = events.onCollectCoinPack;
+            }
+            
+            if ( events.onGoal ) {
+                Game.events.onGoal = events.onGoal;
             }
 		},
 		

@@ -30,9 +30,21 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.initKickConfigs = function() {
             var baseX = (Game.player_bound_left() + Game.player_bound_right() - self.player.width()) / 2;
             var baseY = Game.height - self.player.height();
+            
+            //no keeper
             self.addKickConfig(baseX - 100, baseY, false);
-            self.addKickConfig(baseX + 100, baseY - 100, true, [ [baseX - 100, baseY - 300] ]);
+            
+            self.addKickConfig(baseX - 30, baseY, true, [ [baseX + 20, baseY - 120, 40] , [baseX - 100, baseY - 250] ]);
+            
+            self.addKickConfig(baseX + 100, baseY - 100, true, [ [baseX - 100, baseY - 250, 30] ]);
+            
+            self.addKickConfig(baseX - 100, baseY - 50, true, [ [baseX, baseY - 180, 60] ]);
+            
             self.addKickConfig(baseX, baseY, true, [ [baseX, baseY - 200, 50] ]);
+            
+            self.addKickConfig(baseX - 60 , baseY - 10, true, [ [baseX, baseY - 200, 100], [baseX , baseY - 120, 0] ]);
+            
+            self.addKickConfig(baseX + 80 , baseY, false, [ [baseX, baseY - 220, 100], [baseX , baseY - 100, 80] ]);
         };
 
         self.getRandomKickConfig = function() {
@@ -52,7 +64,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                 .onHit('Post', self.onHitPost)
                 .onHit('Defender', self.onHitDefender)
                 .onHit('Keeper', self.onHitKeeper)
-                .attr({z : Game.depth.controller})
+                .attr({z : Game.depth.controller});
             ball.friction = Game.configs.ball_friction;
             return ball;
         };
@@ -157,7 +169,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.onShoot = function(dir, speed) {
             //console.log('shoot: dir = ' + dir + ', speed = ' + speed);
             var kickForce = Math.max(50 * speed, 15);
-            var kickForce = Math.min(kickForce, 40);
+            kickForce = Math.min(kickForce, 40);
             if (self.player.ball)
             {
                 self.player.kickBall(kickForce, dir);
@@ -172,6 +184,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             Crafty.e("Delay").delay(function(){
                 self.resetKickConfig(self.getRandomKickConfig());
             }, 800, 0);
+            Game.events.onGoal();
         };
 
         self.onHitKeeper = function() {
@@ -216,7 +229,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.lifeHud = Crafty.e('LifeHud');
         self.lifeHud.attr({x: Game.width - self.lifeHud.getWidth() - 10,
-                           y: Game.height - self.lifeHud.getHeight() - 10})
+                           y: Game.height - self.lifeHud.getHeight() - 10});
         self.lifeHud.setLife(self.currentNumOfLife);
 
         self.ball = self.ballCreator();

@@ -51,7 +51,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.mainAnimationScheduler.animateIn();
                 this.$el.find("#game").addClass( this.model.get('sceneName'));
                 
-                require(["games/game", "games/components", "games/components-pass", "games/components-shoot","games/object-randomizer", "games/scene-loading", "games/scene-dribble", "games/scene-pass","games/scene-shoot"],function(Game){
+                require(["games/game", "games/components", "games/components-pass", "games/object-randomizer", "games/scene-loading", "games/scene-dribble", "games/scene-pass"],function(Game){
                     
                     self.Game = Game;
                     Game.registerEvents({

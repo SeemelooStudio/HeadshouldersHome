@@ -240,7 +240,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         };
 
         self.onMouseDown = function(e) {
-
+            
             self.highlightRing.stopRolling();
             if (self.currentController !== null)
             {

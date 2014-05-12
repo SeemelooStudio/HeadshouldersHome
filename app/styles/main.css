@@ -1053,6 +1053,54 @@ img {
     border-radius: 10px;
 }
 
+.ShootGame #game-logo {
+    display: none;
+}
+.ShootGame #game-scoreTitle {
+    width: 100px;
+    background: #0454b7;
+    left: 50%;
+    margin-left: -100px;
+    top:-1px;
+    line-height: 1.4;
+    font-size: 14px;
+    border-radius: 0 0 0 10px;
+    border:1px solid #221417;
+    border-right: none;
+    text-shadow: none;
+}
+.ShootGame #game-score {
+    background: #FFF;
+    color: #0454b7;
+    left: 50%;
+    top:-1px;
+    width: auto;
+    padding: 0 10px;
+    min-width:80px;
+    line-height: 1.4;
+    font-size: 14px;
+    text-shadow: none;
+    border-radius: 0 0 10px 0;
+    border:1px solid #221417;
+    border-left: none;
+}
+.ShootGame #game-coupon {
+    bottom: 200px;
+    top: auto;
+}
+.ShootGame .yellow {
+    color: #c01f2e!important;
+}
+.ShootGame #game-newRecord {
+top: -5px;
+width: 40px;
+height: 40px;
+font-size: 10px;
+border-radius: 22px;
+left: 50%;
+margin-left: 95px;
+line-height: 40px
+}
 @-webkit-keyframes float {
   0% {
     -webkit-transform: translateY(0);
@@ -2879,5 +2927,10 @@ margin-left: 50px;
 #loading-info {
     line-height: 18px;
 }
-
+.ShootGame #game-score {
+    font-size: 16px;
+}
+.ShootGame #game-scoreTitle {
+    font-size: 16px;
+}
 }

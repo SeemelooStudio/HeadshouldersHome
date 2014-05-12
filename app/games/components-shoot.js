@@ -6,9 +6,12 @@ Crafty.c('Goal', {
 
         var hitAreaStartY = 40;
         var goalHalfWidth = 100;
+        var goalStartY = 28;
 
 		self.requires('Actor, SpriteGate, Collision, DebugCollision')
-            .attr({z: Game.depth.goal})
+            .attr({
+                z: Game.depth.goal
+            })
             .collision([self._w / 2 - goalHalfWidth, hitAreaStartY], 
                        [self._w / 2 + goalHalfWidth, hitAreaStartY], 
                        [self._w / 2 + goalHalfWidth, hitAreaStartY + 20], 
@@ -17,7 +20,7 @@ Crafty.c('Goal', {
         self.backgrounds = [];
 		var numOfTiles = Math.ceil(Game.width / 120);
         var startX = self._w / 2 - numOfTiles / 2 * 120;
-        var startY = -28;
+        var startY = -11;
 
         for (var i = 0; i < numOfTiles; i ++)
         {
@@ -67,7 +70,7 @@ Crafty.c('Keeper', {
 				},
 
     horizontalSpeed : Game.configs.goalkeeper_horizontal_speed_per_frame,
-    wanderDistance : 130,
+    wanderDistance : 120,
 
 	getWidth : function() {
 		return this.head._w;
@@ -354,13 +357,13 @@ Crafty.c('LifeHud', {
 
     setLife: function(life) {
         var self = this;
-        var life = Math.min(self.maxNumOfLife, life);
-        var life = Math.max(0, life);
+        life = Math.min(self.maxNumOfLife, life);
+        life = Math.max(0, life);
         for(var i = 0; i < life; i++)
         {
             self.icons[i].visible = true;
         }
-        for(var i = life; i < self.maxNumOfLife; i++)
+        for( i = life; i < self.maxNumOfLife; i++)
         {
             self.icons[i].visible = false;
         }
@@ -436,7 +439,7 @@ Crafty.c('CsvParser', {
 
         // Keep looping over the regular expression matches
         // until we can no longer find a match.
-        while (arrMatches = objPattern.exec( strData )){
+        while(false){ //(arrMatches = objPattern.exec( strData )) {
 
             // Get the delimiter that was found.
             var strMatchedDelimiter = arrMatches[ 1 ];
@@ -460,11 +463,12 @@ Crafty.c('CsvParser', {
             // Now that we have our delimiter out of the way,
             // let's check to see which kind of value we
             // captured (quoted or unquoted).
+            var strMatchedValue;
             if (arrMatches[ 2 ]){
 
                 // We found a quoted value. When we capture
                 // this value, unescape any double quotes.
-                var strMatchedValue = arrMatches[ 2 ].replace(
+                strMatchedValue = arrMatches[ 2 ].replace(
                     new RegExp( "\"\"", "g" ),
                     "\""
                     );
@@ -472,7 +476,7 @@ Crafty.c('CsvParser', {
             } else {
 
                 // We found a non-quoted value.
-                var strMatchedValue = arrMatches[ 3 ];
+                strMatchedValue = arrMatches[ 3 ];
 
             }
 

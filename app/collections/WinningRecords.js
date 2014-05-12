@@ -8,7 +8,7 @@ define(["jquery", "backbone"],
         });
         var WinningRecords = Backbone.Collection.extend({
             url: function() {
-                return "http://192.168.1.105:8008/footballgameservice/prizes/" + this.userId;
+                return "http://192.168.1.101:8008/footballgameservice/prizes/" + this.userId;
                 //return "app/winningrecords.json";
             },
             model:Record

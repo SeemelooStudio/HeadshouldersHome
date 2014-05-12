@@ -83,7 +83,7 @@ define(["jquery", "backbone","cypher"],
                             "shareBadEnd": GameConfig.shoot_share_bad_text_end,
                             "badText":GameConfig.shoot_bad_text,
                             "goodText":GameConfig.shoot_good_text,
-                            "sceneName":"PassGame"
+                            "sceneName":"ShootGame"
                             });
                         break;
                         
@@ -122,7 +122,7 @@ define(["jquery", "backbone","cypher"],
                 });
 
                 $.ajax({
-                    url: "http://192.168.1.105:8008/footballgameservice/Games",
+                    url: "http://192.168.1.101:8008/footballgameservice/Games",
                     //url: "app/data/startgame.json",
                     dataType: "json",
                     data: JSON.stringify({
@@ -159,7 +159,7 @@ define(["jquery", "backbone","cypher"],
                     encipher(cipheredCoupon);
 
                     $.ajax({
-                        url: "http://192.168.1.105:8008/footballgameservice/Games",
+                        url: "http://192.168.1.101:8008/footballgameservice/Games",
                         //url: "app/data/gameresult.json",
                         dataType: "json",
                         data: JSON.stringify({

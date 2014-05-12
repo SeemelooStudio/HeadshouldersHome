@@ -8,7 +8,7 @@ Crafty.c('Actor', {
 Crafty.c('DebugCollision', {
 	init: function() {
 		// turn below line off in production
-		//this.requires('DebugCanvas, WiredHitBox');
+		this.requires('DebugCanvas, WiredHitBox');
 	},
 });
 

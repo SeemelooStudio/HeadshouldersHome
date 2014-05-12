@@ -80,7 +80,7 @@ Crafty.scene('Loading', function(){
             SpritePack:     [0, 0]
         });
 
-        Crafty.sprite(316, 173, imgPath + 'gate.png', {
+        Crafty.sprite(316, 190, imgPath + 'gate.png', {
             SpriteGate:     [0, 0]
         });
 

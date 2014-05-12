@@ -87,12 +87,14 @@ function (Crafty) {
             sprite : 'BodyPro',
             runFrames : [[2,1], [0,2], [1,2], [0,2]],
 			tackleFrames : [[1, 1]],
+            groundFrames : [[0, 6]],
             typeId: 3
 		},
 		rabbit : {
             sprite : 'BodyRabbit',
             runFrames : [[1,0], [2,0], [0,1], [2,0]],
 			tackleFrames : [[0, 0]],
+            groundFrames : [[2, 5]],
             typeId: 4
 		},
     };
@@ -102,7 +104,8 @@ function (Crafty) {
 		body_run: { x : 70, y : 10 },
         body_keeper: { x : 100, y : 36 },
 		body_tackle: { x : 85, y : 50 },
-		body_jump:{ x:70, y:15}
+		body_jump:{ x:70, y:15},
+        body_ground: { x: 95, y : 60},
 	};
     
     return PlayerConfig;

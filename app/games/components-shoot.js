@@ -218,9 +218,15 @@ Crafty.c('Defender', {
         return this;
     },
 
+    fallOnGroundAndStopWandering : function() {
+        this.stopWandering();
+        this.fallOnGround();
+    },
+
     startWandering: function() {
         if (!this.isWandering)
         {
+            console.log('start wandering');
             this.isWandering = true;
             this.run();
             this.bind('EnterFrame', this.update);
@@ -228,7 +234,7 @@ Crafty.c('Defender', {
     },
 
     stopWandering: function() {
-        if (!this.isWandering)
+        if (this.isWandering)
         {
             this.isWandering = false;
             this.standby();

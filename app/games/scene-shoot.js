@@ -30,8 +30,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.initKickConfigs = function() {
             var baseX = (Game.player_bound_left() + Game.player_bound_right() - self.player.width()) / 2;
             var baseY = Game.height - self.player.height();
-            self.addKickConfig(baseX - 100, baseY, false);
-            self.addKickConfig(baseX + 100, baseY - 100, true, [ [baseX - 100, baseY - 300] ]);
+            //self.addKickConfig(baseX - 100, baseY, false);
+            //self.addKickConfig(baseX + 100, baseY - 100, true, [ [baseX - 100, baseY - 300] ]);
             self.addKickConfig(baseX, baseY, true, [ [baseX, baseY - 200, 50] ]);
         };
 
@@ -165,10 +165,14 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.shootController.disableDrag();
         };
 
-        self.onGoal = function() {
-            Crafty.e('PopupDecal').popup('goal', self.ball._x + self.ball._w / 2, self.ball._y);
+        self.hideBall = function() {
             self.ball.trap();
             self.ball.y = -200;
+        };
+
+        self.onGoal = function() {
+            Crafty.e('PopupDecal').popup('goal', self.ball._x + self.ball._w / 2, self.ball._y);
+            self.hideBall();
             Crafty.e("Delay").delay(function(){
                 self.resetKickConfig(self.getRandomKickConfig());
             }, 800, 0);
@@ -183,6 +187,8 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
         self.onHitDefender = function(hitInfo) {
             var defender = hitInfo[0].obj;
             Crafty.e('PopupDecal').popup('pong', defender._x + defender._w / 2, defender._y + defender._h / 2);
+            self.hideBall();
+            defender.fallOnGroundAndStopWandering();
             self.onBallStop();
         };
 

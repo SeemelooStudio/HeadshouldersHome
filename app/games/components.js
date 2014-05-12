@@ -66,6 +66,10 @@ Crafty.c('Body', {
 		{
 			this.reel('Tackle', 550, bodyConfig.tackleFrames);
 		}
+        if (bodyConfig.groundFrames)
+        {
+            this.reel('FallOnGround', 550, bodyConfig.groundFrames);
+        }
 		if (bodyConfig.idleFrames ) {
             this.reel('Idle', 550, bodyConfig.idleFrames);
 		} else {
@@ -104,6 +108,10 @@ Crafty.c('Body', {
 	tackle: function() {
         this.animate('Tackle', -1);
 	},
+
+    fallOnGround : function() {
+        this.animate('FallOnGround', -1);
+    },
 	
 	idle: function() {
         this.animate('Idle', -1);
@@ -243,6 +251,11 @@ Crafty.c('Avatar', {
 				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_tackle.y) / 2
 				},
 
+	bodyFallOnGroundPos : {
+				x : (PlayerConfig.joints.head.x - PlayerConfig.joints.body_ground.x) / 2,
+				y : (PlayerConfig.joints.head.y - PlayerConfig.joints.body_ground.y) / 2
+				},
+
 	width : function() {
 		return this.head._w;
 	},
@@ -372,6 +385,20 @@ Crafty.c('Avatar', {
 		});
 		this.head.setKiss();
 	},
+
+    fallOnGround : function() {
+        if (this.ball)
+        {
+			// not allow to fall when player is dribbling
+			return;
+        }
+        this.isRunning = false;
+        this.body.fallOnGround();
+        this.body.attr({
+					x : this._x + this.bodyFallOnGroundPos.x,
+					y : this._y + this.bodyFallOnGroundPos.y,
+        });
+    },
 
 	faceLeft: function() {
 		this.body.unflip('X');

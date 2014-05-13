@@ -38,6 +38,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
             postRender: function() {
                 var self = this;
                 $("#share").hide();
+                $("#contactButton").hide();
                 this.mainAnimationScheduler = new AnimationScheduler(this.$el.find("#game"));
                 this.gameAnimationScheduler = new AnimationScheduler(this.$el.find("#gameStage"));
                 this.gameOverAnimationScheduler = new AnimationScheduler(this.$el.find("#gameOverWhistle"));
@@ -51,7 +52,7 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                 this.mainAnimationScheduler.animateIn();
                 this.$el.find("#game").addClass( this.model.get('sceneName'));
                 
-                require(["games/game", "games/components", "games/components-pass", "games/object-randomizer", "games/scene-loading", "games/scene-dribble", "games/scene-pass"],function(Game){
+                require(["games/game", "games/components", "games/components-pass","games/components-shoot", "games/object-randomizer", "games/scene-loading", "games/scene-dribble", "games/scene-pass", "games/scene-shoot"],function(Game){
                     
                     self.Game = Game;
                     Game.registerEvents({

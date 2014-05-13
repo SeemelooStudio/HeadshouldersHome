@@ -29,7 +29,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.initKickConfigs = function() {
             var baseX = (Game.player_bound_left() + Game.player_bound_right() - self.player.width()) / 2;
-            var baseY = Game.height - self.player.height();
+            var baseY = Game.height - self.player.height() - 20;
 
             //no keeper
             self.addKickConfig(baseX - 100, baseY, false);

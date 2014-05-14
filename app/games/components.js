@@ -158,12 +158,14 @@ Crafty.c('RollingActor', {
 
 Crafty.c('Ball', {
     acceleration: new Crafty.math.Vector2D(),
-
     velocity: new Crafty.math.Vector2D(),
+    bendAcceleration: new Crafty.math.Vector2D(),
+    bendVelocity: new Crafty.math.Vector2D(),
 
     friction : -1.5,
 
     isStill : true,
+    mass : 1,
 
     onBecomeStillWithoutTrap : function() {},
 
@@ -187,7 +189,7 @@ Crafty.c('Ball', {
         this.attr({x : x, y : y});
     },
 
-	kick: function(kickForce, direction) {
+	kick: function(kickForce, direction, bendForce, bendRight) {
         if (this.player)
 		{
             this.player.ball = null;
@@ -195,17 +197,28 @@ Crafty.c('Ball', {
             this.player = null;
 		}
 
-        this.spinSpeed = 1;
-        this.startRolling();
-
         this.acceleration.setValues(direction);
         this.acceleration.normalize();
-        var mass = 1;
         this.velocity.setValues(this.acceleration);
         this.acceleration.scale(this.friction);
-        this.velocity.scale(kickForce / mass);
-        //console.log(this.acceleration);
-        //console.log(this.velocity);
+        this.velocity.scale(kickForce / this.mass);
+
+        if (bendForce && bendForce > 0)
+        {
+            this.bendAcceleration.setValues(direction);
+            this.bendAcceleration = this.bendAcceleration.getNormal();
+            this.bendAcceleration.normalize();
+            this.bendAcceleration.scale(bendRight ? bendForce : -bendForce);
+            this.bendVelocity.setValues(0, 0);
+        }
+        else
+        {
+            this.bendAcceleration.setValues(0, 0);
+            this.bendVelocity.setValues(0, 0);
+        }
+
+        this.spinSpeed = bendRight ? -1 : 1;
+        this.startRolling();
 
         this.isStill = false;
 	},
@@ -218,6 +231,11 @@ Crafty.c('Ball', {
         {
             this.velocity.add(this.acceleration);
             this.attr({ x: this._x + this.velocity.x, y: this._y + this.velocity.y });
+            if (!this.bendAcceleration.isZero())
+            {
+                this.bendVelocity.add(this.bendAcceleration);
+                this.attr({x: this._x + this.bendVelocity.x, y: this._y + this.bendVelocity.y });
+            }
         }
         else
         {
@@ -351,12 +369,12 @@ Crafty.c('Avatar', {
         this.body.idle();
     },
 
-    kickBall: function(kickForce, direction) {
+    kickBall: function(kickForce, direction, bendForce, bendRight) {
         var self = this;
         self.body.kick(function() {
             if (self.ball)
             {
-                self.ball.kick(kickForce, direction);
+                self.ball.kick(kickForce, direction, bendForce, bendRight);
             }
         });
     },

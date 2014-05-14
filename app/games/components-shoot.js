@@ -14,8 +14,8 @@ Crafty.c('Goal', {
             })
             .collision([self._w / 2 - goalHalfWidth, hitAreaStartY], 
                        [self._w / 2 + goalHalfWidth, hitAreaStartY], 
-                       [self._w / 2 + goalHalfWidth, hitAreaStartY + 20], 
-                       [self._w / 2 - goalHalfWidth, hitAreaStartY + 20]);
+                       [self._w / 2 + goalHalfWidth, hitAreaStartY + 50], 
+                       [self._w / 2 - goalHalfWidth, hitAreaStartY + 50]);
 
         self.backgrounds = [];
 		var numOfTiles = Math.ceil(Game.width / 120);
@@ -232,7 +232,6 @@ Crafty.c('Defender', {
     startWandering: function() {
         if (!this.isWandering)
         {
-            console.log('start wandering');
             this.isWandering = true;
             this.run();
             this.bind('EnterFrame', this.update);
@@ -281,8 +280,16 @@ Crafty.c('Shooter', {
 
 Crafty.c('ShootController', {
     dragStartPosition: new Crafty.math.Vector2D(),
-
+    
     currentDragPosition: new Crafty.math.Vector2D(),
+
+    bendPosition: new Crafty.math.Vector2D(),
+
+    shootDirection: new Crafty.math.Vector2D(),
+
+    distanceToDecideDirection: 30 * 30,
+
+    distanceToShoot: 200 * 200,
 
 	init: function() {
 		this.requires('Actor, Draggable')
@@ -291,6 +298,8 @@ Crafty.c('ShootController', {
 		this.bind('StartDrag', function(data) {
             this.dragStartPosition.setValues(this._x, this._y);
             this.dragStartTime = data.timeStamp;
+            this.directionDecided = false;
+            this.bendFactor = 0;
             this.dragUsed = false;
 		});
 
@@ -298,24 +307,48 @@ Crafty.c('ShootController', {
             if (!this.dragUsed)
             {
                 this.currentDragPosition.setValues(this._x, this._y);
-                if (this.currentDragPosition.distanceSq(this.dragStartPosition) >= 50 * 50)
+                if (!this.directionDecided)
                 {
-                    var dir = this.currentDragPosition.subtract(this.dragStartPosition).normalize();
-                    var elapsedTime = data.timeStamp - this.dragStartTime;
-                    var speed = 50 / elapsedTime;
-                    this.dragUsed = true;
-                    if (this.onShoot)
+                    if (this.currentDragPosition.distanceSq(this.dragStartPosition) >= this.distanceToDecideDirection)
                     {
-                        this.onShoot(dir, speed);
+                        this.bendPosition.setValues(this.currentDragPosition);
+                        this.shootDirection.setValues(this.currentDragPosition.subtract(this.dragStartPosition).normalize());
+                        this.directionDecided = true;
                     }
+                }
+                else if (this.currentDragPosition.distanceSq(this.dragStartPosition) >= this.distanceToShoot)
+                {
+                    this.onDragStop(data);
+                    this.dragUsed = true;
                 }
             }
 		});
 
         this.bind('StopDrag', function(data) {
+            this.onDragStop(data);
             this.attr({x: 0, y: 0});
         });
 	},
+
+    onDragStop : function(data) {
+        if (this.dragUsed) return;
+
+        this.currentDragPosition.subtract(this.bendPosition).normalize();
+        var angle = this.currentDragPosition.angleBetween(this.shootDirection);
+        var bendFactor = 1 - this.currentDragPosition.dotProduct(this.shootDirection);
+        bendFactor = Math.min(bendFactor, 0.5);
+        //console.log(this.dragStartPosition);
+        //console.log(this.bendPosition);
+        //console.log(this.currentDragPosition);
+        //console.log("angle=" + angle + ",bend factor=" + bendFactor);
+        var elapsedTime = data.timeStamp - this.dragStartTime;
+        var speed = 50 / elapsedTime;
+        this.dragUsed = true;
+        if (this.onShoot)
+        {
+            this.onShoot(this.shootDirection, speed, bendFactor, angle < 0);
+        }
+    }
 });
 
 Crafty.c('LifeHud', {

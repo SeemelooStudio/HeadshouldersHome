@@ -176,13 +176,13 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.shootController.enableDrag();
         };
 
-        self.onShoot = function(dir, speed) {
+        self.onShoot = function(dir, speed, bendFactor, bendRight) {
             //console.log('shoot: dir = ' + dir + ', speed = ' + speed);
             var kickForce = Math.max(50 * speed, 15);
-            kickForce = Math.min(kickForce, 40);
+            kickForce = Math.min(kickForce, 35);
             if (self.player.ball)
             {
-                self.player.kickBall(kickForce, dir);
+                self.player.kickBall(kickForce, dir, bendFactor, bendRight);
             }
             self.shootController.disableDrag();
         };

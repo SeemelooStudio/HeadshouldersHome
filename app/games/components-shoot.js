@@ -222,8 +222,11 @@ Crafty.c('Defender', {
     },
 
     fallOnGroundAndStopWandering : function() {
-        this.stopWandering();
-        this.fallOnGround();
+        //this.stopWandering();
+        if (this.isWandering)
+        {
+            this.fallOnGround();
+        }
     },
 
     startWandering: function() {

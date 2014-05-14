@@ -29,7 +29,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.initKickConfigs = function() {
             var baseX = (Game.player_bound_left() + Game.player_bound_right() - self.player.width()) / 2;
-            var baseY = Game.height - self.player.height() - 20;
+            var baseY = Math.min(Game.height, 580) - self.player.height() - 20;
 
             //no keeper
             self.addKickConfig(baseX - 100, baseY, false);
@@ -39,6 +39,22 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
             self.addKickConfig(baseX + 100, baseY - 100, true, [ [baseX - 100, baseY - 250, 30] ]);
             
             self.addKickConfig(baseX - 100, baseY - 50, true, [ [baseX, baseY - 180, 60] ]);
+            
+            self.addKickConfig(baseX - 60, baseY - 150, true, [ [baseX - 100, baseY - 220, 100] ]);
+            
+            self.addKickConfig(baseX - 120, baseY - 100, true, [ [baseX - 60, baseY - 220, 100] ]);
+            
+            self.addKickConfig(baseX, baseY, false, [ [baseX + 20, baseY - 120, 40] , [baseX - 100, baseY - 250, 100] ]);
+            
+            self.addKickConfig(baseX - 100, baseY, true, [ [baseX + 20, baseY - 180] , [baseX + 50, baseY - 180], [baseX + 80, baseY - 180] ]);
+            
+            self.addKickConfig(baseX + 50 , baseY, true, [ [baseX - 60, baseY - 230] , [baseX - 100, baseY - 230], [baseX + 60, baseY - 160, 60] ]);
+            
+            self.addKickConfig(baseX - 50 , baseY, true, [ [baseX - 60, baseY - 160] , [baseX - 100, baseY - 160], [baseX + 60, baseY - 230, 60] ]);
+            
+            self.addKickConfig(baseX + 50 , baseY, true, [ [baseX + 80, baseY - 230] , [baseX + 120, baseY - 230], [baseX - 60, baseY - 180, 60] ]);
+            
+            self.addKickConfig(baseX + 50 , baseY, true, [ [baseX + 60, baseY - 180] , [baseX + 100, baseY - 180], [baseX - 60, baseY - 230, 60] ]);
         };
 
         self.getRandomKickConfig = function() {

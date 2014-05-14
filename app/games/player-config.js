@@ -105,7 +105,7 @@ function (Crafty) {
         body_keeper: { x : 100, y : 36 },
 		body_tackle: { x : 85, y : 50 },
 		body_jump:{ x:70, y:15},
-        body_ground: { x: 95, y : 60},
+        body_ground: { x: 80, y : 60},
 	};
     
     return PlayerConfig;

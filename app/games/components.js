@@ -393,11 +393,13 @@ Crafty.c('Avatar', {
 			return;
         }
         this.isRunning = false;
+        this.isFellOnGround = true;
         this.body.fallOnGround();
         this.body.attr({
 					x : this._x + this.bodyFallOnGroundPos.x,
 					y : this._y + this.bodyFallOnGroundPos.y,
         });
+        this.head.setKiss();
     },
 
 	faceLeft: function() {
@@ -436,8 +438,13 @@ Crafty.c('Avatar', {
         {
             this.faceLeft();
         }
+        
 	},
-
+    standUpAndRun: function() {
+        if ( this.isWandering && this.isFellOnGround) {
+            this.run();
+        }        
+    },
 	wander : function(wanderSpeed, deltaTime) {
         if (!this.centerX ) 
 		{
@@ -451,6 +458,7 @@ Crafty.c('Avatar', {
 				{
 					this.x = this.centerX - this.wanderDistance;
 					this.faceRight();
+					this.standUpAndRun();
 				}
 				else
 				{
@@ -463,6 +471,7 @@ Crafty.c('Avatar', {
 				{
 					this.x = this.centerX + this.wanderDistance;
 					this.faceLeft();
+					this.standUpAndRun();
 				}
 				else
 				{
@@ -588,7 +597,7 @@ Crafty.c('Obstacle', {
 
 	onDisappear : function(player) {
 		++Game.data.num_of_passed_obstacle;
-		Game.events.onPassObstacle(Game.data.num_of_passed_obstacle);
+		Game.events.onPassObstacle(Game.data.num_of_passed_obs);
 	},
 
 	onPlayerHit: function(player) {

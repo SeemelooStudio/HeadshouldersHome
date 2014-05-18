@@ -170,9 +170,31 @@ Crafty.c('Ball', {
     onBecomeStillWithoutTrap : function() {},
 
 	init: function() {
-		this.requires('RollingActor, SpriteBall').origin('center').
+		this.requires('RollingActor, Sprite, SpriteBall').origin('center').
              bind('EnterFrame', this.onEnterFrame);
 	},
+
+    setStyle: function(style) {
+        if (style === 'hsBottle')
+        {
+            this.style = style;
+            this.sprite(0, 1);
+        }
+        else if (style === 'hsPack')
+        {
+            this.style = style;
+            this.sprite(0, 2);
+        }
+        else
+        {
+            this.style = 'ball';
+            this.sprite(0, 0);
+        }
+    },
+
+    setHeadShoulder: function(isBottle) {
+        this.sprite(0, isBottle ? 1 : 2);
+    },
 	
 	setPlayer: function(player) {
         this.player = player;
@@ -180,6 +202,7 @@ Crafty.c('Ball', {
 
     trap: function() {
         this.isStill = true;
+        this.rotation = 0;
         this.velocity.setValues(0, 0);
         this.stopRolling();
     },

@@ -5,6 +5,7 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.kickConfigs = [];
         self.currentNumOfLife = Game.configs.max_num_of_lives_for_shoot_game;
+        self.numOfGoals = 0;
         self.currentDefenders = [];
         self.currentDefenderHeads = [];
         self.currentKickConfig = null;
@@ -124,9 +125,17 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
                                  .attr({x: defenderConfig[0], y: defenderConfig[1]});
         };
 
+        self.ballStyleRandomizer = Crafty.e('ObjectRandomizer').ObjectRandomizer(
+			['ball', 'hsBottle', 'hsPack'],[0.85,0.1]);
+			
+
         self.resetPlayerAndBall = function(kickConfig) {
             self.player.attachBall(self.ball);
             self.ball.trap();
+            
+            var style = self.ballStyleRandomizer.get();
+            self.ball.setStyle(style);
+
             self.player.attr({x: kickConfig.x, y: kickConfig.y});
             if ( kickConfig.x + self.player.width() / 2 < Game.width / 2 )
             {
@@ -194,11 +203,12 @@ define(["crafty", "games/game", "games/player-config"], function (Crafty, Game, 
 
         self.onGoal = function() {
             Crafty.e('PopupDecal').popup('goal', self.ball._x + self.ball._w / 2, self.ball._y);
+            ++self.numOfGoals;
             self.hideBall();
             Crafty.e("Delay").delay(function(){
                 self.resetKickConfig(self.getRandomKickConfig());
             }, 800, 0);
-            Game.events.onGoal();
+            Game.events.onGoal(self.ball.style);
         };
 
         self.onHitKeeper = function() {

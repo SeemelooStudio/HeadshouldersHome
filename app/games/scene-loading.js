@@ -66,6 +66,7 @@ Crafty.scene('Loading', function(){
 
 		Crafty.sprite(35, imgPath + 'ball.png', {
 			SpriteBall:     [0, 0],
+            SpriteBallHS:   [0, 1],
 		});
 
 		Crafty.sprite(110, 200, imgPath + 'hs.png', {

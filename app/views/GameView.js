@@ -73,7 +73,12 @@ define(["jquery", "backbone","mustache", "text!templates/Game.html", "animations
                         onPassWorldClass: function() {
                             self.addScore(1);
                         },
-                        onGoal: function() {
+                        onGoal: function(style) {
+                            if ( style === "hsBottle") {
+                                self.addCoupon(1);
+                            } else if ( style=== "hsPack" ) {
+                                self.addCoupon(2);
+                            }
                             self.addScore(1);
                         },
                         onLoadComplete: function() {

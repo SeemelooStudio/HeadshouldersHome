@@ -2877,6 +2877,9 @@ margin-left: 50px;
     top: 220px;
     font-size: 16px;
 }
+.ShootGame .game-help-text {
+    top:160px;
+}
 .leaderboardPrize {
     width: 120px;
     top: -40px;

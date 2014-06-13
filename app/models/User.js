@@ -17,7 +17,7 @@ define(["jquery", "backbone", "models/Card", "Utils"],
                     this.setUserId(cookieId);
                 }
                 this.weboLoginUrl = "https://api.weibo.com/oauth2/authorize?client_id=2081808740&response_type=code&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fweibo%2f";
-                this.wechatLoginUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaca4b565bbea999a&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fwechat%2f&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                this.wechatLoginUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaca4b565bbea999a&redirect_uri=http%3a%2f%2fhfsshili.app.social-touch.com%2ffootballgamewebservice%2ffootballgameservice%2fusers%2fwechat2%2f&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
                 this.qzoneLoginUrl = "http://hfsshili.app.social-touch.com/footballgamewebService/footballgameService/users/QQ/";
 
             },

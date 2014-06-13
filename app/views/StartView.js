@@ -17,7 +17,7 @@ define(["jquery", "backbone", "mustache", "text!templates/Start.html", "animatio
                 "shootGame": {
                     "id" : 3,
                     "name": "shoot",
-                    "enabled": false            
+                    "enabled":true            
                 },
                 "isqzone":true
         });
